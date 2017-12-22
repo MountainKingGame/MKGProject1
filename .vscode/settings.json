@@ -1,0 +1,14 @@
+{
+    "search.exclude": {
+        "**/bin/js": true,
+        "**/libs": true
+    },
+    "files.exclude": {
+        "**/.svn": true,
+        "**/.git": true,
+        "**/.gitmodules": true,
+        "**/.gitignore": true,
+        "**/LICENSE": true,
+        "**/.DS_Store": true
+    },
+}
