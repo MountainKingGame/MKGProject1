@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="128,128">
+  <controller name="c1" pages="0,,1," selected="1"/>
+  <displayList>
+    <loader id="n0_u9bo" name="icon" xy="64,64" pivot="0.5,0.5" anchor="true" size="128,128" url="ui://ybsps8tfe656m" align="center" vAlign="bottom"/>
+  </displayList>
+</component>

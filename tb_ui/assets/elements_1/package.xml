@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="u4vu42kz" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="h02b0" name="Tank.xml" path="/" exported="true"/>
+    <component id="h02b1" name="MapCell.xml" path="/" exported="true"/>
+    <component id="h02b2" name="Bullet.xml" path="/" exported="true"/>
+  </resources>
+  <publish name="elements_1" genCode="true"/>
+</packageDescription>

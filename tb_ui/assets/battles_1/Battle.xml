@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="900,1600">
+  <displayList>
+    <graph id="n2_u9bo" name="bg" xy="0,0" size="900,1600" type="rect" lineSize="2" lineColor="#ff00ff99" fillColor="#ff333333">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <component id="n1_qitl" name="contentLayer" src="qitl1" xy="-56,62" size="1014,956"/>
+    <component id="n0_qitl" name="joysick" src="iitt1" pkg="rbw1tvvv" xy="0,1350">
+      <relation target="" sidePair="left-left,bottom-bottom"/>
+    </component>
+  </displayList>
+</component>

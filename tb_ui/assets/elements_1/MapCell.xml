@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="64,64">
+  <controller name="kind" pages="0,floor0,1,wood0,2,brick0,3,metal,4,water0,5,ice0" selected="5"/>
+  <displayList>
+    <graph id="n0_h02b" name="n0" xy="0,0" size="64,64" type="rect" lineSize="0" fillColor="#ffffff99">
+      <gearColor controller="kind" pages="0,1,2,3,4,5" values="#ffffff|#006600|#993300|#ffcc00|#0099ff|#ffff99"/>
+    </graph>
+  </displayList>
+</component>

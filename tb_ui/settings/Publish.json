@@ -1,0 +1,14 @@
+{
+	"codeGeneration":{
+		"classNamePrefix":"UI_",
+		"codePath":"C:\\fox\\projects\\MKGProject1\\tb_client\\src\\fuis",
+		"codeType":"TS",
+		"getMemberByName":false,
+		"ignoreNoname":false,
+		"memberNamePrefix":"",
+		"packageName":"fuis"
+	},
+	"fileExtension":"",
+	"packageCount":2,
+	"path":"C:\\fox\\projects\\MKGProject1\\tb_client\\bin\\res\\fuis"
+}

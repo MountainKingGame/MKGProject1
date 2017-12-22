@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="ybsps8tf" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="qitl0" name="Battle.xml" path="/" exported="true"/>
+    <component id="qitl1" name="ContentLayer.xml" path="/"/>
+    <component id="u9bo3" name="Tank.xml" path="/" exported="true"/>
+    <image id="u9bo7" name="brick5.png" path="/images/mapCells/"/>
+    <image id="u9bo8" name="brick1.png" path="/images/mapCells/"/>
+    <image id="u9bo9" name="brick2.png" path="/images/mapCells/"/>
+    <image id="u9boa" name="brick3.png" path="/images/mapCells/"/>
+    <image id="u9bob" name="brick4.png" path="/images/mapCells/"/>
+    <component id="u9boc" name="MapCell.xml" path="/" exported="true"/>
+    <image id="e656d" name="floor1.png" path="/images/mapCells/"/>
+    <image id="e656e" name="floor2.png" path="/images/mapCells/"/>
+    <image id="e656f" name="floor3.png" path="/images/mapCells/"/>
+    <image id="e656g" name="floor4.png" path="/images/mapCells/"/>
+    <image id="e656h" name="floor5.png" path="/images/mapCells/"/>
+    <image id="e656i" name="wood1.png" path="/images/mapCells/"/>
+    <image id="e656j" name="wood2.png" path="/images/mapCells/"/>
+    <image id="e656k" name="bullet1.png" path="/images/livings/"/>
+    <image id="e656l" name="bullet2.png" path="/images/livings/"/>
+    <image id="e656m" name="tank.png" path="/images/livings/"/>
+    <image id="rluqn" name="tank1.png" path="/images/livings/"/>
+    <image id="rluqo" name="tank2.png" path="/images/livings/"/>
+    <image id="rluqp" name="tank3.png" path="/images/livings/"/>
+  </resources>
+  <publish name="battles_1" genCode="true"/>
+</packageDescription>
