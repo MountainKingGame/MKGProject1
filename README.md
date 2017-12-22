@@ -1,1 +1,3 @@
 # MKGProject1
+
+shared
