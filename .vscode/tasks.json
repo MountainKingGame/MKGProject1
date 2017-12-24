@@ -52,7 +52,7 @@
         {
             "type": "shell",
             "taskName": "AutoReferencePaths",
-            "command": "node C:/fox/H5/projects/NodeJsTools/bin/AutoReferencePath.js -d src -e GameMain.ts Main.ts",
+            "command": "node C:/fox/projects/tools/NodeJsTools/AutoReferencePath.js -d src -e GameMain.ts Main.ts",
             "presentation": {
                 "echo": true,
                 "reveal": "always",

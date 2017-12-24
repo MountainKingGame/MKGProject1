@@ -1,3 +1,5 @@
+/// <reference path="Auto_ReferencePaths.ts" />
+
 class GameMain {
     constructor() {
         Laya.init(600, 900, Laya.WebGL);
