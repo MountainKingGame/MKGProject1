@@ -1,0 +1,2 @@
+/// <reference path="C:\fox\projects\MKGProject1\tb_client\tb_cs_common\models\fights\FightModel.ts" />
+/// <reference path="C:\fox\projects\MKGProject1\tb_client\tb_cs_common\services\fights\FightService.ts" />
