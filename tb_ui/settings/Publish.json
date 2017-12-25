@@ -5,7 +5,7 @@
 		"codeType":"TS",
 		"getMemberByName":false,
 		"ignoreNoname":false,
-		"memberNamePrefix":"",
+		"memberNamePrefix":"m_",
 		"packageName":"fuis"
 	},
 	"fileExtension":"",
