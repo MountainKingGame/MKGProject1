@@ -1,7 +1,7 @@
 
 class JoystickModule extends libAdapter.EventDispatcher {
 
-    private view: fuis.joysticks.UI_JoystickMain;
+    private view: fuis.joysticks_1.UI_JoystickMain;
     private _InitX: number;
     private _InitY: number;
     private _startStageX: number;
@@ -23,7 +23,7 @@ class JoystickModule extends libAdapter.EventDispatcher {
     /** touchStart时如果超过这个值则立即触发移动,否则进挪动center */
     public radiiDoMovingWhenStart: number;
 
-    public constructor(view: joysticks.UI_JoystickMain) {
+    public constructor(view: fuis.joysticks_1.UI_JoystickMain) {
         super();
         this.view = view;
         this._button = view.m_joystick;

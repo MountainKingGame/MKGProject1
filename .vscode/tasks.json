@@ -73,6 +73,11 @@
                 "focus": false,
                 "panel": "shared"
             }
+        },
+        {
+            "type": "gulp",
+            "task": "default",
+            "problemMatcher": []
         }
     ]
 }

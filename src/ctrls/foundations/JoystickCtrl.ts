@@ -2,8 +2,8 @@ class JoystickCtrl extends CtrlBase{
     private module: JoystickModule;
     private txtLog: fairygui.GTextField;
 
-    public view:fuis.joysticks.UI_JoystickMain;
-    constructor(view:fuis.joysticks.UI_JoystickMain){
+    public view:fuis.joysticks_1.UI_JoystickMain;
+    constructor(view:fuis.joysticks_1.UI_JoystickMain){
         super(view);
         this.view = view;
     }

@@ -10,8 +10,8 @@ class BattleCtrl extends CtrlBase {
 
 	public joystick:JoystickCtrl;
 
-	public view:fuis.battles.UI_Battle;
-	constructor(view:fuis.battles.UI_Battle){
+	public view:fuis.battles_1.UI_Battle;
+	constructor(view:fuis.battles_1.UI_Battle){
 		super(view);
 		this.view = view;
 	}
@@ -36,7 +36,7 @@ class BattleCtrl extends CtrlBase {
 		this.partialOnFrame.AddTank();
 	}
 	initUI(){
-		this.facade.ctrlMgr.addCtrl(CtrlId.Joysick,this.joystick=new JoystickCtrl(this.view.m_joysick as fuis.joysticks.UI_JoystickMain));
+		this.facade.ctrlMgr.addCtrl(CtrlId.Joysick,this.joystick=new JoystickCtrl(this.view.m_joysick as fuis.joysticks_1.UI_JoystickMain));
 	}
 
 }

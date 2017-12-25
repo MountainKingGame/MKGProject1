@@ -1,4 +1,9 @@
 /// <reference path="Auto_ReferencePaths.ts" />
+/// <reference path="../lib/fairygui.d.ts" />
+/// <reference path="../lib/LayaAir.d.ts" />
+/// <reference path="../lib/protobuf.d.ts" />
+/// <reference path="../lib/pb.d.ts" />
+
 
 class GameMain {
     constructor() {
@@ -16,10 +21,11 @@ class GameMain {
         // Laya.stage.screenMode = "none";
 
         Laya.loader.load([
-            { url: "res/fuis/joysticks@atlas0.png", type: Laya.Loader.IMAGE },
-            { url: "res/fuis/joysticks.fui", type: Laya.Loader.BUFFER },
-            { url: "res/fuis/battles@atlas0.png", type: Laya.Loader.IMAGE },
-            { url: "res/fuis/battles.fui", type: Laya.Loader.BUFFER }
+            { url: "res/fuis/joysticks_1.fui", type: Laya.Loader.BUFFER },
+            { url: "res/fuis/joysticks_1@atlas0.png", type: Laya.Loader.IMAGE },
+            { url: "res/fuis/battles_1.fui", type: Laya.Loader.BUFFER },
+            { url: "res/fuis/battles_1@atlas0.png", type: Laya.Loader.IMAGE },
+            { url: "res/fuis/elements_1.fui", type: Laya.Loader.BUFFER }
         ], Laya.Handler.create(this, this.onLoaded));
     }
     onLoaded(): void {
@@ -39,7 +45,7 @@ class GameMain {
         //
         CtrlFacade.inst = ModelFacade.inst = facade;
         //--do my things
-        let battle: BattleCtrl = new BattleCtrl(fuis.battles.UI_Battle.createInstance());
+        let battle: BattleCtrl = new BattleCtrl(fuis.battles_1.UI_Battle.createInstance());
         facade.ctrlMgr.addCtrl(CtrlId.Battle, battle);
         console.log("[debug]","StageWH:", Laya.stage.width, Laya.stage.height);
         battle.view.setSize(Laya.stage.width, Laya.stage.height);

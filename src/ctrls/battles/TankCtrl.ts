@@ -1,7 +1,7 @@
 class TankCtrl extends CtrlBase{
-    public view:fuis.battles.UI_Tank;
+    public view:fuis.elements_1.UI_Tank;
     constructor(){
-        let view = fuis.battles.UI_Tank.createInstance();
+        let view = fuis.elements_1.UI_Tank.createInstance();
         super(view);
         this.view = view;
         this.view.setXY(300,500);
