@@ -2,7 +2,3 @@
 	path = tb_cs_common
 	url = https://github.com/MountainKingGame/MKGProject1.git
 	branch = tb_cs_common
-[submodule "adapter_laya"]
-	path = adapter_laya
-	url = https://github.com/MountainKingGame/MKGProject1.git
-	branch = adapter_laya
