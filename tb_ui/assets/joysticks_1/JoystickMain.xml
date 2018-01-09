@@ -11,6 +11,6 @@
     <graph id="n2" name="joystick_touch" xy="0,0" size="360,250" type="rect" lineSize="3" fillColor="#24ffffff">
       <relation target="" sidePair="width-width,height-height"/>
     </graph>
-    <text id="n9" name="n9" xy="4,-28" size="302,28" fontSize="24" color="#ffffff" autoSize="height" strokeColor="#000000" text=""/>
+    <text id="n9" name="txt_log" xy="4,-28" size="302,28" fontSize="24" color="#ffffff" autoSize="height" strokeColor="#000000" text=""/>
   </displayList>
 </component>
