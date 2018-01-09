@@ -1,0 +1,35 @@
+{
+	"groups": [
+		{
+			"keys": "battles_1_fui,battles_1@atlas0_png,elements_1_fui,joysticks_1_fui,joysticks_1@atlas0_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/fuis/battles_1.fui",
+			"type": "bin",
+			"name": "battles_1_fui"
+		},
+		{
+			"url": "assets/fuis/battles_1@atlas0.png",
+			"type": "image",
+			"name": "battles_1@atlas0_png"
+		},
+		{
+			"url": "assets/fuis/elements_1.fui",
+			"type": "bin",
+			"name": "elements_1_fui"
+		},
+		{
+			"url": "assets/fuis/joysticks_1.fui",
+			"type": "bin",
+			"name": "joysticks_1_fui"
+		},
+		{
+			"url": "assets/fuis/joysticks_1@atlas0.png",
+			"type": "image",
+			"name": "joysticks_1@atlas0_png"
+		}
+	]
+}

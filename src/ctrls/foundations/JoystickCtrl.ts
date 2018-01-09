@@ -20,14 +20,15 @@ class JoystickCtrl extends CtrlBase{
 
         fairygui.GRoot.inst.addChild(this.view);
 
-        this.txtLog = this.view.getChild("n9").asTextField;
+        this.txtLog =  this.view.m_txt_log;
 
         this.module = new JoystickModule(this.view);
         // this.module.addEventListener(JoystickModule.JoystickMoving,this.onJoystickMoving,this);
         // this.module.addEventListener(JoystickModule.JoystickUp,this.onJoystickUp,this);
-        this.module.on(JoystickModule.JoystickMoving,this,this.onJoystickMoving);
-        this.module.on(JoystickModule.JoystickUp,this,this.onJoystickUp);
-        //
+        // this.module.on(JoystickModule.JoystickMoving,this,this.onJoystickMoving);
+        // this.module.on(JoystickModule.JoystickUp,this,this.onJoystickUp);
+        SDKAdapterFG.GObject_addEventListener(this.module,JoystickModule.JoystickMoving,this.onJoystickMoving,this);
+        SDKAdapterFG.GObject_addEventListener(this.module,JoystickModule.JoystickUp,this.onJoystickUp,this);
         // this.txtLog.visible = false;
         this.view.m_joystick_dir.visible=false;
     }

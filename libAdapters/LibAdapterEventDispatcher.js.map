@@ -1,1 +1,0 @@
-{"version":3,"file":"LibAdapterEventDispatcher.js","sourceRoot":"","sources":["../src/libAdapters/LibAdapterEventDispatcher.ts"],"names":[],"mappings":";;;;;;;;;;AAAA;;EAEE;AACF,IAAU,UAAU,CAGnB;AAHD,WAAU,UAAU;IAChB;QAAqC,mCAA2B;QAAhE;;QACA,CAAC;QAAD,sBAAC;IAAD,CAAC,AADD,CAAqC,IAAI,CAAC,MAAM,CAAC,eAAe,GAC/D;IADY,0BAAe,kBAC3B,CAAA;AACL,CAAC,EAHS,UAAU,KAAV,UAAU,QAGnB"}

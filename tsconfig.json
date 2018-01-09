@@ -1,18 +1,17 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5",
-    // "sourceRoot": "${workspaceRoot}/src",
-    "outDir": "",
-    // "outFile": "gulpfile.js",
-    "removeComments": false,
-    // "watch": true,
-    "sourceMap": true
-  },
-  "include": [
-    "src/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "compilerOptions": {
+        "target": "es5",
+        "outDir": "bin-debug",
+        "experimentalDecorators": true,
+        "lib": [
+            "es5",
+            "dom",
+            "es2015.promise"
+        ],
+        "sourceMap": true,
+        "types":[]
+    },
+    "exclude": [
+        "node_modules"
+    ]
 }

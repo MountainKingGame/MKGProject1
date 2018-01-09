@@ -1,4 +1,4 @@
-[submodule "tb_cs_common"]
-	path = tb_cs_common
+[submodule "adapter_egret"]
+	path = src/adapter_egret
 	url = https://github.com/MountainKingGame/MKGProject1.git
-	branch = tb_cs_common
+	branch = adapter_egret
