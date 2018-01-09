@@ -1,0 +1,8 @@
+[submodule "tb_client"]
+	path = tb_client
+	url = https://github.com/MountainKingGame/MKGProject1.git
+	branch = tb_client
+[submodule "ui_source"]
+	path = ui_source
+	url = https://github.com/MountainKingGame/MKGProject1.git
+	branch = ui_source
