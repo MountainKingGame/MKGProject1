@@ -34,7 +34,7 @@
 		"bin-debug/frameworks/environments/Imports.js",
 		"bin-debug/frameworks/interfaces/IDispose.js",
 		"bin-debug/frameworks/structs/Vector2.js",
-		"bin-debug/adapter_egret/SDKAdapterEgret.js",
+		"bin-debug/services/ServiceMgr.js",
 		"bin-debug/frameworks/utils/MathUtil.js",
 		"bin-debug/frameworks/utils/TimeMgr.js",
 		"bin-debug/fuis/battles_1/battles_1Binder.js",
@@ -57,6 +57,6 @@
 		"bin-debug/games/nets/NetMgr.js",
 		"bin-debug/models/battles/BattleProxy.js",
 		"bin-debug/services/BattleService.js",
-		"bin-debug/services/ServiceMgr.js"
+		"bin-debug/adapter_egret/SDKAdapterEgret.js"
 	]
 }

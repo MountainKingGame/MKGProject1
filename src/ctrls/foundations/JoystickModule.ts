@@ -1,5 +1,6 @@
 
 class JoystickModule extends egret.EventDispatcher {
+    private view: fuis.joysticks_1.UI_JoystickMain;
     private _InitX: number;
     private _InitY: number;
     private _startStageX: number;
@@ -16,25 +17,30 @@ class JoystickModule extends egret.EventDispatcher {
     
     public static JoystickMoving: string = "JoystickMoving";
     public static JoystickUp: string = "JoystickUp";
-
+    /** Max distance between button and center in visual */
     public radius: number;
+    /** When touchStart trigger, if beyond this value then move immediately else move center only */
+    public radiiDoMovingWhenStart: number;
 
-    public constructor(mainView: fairygui.GComponent) {
+    public constructor(view: fuis.joysticks_1.UI_JoystickMain) {
         super();
-        
-        this._button = mainView.getChild("joystick").asButton;
+        this.view = view;
+        this._button = view.m_joystick;
         this._button.changeStateOnClick = false;
-        this._thumb = this._button.getChild("thumb");
-        this._touchArea = mainView.getChild("joystick_touch");
-        this._center = mainView.getChild("joystick_center");
+        this._thumb = view.m_joystick.m_thumb;
+        this._touchArea = view.m_joystick_touch;
+        this._center = view.m_joystick_center;
 
-        this._InitX = this._center.x + this._center.width / 2;
-        this._InitY = this._center.y + this._center.height / 2;
+        this._InitX = view.width / 2;
+        this._InitY = view.height / 2;
         this.touchId = -1;
         this.radius = 150;
+        this.radiiDoMovingWhenStart = 80;
         
         this._curPos = new egret.Point();
 
+        this._center.setXY(this._InitX, this._InitY);
+        this._button.selected = false;
         this._touchArea.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onTouchDown,this);
     }
 
@@ -51,8 +57,7 @@ class JoystickModule extends egret.EventDispatcher {
                 this._tweener.setPaused(true);
                 this._tweener = null;
             }
-
-            fairygui.GRoot.inst.globalToLocal(evt.stageX,evt.stageY,this._curPos);
+            this.view.globalToLocal(evt.stageX,evt.stageY,this._curPos);
             var bx: number = this._curPos.x;
             var by: number = this._curPos.y;
             this._button.selected = true;
@@ -73,18 +78,21 @@ class JoystickModule extends egret.EventDispatcher {
             this._startStageY = by;
 
             this._center.visible = true;
-            this._center.x = bx - this._center.width / 2;
-            this._center.y = by - this._center.height / 2;
-            this._button.x = bx - this._button.width / 2;
-            this._button.y = by - this._button.height / 2;
+            this._center.x = bx;
+            this._center.y = by;
+            this._button.x = bx;
+            this._button.y = by;
 
             var deltaX: number = bx - this._InitX;
             var deltaY: number = by - this._InitY;
-            var degrees: number = Math.atan2(deltaY,deltaX) * 180 / Math.PI;
-            this._thumb.rotation = degrees + 90;
+            var degree: number = Math.atan2(deltaY,deltaX) * 180 / Math.PI;
+            this._thumb.rotation = degree + 90;
 
             fairygui.GRoot.inst.nativeStage.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.OnTouchMove,this);
             fairygui.GRoot.inst.nativeStage.addEventListener(egret.TouchEvent.TOUCH_END,this.OnTouchUp,this);
+            if (MathUtil.distance(bx, by, this._InitX, this._InitY) > this.radiiDoMovingWhenStart) {
+                 this.dispatchEventWith(JoystickModule.JoystickMoving,false,degree);
+            }
         }
     }
 
