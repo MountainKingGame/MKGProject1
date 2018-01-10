@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="900,1600">
+<component size="900,1600" adaptationTest="FitHeightAndSetCenter">
   <displayList>
+    <graph id="n1_qvpo" name="n1" xy="0,0" size="900,1600" aspect="true" type="rect" lineSize="20" lineColor="#ff333333" fillColor="#ff99ffcc"/>
     <graph id="n0_qvpo" name="n0" xy="194,128" size="512,512" aspect="true" type="eclipse" lineSize="3" fillColor="#ff999999"/>
   </displayList>
 </component>
