@@ -4,6 +4,7 @@ module fuis.Package1 {
 
 	export class UI_Scene1 extends fairygui.GComponent {
 
+		public m_n1:fairygui.GGraph;
 		public m_n0:fairygui.GGraph;
 
 		public static URL:string = "ui://5valqnxpqvpo0";
@@ -19,7 +20,8 @@ module fuis.Package1 {
 		protected constructFromXML(xml: any): void {
 			super.constructFromXML(xml);
 
-			this.m_n0 = <fairygui.GGraph><any>(this.getChildAt(0));
+			this.m_n1 = <fairygui.GGraph><any>(this.getChildAt(0));
+			this.m_n0 = <fairygui.GGraph><any>(this.getChildAt(1));
 		}
 	}
 }

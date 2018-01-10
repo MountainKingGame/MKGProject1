@@ -97,10 +97,14 @@ class Main extends egret.DisplayObjectContainer {
         fuis.Package1.Package1Binder.bindAll();
         //-
         this.stage.addChild(fairygui.GRoot.inst.displayObject);
+        ModelFacade.si = CtrlFacade.si = new CtrlFacade();
+        CtrlFacade.si.init();
         //===
-         //===test
-        var root: fairygui.GComponent = new fairygui.GComponent();
-        fairygui.GRoot.inst.addChild(root);
-        root.addChild(fuis.Package1.UI_Scene1.createInstance());
+        this.onResize();
+        this.stage.addEventListener(egret.Event.RESIZE,this.onResize,this);
+    }
+    onResize(...args) {
+        console.log("[debug]", "OnResize StageWH:", this.stage.stageWidth, this.stage.stageHeight,this.stage.width,this.stage.height);
+        CtrlFacade.si.root.setSize(this.stage.stageWidth, this.stage.stageHeight);
     }
 }

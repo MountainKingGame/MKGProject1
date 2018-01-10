@@ -12,9 +12,13 @@
 		"libs/pb/pb.js"
 	],
 	"game": [
+		"bin-debug/models/ModelFacade.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
+		"bin-debug/ctrls/CtrlBase.js",
+		"bin-debug/ctrls/CtrlFacade.js",
+		"bin-debug/ctrls/SceneCtrl.js",
 		"bin-debug/fuis/Package1/Package1Binder.js",
 		"bin-debug/fuis/Package1/UI_Scene1.js"
 	]

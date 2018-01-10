@@ -26,16 +26,16 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-var __reflect = (this && this.__reflect) || function (p, c, t) {
-    p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
-};
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -71,7 +71,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Main = (function (_super) {
+var Main = /** @class */ (function (_super) {
     __extends(Main, _super);
     function Main() {
         var _this = _super.call(this) || this;
@@ -142,13 +142,20 @@ var Main = (function (_super) {
         fuis.Package1.Package1Binder.bindAll();
         //-
         this.stage.addChild(fairygui.GRoot.inst.displayObject);
+        ModelFacade.si = CtrlFacade.si = new CtrlFacade();
+        CtrlFacade.si.init();
         //===
-        //===test
-        var root = new fairygui.GComponent();
-        fairygui.GRoot.inst.addChild(root);
-        root.addChild(fuis.Package1.UI_Scene1.createInstance());
+        this.onResize();
+        this.stage.addEventListener(egret.Event.RESIZE, this.onResize, this);
+    };
+    Main.prototype.onResize = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        console.log("[debug]", "OnResize StageWH:", this.stage.stageWidth, this.stage.stageHeight, this.stage.width, this.stage.height);
+        CtrlFacade.si.root.setSize(this.stage.stageWidth, this.stage.stageHeight);
     };
     return Main;
 }(egret.DisplayObjectContainer));
-__reflect(Main.prototype, "Main");
 //# sourceMappingURL=Main.js.map
