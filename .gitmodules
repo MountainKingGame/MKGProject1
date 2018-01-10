@@ -6,3 +6,7 @@
 	path = shared
 	url = https://github.com/MountainKingGame/MKGProject1.git
 	branch = shared
+[submodule "marble_client"]
+	path = marble_client
+	url = https://github.com/MountainKingGame/MKGProject1.git
+	branch = marble_client
