@@ -83,6 +83,7 @@ class Main extends egret.DisplayObjectContainer {
         // battle.view.setSize(Laya.stage.width, Laya.stage.height);
         // Laya.stage.on(Laya.Event.RESIZE, this, this.onResize);
         // console.log(protobuf,"{protobuf}");
+        new tests.TestProtobuf();
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);

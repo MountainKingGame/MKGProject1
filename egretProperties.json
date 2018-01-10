@@ -37,6 +37,10 @@
     {
       "name": "protobuf",
       "path": "./libs/protobuf"
+    },
+    {
+      "name": "pb",
+      "path": "./libs/pb"
     }
   ]
 }
