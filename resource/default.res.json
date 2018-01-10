@@ -1,0 +1,20 @@
+{
+	"groups": [
+		{
+			"keys": "description_json,Package1_fui",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "config/description.json",
+			"type": "json",
+			"name": "description_json"
+		},
+		{
+			"url": "assets/fuis/Package1.fui",
+			"type": "bin",
+			"name": "Package1_fui"
+		}
+	]
+}
