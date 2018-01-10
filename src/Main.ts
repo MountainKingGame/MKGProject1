@@ -64,10 +64,6 @@ class Main extends egret.DisplayObjectContainer {
         //-
         this.stage.addChild(fairygui.GRoot.inst.displayObject);
         //===
-        var root: fairygui.GComponent = new fairygui.GComponent();
-        fairygui.GRoot.inst.addChild(root);
-        root.addChild(fuis.elements_1.UI_Tank.createInstance());
-        //
         let facade: CtrlFacade = new CtrlFacade();
         facade.ctrlMgr = new CtrlMgr();
         facade.ctrlMgr.facade = facade;
@@ -83,6 +79,11 @@ class Main extends egret.DisplayObjectContainer {
         // battle.view.setSize(Laya.stage.width, Laya.stage.height);
         // Laya.stage.on(Laya.Event.RESIZE, this, this.onResize);
         // console.log(protobuf,"{protobuf}");
+        //===test
+        var root: fairygui.GComponent = new fairygui.GComponent();
+        fairygui.GRoot.inst.addChild(root);
+        root.addChild(fuis.elements_1.UI_Tank.createInstance());
+        //---
         new tests.TestProtobuf();
     }
     onResize() {
