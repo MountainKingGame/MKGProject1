@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="5valqnxp" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="qvpo0" name="Scene1.xml" path="/" exported="true"/>
+  </resources>
+  <publish name="Package1" genCode="true"/>
+</packageDescription>
