@@ -36,7 +36,7 @@
 		"bin-debug/ctrls/battles/BattleCtrl.js",
 		"bin-debug/ctrls/battles/BattleCtrlPartialOnFrame.js",
 		"bin-debug/ctrls/battles/TankCtrl.js",
-		"bin-debug/tests/TestProtobuf.js",
+		"bin-debug/adapter_egret/SDKAdapterEgret.js",
 		"bin-debug/ctrls/foundations/JoystickCtrlInner.js",
 		"bin-debug/csCommons/consts/Direction4.js",
 		"bin-debug/frameworks/ctrlMgrs/CtrlContext.js",
@@ -60,6 +60,6 @@
 		"bin-debug/fuis/Package1/UI_Comp1.js",
 		"bin-debug/fuis/Package1/UI_Menu1.js",
 		"bin-debug/proxies/battles/BattleProxy.js",
-		"bin-debug/adapter_egret/SDKAdapterEgret.js"
+		"bin-debug/tests/TestProtobuf.js"
 	]
 }

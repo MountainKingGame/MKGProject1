@@ -1,0 +1,24 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "StaticServer Launch",
+            "type": "shell",
+            "command": "node",
+            "args": [
+               "C:\\fox\\projects\\tools\\NodeJsTools\\bin\\js\\StaticServer.js",
+               "--dir","C:\\fox\\projects\\MKGProject1\\tb_client"
+            ], 
+        },
+        {
+            "label": "egret clean",
+            "type": "shell",
+            "command": "egret",
+            "args": [
+               "clean"
+            ], 
+        }
+    ]
+}
