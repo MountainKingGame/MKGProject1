@@ -24,6 +24,7 @@ class JoystickCtrl extends CtrlBase {
     }
 
     private onJoystickMoving(evt: egret.Event): void {
+        MsgMgr.si.send(Msgs.InputMove,this.ctrlInner.direction);
         if (this.ui.m_txt_log.visible) {
             //dir = evt.data;
             // let dir:Direction4 = <Direction4>val;
@@ -32,6 +33,7 @@ class JoystickCtrl extends CtrlBase {
     }
 
     private onJoystickUp(): void {
+        MsgMgr.si.send(Msgs.InputMove,Direction4.None);
         if (this.ui.m_txt_log.visible) {
             this.ui.m_txt_log.text = "";
         }

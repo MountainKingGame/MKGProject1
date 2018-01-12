@@ -8,6 +8,7 @@
             "dom",
             "es2015.promise"
         ],
+        "newLine": "LF",
         "sourceMap": true,
         "types":[]
     },

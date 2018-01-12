@@ -27,14 +27,17 @@ class JoystickInner extends egret.EventDispatcher {
     public constructor(ui: fuis.joysticks_1.UI_JoystickMain) {
         super();
         this.ui = ui;
-        this._button = ui.m_joystick;
+        this.init();
+    }
+    public init(){
+        this._button = this.ui.m_joystick;
         this._button.changeStateOnClick = false;
-        this._thumb = ui.m_joystick.m_thumb;
-        this._touchArea = ui.m_joystick_touch;
-        this._center = ui.m_joystick_center;
+        this._thumb = this.ui.m_joystick.m_thumb;
+        this._touchArea = this.ui.m_joystick_touch;
+        this._center = this.ui.m_joystick_center;
 
-        this._InitX = ui.width / 2;
-        this._InitY = ui.height / 2;
+        this._InitX = this.ui.width / 2;
+        this._InitY = this.ui.height / 2;
         this.touchId = -1;
 
         this._curPos = new egret.Point();
@@ -75,9 +78,8 @@ class JoystickInner extends egret.EventDispatcher {
             var deltaX: number = bx - this._InitX;
             var deltaY: number = by - this._InitY;
             this.degree = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
-            this.countDir();
+            this.countDirection();
             //-
-            this.degree = MathUtil.repeatDegree(this.degree);
             fairygui.GRoot.inst.nativeStage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchMove, this);
             fairygui.GRoot.inst.nativeStage.addEventListener(egret.TouchEvent.TOUCH_END, this.OnTouchUp, this);
             if (MathUtil.distance(bx, by, this._InitX, this._InitY) > this.radiiDoMovingWhenStart) {
@@ -86,19 +88,17 @@ class JoystickInner extends egret.EventDispatcher {
             }
         }
     }
-    degree: number;
-    private countDir() {
-        var dir: number = Math.round(this.degree / 90) + 1;
-        if (dir >= 5) {//dir has only 4 values (1~4)
-            dir = 1;
-        }
+    public degree: number;
+    public direction:Direction4;
+    private countDirection() {
+        this.direction = Direction4Util.degreeToDir(this.degree);
         //-
         if (this.showDirUseButtonThumb) {
-            this._thumb.rotation = (dir) * 90 ;//thump forward dir up when ro=0
+            this._thumb.rotation = (this.direction) * 90 ;//thump forward dir up when ro=0
         } else {
             this._thumb.rotation = this.degree + 90;
             this.ui.m_joystick_dir.visible = true;
-            this.ui.m_joystick_dir.rotation = (dir - 1) * 90;
+            this.ui.m_joystick_dir.rotation = (this.direction - 1) * 90;
             this.ui.m_joystick_dir.setXY(this.ui.m_joystick_center.x, this.ui.m_joystick_center.y);
         }
     }
@@ -152,7 +152,7 @@ class JoystickInner extends egret.EventDispatcher {
 
             var rad: number = Math.atan2(offsetY, offsetX);
             this.degree = rad * 180 / Math.PI;
-            this.countDir();
+            this.countDirection();
 
             var maxX: number = this.radius * Math.cos(rad);
             var maxY: number = this.radius * Math.sin(rad);

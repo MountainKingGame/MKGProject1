@@ -1,5 +1,5 @@
 class BattleCtrl extends CtrlBase {
-	public onFrame:BattleCtrlPartialOnFrame = new BattleCtrlPartialOnFrame(this);
+	public onFrame: BattleCtrlPartialOnFrame = new BattleCtrlPartialOnFrame(this);
 	/**
 	 * battle model
 	 */
@@ -8,15 +8,16 @@ class BattleCtrl extends CtrlBase {
 	}
 	public proxy: BattleProxy;
 
-	public joystick:JoystickCtrl;
+	public joystick: JoystickCtrl;
 
-	public ui:fuis.battles_1.UI_Battle;
-	constructor(view:fuis.battles_1.UI_Battle){
+	public ui: fuis.battles_1.UI_Battle;
+	public tanks: TankCtrl[] = [];
+	constructor(view: fuis.battles_1.UI_Battle) {
 		super(view);
 		this.ui = view;
 	}
-	public dispose():void{
-		if(this.ui!=null){
+	public dispose(): void {
+		if (this.ui != null) {
 			this.ui.dispose();
 			this.ui = null;
 		}
@@ -30,14 +31,32 @@ class BattleCtrl extends CtrlBase {
 		this.proxy.init();
 		//
 		this.initUI();
-		setInterval(() => this.onFrame.onFrame_model(),BattleConfig.si.modelFrameMs);
-		setInterval(() => this.onFrame.onFrame_view(),CtrlConfig.si.viewFrameMs);
+		this.initEvent();
 		//
-		this.onFrame.AddTank();
+		setInterval(() => this.onFrame.onFrame_model(), BattleConfig.si.modelFrameMs);
+		setInterval(() => this.onFrame.onFrame_view(), CtrlConfig.si.viewFrameMs);
+		//-test
+		this.AddTank();
 	}
-	initUI(){
+	initUI() {
 		this.ui
-		this.facade.ctrlMgr.addCtrl(CtrlId.Joysick,this.joystick=new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickMain));
+		this.facade.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickMain));
+	}
+	initEvent() {
+		MsgMgr.si.add(Msgs.InputMove, this.OnInputMove, this);
+	}
+	currInputMoveDir: Direction4;
+	OnInputMove(dir: Direction4) {
+		if (this.currInputMoveDir != dir) {
+			this.currInputMoveDir = dir;
+			//TODO:
+		}
+	}
+
+	public AddTank() {
+		let tank: TankCtrl = new TankCtrl();
+		this.tanks.push(tank);
+		this.ui.addChild(tank.ui);
 	}
 
 }

@@ -1,11 +1,12 @@
 class TankCtrl extends CtrlBase{
-    public view:fuis.elements_1.UI_Tank;
+    public ui:fuis.elements_1.UI_Tank;
     constructor(){
         let view = fuis.elements_1.UI_Tank.createInstance();
         super(view);
-        this.view = view;
-        this.view.setXY(300,500);
-        this.view.rotation = 180;
+        this.ui = view;
+        this.ui.setPivot(0.5,0.5,true);
+        this.ui.setXY(300,500);
+        this.ui.rotation = 180;
         //
         // this.view.m_icon.filters = [new egret.BlurFilter(12,12)];
         
@@ -20,9 +21,9 @@ class TankCtrl extends CtrlBase{
         this.view.m_icon.filters = [cf];*/
     }
     public dispose():void{
-        if(this.view!=null){
-            this.view.dispose();
-            this.view = null;
+        if(this.ui!=null){
+            this.ui.dispose();
+            this.ui = null;
         }
         super.dispose();
     }

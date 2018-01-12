@@ -28,6 +28,7 @@ class CtrlFacade extends ModelFacade{
         CtrlFacade.inst.ctrlMgr.addCtrl(CtrlId.Battle, battle);
         //
         battle.ui.setSize(this.stage.stageWidth, this.stage.stageHeight);
+        //
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);
