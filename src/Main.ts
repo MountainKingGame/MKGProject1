@@ -54,36 +54,13 @@ class Main extends egret.DisplayObjectContainer {
         this.onResourceLoadComplete(event);
     }
     private createGameScene(): void {
-        //
-        fairygui.UIPackage.addPackage("battles_1");
-        fairygui.UIPackage.addPackage("elements_1");
-        fairygui.UIPackage.addPackage("joysticks_1");
-        fuis.battles_1.battles_1Binder.bindAll();
-        fuis.elements_1.elements_1Binder.bindAll();
-        fuis.joysticks_1.joysticks_1Binder.bindAll();
-        //-
         this.stage.addChild(fairygui.GRoot.inst.displayObject);
         //===
-        let facade: CtrlFacade = new CtrlFacade();
-        facade.ctrlMgr = new CtrlMgr();
-        facade.ctrlMgr.facade = facade;
-        facade.ctrlMgr.rootLayer = fairygui.GRoot.inst;
+        ModelFacade.inst = CtrlFacade.inst = new CtrlFacade();
+        CtrlFacade.inst.stage = this.stage;
+        CtrlFacade.inst.init();
         //
-        CtrlFacade.inst = ModelFacade.inst = facade;
-        //--do my things
-        let battle: BattleCtrl = new BattleCtrl(fuis.battles_1.UI_Battle.createInstance());
-        facade.ctrlMgr.addCtrl(CtrlId.Battle, battle);
-        // fairygui.GRoot.inst.addChild(battle.view);
-        battle.view.setSize(this.stage.stageWidth, this.stage.stageHeight);
-        // console.log("[debug]","StageWH:", Laya.stage.width, Laya.stage.height);
-        // battle.view.setSize(Laya.stage.width, Laya.stage.height);
-        // Laya.stage.on(Laya.Event.RESIZE, this, this.onResize);
-        // console.log(protobuf,"{protobuf}");
         //===test
-        var root: fairygui.GComponent = new fairygui.GComponent();
-        fairygui.GRoot.inst.addChild(root);
-        root.addChild(fuis.elements_1.UI_Tank.createInstance());
-        //---
         new tests.TestProtobuf();
     }
     onResize() {

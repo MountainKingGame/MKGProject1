@@ -1,9 +1,9 @@
 class CtrlBase implements IDispose {
 	public facade:CtrlFacade;
-	public CtrlId:CtrlId;
-	public z_view:GComponent;
-	public constructor(view:GComponent) {
-		this.z_view = view;
+	public ctrlId:CtrlId;
+	public __ui:GComponent;
+	public constructor(ui:GComponent) {
+		this.__ui = ui;
 	}
 	public init(){
 	}
@@ -12,9 +12,10 @@ class CtrlBase implements IDispose {
 	public close(){
 	}
 	public dispose():void{
-		if(this.z_view!=null){
-			this.z_view.dispose();
-			this.z_view = null;
+		if(this.__ui!=null){
+			this.__ui.dispose();
+			this.__ui = null;
 		}
+		this.facade = null;
 	}
 }

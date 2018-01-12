@@ -18,7 +18,7 @@ class BattleCtrlPartialOnFrame{
 
     public AddTank(){
         let tank:TankCtrl = new TankCtrl();
-        this.owner.view.addChild(tank.view);
+        this.owner.ui.addChild(tank.view);
     }
     
 }

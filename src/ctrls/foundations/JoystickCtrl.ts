@@ -1,54 +1,39 @@
-class JoystickCtrl extends CtrlBase{
-    private module: JoystickModule;
-    private txtLog: fairygui.GTextField;
-
-    public view:fuis.joysticks_1.UI_JoystickMain;
-    constructor(view:fuis.joysticks_1.UI_JoystickMain){
-        super(view);
-        this.view = view;
+class JoystickCtrl extends CtrlBase {
+    public ui: fuis.joysticks_1.UI_JoystickMain;
+    private ctrlInner: JoystickInner;
+    constructor(ui: fuis.joysticks_1.UI_JoystickMain) {
+        super(ui);
+        this.ui = ui;
     }
-    public dispose():void{
-        if(this.view!=null){
-            this.view.dispose();
-            this.view = null;
+    public dispose(): void {
+        if (this.ui != null) {
+            this.ui.dispose();
+            this.ui = null;
         }
         super.dispose();
     }
 
-    public init():void{
+    public init(): void {
         super.init();
-
-        fairygui.GRoot.inst.addChild(this.view);
-
-        this.txtLog =  this.view.m_txt_log;
-
-        this.module = new JoystickModule(this.view);
-        // this.module.addEventListener(JoystickModule.JoystickMoving,this.onJoystickMoving,this);
-        // this.module.addEventListener(JoystickModule.JoystickUp,this.onJoystickUp,this);
-        // this.module.on(JoystickModule.JoystickMoving,this,this.onJoystickMoving);
-        // this.module.on(JoystickModule.JoystickUp,this,this.onJoystickUp);
-        SDKAdapterFG.GObject_addEventListener(this.module,JoystickModule.JoystickMoving,this.onJoystickMoving,this);
-        SDKAdapterFG.GObject_addEventListener(this.module,JoystickModule.JoystickUp,this.onJoystickUp,this);
-        // this.txtLog.visible = false;
-        this.view.m_joystick_dir.visible=false;
+        this.ctrlInner = new JoystickInner(this.ui);
+        SDKAdapterFG.GObject_addEventListener(this.ctrlInner, JoystickInner.JoystickMoving, this.onJoystickMoving, this);
+        SDKAdapterFG.GObject_addEventListener(this.ctrlInner, JoystickInner.JoystickUp, this.onJoystickUp, this);
+        this.ui.m_joystick_dir.visible = false;
+        //
+        this.ui.m_txt_log.visible = false;
     }
 
-    private onJoystickMoving(val:number): void {
-        // this.txtLog.text = "" + evt.data;
-        val = MathUtil.repeatDegree(val);
-        val = Math.round(val/90)+1;
-        if(val>=5){
-            val = 1;
+    private onJoystickMoving(evt: egret.Event): void {
+        if (this.ui.m_txt_log.visible) {
+            //dir = evt.data;
+            // let dir:Direction4 = <Direction4>val;
+            // this.ui.m_txt_log.text = dir.toString() + " dir:" + (<Direction4>dir).toString();
         }
-        this.view.m_joystick_dir.visible=true;
-        this.view.m_joystick_dir.rotation = (val-1)*90;
-        this.view.m_joystick_dir.setXY(this.view.m_joystick_center.x,this.view.m_joystick_center.y);
-        let dir:Direction4 = <Direction4>val;
-        // this.txtLog.text = "" + evt.data + " dir:"+dir.toString();
     }
 
     private onJoystickUp(): void {
-        this.txtLog.text = "";
-        this.view.m_joystick_dir.visible=false;
+        if (this.ui.m_txt_log.visible) {
+            this.ui.m_txt_log.text = "";
+        }
     }
 }

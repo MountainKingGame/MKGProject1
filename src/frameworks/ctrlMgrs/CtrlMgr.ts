@@ -9,8 +9,8 @@ class CtrlMgr {
             return;
         }
         this.ctrlCache[id.toFixed()] = ctrl;
-        if (ctrl.z_view != null) {
-            this.rootLayer.addChild(ctrl.z_view);
+        if (ctrl.__ui != null) {
+            this.rootLayer.addChild(ctrl.__ui);
         }
         ctrl.facade = this.facade;
         switch (id) {
