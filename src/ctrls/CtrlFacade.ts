@@ -1,5 +1,5 @@
 class CtrlFacade extends ModelFacade{
-    public static inst:CtrlFacade;
+    public static si:CtrlFacade;
     public ctrlMgr:CtrlMgr;
     public battle:BattleCtrl;
     public stage:egret.Stage;
@@ -9,6 +9,8 @@ class CtrlFacade extends ModelFacade{
     }
     public init(){
         super.init();
+        //===
+        StcMap.si.init();
         //===
         fairygui.UIPackage.addPackage("battles_1");
         fairygui.UIPackage.addPackage("elements_1");
@@ -25,7 +27,7 @@ class CtrlFacade extends ModelFacade{
         fairygui.GRoot.inst.addChild(this.root);
         //---
         let battle: BattleCtrl = new BattleCtrl(fuis.battles_1.UI_Battle.createInstance());
-        CtrlFacade.inst.ctrlMgr.addCtrl(CtrlId.Battle, battle);
+        CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Battle, battle);
         //
         battle.ui.setSize(this.stage.stageWidth, this.stage.stageHeight);
         //

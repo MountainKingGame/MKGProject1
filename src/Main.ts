@@ -4,7 +4,6 @@ class Main extends egret.DisplayObjectContainer {
         super();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
-
     private onAddToStage(event: egret.Event) {
         console.log('hello,world',"onAddToStage");
         egret.lifecycle.addLifecycleListener((context) => {
@@ -58,9 +57,9 @@ class Main extends egret.DisplayObjectContainer {
     private createGameScene(): void {
         this.stage.addChild(fairygui.GRoot.inst.displayObject);
         //===
-        ModelFacade.inst = CtrlFacade.inst = new CtrlFacade();
-        CtrlFacade.inst.stage = this.stage;
-        CtrlFacade.inst.init();
+        ModelFacade.si = CtrlFacade.si = new CtrlFacade();
+        CtrlFacade.si.stage = this.stage;
+        CtrlFacade.si.init();
         //
         //===test
         new tests.TestProtobuf();

@@ -1,18 +1,14 @@
 class BattleProxy {
-    public facade:ModelFacade;
-    public model:BattleModel;
+    facade:ModelFacade;
+    public model:battleModels.BattleModel;
     public init(){
-        this.model = new BattleModel();
+        this.model = new battleModels.BattleModel();
         this.model.facade = this.facade;
         this.model.init();
-        // let tank:TankVo = new TankVo();
-        // tank.id = 1001;
-        // this.model.partialAdd.addTank(tank);
-        //
-        this.facade.netMgr.req(123,null);
+        // this.facade.netMgr.req(123,null);
     }
-    public onFrame() {
-        this.model.partialOnFrame.onFrame();
+    public tick() {
+        this.model.partialTick.tick();
     }
     public clearFrame(){
         this.model.clearFrame();

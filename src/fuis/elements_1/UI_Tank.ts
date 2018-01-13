@@ -6,8 +6,8 @@ module fuis.elements_1 {
 
 		public m_kind:fairygui.Controller;
 		public m_color:fairygui.Controller;
-		public m_n0:fairygui.GGraph;
-		public m_n1:fairygui.GGraph;
+		public m_avatar:UI_TankAvatar;
+		public m_txt_kind:fairygui.GTextField;
 
 		public static URL:string = "ui://u4vu42kzh02b0";
 
@@ -24,8 +24,8 @@ module fuis.elements_1 {
 
 			this.m_kind = this.getControllerAt(0);
 			this.m_color = this.getControllerAt(1);
-			this.m_n0 = <fairygui.GGraph><any>(this.getChildAt(0));
-			this.m_n1 = <fairygui.GGraph><any>(this.getChildAt(1));
+			this.m_avatar = <UI_TankAvatar><any>(this.getChildAt(0));
+			this.m_txt_kind = <fairygui.GTextField><any>(this.getChildAt(1));
 		}
 	}
 }

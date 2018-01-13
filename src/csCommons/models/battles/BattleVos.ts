@@ -1,22 +1,27 @@
-class IdVo{
-    public id:number;
-}
-class MoveVo extends IdVo{
-    public pos:Vector2 = new Vector2();
-    public moveDir:Direction4  = Direction4.None;
-    /** 碰撞半径 */
-    public hitTestRadii:number;
-}
-//
-class TankVo extends MoveVo {
-}
-class BulletVo extends MoveVo{
+namespace battleModels {
+    export class EleVo {
+        public uid: number;
+        public sid: number;
+    }
+    export class MoveVo extends EleVo {
+        public xy: Vector2 = new Vector2();
+        public col: number;
+        public row: number;
+        public moveDir: Direction4 = Direction4.None;
+        /** 碰撞半径 */
+        public hitTestRadii: number;
+    }
+    //
+    export class TankVo extends MoveVo {
 
-}
-class SkillVo extends IdVo{
+    }
+    export class BulletVo extends MoveVo {
 
-}
-class BuffVo extends IdVo{
-    
-}
+    }
+    export class SkillVo extends EleVo {
 
+    }
+    export class BuffVo extends EleVo {
+
+    }
+}

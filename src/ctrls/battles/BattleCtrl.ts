@@ -3,10 +3,8 @@ class BattleCtrl extends CtrlBase {
 	/**
 	 * battle model
 	 */
-	public get model(): BattleModel {
-		return this.proxy.model;
-	}
 	public proxy: BattleProxy;
+	public model:battleModels.BattleModel;
 
 	public joystick: JoystickCtrl;
 
@@ -29,14 +27,15 @@ class BattleCtrl extends CtrlBase {
 		this.proxy = new BattleProxy();
 		this.proxy.facade = this.facade;
 		this.proxy.init();
+		this.model = this.proxy.model;
 		//
 		this.initUI();
 		this.initEvent();
 		//
-		setInterval(() => this.onFrame.onFrame_model(), BattleConfig.si.modelFrameMs);
+		setInterval(() => this.onFrame.onFrame_model(), battleModels.BattleConfig.si.modelFrameMs);
 		setInterval(() => this.onFrame.onFrame_view(), CtrlConfig.si.viewFrameMs);
-		//-test
-		this.AddTank();
+		//
+		this.AddTank(this.model.tanks[0]);
 	}
 	initUI() {
 		this.ui
@@ -54,8 +53,9 @@ class BattleCtrl extends CtrlBase {
 		}
 	}
 
-	public AddTank() {
-		let tank: TankCtrl = new TankCtrl();
+	public AddTank(vo:battleModels.TankVo) {
+		let tank:TankCtrl = new TankCtrl();
+		tank.vo = vo;
 		this.tanks.push(tank);
 		this.ui.addChild(tank.ui);
 	}

@@ -1,7 +1,6 @@
 class ModelFacade {
-    public static inst: ModelFacade;
+    public static si: ModelFacade;
     public battleProxy: BattleProxy;
-    public battleModel: BattleModel;
     public timeMgr: TimeMgr;
     public netMgr: NetMgr;
     constructor() {

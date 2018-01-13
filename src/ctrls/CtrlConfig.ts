@@ -6,7 +6,7 @@ class CtrlConfig {
         }
         return CtrlConfig._si;
     }
-    public viewFrameRate:number = 30;
+    public viewFrameRate:number = 60;
     /**
      * 每一帧需要的毫秒数,这里保存整数
      */

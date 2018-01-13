@@ -1,5 +1,6 @@
 class TankCtrl extends CtrlBase{
     public ui:fuis.elements_1.UI_Tank;
+    vo:battleModels.TankVo;
     constructor(){
         let view = fuis.elements_1.UI_Tank.createInstance();
         super(view);

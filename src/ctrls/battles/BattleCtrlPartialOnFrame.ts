@@ -6,7 +6,7 @@ class BattleCtrlPartialOnFrame{
     public onFrame_model(){
         // let date:Date = new Date();
         // console.log("[debug]",date.getTime
-        this.owner.proxy.onFrame();
+        this.owner.proxy.tick();
 	}
     public onFrame_view(){
         if(this.owner.model.dirty){
