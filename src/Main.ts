@@ -17,13 +17,13 @@ class Main extends egret.DisplayObjectContainer {
             }
         })
         egret.lifecycle.onPause = () => {
-            console.log("[info]", "egret.lifecycle.onPause");
+            // console.log("[info]", "egret.lifecycle.onPause");
             MsgMgr.si.send(FwConsts.MSG_GamePause);
             egret.ticker.pause();
         }
 
         egret.lifecycle.onResume = () => {
-            console.log("[info]", "egret.lifecycle.onResume");
+            // console.log("[info]", "egret.lifecycle.onResume");
             MsgMgr.si.send(FwConsts.MSG_GameResume);
             egret.ticker.resume();
         }

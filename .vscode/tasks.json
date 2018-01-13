@@ -8,9 +8,10 @@
             "type": "shell",
             "command": "node",
             "args": [
-                "C:\\fox\\projects\\tools\\NodeJsTools\\bin\\js\\StaticServer.js",
-                "--dir",
-                "C:\\fox\\projects\\MKGProject1\\tb_client"
+                // "C:\\fox\\projects\\tools\\NodeJsTools\\bin\\js\\StaticServer.js",
+                "..\\..\\tools\\NodeJsTools\\bin\\js\\StaticServer.js",
+                // "--dir",
+                // "C:\\fox\\projects\\MKGProject1\\tb_client"
             ],
             "problemMatcher": []
         },
