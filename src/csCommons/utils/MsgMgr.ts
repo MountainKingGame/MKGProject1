@@ -21,11 +21,11 @@ class MsgMgr {
             }
         }
     }
-    public send(name:string,data:any=null){
+    public send(name:string,data:any=null,sender:object=null){
         if(this.map[name]){
             for (let i = 0; i < this.map[name].length; i++) {
                 let item:MsgItem = this.map[name][i];
-                item.handler.call(item.thisObj,data);
+                item.handler.call(item.thisObj,data,sender);
             }
         }
     }

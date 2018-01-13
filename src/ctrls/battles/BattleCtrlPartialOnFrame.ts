@@ -17,7 +17,7 @@ class BattleCtrlPartialOnFrame{
         if (dir == Direction4.None) {
         } else {
             var tank: TankCtrl = this.owner.tanks[0];
-            tank.ui.rotation = Direction4Util.dirToDegree(dir);
+            tank.ui.rotation = CommonHelper.dir4ToDegree(dir);
             switch (dir) {
                 case Direction4.Left:
                     tank.ui.x++;
