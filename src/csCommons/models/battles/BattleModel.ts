@@ -1,4 +1,4 @@
-namespace battleModels {
+namespace models.battles {
     export class BattleModel {
         public facade: ModelFacade;
         public partialAdd: BattleModelPartialAdd = new BattleModelPartialAdd(this);

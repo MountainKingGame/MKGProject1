@@ -4,15 +4,18 @@ class BattleCtrl extends CtrlBase {
 	 * battle model
 	 */
 	public proxy: BattleProxy;
-	public model:battleModels.BattleModel;
+	public model:models.battles.BattleModel;
 
 	public joystick: JoystickCtrl;
 
 	public ui: fuis.battles_1.UI_Battle;
+	tankLayer:fairygui.GComponent = new fairygui.GComponent;
+	mapLayer:fairygui.GComponent = new fairygui.GComponent;
+
 	public tanks: TankCtrl[] = [];
-	constructor(view: fuis.battles_1.UI_Battle) {
-		super(view);
-		this.ui = view;
+	constructor(ui: fuis.battles_1.UI_Battle) {
+		super(ui);
+		this.ui = ui;
 	}
 	public dispose(): void {
 		if (this.ui != null) {
@@ -32,32 +35,37 @@ class BattleCtrl extends CtrlBase {
 		this.initUI();
 		this.initEvent();
 		//
-		setInterval(() => this.onFrame.onFrame_model(), battleModels.BattleConfig.si.modelFrameMs);
+		setInterval(() => this.onFrame.onFrame_model(), models.battles.BattleConfig.si.modelFrameMs);
 		setInterval(() => this.onFrame.onFrame_view(), CtrlConfig.si.viewFrameMs);
 		//
-		this.AddTank(this.model.tanks[0]);
+		this.InitMap();
+		this.AddTank(this.proxy.myTank);
 	}
 	initUI() {
-		this.ui
 		this.facade.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickMain));
+		this.ui.m_contentLayer.addChild(this.mapLayer);
+		this.ui.m_contentLayer.addChild(this.tankLayer);
 	}
 	initEvent() {
-		MsgMgr.si.add(JoystickCtrl.JoystickMoving, this,this.OnInputMove);
+
 	}
-	currInputMoveDir: Direction4;
-	OnInputMove(dir: Direction4) {
-		// console.log("[info]",dir);
-		if (this.currInputMoveDir != dir) {
-			this.currInputMoveDir = dir;
-			//TODO:
+	InitMap(){
+		let stcMapVo:IStcMapVo = this.model.stcMapVo;
+		for (let i = 0; i < stcMapVo.cells.length; i++) {
+			let cellKind = this.model.stcMapVo.cells[i];
+			let grid = CommonHelper.indexToGridH(i,stcMapVo.col);
+			let cell:fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
+			cell.m_kind.selectedIndex = cellKind;
+			cell.setXY(grid.col*models.battles.BattleConfig.si.cellSize,grid.row*models.battles.BattleConfig.si.cellSize);
+			this.mapLayer.addChild(cell);
 		}
 	}
 
-	public AddTank(vo:battleModels.TankVo) {
+	public AddTank(vo:models.battles.TankVo) {
 		let tank:TankCtrl = new TankCtrl();
 		tank.vo = vo;
 		this.tanks.push(tank);
-		this.ui.addChild(tank.ui);
+		this.ui.m_contentLayer.addChild(tank.ui);
 	}
 
 }

@@ -13,4 +13,7 @@ class CommonHelper{
         }
         return (dir-1)*90;
     }
+    public static indexToGridH(index:number,colMax:number):IGrid{
+        return {col:index%colMax,row:Math.floor(index/colMax)};
+    }
 }

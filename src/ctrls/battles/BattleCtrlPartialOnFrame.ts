@@ -13,7 +13,7 @@ class BattleCtrlPartialOnFrame{
             //说明执行过proxy.onFrame,需要根据model的数据做处理
             this.owner.proxy.clearFrame();
         }
-        var dir:Direction4 = this.owner.currInputMoveDir;
+        var dir:Direction4 = this.owner.proxy.myTank.moveDir;
         if (dir == Direction4.None) {
         } else {
             var tank: TankCtrl = this.owner.tanks[0];

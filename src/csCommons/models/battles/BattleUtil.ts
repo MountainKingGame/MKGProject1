@@ -1,4 +1,4 @@
-namespace battleModels {
+namespace models.battles {
     export class BattleUtil {
         /** 是否水平方向 */
         public static isHorizontalDirection4(dir: Direction4): boolean {

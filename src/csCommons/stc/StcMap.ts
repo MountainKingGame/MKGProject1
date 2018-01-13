@@ -9,6 +9,9 @@ class StcMap {
                 let vo: IStcMapVo = RES.getRes(resName);
                 if (!vo.id) vo.id = i;
                 this.voDict[i] = vo;
+                //-auto fill
+                vo.row = Math.ceil(vo.cells.length/vo.col);
+                //-
                 i++;
             } else {
                 break;

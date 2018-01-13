@@ -5,8 +5,9 @@ module fuis.elements_1 {
 	export class UI_TankAvatar extends fairygui.GComponent {
 
 		public m_color:fairygui.Controller;
-		public m_n1:fairygui.GGraph;
+		public m_n3:fairygui.GGraph;
 		public m_n0:fairygui.GGraph;
+		public m_n1:fairygui.GGraph;
 
 		public static URL:string = "ui://u4vu42kzcqc44";
 
@@ -22,8 +23,9 @@ module fuis.elements_1 {
 			super.constructFromXML(xml);
 
 			this.m_color = this.getControllerAt(0);
-			this.m_n1 = <fairygui.GGraph><any>(this.getChildAt(0));
+			this.m_n3 = <fairygui.GGraph><any>(this.getChildAt(0));
 			this.m_n0 = <fairygui.GGraph><any>(this.getChildAt(1));
+			this.m_n1 = <fairygui.GGraph><any>(this.getChildAt(2));
 		}
 	}
 }

@@ -7,3 +7,7 @@ interface IVector2{
     x?:number;
     y?:number;
 }
+interface IGrid{
+    col?:number;
+    row?:number;
+}

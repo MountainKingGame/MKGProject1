@@ -1,4 +1,4 @@
-namespace battleModels {
+namespace models.battles {
     /**
      * 为BattleModel添加新物品的方法集合
      */

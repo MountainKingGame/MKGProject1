@@ -1,4 +1,4 @@
-namespace battleModels {
+namespace models.battles {
     export class BattleConfig {
 
         public static readonly si: BattleConfig = new BattleConfig();
@@ -10,5 +10,6 @@ namespace battleModels {
         constructor() {
             this.modelFrameMs = Math.round(1000 / this.modelFrameRate);
         }
+        public cellSize:number = 64;
     }
 }

@@ -1,4 +1,4 @@
-namespace battleModels {
+namespace models.battles {
     export class EleVo {
         public uid: number;
         public sid: number;

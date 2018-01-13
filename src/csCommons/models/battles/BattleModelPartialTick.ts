@@ -1,4 +1,4 @@
-namespace battleModels {
+namespace models.battles {
     export class BattleModelPartialTick {
         public owner: BattleModel;
         constructor(owner: BattleModel) {
