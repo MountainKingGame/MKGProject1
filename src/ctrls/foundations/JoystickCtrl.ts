@@ -47,7 +47,7 @@ class JoystickCtrl extends CtrlBase {
         this.ui.m_joystick_dir.visible = false;
         this.ui.m_txt_log.visible = false;
         //
-        MsgMgr.si.add(FwConsts.MSG_GamePause,this.OnMsg_GamePause,this);
+        MsgMgr.si.add(FwConsts.MSG_GamePause,this,this.OnMsg_GamePause);
     }
     public dispose(): void {
         this.ui = null;

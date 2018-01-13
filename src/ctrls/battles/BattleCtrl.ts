@@ -43,11 +43,11 @@ class BattleCtrl extends CtrlBase {
 		this.facade.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickMain));
 	}
 	initEvent() {
-		MsgMgr.si.add(JoystickCtrl.JoystickMoving, this.OnInputMove, this);
+		MsgMgr.si.add(JoystickCtrl.JoystickMoving, this,this.OnInputMove);
 	}
 	currInputMoveDir: Direction4;
 	OnInputMove(dir: Direction4) {
-		console.log("[info]",dir);
+		// console.log("[info]",dir);
 		if (this.currInputMoveDir != dir) {
 			this.currInputMoveDir = dir;
 			//TODO:
