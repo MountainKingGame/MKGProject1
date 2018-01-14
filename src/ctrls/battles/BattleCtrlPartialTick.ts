@@ -34,6 +34,10 @@ class BattleCtrlPartialTick {
             const tank = this.owner.tanks[uid];
             tank.tick();
         }
+        for (const uid in this.owner.bullets) {
+            const bullet = this.owner.bullets[uid];
+            bullet.tick();
+        }
     }
 
 }

@@ -12,9 +12,11 @@ class BattleCtrl extends CtrlBase {
 	/**all element in here */
 	elementLayer:fairygui.GComponent = new fairygui.GComponent;
 	tankLayer:fairygui.GComponent = new fairygui.GComponent;
+	bulletLayer:fairygui.GComponent = new fairygui.GComponent;
 	mapLayer:fairygui.GComponent = new fairygui.GComponent;
 
 	public tanks: TankCtrl[] = [];
+	public bullets: BulletCtrl[] = [];
 	constructor(ui: fuis.battles_1.UI_Battle) {
 		super(ui);
 		this.ui = ui;
@@ -47,6 +49,7 @@ class BattleCtrl extends CtrlBase {
 		this.ui.addChildAt(this.elementLayer,0);
 		this.elementLayer.addChild(this.mapLayer);
 		this.elementLayer.addChild(this.tankLayer);
+		this.elementLayer.addChild(this.bulletLayer);
 		this.ui.m_touchLayer.alpha = 0;
 	}
 	initEvent() {
@@ -70,7 +73,7 @@ class BattleCtrl extends CtrlBase {
 			let grid = CommonHelper.indexToGridH(i,stcMapVo.size.col);
 			let cell:fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
 			cell.m_kind.selectedIndex = cellKind;
-			cell.setXY(models.battles.BattleUtil.colToX(grid.col),models.battles.BattleUtil.colToX(grid.row));
+			cell.setXY(models.battles.BattleUtil.gridToPos(grid.col),models.battles.BattleUtil.gridToPos(grid.row));
 			this.mapLayer.addChild(cell);
 		}
 	}

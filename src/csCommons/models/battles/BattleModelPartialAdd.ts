@@ -9,22 +9,27 @@ namespace models.battles {
         }
         addTankByIStcMapVoPlayer(player: IStcMapVoPlayer) {
             let vo: TankVo = new TankVo();
-            vo.moveSpeedPerFrame = BattleConfig.si.tankMoveSpeedPerFrame;
             vo.sid = 1;
             vo.uid = this.owner.tankUId++;
-            vo.col = player.init.col;
-            vo.row = player.init.row;
-            vo.x = BattleUtil.colToX(vo.col);
-            vo.y = BattleUtil.colToX(vo.row);
-            vo.hitTestRadii = BattleConfig.si.cellSize;
-            this.addTank(vo);
+            // vo.col = player.init.col;
+            // vo.row = player.init.row;
+            vo.x = BattleUtil.gridToPos(player.init.col);
+            vo.y = BattleUtil.gridToPos(player.init.row);
+            this.addTankVo(vo);
         }
-        addTank(vo: TankVo) {
+        addTankVo(vo: TankVo) {
             // if (this.owner.tanks[vo.uid] != undefined) {
-                // console.log("[fatal]", "tankVo.id is exist!", vo);
+            // console.log("[fatal]", "tankVo.id is exist!", vo);
             // } else {
-                this.owner.tanks[vo.uid] = vo;
+            vo.moveSpeedPerFrame = BattleConfig.si.tankMoveSpeedPerFrame;
+            vo.hitTestRadii = BattleConfig.si.cellSize;
+            this.owner.tanks[vo.uid] = vo;
             // }
+        }
+        addBulletVo(vo: BulletVo) {
+            vo.moveSpeedPerFrame = BattleConfig.si.bulletMoveSpeedPerFrame;
+            vo.hitTestRadii = 10;
+            this.owner.bullets[vo.uid] = vo;
         }
     }
 

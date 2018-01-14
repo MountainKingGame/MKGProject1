@@ -62,6 +62,8 @@ class Main extends egret.DisplayObjectContainer {
         CtrlFacade.si.init();
         //
         //===test
+        console.log("[info]","before kbc");
+        KeyBoardCtrl.si.init();
         new tests.TestProtobuf();
     }
     onResize() {

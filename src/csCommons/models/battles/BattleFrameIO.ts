@@ -28,6 +28,7 @@ class BattleFrameIOItem{
 enum BattleFrameIOKind{
     //===frame input
     MoveDirChange = 101,
+    FireChange,
     //===frame output
     TankDirChange = 201,
     TankXyChange = 202,

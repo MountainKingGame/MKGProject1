@@ -8,11 +8,14 @@ namespace models.battles {
         public static isVerticalDirection4(dir: Direction4): boolean {
             return dir == Direction4.Down || dir == Direction4.Up;
         }
-        public static colToX(col:number):number{
+       /*  public static colToX(col:number):number{
             return col*BattleConfig.si.cellSize;
         }
         public static rowToY(row:number):number{
             return row*BattleConfig.si.cellSize;
+        } */
+        public static gridToPos(gridVal:number):number{
+            return gridVal*BattleConfig.si.cellSize;
         }
         static alignGrid(pos:number,min:number=0,max:number=-1):number{
             var rs:number = Math.round(pos/BattleConfig.si.cellSize);
@@ -26,9 +29,6 @@ namespace models.battles {
                 return max;
             }
             return rs;
-        }
-        static alignGridPos(pos:number,minGrid:number=0,maxGrid:number=-1):number{
-            return BattleUtil.alignGrid(pos,minGrid,maxGrid)*BattleConfig.si.cellSize;
         }
     }
 }

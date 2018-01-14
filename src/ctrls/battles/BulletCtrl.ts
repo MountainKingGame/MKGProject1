@@ -1,4 +1,4 @@
-class TankCtrl extends CtrlBase{
+class BulletCtrl extends CtrlBase{
     public ui:fuis.elements_1.UI_Tank;
     vo:models.battles.TankVo;
     constructor(){

@@ -15,7 +15,7 @@ class JoystickCtrl extends CtrlBase {
     private _tweener: egret.Tween;
     private _curPos: egret.Point;//only for temp
     //===config properties
-    public static JoystickMoving: string = "JoystickMoving";
+    public static JoystickChange: string = "JoystickMoving";
     /** Max distance between button and center in visual */
     public radius: number = 150;
     /** When touchStart trigger, if beyond this value then move immediately else move center only */
@@ -115,7 +115,7 @@ class JoystickCtrl extends CtrlBase {
                 this.ui.m_joystick_dir.setXY(this.ui.m_joystick_center.x, this.ui.m_joystick_center.y);
             }
             //
-            MsgMgr.si.send(JoystickCtrl.JoystickMoving, this.direction, this);
+            MsgMgr.si.send(JoystickCtrl.JoystickChange, this.direction, this);
         }
     }
 
@@ -144,7 +144,7 @@ class JoystickCtrl extends CtrlBase {
         //
         this.ui.m_joystick_dir.visible = false;
         //
-        MsgMgr.si.send(JoystickCtrl.JoystickMoving, Direction4.None, this);
+        MsgMgr.si.send(JoystickCtrl.JoystickChange, Direction4.None, this);
     }
     private resetTouchPosition() {
         this._tweener = null;
