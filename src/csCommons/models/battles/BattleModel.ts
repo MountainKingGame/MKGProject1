@@ -11,7 +11,8 @@ namespace models.battles {
         /**当前帧*/
         public tanks: { [key: number]: TankVo } = {};//key:TankVo.uid
         //--
-        public dirty: boolean = false;
+        frameInputs:BattleFrameIOItem[] = [];
+        frameOutputs:BattleFrameIOItem[] = [];
         //
         public init() {
             this.stcMapVo = StcMap.si.getVo(1);
@@ -19,9 +20,6 @@ namespace models.battles {
                 this.partialAdd.addTankByIStcMapVoPlayer(this.stcMapVo.players[i]);
                 break;//TODO: only add one
             }
-        }
-        public clearFrame() {
-            this.dirty = false;
         }
     }
 }

@@ -10,7 +10,7 @@ class StcMap {
                 if (!vo.id) vo.id = i;
                 this.voDict[i] = vo;
                 //-auto fill
-                vo.row = Math.ceil(vo.cells.length/vo.col);
+                vo.size.row = Math.ceil(vo.cells.length/vo.size.col);
                 //-
                 i++;
             } else {
@@ -29,13 +29,11 @@ interface IStcMapVo {
     version?: number;
     id?: number;
     kind?: number;
-    col?: number;
-    row?: number;
+    size?: IGrid;
     cells: number[];
     players?: IStcMapVoPlayer[];
 }
 interface IStcMapVoPlayer {
     kind?: number;
-    x?: number;
-    y?: number;
+    init?: IGrid;
 }

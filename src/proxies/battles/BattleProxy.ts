@@ -16,16 +16,16 @@ class BattleProxy {
 
     }
     public tick() {
+        this.model.frameOutputs = [];
         this.model.partialTick.tick();
-    }
-    public clearFrame() {
-        this.model.clearFrame();
+        this.model.frameInputs = [];
     }
     initEvent() {
         MsgMgr.si.add(JoystickCtrl.JoystickMoving, this, this.OnInputMove);
     }
     OnInputMove(dir: Direction4) {
         // console.log("[info]",dir);
-        this.myTank.moveDir = dir;
+        // this.myTank.moveDir = dir;
+        this.model.frameInputs.push(new BattleFrameIOItem(BattleFrameIOKind.MoveDirChange,this.model.currFrame,this.myTank.uid,dir));
     }
 }

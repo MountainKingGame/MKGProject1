@@ -4,16 +4,18 @@ namespace models.battles {
         public sid: number;
     }
     export class MoveVo extends EleVo {
-        public xy: Vector2 = new Vector2();
+        public x:number;
+        public y:number;
         public col: number;
         public row: number;
-        public moveDir: Direction4 = Direction4.None;
-        /** 碰撞半径 */
+        public dir:Direction4 = Direction4.Up;
         public hitTestRadii: number;
+        public moveDir: Direction4 = Direction4.None;
+        /** move speed per frame */
+        public moveSpeedPerFrame: number;
     }
     //
     export class TankVo extends MoveVo {
-
     }
     export class BulletVo extends MoveVo {
 

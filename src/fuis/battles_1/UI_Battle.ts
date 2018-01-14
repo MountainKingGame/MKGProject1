@@ -4,8 +4,7 @@ module fuis.battles_1 {
 
 	export class UI_Battle extends fairygui.GComponent {
 
-		public m_bg:fairygui.GGraph;
-		public m_contentLayer:UI_ContentLayer;
+		public m_touchLayer:fairygui.GGraph;
 		public m_joysick:fairygui.GComponent;
 
 		public static URL:string = "ui://ybsps8tfqitl0";
@@ -21,9 +20,8 @@ module fuis.battles_1 {
 		protected constructFromXML(xml: any): void {
 			super.constructFromXML(xml);
 
-			this.m_bg = <fairygui.GGraph><any>(this.getChildAt(0));
-			this.m_contentLayer = <UI_ContentLayer><any>(this.getChildAt(1));
-			this.m_joysick = <fairygui.GComponent><any>(this.getChildAt(2));
+			this.m_touchLayer = <fairygui.GGraph><any>(this.getChildAt(0));
+			this.m_joysick = <fairygui.GComponent><any>(this.getChildAt(1));
 		}
 	}
 }

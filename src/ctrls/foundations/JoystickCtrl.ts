@@ -89,6 +89,7 @@ class JoystickCtrl extends CtrlBase {
             //-
             fairygui.GRoot.inst.nativeStage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchMove, this);
             fairygui.GRoot.inst.nativeStage.addEventListener(egret.TouchEvent.TOUCH_END, this.OnTouchUp, this);
+            fairygui.GRoot.inst.nativeStage.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnTouchUp, this);
             if (MathUtil.distance(bx, by, this._InitX, this._InitY) > this.radiiDoMovingWhenStart) {
                 var deltaX: number = bx - this._InitX;
                 var deltaY: number = by - this._InitY;
@@ -124,6 +125,7 @@ class JoystickCtrl extends CtrlBase {
         }
     }
     private release(){
+        this.direction = Direction4.None;
         this.touchId = -1;
         this._thumb.rotation = this._thumb.rotation + 180;
         this._center.visible = true;
@@ -138,6 +140,7 @@ class JoystickCtrl extends CtrlBase {
         //-
         fairygui.GRoot.inst.nativeStage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchMove, this);
         fairygui.GRoot.inst.nativeStage.removeEventListener(egret.TouchEvent.TOUCH_END, this.OnTouchUp, this);
+        fairygui.GRoot.inst.nativeStage.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnTouchUp, this);
         //
         this.ui.m_joystick_dir.visible = false;
         //
@@ -154,6 +157,10 @@ class JoystickCtrl extends CtrlBase {
 
     private OnTouchMove(evt: egret.TouchEvent): void {
         if (this.touchId != -1 && evt.touchPointID == this.touchId) {
+            if(evt.touchDown==false){
+                this.OnTouchUp(evt);
+                return;
+            }
             this._button.selected = true;
             //
             this.ui.globalToLocal(evt.stageX, evt.stageY, this._curPos);

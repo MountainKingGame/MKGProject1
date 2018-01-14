@@ -8,5 +8,11 @@ namespace models.battles {
         public static isVerticalDirection4(dir: Direction4): boolean {
             return dir == Direction4.Down || dir == Direction4.Up;
         }
+        public static colToX(col:number):number{
+            return col*BattleConfig.si.cellSize;
+        }
+        public static rowToY(row:number):number{
+            return row*BattleConfig.si.cellSize;
+        }
     }
 }

@@ -1,5 +1,5 @@
 class BattleCtrl extends CtrlBase {
-	public onFrame: BattleCtrlPartialOnFrame = new BattleCtrlPartialOnFrame(this);
+	public partialTick: BattleCtrlPartialTick = new BattleCtrlPartialTick(this);
 	/**
 	 * battle model
 	 */
@@ -9,6 +9,8 @@ class BattleCtrl extends CtrlBase {
 	public joystick: JoystickCtrl;
 
 	public ui: fuis.battles_1.UI_Battle;
+	/**all element in here */
+	elementLayer:fairygui.GComponent = new fairygui.GComponent;
 	tankLayer:fairygui.GComponent = new fairygui.GComponent;
 	mapLayer:fairygui.GComponent = new fairygui.GComponent;
 
@@ -35,28 +37,40 @@ class BattleCtrl extends CtrlBase {
 		this.initUI();
 		this.initEvent();
 		//
-		setInterval(() => this.onFrame.onFrame_model(), models.battles.BattleConfig.si.modelFrameMs);
-		setInterval(() => this.onFrame.onFrame_view(), CtrlConfig.si.viewFrameMs);
-		//
 		this.InitMap();
-		this.AddTank(this.proxy.myTank);
+		this.AddTank(this.proxy.myTank);//TODO:
+		//
+		this.partialTick.init();
 	}
 	initUI() {
 		this.facade.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickMain));
-		this.ui.m_contentLayer.addChild(this.mapLayer);
-		this.ui.m_contentLayer.addChild(this.tankLayer);
+		this.ui.addChildAt(this.elementLayer,0);
+		this.elementLayer.addChild(this.mapLayer);
+		this.elementLayer.addChild(this.tankLayer);
+		this.ui.m_touchLayer.alpha = 0;
 	}
 	initEvent() {
-
+		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchDown, this);
+	}
+	// touchId:number = -1;
+	private onTouchDown(evt: egret.TouchEvent) {
+        // if (this.touchId == -1)//First touch
+        // {
+			// this.touchId = evt.touchPointID;
+		// }
+		//---test scale
+		// var tempPos = new egret.Point;
+		// this.elementLayer.globalToLocal(evt.stageX, evt.stageY, tempPos);
+		// FgUtil.scaleAndMoveByXy(this.elementLayer,tempPos.x,tempPos.y,0.1);
 	}
 	InitMap(){
 		let stcMapVo:IStcMapVo = this.model.stcMapVo;
 		for (let i = 0; i < stcMapVo.cells.length; i++) {
 			let cellKind = this.model.stcMapVo.cells[i];
-			let grid = CommonHelper.indexToGridH(i,stcMapVo.col);
+			let grid = CommonHelper.indexToGridH(i,stcMapVo.size.col);
 			let cell:fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
 			cell.m_kind.selectedIndex = cellKind;
-			cell.setXY(grid.col*models.battles.BattleConfig.si.cellSize,grid.row*models.battles.BattleConfig.si.cellSize);
+			cell.setXY(models.battles.BattleUtil.colToX(grid.col),models.battles.BattleUtil.colToX(grid.row));
 			this.mapLayer.addChild(cell);
 		}
 	}
@@ -64,8 +78,10 @@ class BattleCtrl extends CtrlBase {
 	public AddTank(vo:models.battles.TankVo) {
 		let tank:TankCtrl = new TankCtrl();
 		tank.vo = vo;
+		tank.battle = this;
+		tank.init();
+		this.tankLayer.addChild(tank.ui);
 		this.tanks.push(tank);
-		this.ui.m_contentLayer.addChild(tank.ui);
 	}
 
 }

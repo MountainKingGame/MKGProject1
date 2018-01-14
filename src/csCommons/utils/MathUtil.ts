@@ -36,4 +36,7 @@ class MathUtil{
     public static distance(ax:number,ay:number,bx:number,by:number):number{
         return MathUtil.magnitude(bx-ax,by-ay);
     }
+    static round(val:number,digit:number=0){
+        return Math.round(val)//TODO;
+    }
 }

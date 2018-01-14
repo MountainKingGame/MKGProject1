@@ -2,15 +2,15 @@
 
 module fuis.joysticks_1 {
 
-	export class UI_circle extends fairygui.GButton {
+	export class UI_button extends fairygui.GButton {
 
 		public m_button:fairygui.Controller;
 		public m_thumb:fairygui.GImage;
 
 		public static URL:string = "ui://rbw1tvvvq9do18";
 
-		public static createInstance():UI_circle {
-			return <UI_circle><any>(fairygui.UIPackage.createObject("joysticks_1","circle"));
+		public static createInstance():UI_button {
+			return <UI_button><any>(fairygui.UIPackage.createObject("joysticks_1","button"));
 		}
 
 		public constructor() {
