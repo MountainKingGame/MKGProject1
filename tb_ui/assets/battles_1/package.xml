@@ -2,7 +2,6 @@
 <packageDescription id="ybsps8tf" jpegQuality="80" compressPNG="true">
   <resources>
     <component id="qitl0" name="Battle.xml" path="/" exported="true"/>
-    <component id="qitl1" name="ContentLayer.xml" path="/"/>
     <component id="u9bo3" name="Tank.xml" path="/" exported="true"/>
     <image id="u9bo7" name="brick5.png" path="/images/mapCells/"/>
     <image id="u9bo8" name="brick1.png" path="/images/mapCells/"/>

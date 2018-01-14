@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="360,250">
   <displayList>
-    <image id="n11_qitl" name="joystick_dir" src="qitl1b" xy="413,100" pivot="0,0.5" anchor="true" size="156,104" filter="color" filterData="-0.14,0.75,-1.00,0.00"/>
-    <image id="n7" name="joystick_center" src="q9do1a" xy="418,45" pivot="0.5,0.5" anchor="true" filter="color" filterData="0.58,0.00,-0.99,0.00">
+    <graph id="n12_cqc4" name="bg" xy="0,0" size="360,250" type="rect" lineSize="3" fillColor="#5c333333">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <image id="n11_qitl" name="joystick_dir" src="qitl1b" xy="284,153" pivot="0,0.5" anchor="true" size="156,104" filter="color" filterData="-0.14,0.75,-1.00,0.00"/>
+    <image id="n7" name="joystick_center" src="q9do1a" xy="369,24" pivot="0.5,0.5" anchor="true" filter="color" filterData="0.58,0.00,-0.99,0.00">
       <relation target="" sidePair="bottom-bottom"/>
     </image>
-    <component id="n4" name="joystick" src="q9do18" xy="155,407" pivot="0.5,0.5" anchor="true" filter="color" filterData="0.31,0.04,-0.98,0.00" controller="button,1">
+    <component id="n4" name="joystick" src="q9do18" xy="197,262" pivot="0.5,0.5" anchor="true" filter="color" filterData="0.45,0.04,-0.98,0.61" controller="button,1">
       <relation target="" sidePair="bottom-bottom"/>
     </component>
-    <graph id="n2" name="joystick_touch" xy="0,0" size="360,250" type="rect" lineSize="3" fillColor="#24ffffff">
+    <graph id="n2" name="joystick_touch" xy="0,0" size="360,250" locked="true" type="rect" lineSize="3" fillColor="#5c333333">
       <relation target="" sidePair="width-width,height-height"/>
     </graph>
     <text id="n9" name="txt_log" xy="4,-28" size="302,28" fontSize="24" color="#ffffff" autoSize="height" strokeColor="#000000" text=""/>

@@ -2,7 +2,7 @@
 <packageDescription id="rbw1tvvv" jpegQuality="80" compressPNG="true">
   <resources>
     <component id="iitt1" name="JoystickMain.xml" path="/" exported="true"/>
-    <component id="q9do18" name="button.xml" path="/"/>
+    <component id="q9do18" name="button.xml" path="/" exported="true"/>
     <image id="q9do19" name="1.png" path="/images/"/>
     <image id="q9do1a" name="0.png" path="/images/"/>
     <image id="qitl1b" name="dir.png" path="/images/"/>
