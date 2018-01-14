@@ -16,6 +16,7 @@ namespace models.battles {
             vo.row = player.init.row;
             vo.x = BattleUtil.colToX(vo.col);
             vo.y = BattleUtil.colToX(vo.row);
+            vo.hitTestRadii = BattleConfig.si.cellSize;
             this.addTank(vo);
         }
         addTank(vo: TankVo) {
@@ -26,4 +27,5 @@ namespace models.battles {
             // }
         }
     }
+
 }

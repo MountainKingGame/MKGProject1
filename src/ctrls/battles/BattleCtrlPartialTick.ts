@@ -16,7 +16,9 @@ class BattleCtrlPartialTick {
             this.isTickModel = true;
             this.lastTickModelTime = currTime;
             this.owner.proxy.tick();
-           /*  for (let i = 0; i < this.owner.proxy.model.frameOutputs.length; i++) {
+            //--frame output
+            /*  
+            for (let i = 0; i < this.owner.proxy.model.frameOutputs.length; i++) {
                 let item = this.owner.proxy.model.frameOutputs[i];
                 switch (item.kind) {
                     case BattleFrameIOKind.TankDirChange:
@@ -24,7 +26,8 @@ class BattleCtrlPartialTick {
                         this.owner.tanks[item.playerId].onFrameOutput(item);
                         break;
                 }
-            } */
+            } 
+            */
         }
         // console.log("[info]","is key fame",this.isTickModel);
         for (const uid in this.owner.tanks) {

@@ -14,5 +14,21 @@ namespace models.battles {
         public static rowToY(row:number):number{
             return row*BattleConfig.si.cellSize;
         }
+        static alignGrid(pos:number,min:number=0,max:number=-1):number{
+            var rs:number = Math.round(pos/BattleConfig.si.cellSize);
+            if(rs<min){
+                return min;
+            }
+            if(max==-1){
+                return rs;
+            }
+            if(rs>max){
+                return max;
+            }
+            return rs;
+        }
+        static alignGridPos(pos:number,minGrid:number=0,maxGrid:number=-1):number{
+            return BattleUtil.alignGrid(pos,minGrid,maxGrid)*BattleConfig.si.cellSize;
+        }
     }
 }
