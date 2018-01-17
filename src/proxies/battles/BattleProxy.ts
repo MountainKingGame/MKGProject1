@@ -21,28 +21,28 @@ class BattleProxy {
         this.model.frameInputs = [];
     }
     initEvent() {
-        MsgMgr.si.add(JoystickCtrl.JoystickChange, this, this.OnJoystickChange);
-        MsgMgr.si.add(KeyBoardCtrl.OnKeyDown, this, this.OnKeyDown);
-        MsgMgr.si.add(KeyBoardCtrl.OnKeyUp, this, this.OnKeyUp);
+        MsgMgr.si.add(JoystickCtrl.JoystickChange, this, this.onJoystickChange);
+        MsgMgr.si.add(KeyBoardCtrl.KeyDown, this, this.onKeyDown);
+        MsgMgr.si.add(KeyBoardCtrl.KeyUp, this, this.onKeyUp);
     }
     //===Joystick and keyboard
-    OnJoystickChange(dir: Direction4) {
+    onJoystickChange(dir: Direction4) {
         this.onMoveDirChange(dir);
     }
     dirKeyCode:number[] = [KeyBoardCtrl.KEY_D,KeyBoardCtrl.KEY_S,KeyBoardCtrl.KEY_A,KeyBoardCtrl.KEY_W];
-    OnKeyDown(keyCode:number,kbc:KeyBoardCtrl){
+    onKeyDown(keyCode:number,kbc:KeyBoardCtrl){
         var dirKeyCodeIndex:number = this.dirKeyCode.indexOf(keyCode);
         if(dirKeyCodeIndex>-1){
             this.onMoveDirChange(<Direction4>(dirKeyCodeIndex+1));
         }else{
             switch(keyCode){
                 case KeyBoardCtrl.KEY_SPACE_BAR:
-                this.onFire(1);
+                this.onSkillTrigger(1);
                 break;
             }
         }
     }
-    OnKeyUp(keyCode:number,kbc:KeyBoardCtrl){
+    onKeyUp(keyCode:number,kbc:KeyBoardCtrl){
         var dirKeyCodeIndex:number = this.dirKeyCode.indexOf(keyCode);
         if(dirKeyCodeIndex>-1){
             //===plan 1
@@ -63,7 +63,7 @@ class BattleProxy {
         }else{
             switch(keyCode){
                 case KeyBoardCtrl.KEY_SPACE_BAR:
-                this.onFire(0);
+                this.onSkillUntrigger(1);
                 break;
             }
         }
@@ -74,9 +74,11 @@ class BattleProxy {
             this.model.frameInputs.push(new BattleFrameIOItem(BattleFrameIOKind.MoveDirChange,this.model.currFrame,this.myTank.uid,dir));
         }
     }
-    onFire(kind:number){
-        if(kind!=this.myTank.fireKind){
-            this.model.frameInputs.push(new BattleFrameIOItem(BattleFrameIOKind.FireChange,this.model.currFrame,this.myTank.uid,kind));
-        }
+    onSkillTrigger(skillId:number){
+        this.model.frameInputs.push(new BattleFrameIOItem(BattleFrameIOKind.SkillTrigger,this.model.currFrame,this.myTank.uid,skillId));
     }
+    onSkillUntrigger(skillId:number){
+        this.model.frameInputs.push(new BattleFrameIOItem(BattleFrameIOKind.SkillUntrigger,this.model.currFrame,this.myTank.uid,skillId));
+    }
+
 }

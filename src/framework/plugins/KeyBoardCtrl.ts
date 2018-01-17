@@ -38,8 +38,8 @@ class KeyBoardCtrl {
         return KeyBoardCtrl._si;
     }
     //
-    static OnKeyDown = "OnKeyDown";
-    static OnKeyUp = "OnKeyUp";
+    static KeyDown = "OnKeyDown";
+    static KeyUp = "OnKeyUp";
     //
     static KEY_A = 65;
     static KEY_B = 66;
@@ -55,9 +55,6 @@ class KeyBoardCtrl {
     static KEY_ALT = 18;
     static KEY_ENTER = 13;
     //
-    constructor() {
-        console.log("[info]", "KeyBoardCtrl constructor()");
-    }
     // 把keyup事件绑定到document中 
     init() {
         if (document.addEventListener) {
@@ -87,19 +84,19 @@ class KeyBoardCtrl {
         // console.log("[debug]",e.keyCode,"`e.keyCode`","onKeyDown");
         if (!this.keyDownMap[keycode]) {
             this.keyDownMap[keycode] = true;
-            MsgMgr.si.send(KeyBoardCtrl.OnKeyDown,keycode,this);
+            MsgMgr.si.send(KeyBoardCtrl.KeyDown,keycode,this);
         }
     }
     onKeyUp(e) {
         e = e || window.event;
         var keycode = e.which ? e.which : e.keyCode;
-        console.log("[debug]",e.keyCode,"`e.keyCode`","onKeyUp");
+        // console.log("[debug]",e.keyCode,"`e.keyCode`","onKeyUp");
         // if (keycode == 13 || keycode == 108) { //如果按下ENTER键 
         //在这里设置你想绑定的事件 
         // }
         if (this.keyDownMap[keycode]) {
             this.keyDownMap[keycode] = false;
-            MsgMgr.si.send(KeyBoardCtrl.OnKeyUp,keycode,this);
+            MsgMgr.si.send(KeyBoardCtrl.KeyUp,keycode,this);
         }
     }
 

@@ -28,8 +28,11 @@ class BattleFrameIOItem{
 enum BattleFrameIOKind{
     //===frame input
     MoveDirChange = 101,
-    FireChange,
+    SkillTrigger,
+    SkillUntrigger,
     //===frame output
     TankDirChange = 201,
-    TankXyChange = 202,
+    TankXyChange,
+    AddTank,
+    AddBullet,
 }

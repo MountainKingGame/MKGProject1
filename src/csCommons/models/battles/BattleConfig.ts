@@ -2,7 +2,7 @@ namespace models.battles {
     export class BattleConfig {
 
         public static readonly si: BattleConfig = new BattleConfig();
-        public modelFrameRate: number = 30;
+        public modelFrameRate: number = 10;
         /**
          * 每一帧需要的毫秒数,这里保存整数
          */

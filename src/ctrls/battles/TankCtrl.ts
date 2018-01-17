@@ -1,15 +1,12 @@
-class TankCtrl extends CtrlBase{
-    public ui:fuis.elements_1.UI_Tank;
+class TankCtrl extends CtrlBase<fuis.elements_1.UI_Tank>{
     vo:models.battles.TankVo;
     constructor(){
         super(fuis.elements_1.UI_Tank.createInstance());
     }
     public init(){
         super.init();
-        this.ui = <fuis.elements_1.UI_Tank>this.z_ui;
         this.ui.setPivot(0.5,0.5,true);
         this.ui.setXY(this.vo.x,this.vo.y);
-        this.ui.rotation = 180;
         //
         // this.view.m_icon.filters = [new egret.BlurFilter(12,12)];
         

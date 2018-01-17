@@ -24,12 +24,18 @@ namespace models.battles {
             vo.moveSpeedPerFrame = BattleConfig.si.tankMoveSpeedPerFrame;
             vo.hitTestRadii = BattleConfig.si.cellSize;
             this.owner.tanks[vo.uid] = vo;
+            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameIOKind.AddTank,this.owner.currFrame,vo.uid))
             // }
+            let skillVo = new SkillVo();
+            skillVo.sid = 1;
+            skillVo.castGapFrame = BattleConfig.si.modelFrameRate;
+            vo.skillMap[skillVo.sid] = skillVo;
         }
         addBulletVo(vo: BulletVo) {
             vo.moveSpeedPerFrame = BattleConfig.si.bulletMoveSpeedPerFrame;
             vo.hitTestRadii = 10;
             this.owner.bullets[vo.uid] = vo;
+            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameIOKind.AddBullet,this.owner.currFrame,vo.masterUid,vo.uid))
         }
     }
 

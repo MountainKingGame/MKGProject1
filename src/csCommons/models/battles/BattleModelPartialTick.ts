@@ -14,7 +14,7 @@ namespace models.battles {
             this.tick_generate();
             //move放最后,因为需要view在这一帧移动到xy,然后下一帧再处理hit等事项
             this.tick_tank_move();
-            this.tick_fire();//开火
+            this.tick_skill();
             this.tick_bullet_move();
         }
         public tick_frameInput() {
@@ -24,27 +24,37 @@ namespace models.battles {
                     case BattleFrameIOKind.MoveDirChange:
                         this.owner.tanks[item.playerId].moveDir = <Direction4>item.data0;
                         break;
-                    case BattleFrameIOKind.FireChange:
-                        this.owner.tanks[item.playerId].fireKind = <number>item.data0;
+                    case BattleFrameIOKind.SkillTrigger:
+                        this.owner.tanks[item.playerId].skillMap[<number>item.data0].isTrigger = true;
+                        break;
+                        case BattleFrameIOKind.SkillUntrigger:
+                        this.owner.tanks[item.playerId].skillMap[<number>item.data0].isTrigger = false;
                         break;
                 }
             }
         }
         public tick_generate() {
         }
-        public tick_fire() {
+        public tick_skill() {
             for (const uid in this.owner.tanks) {
                 const tank = this.owner.tanks[uid];
-                if(tank.fireKind>0){
-                    var bullet:BulletVo = new BulletVo();
-                    bullet.masterUid = tank.uid;
-                    bullet.sid = tank.fireKind;
-                    bullet.uid = tank.uid*1000000+tank.bulletUid;
-                    tank.bulletUid++;
-                    bullet.x = tank.x;
-                    bullet.y = tank.y;
-                    bullet.moveDir = tank.dir;
-                    this.owner.partialAdd.addBulletVo(bullet);
+                for(const skillSid in tank.skillMap){
+                    let skillVo = tank.skillMap[skillSid];
+                    if (skillVo.isTrigger && (this.owner.currFrame-skillVo.castFrame)>skillVo.castGapFrame) {
+                        skillVo.castFrame = this.owner.currFrame;
+                        var bullet: BulletVo = new BulletVo();
+                        bullet.masterUid = tank.uid;
+                        bullet.sid = skillVo.sid;//TODO:
+                        bullet.uid = tank.uid * 1000 + tank.bulletUid;
+                        tank.bulletUid++;
+                        if(tank.bulletUid>1000){
+                            tank.bulletUid=1;
+                        }
+                        bullet.x = tank.x;
+                        bullet.y = tank.y;
+                        bullet.moveDir = tank.dir;
+                        this.owner.partialAdd.addBulletVo(bullet);
+                    }
                 }
             }
         }

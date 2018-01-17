@@ -1,15 +1,12 @@
-class BulletCtrl extends CtrlBase{
-    public ui:fuis.elements_1.UI_Tank;
-    vo:models.battles.TankVo;
+class BulletCtrl extends CtrlBase<fuis.elements_1.UI_Bullet>{
+    vo:models.battles.BulletVo;
     constructor(){
-        super(fuis.elements_1.UI_Tank.createInstance());
+        super(fuis.elements_1.UI_Bullet.createInstance());
     }
     public init(){
         super.init();
-        this.ui = <fuis.elements_1.UI_Tank>this.z_ui;
         this.ui.setPivot(0.5,0.5,true);
         this.ui.setXY(this.vo.x,this.vo.y);
-        this.ui.rotation = 180;
         //
         // this.view.m_icon.filters = [new egret.BlurFilter(12,12)];
         

@@ -7,6 +7,7 @@ class CallbackPool<T>{
         item.callback = callback;
         this.items.push(item);
     }
+    
     public getItemByKeyThisObj(key:T,thisObj:object):CallbackPoolItem<T>{
         for (let i = 0; i < this.items.length; i++) {
             let item:CallbackPoolItem<T> = this.items[i];

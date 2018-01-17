@@ -1,6 +1,5 @@
 
-class JoystickCtrl extends CtrlBase {
-    private ui: fuis.joysticks_1.UI_JoystickMain;
+class JoystickCtrl extends CtrlBase<fuis.joysticks_1.UI_JoystickComp> {
     private _InitX: number;
     private _InitY: number;
     private _startStageX: number;
@@ -23,7 +22,7 @@ class JoystickCtrl extends CtrlBase {
 
     public showDirUseButtonThumb: boolean = true;
     //===
-    public constructor(ui: fuis.joysticks_1.UI_JoystickMain) {
+    public constructor(ui: fuis.joysticks_1.UI_JoystickComp) {
         super(ui);
         this.ui = ui;
     }

@@ -16,13 +16,16 @@ namespace models.battles {
     //
     export class TankVo extends MoveVo {
         public bulletUid = 1;
-        public fireKind:number = 0;
+        public skillMap:{[key:number]:SkillVo} = {};//key:skillSid
     }
     export class BulletVo extends MoveVo {
         /** sender's id   e.g. TankVo.uid */
         masterUid:number;
     }
     export class SkillVo extends EleVo {
+        public isTrigger:boolean = false;
+        public castFrame:number = -999999;
+        public castGapFrame:number;//间隔帧数
 
     }
     export class BuffVo extends EleVo {

@@ -1,4 +1,4 @@
-class BattleCtrl extends CtrlBase {
+class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	public partialTick: BattleCtrlPartialTick = new BattleCtrlPartialTick(this);
 	/**
 	 * battle model
@@ -8,7 +8,6 @@ class BattleCtrl extends CtrlBase {
 
 	public joystick: JoystickCtrl;
 
-	public ui: fuis.battles_1.UI_Battle;
 	/**all element in here */
 	elementLayer:fairygui.GComponent = new fairygui.GComponent;
 	tankLayer:fairygui.GComponent = new fairygui.GComponent;
@@ -16,11 +15,7 @@ class BattleCtrl extends CtrlBase {
 	mapLayer:fairygui.GComponent = new fairygui.GComponent;
 
 	public tanks: TankCtrl[] = [];
-	public bullets: BulletCtrl[] = [];
-	constructor(ui: fuis.battles_1.UI_Battle) {
-		super(ui);
-		this.ui = ui;
-	}
+	public bulletMap: {[key:number]:BulletCtrl} = {};
 	public dispose(): void {
 		if (this.ui != null) {
 			this.ui.dispose();
@@ -39,13 +34,14 @@ class BattleCtrl extends CtrlBase {
 		this.initUI();
 		this.initEvent();
 		//
-		this.InitMap();
-		this.AddTank(this.proxy.myTank);//TODO:
+		this.initMap();
+		this.addTank(this.proxy.myTank);//TODO:
 		//
 		this.partialTick.init();
 	}
 	initUI() {
-		this.facade.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickMain));
+		this.facade.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickComp));
+		this.facade.ctrlMgr.addCtrl(CtrlId.Battle_SkillSection, new SkillSectionCtrl(this.ui.m_skillComp as fuis.joysticks_1.UI_SkillSection));
 		this.ui.addChildAt(this.elementLayer,0);
 		this.elementLayer.addChild(this.mapLayer);
 		this.elementLayer.addChild(this.tankLayer);
@@ -66,7 +62,7 @@ class BattleCtrl extends CtrlBase {
 		// this.elementLayer.globalToLocal(evt.stageX, evt.stageY, tempPos);
 		// FgUtil.scaleAndMoveByXy(this.elementLayer,tempPos.x,tempPos.y,0.1);
 	}
-	InitMap(){
+	initMap(){
 		let stcMapVo:IStcMapVo = this.model.stcMapVo;
 		for (let i = 0; i < stcMapVo.cells.length; i++) {
 			let cellKind = this.model.stcMapVo.cells[i];
@@ -78,7 +74,7 @@ class BattleCtrl extends CtrlBase {
 		}
 	}
 
-	public AddTank(vo:models.battles.TankVo) {
+	public addTank(vo:models.battles.TankVo) {
 		let tank:TankCtrl = new TankCtrl();
 		tank.vo = vo;
 		tank.battle = this;
@@ -86,5 +82,15 @@ class BattleCtrl extends CtrlBase {
 		this.tankLayer.addChild(tank.ui);
 		this.tanks.push(tank);
 	}
-
+	public addBulletById(battleUid:number){
+		this.addBullet(this.model.bullets[battleUid]);
+	}
+	public addBullet(vo:models.battles.BulletVo){
+		let bullet:BulletCtrl = new BulletCtrl();
+		bullet.vo = vo;
+		bullet.battle = this;
+		bullet.init();
+		this.bulletLayer.addChild(bullet.ui);
+		this.bulletMap[vo.uid] = bullet;
+	}
 }

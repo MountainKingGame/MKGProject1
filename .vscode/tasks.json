@@ -23,6 +23,15 @@
                 "clean"
             ],
             "problemMatcher": []
+        },
+        {
+            "label": "egret build",
+            "type": "shell",
+            "command": "egret",
+            "args": [
+                "clean"
+            ],
+            "problemMatcher": []
         }
     ]
 }
