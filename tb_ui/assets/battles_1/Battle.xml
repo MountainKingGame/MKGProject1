@@ -7,5 +7,8 @@
     <component id="n0_qitl" name="joysick" src="iitt1" pkg="rbw1tvvv" xy="0,1350">
       <relation target="" sidePair="left-left,bottom-bottom"/>
     </component>
+    <component id="n4_hrji" name="skillComp" src="hrji1c" pkg="rbw1tvvv" xy="540,1350">
+      <relation target="" sidePair="right-right,bottom-bottom"/>
+    </component>
   </displayList>
 </component>

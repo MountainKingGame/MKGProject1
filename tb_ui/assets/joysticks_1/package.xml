@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <packageDescription id="rbw1tvvv" jpegQuality="80" compressPNG="true">
   <resources>
-    <component id="iitt1" name="JoystickMain.xml" path="/" exported="true"/>
-    <component id="q9do18" name="button.xml" path="/" exported="true"/>
+    <component id="iitt1" name="JoystickComp.xml" path="/" exported="true"/>
+    <component id="q9do18" name="JoystickButton.xml" path="/" exported="true"/>
     <image id="q9do19" name="1.png" path="/images/"/>
     <image id="q9do1a" name="0.png" path="/images/"/>
     <image id="qitl1b" name="dir.png" path="/images/"/>
+    <component id="hrji1c" name="SkillSection.xml" path="/" exported="true"/>
+    <component id="hrji1d" name="Button1.xml" path="/" exported="true"/>
   </resources>
   <publish name="joysticks_1" genCode="true">
     <atlas name="默认" index="0"/>

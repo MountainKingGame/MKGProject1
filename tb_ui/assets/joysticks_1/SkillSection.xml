@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="360,250">
+  <displayList>
+    <component id="n15_hrji" name="btn0" src="hrji1d" xy="168,71" size="123,125" aspect="true"/>
+    <component id="n16_hrji" name="btn1" src="hrji1d" xy="101,158"/>
+    <component id="n17_hrji" name="btn2" src="hrji1d" xy="265,16"/>
+    <component id="n18_hrji" name="btn3" src="hrji1d" xy="278,169"/>
+  </displayList>
+</component>
