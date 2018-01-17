@@ -8,7 +8,7 @@ class TimeMgr{
     constructor(){
         this.startTime = Date.now();
         // setInterval(()=>this.onFrame(),1);
-        setInterval(()=>this.onFrame(),CtrlConfig.si.viewFrameMs);
+        setInterval(()=>this.onFrame(),CtrlConfig.si.viewMsPerFrame);
     }
     
     public onFrame(){

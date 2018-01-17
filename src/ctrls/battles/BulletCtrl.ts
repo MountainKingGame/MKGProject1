@@ -1,10 +1,16 @@
 class BulletCtrl extends CtrlBase<fuis.elements_1.UI_Bullet>{
     vo:models.battles.BulletVo;
+    battle:BattleCtrl;
+    movableEleCtrl:MovableEleCtrl;
     constructor(){
         super(fuis.elements_1.UI_Bullet.createInstance());
     }
     public init(){
         super.init();
+        this.movableEleCtrl = new MovableEleCtrl(this.ui);
+        this.movableEleCtrl.facade = this.facade;
+        this.movableEleCtrl.vo = this.vo;
+        this.movableEleCtrl.battle = this.battle;
         this.ui.setPivot(0.5,0.5,true);
         this.ui.setXY(this.vo.x,this.vo.y);
         //
@@ -20,19 +26,12 @@ class BulletCtrl extends CtrlBase<fuis.elements_1.UI_Bullet>{
         var cf: egret.ColorMatrixFilter = new egret.ColorMatrixFilter(cm.matrix);
         this.view.m_icon.filters = [cf];*/
     }
-    battle:BattleCtrl;
     tick():void{
-        if(this.battle.partialTick.isTickModel){
-            this.ui.rotation = CommonHelper.dir4ToDegree(this.vo.dir); 
-            this.ui.x = this.vo.x;
-            this.ui.y = this.vo.y;
-        }
+        this.movableEleCtrl.tick();
     }
     public dispose():void{
-        if(this.ui!=null){
-            this.ui.dispose();
-            this.ui = null;
-        }
+        this.movableEleCtrl.dispose();
+        this.movableEleCtrl = null;
         super.dispose();
     }
 }

@@ -5,15 +5,18 @@ class BattleCtrlPartialTick {
     }
     public init() {
         this.lastTickModelTime = new Date().getTime();
-        setInterval(this.tick.bind(this), CtrlConfig.si.viewFrameMs);
+        MsgMgr.si.add(CtrlConst.Msg_OnTick,this,this.tick);
+        // setInterval(this.tick.bind(this), CtrlConfig.si.viewMsPerFrame);
     }
     lastTickModelTime: number = 0;
-    isTickModel: boolean = false;
+    isKeyFrame: boolean = false;
     public tick() {
-        this.isTickModel = false;
+        this.isKeyFrame = false;
         let currTime: number = new Date().getTime();
-        if ((currTime - this.lastTickModelTime) >= models.battles.BattleConfig.si.modelFrameMs) {
-            this.isTickModel = true;
+        if (CtrlConfig.si.viewFrameRate == models.battles.BattleConfig.si.modelFrameRate
+            || (currTime - this.lastTickModelTime) >= models.battles.BattleConfig.si.modelMsPerFrame) {
+            this.isKeyFrame = true;
+            console.log("[debug]",currTime - this.lastTickModelTime);
             this.lastTickModelTime = currTime;
             this.owner.proxy.tick();
             //--frame output

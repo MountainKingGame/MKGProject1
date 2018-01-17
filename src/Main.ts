@@ -13,6 +13,7 @@ class Main extends egret.DisplayObjectContainer {
                 // var nowTime:number = new Date().getTime();
                 // console.log("[info]","onUpdate",nowTime-lastTime);
                 // lastTime = nowTime;
+                MsgMgr.si.send(CtrlConst.Msg_OnTick);
             }
         })
         egret.lifecycle.onPause = () => {

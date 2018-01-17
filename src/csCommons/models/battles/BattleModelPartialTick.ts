@@ -43,7 +43,7 @@ namespace models.battles {
                     if (skillVo.isTrigger && (this.owner.currFrame-skillVo.castFrame)>skillVo.castGapFrame) {
                         skillVo.castFrame = this.owner.currFrame;
                         var bullet: BulletVo = new BulletVo();
-                        bullet.masterUid = tank.uid;
+                        bullet.ownerUid = tank.uid;
                         bullet.sid = skillVo.sid;//TODO:
                         bullet.uid = tank.uid * 1000 + tank.bulletUid;
                         tank.bulletUid++;

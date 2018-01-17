@@ -3,7 +3,7 @@ namespace models.battles {
         public uid: number;
         public sid: number;
     }
-    export class MoveVo extends EleVo {
+    export class MovableEleVo extends EleVo {
         public x:number;
         public y:number;
         // public col: number;
@@ -14,13 +14,13 @@ namespace models.battles {
         public moveSpeedPerFrame: number;
     }
     //
-    export class TankVo extends MoveVo {
+    export class TankVo extends MovableEleVo {
         public bulletUid = 1;
         public skillMap:{[key:number]:SkillVo} = {};//key:skillSid
     }
-    export class BulletVo extends MoveVo {
+    export class BulletVo extends MovableEleVo {
         /** sender's id   e.g. TankVo.uid */
-        masterUid:number;
+        ownerUid:number;
     }
     export class SkillVo extends EleVo {
         public isTrigger:boolean = false;

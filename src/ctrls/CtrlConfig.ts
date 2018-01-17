@@ -7,11 +7,8 @@ class CtrlConfig {
         return CtrlConfig._si;
     }
     public viewFrameRate:number = 60;
-    /**
-     * 每一帧需要的毫秒数,这里保存整数
-     */
-    public viewFrameMs:number;
+    public viewMsPerFrame:number;
     constructor(){
-        this.viewFrameMs = Math.round(1000/this.viewFrameRate);
+        this.viewMsPerFrame = Math.round(1000/this.viewFrameRate);
     }
 }

@@ -35,7 +35,7 @@ namespace models.battles {
             vo.moveSpeedPerFrame = BattleConfig.si.bulletMoveSpeedPerFrame;
             vo.hitTestRadii = 10;
             this.owner.bullets[vo.uid] = vo;
-            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameIOKind.AddBullet,this.owner.currFrame,vo.masterUid,vo.uid))
+            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameIOKind.AddBullet,this.owner.currFrame,vo.ownerUid,vo.uid))
         }
     }
 
