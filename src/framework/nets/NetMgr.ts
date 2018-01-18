@@ -1,7 +1,6 @@
 class NetMgr {
+	static si:NetMgr;
 	private fake:ServiceMgr = new ServiceMgr();
-	public constructor() {
-	}
 	public init(){
 		this.fake.netMgr = this;
 		this.fake.init();

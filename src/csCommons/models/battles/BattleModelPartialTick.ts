@@ -22,13 +22,13 @@ namespace models.battles {
                 let item = this.owner.frameInputs[i];
                 switch (item.kind) {
                     case BattleFrameIOKind.MoveDirChange:
-                        this.owner.tanks[item.playerId].moveDir = <Direction4>item.data0;
+                        this.owner.tanks[item.uid].moveDir = <Direction4>item.data0;
                         break;
                     case BattleFrameIOKind.SkillTrigger:
-                        this.owner.tanks[item.playerId].skillMap[<number>item.data0].isTrigger = true;
+                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTrigger = true;
                         break;
                         case BattleFrameIOKind.SkillUntrigger:
-                        this.owner.tanks[item.playerId].skillMap[<number>item.data0].isTrigger = false;
+                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTrigger = false;
                         break;
                 }
             }

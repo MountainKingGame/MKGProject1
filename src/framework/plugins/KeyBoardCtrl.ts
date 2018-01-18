@@ -38,8 +38,8 @@ class KeyBoardCtrl {
         return KeyBoardCtrl._si;
     }
     //
-    static KeyDown = "OnKeyDown";
-    static KeyUp = "OnKeyUp";
+    static KeyDown = "KeyBoardCtrl.OnKeyDown";
+    static KeyUp = "KeyBoardCtrl.OnKeyUp";
     //
     static KEY_A = 65;
     static KEY_B = 66;

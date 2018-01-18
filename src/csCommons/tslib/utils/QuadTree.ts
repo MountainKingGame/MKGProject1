@@ -5,7 +5,7 @@ class QuadTree {
     static MAX_ITEMS = 10;
     static MAX_LEVEL = 5;
     //
-    /**自身范围 */
+    /**self bounds */
     bounds: IQuadTreeItem;
     parent: QuadTree;
     level: number;

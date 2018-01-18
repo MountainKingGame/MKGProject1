@@ -1,14 +1,8 @@
 class CtrlConfig {
-    private static _si: CtrlConfig;
-    public static get si(): CtrlConfig {
-        if (CtrlConfig._si == null) {
-            CtrlConfig._si = new CtrlConfig();
-        }
-        return CtrlConfig._si;
-    }
-    public viewFrameRate:number = 60;
+    static si: CtrlConfig;
+    public viewFrameRate:number;
     public viewMsPerFrame:number;
-    constructor(){
+    init(){
         this.viewMsPerFrame = Math.round(1000/this.viewFrameRate);
     }
 }

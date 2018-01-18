@@ -7,11 +7,5 @@ class TimeMgr{
     public time:number;
     constructor(){
         this.startTime = Date.now();
-        // setInterval(()=>this.onFrame(),1);
-        setInterval(()=>this.onFrame(),CtrlConfig.si.viewMsPerFrame);
-    }
-    
-    public onFrame(){
-        this.time = Date.now()-this.startTime;
     }
 }

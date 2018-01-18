@@ -13,7 +13,7 @@ class Main extends egret.DisplayObjectContainer {
                 // var nowTime:number = new Date().getTime();
                 // console.log("[info]","onUpdate",nowTime-lastTime);
                 // lastTime = nowTime;
-                MsgMgr.si.send(CtrlConst.Msg_OnTick);
+                MsgMgr.si.send(CtrlConst.Msg_OnGameTick);
             }
         })
         egret.lifecycle.onPause = () => {
@@ -56,16 +56,13 @@ class Main extends egret.DisplayObjectContainer {
         this.onResourceLoadComplete(event);
     }
     private createGameScene(): void {
-        this.stage.addChild(fairygui.GRoot.inst.displayObject);
         //===
-        ModelFacade.si = CtrlFacade.si = new CtrlFacade();
+        CtrlFacade.si = new CtrlFacade();
         CtrlFacade.si.stage = this.stage;
-        CtrlFacade.si.init();
-        //
+        CtrlFacade.si.init(true);
         //===test
-        console.log("[info]","before kbc");
-        KeyBoardCtrl.si.init();
-        new tests.TestProtobuf();
+        // new tests.TestProtobuf();
+        // new TestMoveSmooth().init();
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);

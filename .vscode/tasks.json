@@ -8,12 +8,17 @@
             "type": "shell",
             "command": "node",
             "args": [
-                // "C:\\fox\\projects\\tools\\NodeJsTools\\bin\\js\\StaticServer.js",
-                "..\\..\\tools\\NodeJsTools\\bin\\js\\StaticServer.js",
-                // "--dir",
-                // "C:\\fox\\projects\\MKGProject1\\tb_client"
+                "..\\..\\tools\\NodeJsTools\\bin\\js\\StaticServer.js"
             ],
             "problemMatcher": []
+        },
+        {
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "option": "watch",
+            "problemMatcher": [
+                "$tsc-watch"
+            ]
         },
         {
             "label": "egret clean",

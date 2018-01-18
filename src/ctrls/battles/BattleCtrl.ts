@@ -9,7 +9,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	public joystick: JoystickCtrl;
 
 	/**all element in here */
-	elementLayer:fairygui.GComponent = new fairygui.GComponent;
+	eleLayer:fairygui.GComponent = new fairygui.GComponent;
 	tankLayer:fairygui.GComponent = new fairygui.GComponent;
 	bulletLayer:fairygui.GComponent = new fairygui.GComponent;
 	mapLayer:fairygui.GComponent = new fairygui.GComponent;
@@ -27,7 +27,6 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		super.init();
 		//
 		this.proxy = new BattleProxy();
-		this.proxy.facade = this.facade;
 		this.proxy.init();
 		this.model = this.proxy.model;
 		//
@@ -40,27 +39,88 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.partialTick.init();
 	}
 	initUI() {
-		this.facade.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickComp));
-		this.facade.ctrlMgr.addCtrl(CtrlId.Battle_SkillSection, new SkillSectionCtrl(this.ui.m_skillComp as fuis.joysticks_1.UI_SkillSection));
-		this.ui.addChildAt(this.elementLayer,0);
-		this.elementLayer.addChild(this.mapLayer);
-		this.elementLayer.addChild(this.tankLayer);
-		this.elementLayer.addChild(this.bulletLayer);
+		CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickComp));
+		CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Battle_SkillSection, new SkillSectionCtrl(this.ui.m_skillComp as fuis.joysticks_1.UI_SkillSection));
+		this.ui.addChildAt(this.eleLayer,this.ui.getChildIndex(this.ui.m_bg)+1);
+		this.eleLayer.addChild(this.mapLayer);
+		this.eleLayer.addChild(this.tankLayer);
+		this.eleLayer.addChild(this.bulletLayer);
 		this.ui.m_touchLayer.alpha = 0;
 	}
 	initEvent() {
 		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchDown, this);
+		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+		this.initInputEvent();
+    }
+    //===input Joystick keyboard mouse
+    initInputEvent(){
+        MsgMgr.si.add(JoystickCtrl.JoystickChange, this, this.onJoystickChange);
+        MsgMgr.si.add(KeyBoardCtrl.KeyDown, this, this.onKeyDown);
+		MsgMgr.si.add(KeyBoardCtrl.KeyUp, this, this.onKeyUp);
+		MsgMgr.si.add(MouseWheelCtrl.OnChange,this,this.onMouseWheelChange)
 	}
+	mouseStageXY:egret.Point = new egret.Point();
+	tempPoi:egret.Point = new egret.Point();
+	onMouseWheelChange(delta:number){
+		// console.log("[info]",delta,"`delta`");
+		this.eleLayer.globalToLocal(this.mouseStageXY.x,this.mouseStageXY.y, this.tempPoi);
+		FgUtil.scaleAndMoveByXy(this.eleLayer,this.tempPoi.x,this.tempPoi.y,delta/10000);
+	}
+    onJoystickChange(dir: Direction4) {
+        this.proxy.onMoveDirChange(dir);
+    }
+    dirKeyCode:number[] = [KeyBoardCtrl.KEY_D,KeyBoardCtrl.KEY_S,KeyBoardCtrl.KEY_A,KeyBoardCtrl.KEY_W];
+    onKeyDown(keyCode:number,kbc:KeyBoardCtrl){
+        var dirKeyCodeIndex:number = this.dirKeyCode.indexOf(keyCode);
+        if(dirKeyCodeIndex>-1){
+            this.proxy.onMoveDirChange(<Direction4>(dirKeyCodeIndex+1));
+        }else{
+            switch(keyCode){
+                case KeyBoardCtrl.KEY_SPACE_BAR:
+                this.proxy.onSkillTrigger(1);
+                break;
+            }
+        }
+    }
+    onKeyUp(keyCode:number,kbc:KeyBoardCtrl){
+        var dirKeyCodeIndex:number = this.dirKeyCode.indexOf(keyCode);
+        if(dirKeyCodeIndex>-1){
+            //===plan 1
+            /* for (let i = 0; i < this.dirKeyCode.length; i++) {
+                let keyCode = this.dirKeyCode[i];
+                if(KeyBoardCtrl.si.isKeyDown(keyCode)){
+                    this.onMoveDirChange(<Direction4>(dirKeyCodeIndex+1));
+                    return;
+                }
+            }
+            this.onMoveDirChange(Direction4.None); */
+            //===plan 2
+            var dir:Direction4 = <Direction4>(dirKeyCodeIndex+1);
+            if(dir==this.proxy.myTank.dir){
+                this.proxy.onMoveDirChange(Direction4.None);
+            }
+            //===
+        }else{
+            switch(keyCode){
+                case KeyBoardCtrl.KEY_SPACE_BAR:
+                this.proxy.onSkillUntrigger(1);
+                break;
+            }
+        }
+    }
+    //===
 	// touchId:number = -1;
-	private onTouchDown(evt: egret.TouchEvent) {
+	private onTouchDown(e: egret.TouchEvent) {
+		this.mouseStageXY.x = e.stageX, 
+		this.mouseStageXY.y = e.stageY;
         // if (this.touchId == -1)//First touch
         // {
 			// this.touchId = evt.touchPointID;
 		// }
-		//---test scale
-		// var tempPos = new egret.Point;
-		// this.elementLayer.globalToLocal(evt.stageX, evt.stageY, tempPos);
-		// FgUtil.scaleAndMoveByXy(this.elementLayer,tempPos.x,tempPos.y,0.1);
+	}
+	private onTouchMove(e:egret.TouchEvent){
+		this.mouseStageXY.x = e.stageX, 
+		this.mouseStageXY.y = e.stageY;
 	}
 	initMap(){
 		let stcMapVo:IStcMapVo = this.model.stcMapVo;

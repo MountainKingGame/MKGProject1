@@ -1,5 +1,4 @@
 class CtrlMgr {
-    public facade: CtrlFacade;
     public rootLayer: fairygui.GRoot;
     // public sceneLayer:fairygui.GComponent; 
     private ctrlCache: { [key: number]: ICtrlBase } = {};
@@ -12,12 +11,7 @@ class CtrlMgr {
         if (ctrl.getUIAsGComponent() != null) {
             this.rootLayer.addChild(ctrl.getUIAsGComponent());
         }
-        ctrl.facade = this.facade;
-        switch (id) {
-            case CtrlId.Battle:
-                this.facade.battle = ctrl as BattleCtrl;
-                break;
-        }
+        ctrl.ctrlId = id;
         ctrl.init();
         return ctrl;
     }

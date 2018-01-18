@@ -3,10 +3,10 @@
     public outputs:BattleFrameIOItem[] = [];
 } */
 class BattleFrameIOItem{
-    constructor(kind:BattleFrameIOKind,frame:number,playerId:number,data0:any=null,data1:any=null,data2:any=null,data3:any=null,data4:any=null,data5:any=null){
+    constructor(kind:BattleFrameIOKind,frame:number,playerUid:number,data0:any=null,data1:any=null,data2:any=null,data3:any=null,data4:any=null,data5:any=null){
         this.kind = kind;
         this.frame = frame;
-        this.playerId = playerId;
+        this.uid = playerUid;
         this.data0 = data0;
         this.data1 = data1;
         this.data2 = data2;
@@ -16,7 +16,7 @@ class BattleFrameIOItem{
     }
     kind:BattleFrameIOKind;
     frame:number;
-    playerId:number;
+    uid:number;
     //
     data0:any;
     data1:any;

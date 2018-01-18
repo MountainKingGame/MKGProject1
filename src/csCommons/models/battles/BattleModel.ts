@@ -16,13 +16,15 @@ namespace models.battles {
         frameInputs:BattleFrameIOItem[] = [];
         frameOutputs:BattleFrameIOItem[] = [];
         //
-        public init() {
-            this.stcMapVo = StcMap.si.getVo(1);
+        public init(stcMapId:number) {
+            models.battles.BattleConfig.si.init();
+            //
+            this.stcMapVo = StcMap.si.getVo(stcMapId);
+            this.size = new Vector2(this.stcMapVo.size.col*BattleConfig.si.cellSize,this.stcMapVo.size.row*BattleConfig.si.cellSize);
             for (let i = 0; i < this.stcMapVo.players.length; i++) {
                 this.partialAdd.addTankByIStcMapVoPlayer(this.stcMapVo.players[i]);
                 break;//TODO: only add one
             }
-            this.size = new Vector2(this.stcMapVo.size.col*BattleConfig.si.cellSize,this.stcMapVo.size.row*BattleConfig.si.cellSize);
         }
         tankAlignGridX(tank:TankVo){
             tank.x = BattleUtil.gridToPos(BattleUtil.alignGrid(tank.x,1, this.stcMapVo.size.col - 1));

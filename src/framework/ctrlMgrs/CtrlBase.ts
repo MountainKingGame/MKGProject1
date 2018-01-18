@@ -1,5 +1,4 @@
 interface ICtrlBase extends IDispose{
-	facade:CtrlFacade;
 	ctrlId:CtrlId;
 	init();
 	open();
@@ -7,7 +6,6 @@ interface ICtrlBase extends IDispose{
 	getUIAsGComponent():fairygui.GComponent;
 }
 class CtrlBase<T> implements ICtrlBase  {
-	public facade:CtrlFacade;
 	public ctrlId:CtrlId;
 	public ui:T;
 	public constructor(ui:T) {
@@ -24,7 +22,6 @@ class CtrlBase<T> implements ICtrlBase  {
 			(<IDispose><any>this.ui).dispose();
 			this.ui = null;
 		}
-		this.facade = null;
 	}
 	public getUIAsGComponent():fairygui.GComponent{
 		return <fairygui.GComponent><any>this.ui;

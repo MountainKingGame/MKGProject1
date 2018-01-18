@@ -8,7 +8,6 @@ class BulletCtrl extends CtrlBase<fuis.elements_1.UI_Bullet>{
     public init(){
         super.init();
         this.movableEleCtrl = new MovableEleCtrl(this.ui);
-        this.movableEleCtrl.facade = this.facade;
         this.movableEleCtrl.vo = this.vo;
         this.movableEleCtrl.battle = this.battle;
         this.ui.setPivot(0.5,0.5,true);

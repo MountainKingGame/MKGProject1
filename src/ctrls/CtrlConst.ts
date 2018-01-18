@@ -1,3 +1,3 @@
 class CtrlConst{
-    static Msg_OnTick = "Msg_OnTick";
+    static Msg_OnGameTick = "Msg_OnTick";
 }

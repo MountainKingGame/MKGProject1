@@ -4,20 +4,20 @@ class BattleCtrlPartialTick {
         this.owner = owner;
     }
     public init() {
-        this.lastTickModelTime = new Date().getTime();
-        MsgMgr.si.add(CtrlConst.Msg_OnTick,this,this.tick);
+        this.lastKeyFrameTime = new Date().getTime();
+        MsgMgr.si.add(CtrlConst.Msg_OnGameTick,this,this.tick);
         // setInterval(this.tick.bind(this), CtrlConfig.si.viewMsPerFrame);
     }
-    lastTickModelTime: number = 0;
+    lastKeyFrameTime: number = 0;
     isKeyFrame: boolean = false;
     public tick() {
         this.isKeyFrame = false;
         let currTime: number = new Date().getTime();
-        if (CtrlConfig.si.viewFrameRate == models.battles.BattleConfig.si.modelFrameRate
-            || (currTime - this.lastTickModelTime) >= models.battles.BattleConfig.si.modelMsPerFrame) {
+        if (CtrlConfig.si.viewFrameRate <= models.battles.BattleConfig.si.modelFrameRate
+            || (currTime - this.lastKeyFrameTime) >= models.battles.BattleConfig.si.modelMsPerFrame) {
             this.isKeyFrame = true;
-            console.log("[debug]",currTime - this.lastTickModelTime);
-            this.lastTickModelTime = currTime;
+            // console.log("[debug]",currTime - this.lastTickModelTime);
+            this.lastKeyFrameTime = currTime-(currTime - this.lastKeyFrameTime)%models.battles.BattleConfig.si.modelMsPerFrame;
             this.owner.proxy.tick();
             //--frame output
             for (let i = 0; i < this.owner.proxy.model.frameOutputs.length; i++) {
