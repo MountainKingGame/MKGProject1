@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="400,400">
+  <displayList>
+    <component id="n0_eycn" name="n0" src="h02b2" pkg="u4vu42kz" xy="152,1000"/>
+  </displayList>
+  <transition name="t0" autoPlay="true" autoPlayRepeat="-1">
+    <item time="0" type="XY" target="n0_eycn" tween="true" startValue="-,1000" endValue="-,0" duration="48" ease="Linear"/>
+  </transition>
+</component>

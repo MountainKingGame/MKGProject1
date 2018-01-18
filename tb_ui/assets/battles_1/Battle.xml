@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="900,1600">
   <displayList>
-    <graph id="n3_cqc4" name="touchLayer" xy="0,0" size="900,1600" type="rect" lineSize="2" lineColor="#ff00ff99" fillColor="#800033ff">
+    <graph id="n5_s8hg" name="bg" xy="0,0" size="900,1600" type="rect" lineSize="2" lineColor="#ffeeeeee" fillColor="#ff111111">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <graph id="n3_cqc4" name="touchLayer" xy="0,0" size="900,1600" hideByEditor="true" type="rect" lineSize="2" lineColor="#ff00ff99" fillColor="#800033ff">
       <relation target="" sidePair="width-width,height-height"/>
     </graph>
     <component id="n0_qitl" name="joysick" src="iitt1" pkg="rbw1tvvv" xy="0,1350">
