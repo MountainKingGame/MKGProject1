@@ -5,9 +5,9 @@ class QuadTree {
     static MAX_ITEMS = 10;
     static MAX_LEVEL = 5;
     //
+    parent: QuadTree;
     /**self bounds */
     bounds: IQuadTreeItem;
-    parent: QuadTree;
     level: number;
     children: QuadTree[];
     items: IQuadTreeItem[];
@@ -38,21 +38,22 @@ class QuadTree {
     }
 
     split() {
-        var bounds = this.bounds;
+        let xHalf = Math.round((this.bounds.x+this.bounds.right)/2);
+        let yHalf = Math.round((this.bounds.y+this.bounds.bottom)/2);
         this.children.push(
-            new QuadTree(new QuadTreeItem(bounds.x, bounds.xHalf, bounds.y, bounds.yHalf), this),
-            new QuadTree(new QuadTreeItem(bounds.xHalf, bounds.right, bounds.y, bounds.yHalf), this),
-            new QuadTree(new QuadTreeItem(bounds.x, bounds.xHalf, bounds.yHalf, bounds.bottom), this),
-            new QuadTree(new QuadTreeItem(bounds.xHalf, bounds.right, bounds.yHalf, bounds.bottom), this)
+            new QuadTree(new QuadTreeItem(this.bounds.x, xHalf, this.bounds.y, yHalf), this),
+            new QuadTree(new QuadTreeItem(xHalf, this.bounds.right, this.bounds.y, yHalf), this),
+            new QuadTree(new QuadTreeItem(this.bounds.x, xHalf, yHalf, this.bounds.bottom), this),
+            new QuadTree(new QuadTreeItem(xHalf, this.bounds.right, yHalf, this.bounds.bottom), this)
         );
     }
     getIndex(rect: IQuadTreeItem) {
         QuadTree.debug_getIndex_count++;
         var bounds = this.bounds;
-        var onLeft = rect.right <= bounds.xHalf;
-        var onTop = rect.bottom <= bounds.yHalf;
-        var onBottom = rect.y >= bounds.yHalf;
-        var onRight = rect.x >= bounds.xHalf;
+        var onLeft = rect.right <= this.children[0].bounds.right;
+        var onRight = rect.x >= this.children[0].bounds.right;
+        var onTop = rect.bottom <= this.children[0].bounds.bottom;
+        var onBottom = rect.y >= this.children[0].bounds.bottom;
 
         if (onTop) {
             if (onLeft) {
@@ -156,7 +157,7 @@ class QuadTree {
             } else {
                 // 切割矩形
                 var arr: IQuadTreeItem[], i: number;
-                arr = QuadTree.carve(rect, this.bounds.xHalf, this.bounds.yHalf);
+                arr = QuadTree.carve(rect, this.children[0].bounds.right, this.children[0].bounds.bottom);
                 for (i = arr.length - 1; i >= 0; i--) {
                     index = this.getIndex(arr[i]);
                     result = result.concat(this.children[index].retrieve(rect));
@@ -201,30 +202,24 @@ class QuadTree {
 }
 /** Pivot and anchor is top-left */
 interface IQuadTreeItem {
+    ownerQuadTree: QuadTree;
     isDirty: boolean;
     x: number;
     y: number;
     right: number;
     bottom: number;
-    xHalf: number;
-    yHalf: number;
-    ownerQuadTree: QuadTree;
 }
 class QuadTreeItem implements IQuadTreeItem {
+    ownerQuadTree: QuadTree;
     isDirty: boolean;
     x: number;
     y: number;
     right: number;
     bottom: number;
-    xHalf: number;
-    yHalf: number;
-    ownerQuadTree: QuadTree;
     constructor(x, right, y, bottom) {
         this.x = x;
         this.y = y;
         this.right = right;
         this.bottom = bottom;
-        this.xHalf = (x + right) / 2;
-        this.yHalf = (y + bottom) / 2;
     }
 }
