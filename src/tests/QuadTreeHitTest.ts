@@ -45,6 +45,8 @@ class Rect implements IQuadTreeItem {
         this.h = h;
         this.wHalf = w / 2;
         this.hHalf = h / 2;
+        this.xHalf = this.x + this.wHalf;
+        this.yHalf = this.y + this.hHalf;
         this.isDirty = true;
     }
 
@@ -276,27 +278,26 @@ class TestQuadTreeShow {
         // 碰撞检测
         for (i = 0, len = this.rectArr.length; i < len; i++) {
             tempRect = this.tree.retrieve(this.rectArr[i]);
-            console.log(tempRect.length);
+            // console.log(tempRect.length);
             for (j = 0; j < tempRect.length; j++) {
                 if (this.rectArr[i] != tempRect[j]) {
                     this.collideCount++;
                     Rect.isCollide(this.rectArr[i], tempRect[j]);
                 }
             }
+            if(this.frame%len==i){
+                this.rectArr[i].resize(Math.floor(Math.random() * 140 + 5),Math.floor(Math.random() * 140 + 5));
+            }
             // 防止溢出画布
             this.rectArr[i].collide(new Rect(0, 0, this.w, this.h), true);
         }
-        console.info(this.collideCount, "`this.collideCount`", QuadTree.debug_itemsPush_count, QuadTree.debug_getIndex_count, QuadTree.debug_isInner_count);
-
+        
         if (this.test1) {
             this.rectArr[3].moveTo(0, 0);
             this.rectArr[10].moveTo(this.w / 2 - 100, this.h / 2 - 100);
         }
         // 绘制
         for (i = 0, len = this.rectArr.length; i < len; i++) {
-            if(this.frame%len==i){
-                this.rectArr[i].resize(Math.floor(Math.random() * 140 + 5),Math.floor(Math.random() * 140 + 5));
-            }
             if (!this.test1) {
                 this.rectArr[i].run(cTime - this.time);
             }
@@ -304,7 +305,8 @@ class TestQuadTreeShow {
             this.rectArr[i].draw(this.cxt);
             this.cxt.fill();
         }
-
+        
+        console.info(cTime-this.time,this.collideCount, QuadTree.debug_itemsPush_count, QuadTree.debug_getIndex_count, QuadTree.debug_isInner_count);
         this.time = cTime;
 
         requestAnimationFrame(this.draw.bind(this));

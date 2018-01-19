@@ -10,7 +10,7 @@ class QuadTree {
     rect: IQuadTreeRect;
     level: number;
     children: QuadTree[];
-    itemCount:number = 0;
+    itemCount: number = 0;
     headItem: IQuadTreeItem;
     //---
     static debug_itemsPush_count: number = 0;
@@ -37,8 +37,8 @@ class QuadTree {
     }
 
     split() {
-        let xHalf = Math.round((this.rect.x+this.rect.right)/2);
-        let yHalf = Math.round((this.rect.y+this.rect.bottom)/2);
+        let xHalf = Math.round((this.rect.x + this.rect.right) / 2);
+        let yHalf = Math.round((this.rect.y + this.rect.bottom) / 2);
         this.children.push(
             new QuadTree(new QuadTreeRect(this.rect.x, xHalf, this.rect.y, yHalf), this),
             new QuadTree(new QuadTreeRect(xHalf, this.rect.right, this.rect.y, yHalf), this),
@@ -86,7 +86,7 @@ class QuadTree {
                 this.split();//拆分
             }
             let checkItem = this.headItem;
-            while(checkItem!=null){
+            while (checkItem != null) {
                 item = checkItem;
                 checkItem = checkItem.preItem;
                 //
@@ -99,29 +99,29 @@ class QuadTree {
             }
         }
     }
-    static remove(item:IQuadTreeItem){
+    static remove(item: IQuadTreeItem) {
         item.ownerQuadTree.removeItem(item);
     }
-    private removeItem(item:IQuadTreeItem){
-        if(item.preItem!=null){
+    private removeItem(item: IQuadTreeItem) {
+        if (item.preItem != null) {
             item.preItem.nextItem = item.nextItem;
         }
-        if(item.nextItem!=null){
+        if (item.nextItem != null) {
             item.nextItem.preItem = item.preItem;
         }
-        if(this.headItem==item){
+        if (this.headItem == item) {
             this.headItem = item.preItem;
         }
         item.nextItem = item.preItem = null;
         this.itemCount--;
         item.ownerQuadTree = null;
     }
-    private addItem(item:IQuadTreeItem){
-        if(this.headItem==null){
+    private addItem(item: IQuadTreeItem) {
+        if (this.headItem == null) {
             this.headItem = item;
             this.headItem.preItem = null;
             this.headItem.nextItem = null;
-        }else{
+        } else {
             item.preItem = this.headItem;
             this.headItem.nextItem = item;
             this.headItem = item;
@@ -147,11 +147,11 @@ class QuadTree {
         var item: IQuadTreeItem, index: number, i: number, len: number;
 
         let checkItem = this.headItem;
-        while(checkItem!=null){
+        while (checkItem != null) {
             item = checkItem;
             checkItem = checkItem.preItem;
             //
-            if(item.ownerQuadTree==this){
+            if (item.ownerQuadTree == this) {
                 if (item.isDirty == false) {
                     continue;
                 }
@@ -172,8 +172,8 @@ class QuadTree {
                         this.removeItem(item);
                         this.children[index].insert(item);
                     }
-                } 
-            }else{
+                }
+            } else {
                 //TODO: error
                 console.log("[error]");
             }
@@ -185,7 +185,7 @@ class QuadTree {
         }
     }
     /** 检索可以用鱼碰撞的结果队列 */
-    retrieve(rect: IQuadTreeItem):IQuadTreeItem[] {
+    retrieve(rect: IQuadTreeItem): IQuadTreeItem[] {
         var result: IQuadTreeItem[] = [];
         if (this.children.length > 0) {
             var index: number;
@@ -202,11 +202,11 @@ class QuadTree {
                 }
             }
         }
-        QuadTree.pushItemsInArray(this.headItem,result);
+        QuadTree.pushItemsInArray(this.headItem, result);
         return result;
     }
-    static pushItemsInArray(headItem:IQuadTreeItem,arr:IQuadTreeItem[]){
-        while(headItem!=null){
+    static pushItemsInArray(headItem: IQuadTreeItem, arr: IQuadTreeItem[]) {
+        while (headItem != null) {
             arr.push(headItem);
             headItem = headItem.preItem;
         }
@@ -263,8 +263,8 @@ class QuadTreeRect implements IQuadTreeRect {
 }
 interface IQuadTreeItem extends IQuadTreeRect {
     ownerQuadTree: QuadTree;
-    preItem:IQuadTreeItem;
-    nextItem:IQuadTreeItem;
+    preItem: IQuadTreeItem;
+    nextItem: IQuadTreeItem;
     isDirty: boolean;
     x: number;
     y: number;
