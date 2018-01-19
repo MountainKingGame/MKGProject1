@@ -12,9 +12,9 @@ class QuadTree {
     children: QuadTree[];
     items: IQuadTreeItem[];
     //---
-    static debug_itemsPush_count:number = 0;
-    static debug_getIndex_count:number = 0;
-    static debug_isInner_count:number = 0;
+    static debug_itemsPush_count: number = 0;
+    static debug_getIndex_count: number = 0;
+    static debug_isInner_count: number = 0;
 
     constructor(bounds: IQuadTreeItem, parentQuadTree: QuadTree = null) {
         this.items = [];
@@ -36,34 +36,28 @@ class QuadTree {
             subnode.clear();
         }
     }
-    
-    split() {
-        var level = this.level;
-        var bounds = this.bounds;
-        var x = bounds.x;
-        var y = bounds.y;
-        var wHalf = bounds.wHalf;
-        var hHalf = bounds.hHalf;
 
+    split() {
+        var bounds = this.bounds;
         this.children.push(
-            new QuadTree(new QuadTreeItem(bounds.xHalf, y, wHalf, hHalf), this),
-            new QuadTree(new QuadTreeItem(x, y, wHalf, hHalf), this),
-            new QuadTree(new QuadTreeItem(x, bounds.yHalf, wHalf, hHalf), this),
-            new QuadTree(new QuadTreeItem(bounds.xHalf, bounds.yHalf, wHalf, hHalf), this)
+            new QuadTree(new QuadTreeItem(bounds.x, bounds.xHalf, bounds.y, bounds.yHalf), this),
+            new QuadTree(new QuadTreeItem(bounds.xHalf, bounds.right, bounds.y, bounds.yHalf), this),
+            new QuadTree(new QuadTreeItem(bounds.x, bounds.xHalf, bounds.yHalf, bounds.bottom), this),
+            new QuadTree(new QuadTreeItem(bounds.xHalf, bounds.right, bounds.yHalf, bounds.bottom), this)
         );
     }
     getIndex(rect: IQuadTreeItem) {
         QuadTree.debug_getIndex_count++;
-        var bounds = this.bounds,
-            onTop = rect.y + rect.h <= bounds.yHalf,
-            onBottom = rect.y >= bounds.yHalf,
-            onLeft = rect.x + rect.w <= bounds.xHalf,
-            onRight = rect.x >= bounds.xHalf;
+        var bounds = this.bounds;
+        var onLeft = rect.x + rect.w <= bounds.xHalf;
+        var onTop = rect.y + rect.h <= bounds.yHalf;
+        var onBottom = rect.y >= bounds.yHalf;
+        var onRight = rect.x >= bounds.xHalf;
 
         if (onTop) {
-            if (onRight) {
+            if (onLeft) {
                 return 0;
-            } else if (onLeft) {
+            } else if (onRight) {
                 return 1;
             }
         } else if (onBottom) {
@@ -91,7 +85,7 @@ class QuadTree {
         QuadTree.debug_itemsPush_count++;
         //
         if (this.items.length > QuadTree.MAX_ITEMS && this.level < QuadTree.MAX_LEVEL) {
-            if(!this.children.length){
+            if (!this.children.length) {
                 this.split();//拆分
             }
             for (i = this.items.length - 1; i >= 0; i--) {
@@ -113,8 +107,8 @@ class QuadTree {
             rect.y >= bounds.y &&
             rect.y + rect.h <= bounds.y + bounds.h;
     }
-    refresh(root: QuadTree=null) {
-        if(root==null){
+    refresh(root: QuadTree = null) {
+        if (root == null) {
             QuadTree.debug_itemsPush_count = 0;
             QuadTree.debug_getIndex_count = 0;
             QuadTree.debug_isInner_count = 0;
@@ -125,25 +119,25 @@ class QuadTree {
 
         for (i = this.items.length - 1; i >= 0; i--) {
             rect = this.items[i];
-            if(rect.isDirty==false){
+            if (rect.isDirty == false) {
                 continue;
             }
-            rect.isDirty=false;
+            rect.isDirty = false;
             // 如果矩形不属于该象限， 且该矩形不是root,则将该矩形重新插入root
             if (!QuadTree.isInner(rect, this.bounds)) {
                 if (this !== root) {
                     root.insert(this.items.splice(i, 1)[0]);
                 }
             }
-            /* 没必要插入子对象中, 因为从root insert新的后会导致超过上限再拆分或重新排列
-            else if (this.nodes.length) {
+            //TODO: fox没必要插入子对象中, 因为从root insert新的后会导致超过上限再拆分或重新排列
+            else if (this.children.length) {
                 // 如果矩形属于该象限 且 该象限具有子象限，则
                 // 将该矩形安插到子象限中
                 index = this.getIndex(rect);
                 if (index !== -1) {
-                    this.nodes[index].insert(this.objects.splice(i, 1)[0]);
+                    this.children[index].insert(this.items.splice(i, 1)[0]);
                 }
-            } */
+            } 
         }
 
         // 递归刷新子象限
@@ -190,15 +184,15 @@ class QuadTree {
             // 只切割X方向
         } else if (carveX) {
             result.push(
-                new QuadTreeItem(rect.x, rect.y, dX, rect.h),
-                new QuadTreeItem(cX, rect.y, rect.w - dX, rect.h)
+                new QuadTreeItem(rect.x, cX, rect.y, rect.bottom),
+                new QuadTreeItem(cX, rect.y, rect.y, rect.bottom)
             );
 
             // 只切割Y方向
         } else if (carveY) {
             result.push(
-                new QuadTreeItem(rect.x, rect.y, rect.w, dY),
-                new QuadTreeItem(rect.x, cY, rect.w, rect.h - dY)
+                new QuadTreeItem(rect.x, rect.right, rect.y, cY),
+                new QuadTreeItem(rect.x, rect.right, cY, rect.bottom)
             );
         }
 
@@ -207,36 +201,36 @@ class QuadTree {
 }
 /** Pivot and anchor is top-left */
 interface IQuadTreeItem {
-    isDirty:boolean;
+    isDirty: boolean;
     x: number;
     y: number;
+    right: number;
+    bottom: number;
     w: number;
     h: number;
     xHalf: number;
     yHalf: number;
-    wHalf: number;
-    hHalf: number;
     ownerQuadTree: QuadTree;
 }
 class QuadTreeItem implements IQuadTreeItem {
-    isDirty:boolean;
+    isDirty: boolean;
     x: number;
     y: number;
+    right: number;
+    bottom: number;
     h: number;
     w: number;
     xHalf: number;
     yHalf: number;
-    wHalf: number;
-    hHalf: number;
     ownerQuadTree: QuadTree;
-    constructor(x, y, width, height) {
+    constructor(x, right, y, bottom) {
         this.x = x;
         this.y = y;
-        this.w = width;
-        this.h = height;
-        this.xHalf = x + this.wHalf;
-        this.yHalf = y + this.hHalf;
-        this.wHalf = width / 2;
-        this.hHalf = height / 2;
+        this.right = right;
+        this.bottom = bottom;
+        this.w = right - x;
+        this.h = bottom - y;
+        this.xHalf = x + this.w / 2;
+        this.yHalf = y + this.h / 2;
     }
 }
