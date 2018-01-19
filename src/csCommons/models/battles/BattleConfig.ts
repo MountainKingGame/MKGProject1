@@ -2,13 +2,13 @@ namespace models.battles {
     export class BattleConfig {
 
         public static readonly si: BattleConfig = new BattleConfig();
-        public modelFrameRate: number = 60;
+        public modelFrameRate: number = 30;
         public modelMsPerFrame: number;
         public digit4: number = 4;
         public cellSize: number = 64;
         public tankMoveSpeedPerSecond: number = 520;
         public tankMoveSpeedPerFrame: number;
-        public bulletMoveSpeedPerSecond: number = 1220;
+        public bulletMoveSpeedPerSecond: number = 1000;
         public bulletMoveSpeedPerFrame: number;
         
         init() {

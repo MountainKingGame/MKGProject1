@@ -1,0 +1,9 @@
+{
+    "name": "cb_client",
+    "version": "1.0.1",
+    "scripts": {
+        "t1": "echo 1",
+        "t2":"echo 2",
+        "t3":"npm run t1 & npm run t2"
+    }
+}
