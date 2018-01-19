@@ -99,7 +99,10 @@ class QuadTree {
             }
         }
     }
-    removeItem(item:IQuadTreeItem){
+    static remove(item:IQuadTreeItem){
+        item.ownerQuadTree.removeItem(item);
+    }
+    private removeItem(item:IQuadTreeItem){
         if(item.preItem!=null){
             item.preItem.nextItem = item.nextItem;
         }
@@ -113,7 +116,7 @@ class QuadTree {
         this.itemCount--;
         item.ownerQuadTree = null;
     }
-    addItem(item:IQuadTreeItem){
+    private addItem(item:IQuadTreeItem){
         if(this.headItem==null){
             this.headItem = item;
             this.headItem.preItem = null;
@@ -170,7 +173,10 @@ class QuadTree {
                         this.children[index].insert(item);
                     }
                 } 
-            }//TODO: error
+            }else{
+                //TODO: error
+                console.log("[error]");
+            }
         }
 
         // 递归刷新子象限
