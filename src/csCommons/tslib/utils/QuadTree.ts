@@ -6,18 +6,18 @@ class QuadTree {
     static MAX_LEVEL = 5;
     //
     parent: QuadTree;
-    /**self bounds */
-    bounds: IQuadTreeRect;
+    /**self rect */
+    rect: IQuadTreeRect;
     level: number;
     children: QuadTree[];
-    items: IQuadTreeItem[];
+    itemCount:number = 0;
+    headItem: IQuadTreeItem;
     //---
     static debug_itemsPush_count: number = 0;
     static debug_getIndex_count: number = 0;
     static debug_isInner_count: number = 0;
 
-    constructor(bounds: IQuadTreeRect, parentQuadTree: QuadTree = null) {
-        this.items = [];
+    constructor(rect: IQuadTreeRect, parentQuadTree: QuadTree = null) {
         this.children = [];
         this.parent = parentQuadTree;
         if (this.parent == null) {
@@ -25,35 +25,33 @@ class QuadTree {
         } else {
             this.level = this.parent.level + 1;
         }
-        this.bounds = bounds;
+        this.rect = rect;
     }
     clear() {
-        var nodes: QuadTree[] = this.children;
-        var subnode: QuadTree;
-        this.items.splice(0, this.items.length);
-        while (nodes.length) {
-            subnode = nodes.shift();
-            subnode.clear();
+        this.itemCount = 0;
+        this.headItem = null;
+        for (let i = 0; i < this.children.length; i++) {
+            let child = this.children[i];
+            child.clear();
         }
     }
 
     split() {
-        let xHalf = Math.round((this.bounds.x+this.bounds.right)/2);
-        let yHalf = Math.round((this.bounds.y+this.bounds.bottom)/2);
+        let xHalf = Math.round((this.rect.x+this.rect.right)/2);
+        let yHalf = Math.round((this.rect.y+this.rect.bottom)/2);
         this.children.push(
-            new QuadTree(new QuadTreeRect(this.bounds.x, xHalf, this.bounds.y, yHalf), this),
-            new QuadTree(new QuadTreeRect(xHalf, this.bounds.right, this.bounds.y, yHalf), this),
-            new QuadTree(new QuadTreeRect(this.bounds.x, xHalf, yHalf, this.bounds.bottom), this),
-            new QuadTree(new QuadTreeRect(xHalf, this.bounds.right, yHalf, this.bounds.bottom), this)
+            new QuadTree(new QuadTreeRect(this.rect.x, xHalf, this.rect.y, yHalf), this),
+            new QuadTree(new QuadTreeRect(xHalf, this.rect.right, this.rect.y, yHalf), this),
+            new QuadTree(new QuadTreeRect(this.rect.x, xHalf, yHalf, this.rect.bottom), this),
+            new QuadTree(new QuadTreeRect(xHalf, this.rect.right, yHalf, this.rect.bottom), this)
         );
     }
     getIndex(rect: IQuadTreeRect) {
         QuadTree.debug_getIndex_count++;
-        var bounds = this.bounds;
-        var onLeft = rect.right <= this.children[0].bounds.right;
-        var onRight = rect.x >= this.children[0].bounds.right;
-        var onTop = rect.bottom <= this.children[0].bounds.bottom;
-        var onBottom = rect.y >= this.children[0].bounds.bottom;
+        var onLeft = rect.right <= this.children[0].rect.right;
+        var onRight = rect.x >= this.children[0].rect.right;
+        var onTop = rect.bottom <= this.children[0].rect.bottom;
+        var onBottom = rect.y >= this.children[0].rect.bottom;
 
         if (onTop) {
             if (onLeft) {
@@ -71,42 +69,70 @@ class QuadTree {
         // 如果物体跨越多个象限，则返回-1
         return -1;
     }
-    insert(rect: IQuadTreeItem) {
+    insert(item: IQuadTreeItem) {
         var i: number, index: number;
         if (this.children.length) {
-            index = this.getIndex(rect);
+            index = this.getIndex(item);
             if (index !== -1) {
-                this.children[index].insert(rect);
+                this.children[index].insert(item);
                 return;
             }
         }
         //
-        this.items.push(rect);
-        rect.ownerQuadTree = this;
-        QuadTree.debug_itemsPush_count++;
+        this.addItem(item);
         //
-        if (this.items.length > QuadTree.MAX_ITEMS && this.level < QuadTree.MAX_LEVEL) {
+        if (this.itemCount > QuadTree.MAX_ITEMS && this.level < QuadTree.MAX_LEVEL) {
             if (!this.children.length) {
                 this.split();//拆分
             }
-            for (i = this.items.length - 1; i >= 0; i--) {
-                index = this.getIndex(this.items[i]);
+            let checkItem = this.headItem;
+            while(checkItem!=null){
+                item = checkItem;
+                checkItem = checkItem.preItem;
+                //
+                index = this.getIndex(item);
                 if (index !== -1) {
-                    rect = this.items.splice(i, 1)[0];
-                    this.children[index].items.push(rect);
-                    rect.ownerQuadTree = this.children[index];
-                    QuadTree.debug_itemsPush_count++;
+                    this.removeItem(item);
                     // this.nodes[index].insert(rect);//There is no need to write like this, because there is already a index value, and subNode can't split at this time
+                    this.children[index].addItem(item);
                 }
             }
         }
     }
-    static isInner(rect: IQuadTreeRect, bounds: IQuadTreeRect) {
+    removeItem(item:IQuadTreeItem){
+        if(item.preItem!=null){
+            item.preItem.nextItem = item.nextItem;
+        }
+        if(item.nextItem!=null){
+            item.nextItem.preItem = item.preItem;
+        }
+        if(this.headItem==item){
+            this.headItem = item.preItem;
+        }
+        item.nextItem = item.preItem = null;
+        this.itemCount--;
+        item.ownerQuadTree = null;
+    }
+    addItem(item:IQuadTreeItem){
+        if(this.headItem==null){
+            this.headItem = item;
+            this.headItem.preItem = null;
+            this.headItem.nextItem = null;
+        }else{
+            item.preItem = this.headItem;
+            this.headItem.nextItem = item;
+            this.headItem = item;
+        }
+        this.itemCount++;
+        item.ownerQuadTree = this;
+        QuadTree.debug_itemsPush_count++;
+    }
+    static isInner(rect: IQuadTreeRect, outRect: IQuadTreeRect) {
         QuadTree.debug_isInner_count++;
-        return rect.x >= bounds.x &&
-            rect.right <= bounds.right &&
-            rect.y >= bounds.y &&
-            rect.bottom <= bounds.bottom;
+        return rect.x >= outRect.x &&
+            rect.right <= outRect.right &&
+            rect.y >= outRect.y &&
+            rect.bottom <= outRect.bottom;
     }
     refresh(root: QuadTree = null) {
         if (root == null) {
@@ -117,28 +143,34 @@ class QuadTree {
         }
         var item: IQuadTreeItem, index: number, i: number, len: number;
 
-
-        for (i = this.items.length - 1; i >= 0; i--) {
-            item = this.items[i];
-            if (item.isDirty == false) {
-                continue;
-            }
-            item.isDirty = false;
-            // 如果矩形不属于该象限， 且该矩形不是root,则将该矩形重新插入root
-            if (!QuadTree.isInner(item, this.bounds)) {
-                if (this !== root) {
-                    root.insert(this.items.splice(i, 1)[0]);
-                    // this.parent.insert(this.items.splice(i, 1)[0]);
+        let checkItem = this.headItem;
+        while(checkItem!=null){
+            item = checkItem;
+            checkItem = checkItem.preItem;
+            //
+            if(item.ownerQuadTree==this){
+                if (item.isDirty == false) {
+                    continue;
                 }
-            }
-            //fox:不要等 从root insert新的后会导致超过上限再拆分或重新排列, 因为会导致this.items变化,本次循环又肯呢个出错,所以必须把需要放到children放进去
-            else if (this.children.length) {
-                // 如果矩形属于该象限且该象限具有子象限，则将该矩形安插到子象限中
-                index = this.getIndex(item);
-                if (index !== -1) {
-                    this.children[index].insert(this.items.splice(i, 1)[0]);
+                item.isDirty = false;
+                // 如果矩形不属于该象限， 且该矩形不是root,则将该矩形重新插入root
+                if (!QuadTree.isInner(item, this.rect)) {
+                    if (this !== root) {
+                        this.removeItem(item);
+                        root.insert(item);
+                        // this.parent.insert(this.items.splice(i, 1)[0]);
+                    }
                 }
-            } 
+                //fox:不要等 从root insert新的后会导致超过上限再拆分或重新排列, 因为会导致this.items变化,本次循环又肯呢个出错,所以必须把需要放到children放进去
+                else if (this.children.length) {
+                    // 如果矩形属于该象限且该象限具有子象限，则将该矩形安插到子象限中
+                    index = this.getIndex(item);
+                    if (index !== -1) {
+                        this.removeItem(item);
+                        this.children[index].insert(item);
+                    }
+                } 
+            }//TODO: error
         }
 
         // 递归刷新子象限
@@ -147,7 +179,7 @@ class QuadTree {
         }
     }
     /** 检索可以用鱼碰撞的结果队列 */
-    retrieve(rect: IQuadTreeItem) {
+    retrieve(rect: IQuadTreeItem):IQuadTreeItem[] {
         var result: IQuadTreeItem[] = [];
         if (this.children.length > 0) {
             var index: number;
@@ -157,15 +189,21 @@ class QuadTree {
             } else {
                 // 切割矩形
                 var arr: IQuadTreeRect[], i: number;
-                arr = QuadTree.carve(rect, this.children[0].bounds.right, this.children[0].bounds.bottom);
+                arr = QuadTree.carve(rect, this.children[0].rect.right, this.children[0].rect.bottom);
                 for (i = arr.length - 1; i >= 0; i--) {
                     index = this.getIndex(arr[i]);
                     result = result.concat(this.children[index].retrieve(rect));
                 }
             }
         }
-        result = result.concat(this.items);
+        QuadTree.pushItemsInArray(this.headItem,result);
         return result;
+    }
+    static pushItemsInArray(headItem:IQuadTreeItem,arr:IQuadTreeItem[]){
+        while(headItem!=null){
+            arr.push(headItem);
+            headItem = headItem.preItem;
+        }
     }
     static carve(rect: IQuadTreeRect, cX: number, cY: number) {
         var result: IQuadTreeRect[] = [],
@@ -219,6 +257,8 @@ class QuadTreeRect implements IQuadTreeRect {
 }
 interface IQuadTreeItem extends IQuadTreeRect {
     ownerQuadTree: QuadTree;
+    preItem:IQuadTreeItem;
+    nextItem:IQuadTreeItem;
     isDirty: boolean;
     x: number;
     y: number;
