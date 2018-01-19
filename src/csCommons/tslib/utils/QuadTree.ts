@@ -49,8 +49,8 @@ class QuadTree {
     getIndex(rect: IQuadTreeItem) {
         QuadTree.debug_getIndex_count++;
         var bounds = this.bounds;
-        var onLeft = rect.x + rect.w <= bounds.xHalf;
-        var onTop = rect.y + rect.h <= bounds.yHalf;
+        var onLeft = rect.right <= bounds.xHalf;
+        var onTop = rect.bottom <= bounds.yHalf;
         var onBottom = rect.y >= bounds.yHalf;
         var onRight = rect.x >= bounds.xHalf;
 
@@ -103,9 +103,9 @@ class QuadTree {
     static isInner(rect: IQuadTreeItem, bounds: IQuadTreeItem) {
         QuadTree.debug_isInner_count++;
         return rect.x >= bounds.x &&
-            rect.x + rect.w <= bounds.x + bounds.w &&
+            rect.right <= bounds.right &&
             rect.y >= bounds.y &&
-            rect.y + rect.h <= bounds.y + bounds.h;
+            rect.bottom <= bounds.bottom;
     }
     refresh(root: QuadTree = null) {
         if (root == null) {
@@ -206,8 +206,6 @@ interface IQuadTreeItem {
     y: number;
     right: number;
     bottom: number;
-    w: number;
-    h: number;
     xHalf: number;
     yHalf: number;
     ownerQuadTree: QuadTree;
@@ -218,8 +216,6 @@ class QuadTreeItem implements IQuadTreeItem {
     y: number;
     right: number;
     bottom: number;
-    h: number;
-    w: number;
     xHalf: number;
     yHalf: number;
     ownerQuadTree: QuadTree;
@@ -228,9 +224,7 @@ class QuadTreeItem implements IQuadTreeItem {
         this.y = y;
         this.right = right;
         this.bottom = bottom;
-        this.w = right - x;
-        this.h = bottom - y;
-        this.xHalf = x + this.w / 2;
-        this.yHalf = y + this.h / 2;
+        this.xHalf = (x + right) / 2;
+        this.yHalf = (y + bottom) / 2;
     }
 }
