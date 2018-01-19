@@ -27,7 +27,7 @@ namespace models.battles {
                     case BattleFrameIOKind.SkillTrigger:
                         this.owner.tanks[item.uid].skillMap[<number>item.data0].isTrigger = true;
                         break;
-                        case BattleFrameIOKind.SkillUntrigger:
+                    case BattleFrameIOKind.SkillUntrigger:
                         this.owner.tanks[item.uid].skillMap[<number>item.data0].isTrigger = false;
                         break;
                 }
@@ -38,17 +38,17 @@ namespace models.battles {
         public tick_skill() {
             for (const uid in this.owner.tanks) {
                 const tank = this.owner.tanks[uid];
-                for(const skillSid in tank.skillMap){
+                for (const skillSid in tank.skillMap) {
                     let skillVo = tank.skillMap[skillSid];
-                    if (skillVo.isTrigger && (this.owner.currFrame-skillVo.castFrame)>skillVo.castGapFrame) {
+                    if (skillVo.isTrigger && (this.owner.currFrame - skillVo.castFrame) > skillVo.castGapFrame) {
                         skillVo.castFrame = this.owner.currFrame;
                         var bullet: BulletVo = new BulletVo();
                         bullet.ownerUid = tank.uid;
                         bullet.sid = skillVo.sid;//TODO:
                         bullet.uid = tank.uid * 1000 + tank.bulletUid;
                         tank.bulletUid++;
-                        if(tank.bulletUid>1000){
-                            tank.bulletUid=1;
+                        if (tank.bulletUid > 1000) {
+                            tank.bulletUid = 1;
                         }
                         bullet.x = tank.x;
                         bullet.y = tank.y;

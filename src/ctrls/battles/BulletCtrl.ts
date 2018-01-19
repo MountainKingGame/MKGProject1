@@ -7,26 +7,18 @@ class BulletCtrl extends CtrlBase<fuis.elements_1.UI_Bullet>{
     }
     public init(){
         super.init();
+        this.ui.setPivot(0.5,0.5,true);
         this.movableEleCtrl = new MovableEleCtrl(this.ui);
         this.movableEleCtrl.vo = this.vo;
         this.movableEleCtrl.battle = this.battle;
-        this.ui.setPivot(0.5,0.5,true);
-        this.ui.setXY(this.vo.x,this.vo.y);
-        //
-        // this.view.m_icon.filters = [new egret.BlurFilter(12,12)];
-        
-        /* var cm: fairygui.utils.ColorMatrix = new fairygui.ColorMatrix();
-        // let arr:number[] = [-0.14,1.00,0.94,0.39];
-        let arr:number[] = [-0.35,0.95,1.00,-0.26];//红色
-        cm.adjustBrightness(arr[0]);
-        cm.adjustContrast(arr[1]);
-        cm.adjustSaturation(arr[2]);
-        cm.adjustHue(arr[3]);
-        var cf: egret.ColorMatrixFilter = new egret.ColorMatrixFilter(cm.matrix);
-        this.view.m_icon.filters = [cf];*/
+        this.movableEleCtrl.init();
     }
     tick():void{
         this.movableEleCtrl.tick();
+        var gc:fairygui.GComponent = fuis.elements_1.UI_Bullet.createInstance();
+        this.ui.parent.addChild(gc);
+        gc.setPivot(0.5,0.5,true);
+        gc.setXY(this.ui.x,this.ui.y);
     }
     public dispose():void{
         this.movableEleCtrl.dispose();

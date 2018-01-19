@@ -3,6 +3,9 @@ namespace models.battles {
         public uid: number;
         public sid: number;
     }
+    // export class QuadTreeHitRect implements IQuadTreeItem{
+    
+    // }
     export class MovableEleVo extends EleVo {
         public x:number;
         public y:number;

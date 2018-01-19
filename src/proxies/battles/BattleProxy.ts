@@ -18,6 +18,9 @@ class BattleProxy {
         this.model.partialTick.tick();
         this.model.frameInputs = [];
     }
+    optimizeFrameInputs(){
+        
+    }
     initEvent() {
     }
     onMoveDirChange(dir:Direction4){
