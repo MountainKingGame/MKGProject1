@@ -3,7 +3,7 @@ namespace models.battles {
 
         public static readonly si: BattleConfig = new BattleConfig();
         public modelFrameRate: number = 30;
-        /**服务器同步frame input的帧率, modelFrameRate 必须是它的整数倍 */
+        /**synchro frame input fate, modelFrameRate  must be the integer multiple of it */
         public modelKeyFrameRate: number = 10;
         public keyFrameMultiple:number;
         public modelMsPerFrame: number;
@@ -13,10 +13,10 @@ namespace models.battles {
         public tankMoveSpeedPerFrame: number;
         public bulletMoveSpeedPerSecond: number = 1000;
         public bulletMoveSpeedPerFrame: number;
-        /** */
+
         init() {
             if(this.modelFrameRate%this.modelKeyFrameRate!=0){
-                throw new Error("modelFrameRate A must be the integer multiple of b modelKeyFrameRate");
+                throw new Error("modelFrameRate must be the integer multiple of modelKeyFrameRate");
             }
             this.keyFrameMultiple = Math.ceil(this.modelFrameRate/this.modelKeyFrameRate);
             this.modelMsPerFrame = Math.round(1000 / this.modelFrameRate);

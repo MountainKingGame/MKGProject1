@@ -6,6 +6,7 @@ namespace models.battles {
         //===
         public tankUId:number = 1;
         public currFrame: number = 0;
+        public currKeyFrame: number = 0;
         //===
         public stcMapVo: IStcMapVo;
         /**当前帧*/

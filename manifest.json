@@ -75,6 +75,7 @@
 		"bin-debug/fuis/Package1/UI_Comp1.js",
 		"bin-debug/fuis/Package1/UI_Menu1.js",
 		"bin-debug/proxies/battles/BattleProxy.js",
+		"bin-debug/proxies/battles/FrameInputMgr.js",
 		"bin-debug/tests/QuadTreeHitTest.js",
 		"bin-debug/tests/TestMoveSmooth.js",
 		"bin-debug/tests/TestProtobuf.js"

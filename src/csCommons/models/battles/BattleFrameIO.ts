@@ -29,6 +29,8 @@ enum BattleFrameIOKind{
     //===frame input
     MoveDirChange = 101,
     SkillTrigger,
+    /** this frame trigger skill once */
+    SkillTriggerOnce,
     SkillUntrigger,
     //===frame output
     TankDirChange = 201,

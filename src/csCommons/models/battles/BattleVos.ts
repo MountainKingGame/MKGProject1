@@ -26,7 +26,8 @@ namespace models.battles {
         ownerUid:number;
     }
     export class SkillVo extends EleVo {
-        public isTrigger:boolean = false;
+        public isTriggering:boolean = false;
+        public isTriggerOnce:boolean = false;
         public castFrame:number = -999999;
         public castGapFrame:number;//间隔帧数
 

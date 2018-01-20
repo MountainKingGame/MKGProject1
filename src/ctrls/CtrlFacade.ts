@@ -18,7 +18,6 @@ class CtrlFacade{
         CtrlConfig.si = new CtrlConfig();
         CtrlConfig.si.viewFrameRate = this.stage.frameRate;
         CtrlConfig.si.init();
-        console.log("[info]",CtrlConfig.si.viewFrameRate,CtrlConfig.si.viewMsPerFrame);
         //===
         fairygui.UIPackage.addPackage("battles_1");
         fairygui.UIPackage.addPackage("elements_1");

@@ -9,8 +9,10 @@
             "es2015.promise"
         ],
         "newLine": "LF",
-        "sourceMap": true,
-        "types":[]
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "types":[],
+        "sourceMap": true
     },
     "exclude": [
         "node_modules"

@@ -5,7 +5,7 @@ class CtrlMgr {
     public addCtrl(id: CtrlId, ctrl: ICtrlBase): ICtrlBase {
         if (this.ctrlCache[id.toFixed()] != undefined) {
             console.log("[fatal]", `ctrlBase(id=${id}) is exist!`);
-            return;
+            return null;
         }
         this.ctrlCache[id.toFixed()] = ctrl;
         if (ctrl.getUIAsGComponent() != null) {

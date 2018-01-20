@@ -8,7 +8,6 @@ namespace models.battles {
          * onFrame
          */
         public tick() {
-            this.owner.currFrame++;
             this.tick_frameInput();
             this.tick_bulletHitTest();//先计算hit,因为被hit后的物品是不能在做后面动作了
             this.tick_generate();
@@ -25,10 +24,16 @@ namespace models.battles {
                         this.owner.tanks[item.uid].moveDir = <Direction4>item.data0;
                         break;
                     case BattleFrameIOKind.SkillTrigger:
-                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTrigger = true;
+                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggering = true;
+                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
                         break;
                     case BattleFrameIOKind.SkillUntrigger:
-                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTrigger = false;
+                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggering = false;
+                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
+                        break;
+                        case BattleFrameIOKind.SkillTriggerOnce:
+                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggerOnce = true;
+                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggering = false;
                         break;
                 }
             }
@@ -40,7 +45,7 @@ namespace models.battles {
                 const tank = this.owner.tanks[uid];
                 for (const skillSid in tank.skillMap) {
                     let skillVo = tank.skillMap[skillSid];
-                    if (skillVo.isTrigger && (this.owner.currFrame - skillVo.castFrame) > skillVo.castGapFrame) {
+                    if ((skillVo.isTriggering || skillVo.isTriggerOnce) && (this.owner.currFrame - skillVo.castFrame) > skillVo.castGapFrame) {
                         skillVo.castFrame = this.owner.currFrame;
                         var bullet: BulletVo = new BulletVo();
                         bullet.ownerUid = tank.uid;
@@ -55,6 +60,7 @@ namespace models.battles {
                         bullet.moveDir = tank.dir;
                         this.owner.partialAdd.addBulletVo(bullet);
                     }
+                    skillVo.isTriggerOnce = false;
                 }
             }
         }
