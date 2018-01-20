@@ -1,4 +1,4 @@
-# FairyGUI
+## FairyGUI
 #### BlurFilter
 ```
 this.view.m_icon.filters = [new egret.BlurFilter(12,12)];
@@ -16,7 +16,7 @@ var cf: egret.ColorMatrixFilter = new egret.ColorMatrixFilter(cm.matrix);
 this.view.m_icon.filters = [cf];
 ```
 
-# npm
+## npm
 ### script in package.json
 ```
 {
