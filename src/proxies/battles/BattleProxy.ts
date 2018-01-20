@@ -31,9 +31,8 @@ class BattleProxy {
     initEvent() {
     }
     onMoveDirChange(dir:Direction4){
-        if(dir!=this.myTank.moveDir){
-            this.model.frameInputs.push(new BattleFrameIOItem(BattleFrameIOKind.MoveDirChange,this.model.currFrame,this.myTank.uid,dir));
-        }
+        console.log("[info]","`onMoveDirChange`",dir,this.myTank.moveDir);
+        this.model.frameInputs.push(new BattleFrameIOItem(BattleFrameIOKind.MoveDirChange,this.model.currFrame,this.myTank.uid,dir));
     }
     onSkillTrigger(skillId:number){
         this.model.frameInputs.push(new BattleFrameIOItem(BattleFrameIOKind.SkillTrigger,this.model.currFrame,this.myTank.uid,skillId));

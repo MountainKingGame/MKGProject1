@@ -4,18 +4,18 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	 * battle model
 	 */
 	public proxy: BattleProxy;
-	public model:models.battles.BattleModel;
+	public model: models.battles.BattleModel;
 
 	public joystick: JoystickCtrl;
 
 	/**all element in here */
-	eleLayer:fairygui.GComponent = new fairygui.GComponent;
-	tankLayer:fairygui.GComponent = new fairygui.GComponent;
-	bulletLayer:fairygui.GComponent = new fairygui.GComponent;
-	mapLayer:fairygui.GComponent = new fairygui.GComponent;
+	eleLayer: fairygui.GComponent = new fairygui.GComponent;
+	tankLayer: fairygui.GComponent = new fairygui.GComponent;
+	bulletLayer: fairygui.GComponent = new fairygui.GComponent;
+	mapLayer: fairygui.GComponent = new fairygui.GComponent;
 
 	public tanks: TankCtrl[] = [];
-	public bulletMap: {[key:number]:BulletCtrl} = {};
+	public bulletMap: { [key: number]: BulletCtrl } = {};
 	public dispose(): void {
 		if (this.ui != null) {
 			this.ui.dispose();
@@ -41,7 +41,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	initUI() {
 		CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickComp));
 		CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Battle_SkillSection, new SkillSectionCtrl(this.ui.m_skillComp as fuis.joysticks_1.UI_SkillSection));
-		this.ui.addChildAt(this.eleLayer,this.ui.getChildIndex(this.ui.m_bg)+1);
+		this.ui.addChildAt(this.eleLayer, this.ui.getChildIndex(this.ui.m_bg) + 1);
 		this.eleLayer.addChild(this.mapLayer);
 		this.eleLayer.addChild(this.tankLayer);
 		this.eleLayer.addChild(this.bulletLayer);
@@ -51,102 +51,105 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchDown, this);
 		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
 		this.initInputEvent();
-    }
-    //===input Joystick keyboard mouse
-    initInputEvent(){
-        MsgMgr.si.add(JoystickCtrl.JoystickChange, this, this.onJoystickChange);
-        MsgMgr.si.add(KeyBoardCtrl.KeyDown, this, this.onKeyDown);
+	}
+	//===input Joystick keyboard mouse
+	initInputEvent() {
+		MsgMgr.si.add(JoystickCtrl.JoystickChange, this, this.onJoystickChange);
+		MsgMgr.si.add(KeyBoardCtrl.KeyDown, this, this.onKeyDown);
 		MsgMgr.si.add(KeyBoardCtrl.KeyUp, this, this.onKeyUp);
-		MsgMgr.si.add(MouseWheelCtrl.OnChange,this,this.onMouseWheelChange)
+		MsgMgr.si.add(MouseWheelCtrl.OnChange, this, this.onMouseWheelChange)
 	}
-	mouseStageXY:egret.Point = new egret.Point();
-	tempPoi:egret.Point = new egret.Point();
-	onMouseWheelChange(delta:number){
+	mouseStageXY: egret.Point = new egret.Point();
+	tempPoi: egret.Point = new egret.Point();
+	onMouseWheelChange(delta: number) {
 		// console.log("[info]",delta,"`delta`");
-		this.eleLayer.globalToLocal(this.mouseStageXY.x,this.mouseStageXY.y, this.tempPoi);
-		FgUtil.scaleAndMoveByXy(this.eleLayer,this.tempPoi.x,this.tempPoi.y,delta/10000);
+		this.eleLayer.globalToLocal(this.mouseStageXY.x, this.mouseStageXY.y, this.tempPoi);
+		FgUtil.scaleAndMoveByXy(this.eleLayer, this.tempPoi.x, this.tempPoi.y, delta / 10000);
 	}
-    onJoystickChange(dir: Direction4) {
-        this.proxy.onMoveDirChange(dir);
-    }
-    dirKeyCode:number[] = [KeyBoardCtrl.KEY_D,KeyBoardCtrl.KEY_S,KeyBoardCtrl.KEY_A,KeyBoardCtrl.KEY_W];
-    onKeyDown(keyCode:number,kbc:KeyBoardCtrl){
-        var dirKeyCodeIndex:number = this.dirKeyCode.indexOf(keyCode);
-        if(dirKeyCodeIndex>-1){
-            this.proxy.onMoveDirChange(<Direction4>(dirKeyCodeIndex+1));
-        }else{
-            switch(keyCode){
-                case KeyBoardCtrl.KEY_SPACE_BAR:
-                this.proxy.onSkillTrigger(1);
-                break;
-            }
-        }
-    }
-    onKeyUp(keyCode:number,kbc:KeyBoardCtrl){
-        var dirKeyCodeIndex:number = this.dirKeyCode.indexOf(keyCode);
-        if(dirKeyCodeIndex>-1){
-            //===plan 1
-            /* for (let i = 0; i < this.dirKeyCode.length; i++) {
-                let keyCode = this.dirKeyCode[i];
-                if(KeyBoardCtrl.si.isKeyDown(keyCode)){
-                    this.onMoveDirChange(<Direction4>(dirKeyCodeIndex+1));
-                    return;
-                }
-            }
-            this.onMoveDirChange(Direction4.None); */
-            //===plan 2
-            var dir:Direction4 = <Direction4>(dirKeyCodeIndex+1);
-            if(dir==this.proxy.myTank.dir){
-                this.proxy.onMoveDirChange(Direction4.None);
-            }
-            //===
-        }else{
-            switch(keyCode){
-                case KeyBoardCtrl.KEY_SPACE_BAR:
-                this.proxy.onSkillUntrigger(1);
-                break;
-            }
-        }
-    }
-    //===
+	onJoystickChange(dir: Direction4) {
+		this.proxy.onMoveDirChange(dir);
+	}
+	dirKeyCode: number[] = [KeyBoardCtrl.KEY_D, KeyBoardCtrl.KEY_S, KeyBoardCtrl.KEY_A, KeyBoardCtrl.KEY_W];
+	onKeyDown(keyCode: number, kbc: KeyBoardCtrl) {
+		var dirKeyCodeIndex: number = this.dirKeyCode.indexOf(keyCode);
+		if (dirKeyCodeIndex > -1) {
+			this.proxy.onMoveDirChange(<Direction4>(dirKeyCodeIndex + 1));
+		} else {
+			switch (keyCode) {
+				case KeyBoardCtrl.KEY_SPACE_BAR:
+					this.proxy.onSkillTrigger(1);
+					break;
+			}
+		}
+	}
+	onKeyUp(keyCode: number, kbc: KeyBoardCtrl) {
+		var dirKeyCodeIndex: number = this.dirKeyCode.indexOf(keyCode);
+		if (dirKeyCodeIndex > -1) {
+			switch (CtrlConfig.si.keyBoardCtrlKind) {
+				case 1:
+					for (let i = 0; i < this.dirKeyCode.length; i++) {
+						keyCode = this.dirKeyCode[i];
+						if (KeyBoardCtrl.si.isKeyDown(keyCode)) {
+							this.proxy.onMoveDirChange(<Direction4>(this.dirKeyCode.indexOf(keyCode) + 1));
+							return;
+						}
+					}
+					this.proxy.onMoveDirChange(Direction4.None);
+					break;
+				case 2:
+					var dir: Direction4 = <Direction4>(dirKeyCodeIndex + 1);
+					if (dir == this.proxy.myTank.dir) {
+						this.proxy.onMoveDirChange(Direction4.None);
+					}
+					break;
+			}
+		} else {
+			switch (keyCode) {
+				case KeyBoardCtrl.KEY_SPACE_BAR:
+					this.proxy.onSkillUntrigger(1);
+					break;
+			}
+		}
+	}
+	//===
 	// touchId:number = -1;
 	private onTouchDown(e: egret.TouchEvent) {
-		this.mouseStageXY.x = e.stageX, 
-		this.mouseStageXY.y = e.stageY;
-        // if (this.touchId == -1)//First touch
-        // {
-			// this.touchId = evt.touchPointID;
+		this.mouseStageXY.x = e.stageX,
+			this.mouseStageXY.y = e.stageY;
+		// if (this.touchId == -1)//First touch
+		// {
+		// this.touchId = evt.touchPointID;
 		// }
 	}
-	private onTouchMove(e:egret.TouchEvent){
-		this.mouseStageXY.x = e.stageX, 
-		this.mouseStageXY.y = e.stageY;
+	private onTouchMove(e: egret.TouchEvent) {
+		this.mouseStageXY.x = e.stageX,
+			this.mouseStageXY.y = e.stageY;
 	}
-	initMap(){
-		let stcMapVo:IStcMapVo = this.model.stcMapVo;
+	initMap() {
+		let stcMapVo: IStcMapVo = this.model.stcMapVo;
 		for (let i = 0; i < stcMapVo.cells.length; i++) {
 			let cellKind = this.model.stcMapVo.cells[i];
-			let grid = CommonHelper.indexToGridH(i,stcMapVo.size.col);
-			let cell:fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
+			let grid = CommonHelper.indexToGridH(i, stcMapVo.size.col);
+			let cell: fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
 			cell.m_kind.selectedIndex = cellKind;
-			cell.setXY(models.battles.BattleUtil.gridToPos(grid.col),models.battles.BattleUtil.gridToPos(grid.row));
+			cell.setXY(models.battles.BattleUtil.gridToPos(grid.col), models.battles.BattleUtil.gridToPos(grid.row));
 			this.mapLayer.addChild(cell);
 		}
 	}
 
-	public addTank(vo:models.battles.TankVo) {
-		let tank:TankCtrl = new TankCtrl();
+	public addTank(vo: models.battles.TankVo) {
+		let tank: TankCtrl = new TankCtrl();
 		tank.vo = vo;
 		tank.battle = this;
 		tank.init();
 		this.tankLayer.addChild(tank.ui);
 		this.tanks.push(tank);
 	}
-	public addBulletById(battleUid:number){
+	public addBulletById(battleUid: number) {
 		this.addBullet(this.model.bullets[battleUid]);
 	}
-	public addBullet(vo:models.battles.BulletVo){
-		let bullet:BulletCtrl = new BulletCtrl();
+	public addBullet(vo: models.battles.BulletVo) {
+		let bullet: BulletCtrl = new BulletCtrl();
 		bullet.vo = vo;
 		bullet.battle = this;
 		bullet.init();

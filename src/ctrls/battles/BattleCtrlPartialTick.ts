@@ -15,17 +15,18 @@ class BattleCtrlPartialTick {
     extraMs:number = 0;
     /** 需要多少ms到下一个关键帧 */
     nextFrameNeedTime: number = 0;
+    public isFrame: boolean = false;
     public tick() {
+        this.isFrame = false;
         this.currTime = SUtil.getTime();
         //--
-        let isFrame: boolean = false;
         if (this.owner.proxy.isChaseFrame) {
-            isFrame = true;
+            this.isFrame = true;
             this.nextFrameNeedTime = 0;
         } else {
             let gapMs = this.currTime - this.lastFrameTime;
             if((gapMs+this.extraMs)>=models.battles.BattleConfig.si.modelMsPerFrame){
-                isFrame = true;
+                this.isFrame = true;
                 this.extraMs = (gapMs+this.extraMs)-models.battles.BattleConfig.si.modelMsPerFrame;
                 if(this.extraMs>=models.battles.BattleConfig.si.modelMsPerFrame){
                     this.nextFrameNeedTime = 0;
@@ -40,9 +41,9 @@ class BattleCtrlPartialTick {
         //--
         this.lastFrameTime = this.currTime;
         //---
-        if (isFrame) {
+        if (this.isFrame) {
             this.owner.proxy.tick();
-            console.log("[info]","this is frame",this.owner.model.currFrame,this.owner.proxy.isKeyFrame);
+            // console.log("[info]","this is frame",this.owner.model.currFrame,this.owner.proxy.isKeyFrame);
             //-- deal frame output
             for (let i = 0; i < this.owner.proxy.model.frameOutputs.length; i++) {
                 let item = this.owner.proxy.model.frameOutputs[i];

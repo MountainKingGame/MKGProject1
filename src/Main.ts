@@ -8,11 +8,11 @@ class Main extends egret.DisplayObjectContainer {
         console.log('hello,world',"onAddToStage");
         egret.lifecycle.addLifecycleListener((context) => {
             // custom lifecycle plugin
-            var lastTime:number = new Date().getTime();
+            // var lastTime:number = new Date().getTime();
             context.onUpdate = () => {
-                var nowTime:number = new Date().getTime();
-                console.log("[info]","onUpdate",nowTime-lastTime);
-                lastTime = nowTime;
+                // var nowTime:number = new Date().getTime();
+                // console.log("[info]","onUpdate",nowTime-lastTime);
+                // lastTime = nowTime;
                 MsgMgr.si.send(CtrlConst.Msg_OnGameTick);
             }
         })

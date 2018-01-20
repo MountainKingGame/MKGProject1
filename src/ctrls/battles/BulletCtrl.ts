@@ -15,10 +15,10 @@ class BulletCtrl extends CtrlBase<fuis.elements_1.UI_Bullet>{
     }
     tick():void{
         this.movableEleCtrl.tick();
-        var gc:fairygui.GComponent = fuis.elements_1.UI_Bullet.createInstance();
-        this.ui.parent.addChild(gc);
-        gc.setPivot(0.5,0.5,true);
-        gc.setXY(this.ui.x,this.ui.y);
+       /*  var test1:fairygui.GComponent = fuis.elements_1.UI_Bullet.createInstance();
+        this.ui.parent.addChild(test1);
+        test1.setPivot(0.5,0.5,true);
+        test1.setXY(this.ui.x,this.ui.y); */
     }
     public dispose():void{
         this.movableEleCtrl.dispose();
