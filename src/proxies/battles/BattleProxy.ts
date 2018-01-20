@@ -2,6 +2,9 @@ class BattleProxy {
     public isInit: boolean = false;
     public model: models.battles.BattleModel;
     public myTank: models.battles.TankVo;
+    isKeyFrame: boolean = false;
+    //补帧状态
+    isChaseFrame:boolean = false;
     public init() {
         this.isInit = true;
         this.initEvent();
@@ -14,6 +17,10 @@ class BattleProxy {
 
     }
     public tick() {
+        this.isKeyFrame = false;
+        if ((this.model.currFrame + 1) % models.battles.BattleConfig.si.keyFrameMultiple == 0) {
+            this.isKeyFrame = true;
+        }
         this.model.frameOutputs = [];
         this.model.partialTick.tick();
         this.model.frameInputs = [];

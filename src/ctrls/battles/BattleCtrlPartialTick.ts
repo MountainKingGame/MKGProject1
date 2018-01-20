@@ -4,22 +4,46 @@ class BattleCtrlPartialTick {
         this.owner = owner;
     }
     public init() {
-        this.lastKeyFrameTime = new Date().getTime();
-        MsgMgr.si.add(CtrlConst.Msg_OnGameTick,this,this.tick);
+        this.lastFrameTime = new Date().getTime();
+        this.nextFrameNeedTime = models.battles.BattleConfig.si.modelMsPerFrame;
+        MsgMgr.si.add(CtrlConst.Msg_OnGameTick, this, this.tick);
         // setInterval(this.tick.bind(this), CtrlConfig.si.viewMsPerFrame);
     }
-    lastKeyFrameTime: number = 0;
-    isKeyFrame: boolean = false;
+    lastFrameTime: number = 0;
+    private currTime: number = 0;
+    /** 多出来的时间 */
+    extraMs:number = 0;
+    /** 需要多少ms到下一个关键帧 */
+    nextFrameNeedTime: number = 0;
     public tick() {
-        this.isKeyFrame = false;
-        let currTime: number = new Date().getTime();
-        if (CtrlConfig.si.viewFrameRate <= models.battles.BattleConfig.si.modelFrameRate
-            || (currTime - this.lastKeyFrameTime) >= models.battles.BattleConfig.si.modelMsPerFrame) {
-            this.isKeyFrame = true;
-            // console.log("[debug]",currTime - this.lastTickModelTime);
-            this.lastKeyFrameTime = currTime-(currTime - this.lastKeyFrameTime)%models.battles.BattleConfig.si.modelMsPerFrame;
+        this.currTime = SUtil.getTime();
+        //--
+        let isFrame: boolean = false;
+        if (this.owner.proxy.isChaseFrame) {
+            isFrame = true;
+            this.nextFrameNeedTime = 0;
+        } else {
+            let gapMs = this.currTime - this.lastFrameTime;
+            if((gapMs+this.extraMs)>=models.battles.BattleConfig.si.modelMsPerFrame){
+                isFrame = true;
+                this.extraMs = (gapMs+this.extraMs)-models.battles.BattleConfig.si.modelMsPerFrame;
+                if(this.extraMs>=models.battles.BattleConfig.si.modelMsPerFrame){
+                    this.nextFrameNeedTime = 0;
+                }else{
+                    this.nextFrameNeedTime = models.battles.BattleConfig.si.modelMsPerFrame-this.extraMs;
+                }
+            }else{
+                this.extraMs+=gapMs;
+                this.nextFrameNeedTime = models.battles.BattleConfig.si.modelMsPerFrame-this.extraMs;
+            }
+        }
+        //--
+        this.lastFrameTime = this.currTime;
+        //---
+        if (isFrame) {
             this.owner.proxy.tick();
-            //--frame output
+            console.log("[info]","this is frame",this.owner.model.currFrame,this.owner.proxy.isKeyFrame);
+            //-- deal frame output
             for (let i = 0; i < this.owner.proxy.model.frameOutputs.length; i++) {
                 let item = this.owner.proxy.model.frameOutputs[i];
                 switch (item.kind) {
@@ -36,7 +60,10 @@ class BattleCtrlPartialTick {
                 }
             }
         }
-        // console.log("[info]","is key fame",this.isTickModel);
+        /** 无论是不是关键帧 ctrl层还是要tick的 */
+        this.tickCtrl();
+    }
+    tickCtrl(){
         for (const uid in this.owner.tanks) {
             const tank = this.owner.tanks[uid];
             tank.tick();
