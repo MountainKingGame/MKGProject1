@@ -49,7 +49,7 @@ class Main extends egret.DisplayObjectContainer {
         console.warn("Url:" + event.resItem.url + " has failed to load");
     }
     private onResourceLoadError(event: RES.ResourceEvent) {
-        //TODO
+        //TODO:
         console.warn("Group:" + event.groupName + " has failed to load");
         //忽略加载失败的项目
         //Ignore the loading failed projects

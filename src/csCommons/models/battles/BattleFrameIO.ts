@@ -2,8 +2,8 @@
     public inputs:BattleFrameIOItem[] = [];
     public outputs:BattleFrameIOItem[] = [];
 } */
-class BattleFrameIOItem{
-    constructor(kind:BattleFrameIOKind,frame:number,playerUid:number,data0:any=null,data1:any=null,data2:any=null,data3:any=null,data4:any=null,data5:any=null){
+class BattleFrameIOItem {
+    constructor(kind: BattleFrameInputKind|BattleFrameOutputKind, frame: number, playerUid: number, data0: number = null, data1: number = null, data2: number = null, data3: number = null, data4: number = null, data5: number = null, data6: number = null, data7: number = null) {
         this.kind = kind;
         this.frame = frame;
         this.uid = playerUid;
@@ -13,27 +13,34 @@ class BattleFrameIOItem{
         this.data3 = data3;
         this.data4 = data4;
         this.data5 = data5;
+        this.data6 = data6;
+        this.data7 = data7;
     }
-    kind:BattleFrameIOKind;
-    frame:number;
-    uid:number;
+    kind: BattleFrameInputKind|BattleFrameOutputKind;
+    frame: number;
+    uid: number;
     //
-    data0:any;
-    data1:any;
-    data2:any;
-    data3:any;
-    data4:any;
-    data5:any;
+    data0: number;
+    data1: number;
+    data2: number;
+    data3: number;
+    data4: number;
+    data5: number;
+    data6: number;
+    data7: number;
 }
-enum BattleFrameIOKind{
+enum BattleFrameInputKind {
     //===frame input
-    MoveDirChange = 101,
+    MoveDirChange = 10001,
+    /** skill trigger start  */
     SkillTrigger,
-    /** this frame trigger skill once */
+    /** skill once */
     SkillTriggerOnce,
+    /** skill trigger end */
     SkillUntrigger,
-    //===frame output
-    TankDirChange = 201,
+}
+enum BattleFrameOutputKind {
+    TankDirChange = 20001,
     TankXyChange,
     AddTank,
     AddBullet,

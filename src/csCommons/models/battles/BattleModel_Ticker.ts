@@ -20,20 +20,20 @@ namespace models.battles {
             for (let i = 0; i < this.owner.frameInputs.length; i++) {
                 let item = this.owner.frameInputs[i];
                 switch (item.kind) {
-                    case BattleFrameIOKind.MoveDirChange:
-                        this.owner.tanks[item.uid].moveDir = <Direction4>item.data0;
+                    case BattleFrameInputKind.MoveDirChange:
+                        this.owner.tankMap[item.uid].moveDir = <Direction4>item.data0;
                         break;
-                    case BattleFrameIOKind.SkillTrigger:
-                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggering = true;
-                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
+                    case BattleFrameInputKind.SkillTrigger:
+                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = true;
+                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
                         break;
-                    case BattleFrameIOKind.SkillUntrigger:
-                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggering = false;
-                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
+                    case BattleFrameInputKind.SkillUntrigger:
+                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
+                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
                         break;
-                        case BattleFrameIOKind.SkillTriggerOnce:
-                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggerOnce = true;
-                        this.owner.tanks[item.uid].skillMap[<number>item.data0].isTriggering = false;
+                        case BattleFrameInputKind.SkillTriggerOnce:
+                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = true;
+                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
                         break;
                 }
             }
@@ -41,8 +41,8 @@ namespace models.battles {
         public tick_generate() {
         }
         public tick_skill() {
-            for (const uid in this.owner.tanks) {
-                const tank = this.owner.tanks[uid];
+            for (const uid in this.owner.tankMap) {
+                const tank = this.owner.tankMap[uid];
                 for (const skillSid in tank.skillMap) {
                     let skillVo = tank.skillMap[skillSid];
                     if ((skillVo.isTriggering || skillVo.isTriggerOnce) && (this.owner.currFrame - skillVo.castFrame) > skillVo.castGapFrame) {
@@ -58,7 +58,7 @@ namespace models.battles {
                         bullet.x = tank.x;
                         bullet.y = tank.y;
                         bullet.moveDir = tank.dir;
-                        this.owner.partialAdd.addBulletVo(bullet);
+                        this.owner.adder.addBulletVo(bullet);
                     }
                     skillVo.isTriggerOnce = false;
                 }
@@ -70,8 +70,8 @@ namespace models.battles {
          * onFrame_move
          */
         public tick_tank_move() {
-            for (const uid in this.owner.tanks) {
-                const vo = this.owner.tanks[uid];
+            for (const uid in this.owner.tankMap) {
+                const vo = this.owner.tankMap[uid];
                 if (vo.moveDir != Direction4.None) {
                     vo.dir = vo.moveDir;
                     switch (vo.moveDir) {

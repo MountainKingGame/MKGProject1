@@ -1,3 +1,14 @@
 {
-    "search.useIgnoreFiles": false
+    "search.useIgnoreFiles": false,
+    "TodoParser": {
+        "folderExclude": [
+            "node_modules",
+            "libs",
+            "bin-debug",
+            "bin"
+        ],
+        "only": [
+            "src"
+        ]
+    }
 }

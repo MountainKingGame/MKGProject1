@@ -10,7 +10,7 @@ class MovableEleCtrl extends CtrlBase<fairygui.GComponent>{
     private frameMoveX:number = 0;
     private frameMoveY:number = 0;
     tick():void{
-        if(this.battle.partialTick.isFrame){
+        if(this.battle.proxy.isFrame){
             this.ui.rotation = CommonHelper.dir4ToDegree(this.vo.dir); 
             this.frameMoveX = this.vo.x-this.ui.x;
             this.frameMoveY = this.vo.y-this.ui.y;

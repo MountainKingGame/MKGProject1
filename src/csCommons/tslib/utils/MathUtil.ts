@@ -37,6 +37,6 @@ class MathUtil{
         return MathUtil.magnitude(bx-ax,by-ay);
     }
     static round(val:number,digit:number=0){
-        return Math.round(val)//TODO;
+        return Math.round(val)//TODO:
     }
 }

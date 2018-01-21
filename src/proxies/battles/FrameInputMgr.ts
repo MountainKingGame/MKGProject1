@@ -10,16 +10,16 @@ class FrameInputMgr {
         for (let i = 0; i < this.frameInputs.length; i++) {
             let item = this.frameInputs[i];
             switch (item.kind) {
-                case BattleFrameIOKind.MoveDirChange:
+                case BattleFrameInputKind.MoveDirChange:
                     moveChangeItem = item;//MoveDir only use lastest 
                     break;
-                case BattleFrameIOKind.SkillTrigger:
+                case BattleFrameInputKind.SkillTrigger:
                     if (!skillMap[item.data0]) {
                         skillMap[item.data0] = [null, null];
                     }
                     skillMap[item.data0] = [item, null];//只要有trigger就把untrigger覆盖掉
                     break;
-                case BattleFrameIOKind.SkillUntrigger:
+                case BattleFrameInputKind.SkillUntrigger:
                     if (!skillMap[item.data0]) {
                         skillMap[item.data0] = [null, null];
                     }
@@ -31,7 +31,7 @@ class FrameInputMgr {
                     //--
                     if (!skillMap[item.data0][0]) {
                         skillMap[item.data0] = [item, null];
-                    } else if (skillMap[item.data0][0].kind == BattleFrameIOKind.SkillTrigger) {
+                    } else if (skillMap[item.data0][0].kind == BattleFrameInputKind.SkillTrigger) {
                         skillMap[item.data0][1] = item;
                     }
                     break;
@@ -48,7 +48,7 @@ class FrameInputMgr {
                 rs.push(skillMap[skillSid][0]);
             } else {
                 // [0]:trigger[1]:untrigger
-                rs.push(new BattleFrameIOItem(BattleFrameIOKind.SkillTriggerOnce, frame, skillMap[skillSid][1].uid, skillSid));
+                rs.push(new BattleFrameIOItem(BattleFrameInputKind.SkillTriggerOnce, frame, skillMap[skillSid][1].uid, skillSid));
             }
         }
         this.frameInputs = [];

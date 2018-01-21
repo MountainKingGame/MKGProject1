@@ -2,7 +2,7 @@ namespace models.battles {
     /**
      * 为BattleModel添加新物品的方法集合
      */
-    export class BattleModelPartialAdd {
+    export class BattleModel_Adder {
         public owner: BattleModel;
         constructor(owner: BattleModel) {
             this.owner = owner;
@@ -23,8 +23,8 @@ namespace models.battles {
             // } else {
             vo.moveSpeedPerFrame = BattleConfig.si.tankMoveSpeedPerFrame;
             vo.hitTestRadii = BattleConfig.si.cellSize;
-            this.owner.tanks[vo.uid] = vo;
-            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameIOKind.AddTank,this.owner.currFrame,vo.uid))
+            this.owner.tankMap[vo.uid] = vo;
+            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddTank,this.owner.currFrame,vo.uid))
             // }
             let skillVo = new SkillVo();
             skillVo.sid = 1;
@@ -35,7 +35,7 @@ namespace models.battles {
             vo.moveSpeedPerFrame = BattleConfig.si.bulletMoveSpeedPerFrame;
             vo.hitTestRadii = 10;
             this.owner.bullets[vo.uid] = vo;
-            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameIOKind.AddBullet,this.owner.currFrame,vo.ownerUid,vo.uid))
+            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddBullet,this.owner.currFrame,vo.ownerUid,vo.uid))
         }
     }
 

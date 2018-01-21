@@ -1,5 +1,5 @@
 class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
-	public partialTick: BattleCtrlPartialTick = new BattleCtrlPartialTick(this);
+	public partialTick: BattleCtrl_Ticker = new BattleCtrl_Ticker(this);
 	/**
 	 * battle model
 	 */
@@ -14,7 +14,8 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	bulletLayer: fairygui.GComponent = new fairygui.GComponent;
 	mapLayer: fairygui.GComponent = new fairygui.GComponent;
 
-	public tanks: TankCtrl[] = [];
+	public tankMap: { [key: number]: TankCtrl } = {};
+	myTank: TankCtrl;
 	public bulletMap: { [key: number]: BulletCtrl } = {};
 	public dispose(): void {
 		if (this.ui != null) {
@@ -34,8 +35,10 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.initEvent();
 		//
 		this.initMap();
+		//- TODO:
 		this.addTank(this.proxy.myTank);//TODO:
-		//
+		this.myTank = this.tankMap[this.proxy.myTank.uid];
+		//-
 		this.partialTick.init();
 	}
 	initUI() {
@@ -63,8 +66,11 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	tempPoi: egret.Point = new egret.Point();
 	onMouseWheelChange(delta: number) {
 		// console.log("[info]",delta,"`delta`");
-		this.eleLayer.globalToLocal(this.mouseStageXY.x, this.mouseStageXY.y, this.tempPoi);
-		FgUtil.scaleAndMoveByXy(this.eleLayer, this.tempPoi.x, this.tempPoi.y, delta / 10000);
+		//- kind 1
+		// this.eleLayer.globalToLocal(this.mouseStageXY.x, this.mouseStageXY.y, this.tempPoi);
+		// FgUtil.scaleAndMoveByXy(this.eleLayer, this.tempPoi.x, this.tempPoi.y, delta / 10000);
+		//- kind 2
+		FgUtil.scaleAndMoveByXy(this.eleLayer, this.myTank.ui.x, this.myTank.ui.y, delta / 1000);
 	}
 	onJoystickChange(dir: Direction4) {
 		this.proxy.onMoveDirChange(dir);
@@ -136,14 +142,13 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 			this.mapLayer.addChild(cell);
 		}
 	}
-
 	public addTank(vo: models.battles.TankVo) {
 		let tank: TankCtrl = new TankCtrl();
 		tank.vo = vo;
 		tank.battle = this;
 		tank.init();
 		this.tankLayer.addChild(tank.ui);
-		this.tanks.push(tank);
+		this.tankMap[vo.uid] = tank;
 	}
 	public addBulletById(battleUid: number) {
 		this.addBullet(this.model.bullets[battleUid]);
