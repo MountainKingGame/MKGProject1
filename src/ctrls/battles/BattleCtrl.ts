@@ -14,6 +14,10 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	bulletLayer: fairygui.GComponent = new fairygui.GComponent;
 	mapLayer: fairygui.GComponent = new fairygui.GComponent;
 
+	uiHalfWidth: number;
+	uiHalfHeight: number;
+	public mapSize: Vector2;
+
 	public tankMap: { [key: number]: TankCtrl } = {};
 	myTank: TankCtrl;
 	public bulletMap: { [key: number]: BulletCtrl } = {};
@@ -32,6 +36,8 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.model = this.proxy.model;
 		//
 		this.initUI();
+		this.uiHalfWidth = Math.round(this.ui.width / 2);
+		this.uiHalfHeight = Math.round(this.ui.height / 2);
 		this.initEvent();
 		//
 		this.initMap();
@@ -71,6 +77,17 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		// FgUtil.scaleAndMoveByXy(this.eleLayer, this.tempPoi.x, this.tempPoi.y, delta / 10000);
 		//- kind 2
 		FgUtil.scaleAndMoveByXy(this.eleLayer, this.myTank.ui.x, this.myTank.ui.y, delta / 1000);
+		//-
+		this.clampMapScale();
+	}
+	clampMapScale(){
+		let scale = Math.min(
+			MathUtil.clamp(this.eleLayer.scaleX, this.ui.width / this.mapSize.x, 1),
+			MathUtil.clamp(this.eleLayer.scaleY, this.ui.height / this.mapSize.y, 1)
+		);
+		this.eleLayer.scaleX = scale;
+		this.eleLayer.scaleY = scale;
+		// this.clampMapXY(this.eleLayer.x,this.eleLayer.y);//Don't need do this, because every tick will do it
 	}
 	onJoystickChange(dir: Direction4) {
 		this.proxy.onMoveDirChange(dir);
@@ -132,6 +149,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 			this.mouseStageXY.y = e.stageY;
 	}
 	initMap() {
+		this.mapSize = this.model.size;
 		let stcMapVo: IStcMapVo = this.model.stcMapVo;
 		for (let i = 0; i < stcMapVo.cells.length; i++) {
 			let cellKind = this.model.stcMapVo.cells[i];
@@ -141,6 +159,35 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 			cell.setXY(models.battles.BattleUtil.gridToPos(grid.col), models.battles.BattleUtil.gridToPos(grid.row));
 			this.mapLayer.addChild(cell);
 		}
+		this.eleLayer.scaleX = this.eleLayer.scaleY = 0.5;
+		this.clampMapScale();
+	}
+	alginByMyTank() {
+		this.clampMapXY(
+			Math.round(this.uiHalfWidth - this.myTank.ui.x * this.eleLayer.scaleX),
+			Math.round(this.uiHalfHeight - this.myTank.ui.y * this.eleLayer.scaleY)
+		);
+	}
+	clampMapXY(x: number, y: number) {
+		let w: number = this.mapSize.x * this.eleLayer.scaleX;
+		if (this.ui.width == w) {
+			x = 0;
+		} else if (this.ui.width > w) {
+			x = (this.ui.width - w) / 2;
+		} else {
+			x = MathUtil.clamp(x, this.ui.width - w, 0);
+		}
+		this.eleLayer.x = Math.round(x);
+		//-
+		let h: number = this.mapSize.y * this.eleLayer.scaleY;
+		if (this.ui.height == h) {
+			y = 0;
+		} else if (this.ui.height > h) {
+			y = (this.ui.height - h) / 2;
+		} else {
+			y = MathUtil.clamp(y, this.ui.height - h, 0);
+		}
+		this.eleLayer.y = Math.round(y);
 	}
 	public addTank(vo: models.battles.TankVo) {
 		let tank: TankCtrl = new TankCtrl();

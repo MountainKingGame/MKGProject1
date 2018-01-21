@@ -72,7 +72,7 @@ class BattleCtrl_Ticker {
             const bullet = this.owner.bulletMap[uid];
             bullet.tick();
         }
-        
+        this.owner.alginByMyTank();
     }
 
 }

@@ -19,7 +19,7 @@ class MouseWheelCtrl {
         } else if (e.detail) {//Firefox 
             delta = e.detail;
         }
-        console.log("[info]",delta,"`delta`",e.screenX,e.screenY);
+        // console.log("[info]",delta,"`delta`",e.screenX,e.screenY);
         MsgMgr.si.send(MouseWheelCtrl.OnChange,delta,this);
     }
 

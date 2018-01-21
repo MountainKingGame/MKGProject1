@@ -22,10 +22,10 @@ class MathUtil{
      * e.g. clamp(-3,0,10)=>0; clamp(30,0,12)=>12;  clamp(20,0,42)=>20;
      */
     public static clamp(val:number,min:number,max:number):number{
-        if(val>max){
+        if(val>=max){
             return max;
         }
-        if(val<min){
+        if(val<=min){
             return min;
         }
         return val;
