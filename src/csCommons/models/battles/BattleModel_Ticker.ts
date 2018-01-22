@@ -74,10 +74,13 @@ namespace models.battles {
             this.owner.qtBullet.refresh();
             this.owner.qtTank.refresh();
             for (const uid in this.owner.bulletMap) {
-                if (this.owner.bulletMap[uid].stateA == BattleVoStateA.Living) {
-                    this.checkBulletHitTest(this.owner.bulletMap[uid]);
+                let vo: BulletVo = this.owner.bulletMap[uid];
+                if (vo.stateA == BattleVoStateA.Living) {
+                    this.checkBulletHitTest(vo);
                     if (this.owner.bulletMap[uid].stateA == BattleVoStateA.Dump) {
-                        //TODO: delete this.owner.bulletMap[uid];//must wait after ctrl used
+                        //don't remove, wait after ctrl used
+                        this.owner.dumpBulletMap[uid] = vo;
+                        delete this.owner.bulletMap[uid];
                     }
                 }
             }

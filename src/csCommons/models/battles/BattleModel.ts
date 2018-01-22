@@ -11,8 +11,12 @@ namespace models.battles {
         public stcMapVo: IStcMapVo;
         /**当前帧*/
         public cellMap: { [key: number]: CellVo } = {};//key:Vo.uid
-        public tankMap: { [key: number]: TankVo } = {};//key:Vo.uid
-        public bulletMap: { [key: number]: BulletVo } = {};//key:Vo.uid
+        public tankMap: { [key: number]: TankVo } = {};
+        public bulletMap: { [key: number]: BulletVo } = {};
+        //
+        public dumpCellMap: { [key: number]: CellVo } = {};
+        public dumpTankMap: { [key: number]: TankVo } = {};
+        public dumpBulletMap: { [key: number]: BulletVo } = {};
         //
         qtCell:QuadTree;
         qtTank:QuadTree;
@@ -61,5 +65,6 @@ namespace models.battles {
             tank.y = MathUtil.clamp(tank.y,tank.hitRect.z_h,this.size.y - tank.hitRect.z_h);
             tank.y = Math.round(tank.y);
         }
+
     }
 }

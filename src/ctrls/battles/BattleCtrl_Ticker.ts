@@ -61,8 +61,11 @@ class BattleCtrl_Ticker {
                         let cellVo:models.battles.CellVo = this.owner.model.cellMap[item.data1];
                         this.owner.cellMap[cellVo.uid].m_kind.selectedIndex = cellVo.sid;
                         let bulletVo:models.battles.BulletVo = this.owner.model.bulletMap[item.data0];
-                        if(bulletVo.stateA == models.battles.BattleVoStateA.Dump){
+                        if(bulletVo==undefined){
+                            bulletVo = this.owner.model.dumpBulletMap[item.data0];
+                            //be dumped
                             this.owner.removeBullet(bulletVo);
+                        }else{
                         }
                         break;
                 }

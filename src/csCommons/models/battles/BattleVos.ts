@@ -69,8 +69,8 @@ namespace models.battles {
         public skillMap:{[key:number]:SkillVo} = {};//key:skillSid
     }
     export class BulletVo extends MovableEleVo {
-        /** sender's id   e.g. TankVo.uid */
         stateA:BattleVoStateA = BattleVoStateA.None;
+        /** sender's id   e.g. TankVo.uid */
         ownerUid:number;
     }
     export class SkillVo extends EleVo {

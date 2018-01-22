@@ -28,7 +28,7 @@ namespace models.battles {
             // }
             let skillVo = new SkillVo();
             skillVo.sid = 1;
-            skillVo.castGapFrame = BattleConfig.si.modelFrameRate/2;
+            skillVo.castGapFrame = BattleConfig.si.modelFrameRate / 2;
             vo.skillMap[skillVo.sid] = skillVo;
             vo.stateA = BattleVoStateA.Living;
             this.owner.tankMap[vo.uid] = vo;
@@ -47,12 +47,24 @@ namespace models.battles {
             this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddBullet, this.owner.currFrame, vo.ownerUid, vo.uid));
         }
         /*cell's pivot is left-top*/
-        addCellVo(vo:CellVo) {
+        addCellVo(vo: CellVo) {
             this.owner.cellMap[vo.uid] = vo;
-            if(vo.sid>0){//0 is normal earth
+            if (vo.sid > 0) {//0 is normal earth
                 vo.hitRect = new QuadTreeHitRect(vo);
-                vo.hitRect.recountLeftTop(vo.x,vo.y,BattleConfig.si.cellSize,BattleConfig.si.cellSize);
+                vo.hitRect.recountLeftTop(vo.x, vo.y, BattleConfig.si.cellSize, BattleConfig.si.cellSize);
                 this.owner.qtCell.insert(vo.hitRect);
+            }
+        }
+        removeDumpAll() {
+            for (const uid in this.owner.dumpCellMap) {
+                delete this.owner.dumpCellMap[uid];
+            }
+            for (const uid in this.owner.dumpBulletMap) {
+                // let vo: BulletVo = this.owner.bulletMap[uid];
+                delete this.owner.dumpBulletMap[uid];
+            }
+            for (const uid in this.owner.dumpTankMap) {
+                delete this.owner.dumpTankMap[uid];
             }
         }
     }
