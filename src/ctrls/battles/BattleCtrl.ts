@@ -18,7 +18,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	uiHalfHeight: number;
 	public mapSize: Vector2;
 
-	public cellMap: { [key: number]: fuis.elements_1.UI_MapCell } = {};
+	public cellMap: { [key: number]: fuis.battles_1.UI_MapCell } = {};
 	public tankMap: { [key: number]: TankCtrl } = {};
 	myTank: TankCtrl;
 	public bulletMap: { [key: number]: BulletCtrl } = {};
@@ -154,7 +154,8 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		for (const key in this.model.cellMap) {
 			const vo = this.model.cellMap[parseInt(key)];
 			// if(vo.sid>0){
-			let cell: fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
+			// let cell: fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
+			let cell: fuis.battles_1.UI_MapCell = fuis.battles_1.UI_MapCell.createInstance();
 			cell.setXY(vo.x, vo.y);
 			cell.m_kind.selectedIndex = vo.sid;
 			this.mapLayer.addChild(cell);

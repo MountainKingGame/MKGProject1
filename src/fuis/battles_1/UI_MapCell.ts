@@ -4,6 +4,7 @@ module fuis.battles_1 {
 
 	export class UI_MapCell extends fairygui.GComponent {
 
+		public m_kind:fairygui.Controller;
 		public m_icon:fairygui.GLoader;
 
 		public static URL:string = "ui://ybsps8tfu9boc";
@@ -19,6 +20,7 @@ module fuis.battles_1 {
 		protected constructFromXML(xml: any): void {
 			super.constructFromXML(xml);
 
+			this.m_kind = this.getControllerAt(0);
 			this.m_icon = <fairygui.GLoader><any>(this.getChildAt(0));
 		}
 	}
