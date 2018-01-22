@@ -31,7 +31,7 @@ namespace models.battles {
             return rs;
         }
         static checkHit(rect1:IQuadTreeRect,rect2:IQuadTreeRect){
-            if(rect1.right<rect2.x || rect1.x>rect2.right || rect1.bottom<rect2.y || rect1.y>rect2.bottom){
+            if(rect1.right<=rect2.x || rect1.x>=rect2.right || rect1.bottom<=rect2.y || rect1.y>=rect2.bottom){
                 return false;
             }
             return true;

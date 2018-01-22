@@ -75,9 +75,9 @@ namespace models.battles {
             this.owner.qtTank.refresh();
             for (const uid in this.owner.bulletMap) {
                 let vo: BulletVo = this.owner.bulletMap[uid];
-                if(QuadTree.isInner(vo.hitRect,this.owner.qtBullet.rect)==false){
+                if (QuadTree.isInner(vo.hitRect, this.owner.qtBullet.rect) == false) {
                     this.owner.adder.removeBullet(vo);
-                }else{
+                } else {
                     if (vo.stateA == BattleVoStateA.Living) {
                         this.checkBulletHitTest(vo);
                         if (this.owner.bulletMap[uid].stateA == BattleVoStateA.Dump) {
@@ -92,6 +92,7 @@ namespace models.battles {
             let hitArr: IQuadTreeItem[] = this.owner.qtBullet.retrieve(vo.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
+                //if (vo.uid != ((<QuadTreeHitRect>item).owner as BulletVo).uid) {
                 if (vo.ownerUid != ((<QuadTreeHitRect>item).owner as BulletVo).ownerUid) {
                     if (BattleUtil.checkHit(vo.hitRect, item)) {
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitBullet, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
@@ -132,6 +133,27 @@ namespace models.battles {
                 }
             }
         }
+        checkTankHitTest(vo: TankVo):IQuadTreeItem {
+            let hitArr:IQuadTreeItem[] = this.owner.qtCell.retrieve(vo.hitRect);
+            for (let i = 0; i < hitArr.length; i++) {
+                let item = hitArr[i];
+                if ((<QuadTreeHitRect>item).owner.sid > 0) {
+                    if (BattleUtil.checkHit(vo.hitRect, item)) {
+                        return item;
+                    }
+                }
+            }
+            hitArr = this.owner.qtTank.retrieve(vo.hitRect);
+            for (let i = 0; i < hitArr.length; i++) {
+                let item = hitArr[i];
+                if (vo.uid != (<QuadTreeHitRect>item).owner.uid) {
+                    if (BattleUtil.checkHit(vo.hitRect, item)) {
+                        return item;
+                    }
+                }
+            }
+            return null;
+        }
         /**
          * onFrame_move
          */
@@ -140,29 +162,48 @@ namespace models.battles {
                 const vo = this.owner.tankMap[uid];
                 if (vo.moveDir != Direction4.None) {
                     vo.dir = vo.moveDir;
+                    var xOld: number;
+                    var yOld: number;
                     switch (vo.moveDir) {
                         case Direction4.Left:
+                            this.owner.tankAlignGridY(vo);
+                            xOld = vo.x;
+                            yOld = vo.y;
                             vo.x += vo.moveSpeedPerFrame;
                             this.owner.validateTankX(vo);
-                            this.owner.tankAlignGridY(vo);
                             break;
                         case Direction4.Right:
+                            this.owner.tankAlignGridY(vo);
+                            xOld = vo.x;
+                            yOld = vo.y;
                             vo.x -= vo.moveSpeedPerFrame;
                             this.owner.validateTankX(vo);
-                            this.owner.tankAlignGridY(vo);
                             break;
                         case Direction4.Up:
                             this.owner.tankAlignGridX(vo);
+                            xOld = vo.x;
+                            yOld = vo.y;
                             vo.y -= vo.moveSpeedPerFrame;
                             this.owner.validateTankY(vo);
                             break;
                         case Direction4.Down:
                             this.owner.tankAlignGridX(vo);
+                            xOld = vo.x;
+                            yOld = vo.y;
                             vo.y += vo.moveSpeedPerFrame;
                             this.owner.validateTankY(vo);
                             break;
                     }
+                    //--check hit other, resolve can move
                     vo.hitRect.recountPivotCenter(vo.x, vo.y);
+                    let hitItem:IQuadTreeItem = this.checkTankHitTest(vo);
+                    //--
+                    if(hitItem!=null){
+                        //restore
+                        vo.x = xOld;
+                        vo.y = yOld;
+                        vo.hitRect.recountPivotCenter(vo.x, vo.y);
+                    }
                 }
             }
         }
