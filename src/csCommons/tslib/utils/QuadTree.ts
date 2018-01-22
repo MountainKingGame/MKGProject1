@@ -185,20 +185,20 @@ class QuadTree {
         }
     }
     /** 检索可以用鱼碰撞的结果队列 */
-    retrieve(rect: IQuadTreeItem): IQuadTreeItem[] {
+    retrieve(item: IQuadTreeItem): IQuadTreeItem[] {
         var result: IQuadTreeItem[] = [];
         if (this.children.length > 0) {
             var index: number;
-            index = this.getIndex(rect);
+            index = this.getIndex(item);
             if (index !== -1) {
-                result = result.concat(this.children[index].retrieve(rect));
+                result = result.concat(this.children[index].retrieve(item));
             } else {
                 // 切割矩形
                 var arr: IQuadTreeRect[], i: number;
-                arr = QuadTree.carve(rect, this.children[0].rect.right, this.children[0].rect.bottom);
+                arr = QuadTree.carve(item, this.children[0].rect.right, this.children[0].rect.bottom);
                 for (i = arr.length - 1; i >= 0; i--) {
                     index = this.getIndex(arr[i]);
-                    result = result.concat(this.children[index].retrieve(rect));
+                    result = result.concat(this.children[index].retrieve(item));
                 }
             }
         }
@@ -228,7 +228,7 @@ class QuadTree {
         } else if (isCarveX) {
             result.push(
                 new QuadTreeRect(rect.x, cX, rect.y, rect.bottom),
-                new QuadTreeRect(cX, rect.y, rect.y, rect.bottom)
+                new QuadTreeRect(cX, rect.right, rect.y, rect.bottom)
             );
 
             // 只切割Y方向
