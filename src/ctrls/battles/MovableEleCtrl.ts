@@ -19,4 +19,9 @@ class MovableEleCtrl extends CtrlBase<fairygui.GComponent>{
         this.ui.x = this.vo.x-this.frameMoveX*leavePercent;
         this.ui.y = this.vo.y-this.frameMoveY*leavePercent;
     }
+    public dispose():void{
+        this.vo = null;
+        this.battle = null;
+        super.dispose();
+    }
 }

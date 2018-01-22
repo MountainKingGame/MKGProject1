@@ -22,6 +22,7 @@
 		"bin-debug/csCommons/models/battles/BattleModel_Adder.js",
 		"bin-debug/csCommons/models/battles/BattleModel_Ticker.js",
 		"bin-debug/csCommons/models/battles/BattleModel.js",
+		"bin-debug/csCommons/models/battles/BattleModelConst.js",
 		"bin-debug/csCommons/models/battles/BattleUtil.js",
 		"bin-debug/csCommons/models/battles/BattleVos.js",
 		"bin-debug/csCommons/services/BattleService.js",

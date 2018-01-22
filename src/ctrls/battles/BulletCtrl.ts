@@ -21,6 +21,8 @@ class BulletCtrl extends CtrlBase<fuis.elements_1.UI_Bullet>{
         test1.setXY(this.ui.x,this.ui.y); */
     }
     public dispose():void{
+        this.vo = null;
+        this.battle = null;
         this.movableEleCtrl.dispose();
         this.movableEleCtrl = null;
         super.dispose();

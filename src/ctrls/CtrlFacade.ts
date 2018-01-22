@@ -36,6 +36,7 @@ class CtrlFacade{
             let battle: BattleCtrl = new BattleCtrl(fuis.battles_1.UI_Battle.createInstance());
             CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Battle, battle);
             battle.ui.setSize(this.stage.stageWidth, this.stage.stageHeight);
+            this.stage.dirtyRegionPolicy  = "off";
         }
     }
     onResize() {

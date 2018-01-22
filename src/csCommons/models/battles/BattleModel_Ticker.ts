@@ -8,13 +8,18 @@ namespace models.battles {
          * onFrame
          */
         public tick() {
+            let t0 = SUtil.getTime();
             this.tick_frameInput();
+            let t1 = SUtil.getTime();
             this.tick_bulletHitTest();//先计算hit,因为被hit后的物品是不能在做后面动作了
+            let t2 = SUtil.getTime();
             this.tick_generate();
             //move放最后,因为需要view在这一帧移动到xy,然后下一帧再处理hit等事项
             this.tick_tank_move();
             this.tick_skill();
             this.tick_bullet_move();
+            let te = SUtil.getTime();
+            console.log(te - t0, t2 - t1, t1 - t0);
         }
         public tick_frameInput() {
             for (let i = 0; i < this.owner.frameInputs.length; i++) {
@@ -31,7 +36,7 @@ namespace models.battles {
                         this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
                         this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
                         break;
-                        case BattleFrameInputKind.SkillTriggerOnce:
+                    case BattleFrameInputKind.SkillTriggerOnce:
                         this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = true;
                         this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
                         break;
@@ -65,6 +70,59 @@ namespace models.battles {
             }
         }
         public tick_bulletHitTest() {
+            this.owner.qtCell.refresh();
+            this.owner.qtBullet.refresh();
+            this.owner.qtTank.refresh();
+            for (const uid in this.owner.bulletMap) {
+                if (this.owner.bulletMap[uid].stateA == BattleVoStateA.Living) {
+                    this.checkBulletHitTest(this.owner.bulletMap[uid]);
+                    if (this.owner.bulletMap[uid].stateA == BattleVoStateA.Dump) {
+                        //TODO: delete this.owner.bulletMap[uid];//must wait after ctrl used
+                    }
+                }
+            }
+        }
+        checkBulletHitTest(vo: BulletVo) {
+            console.log("[info]", vo.uid, "`vo.uid` checkBulletHitTest");
+            let hitArr: IQuadTreeItem[] = this.owner.qtBullet.retrieve(vo.hitRect);
+            for (let i = 0; i < hitArr.length; i++) {
+                let item = hitArr[i];
+                if (vo.ownerUid != ((<QuadTreeHitRect>item).owner as BulletVo).ownerUid) {
+                    if (BattleUtil.checkHit(vo.hitRect, item)) {
+                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitBullet, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
+                        vo.stateA = BattleVoStateA.Dump;
+                        break;//TODO:only hit one bullet
+                    }
+                }
+            }
+            if (vo.stateA == BattleVoStateA.Dump) {
+                return;
+            }
+            hitArr = this.owner.qtCell.retrieve(vo.hitRect);
+            for (let i = 0; i < hitArr.length; i++) {
+                let item = hitArr[i];
+                if ((<QuadTreeHitRect>item).owner.sid > 0) {
+                    if (BattleUtil.checkHit(vo.hitRect, item)) {
+                        // console.log("[debug]","hit:",vo.hitRect,item,(<QuadTreeHitRect>item).owner.uid);
+                        ((<QuadTreeHitRect>item).owner as CellVo).sid = 0;
+                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitCell, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
+                        vo.stateA = BattleVoStateA.Dump;
+                    }
+                }
+            }
+            if (vo.stateA == BattleVoStateA.Dump) {
+                return;
+            }
+            hitArr = this.owner.qtTank.retrieve(vo.hitRect);
+            for (let i = 0; i < hitArr.length; i++) {
+                let item = hitArr[i];
+                if (vo.ownerUid != (<QuadTreeHitRect>item).owner.uid) {
+                    if (BattleUtil.checkHit(vo.hitRect, item)) {
+                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
+                        vo.stateA = BattleVoStateA.Dump;
+                    }
+                }
+            }
         }
         /**
          * onFrame_move
@@ -96,27 +154,31 @@ namespace models.battles {
                             this.owner.validateTankY(vo);
                             break;
                     }
+                    vo.hitRect.recountPivotCenter(vo.x, vo.y);
                 }
             }
         }
         public tick_bullet_move() {
-            for (const uid in this.owner.bullets) {
-                const vo = this.owner.bullets[uid];
-                if (vo.moveDir != Direction4.None) {
-                    vo.dir = vo.moveDir;
-                    switch (vo.moveDir) {
-                        case Direction4.Left:
-                            vo.x += vo.moveSpeedPerFrame;
-                            break;
-                        case Direction4.Right:
-                            vo.x -= vo.moveSpeedPerFrame;
-                            break;
-                        case Direction4.Up:
-                            vo.y -= vo.moveSpeedPerFrame;
-                            break;
-                        case Direction4.Down:
-                            vo.y += vo.moveSpeedPerFrame;
-                            break;
+            for (const uid in this.owner.bulletMap) {
+                if (this.owner.bulletMap[uid].stateA == BattleVoStateA.Living) {
+                    const vo = this.owner.bulletMap[uid];
+                    if (vo.moveDir != Direction4.None) {
+                        vo.dir = vo.moveDir;
+                        switch (vo.moveDir) {
+                            case Direction4.Left:
+                                vo.x += vo.moveSpeedPerFrame;
+                                break;
+                            case Direction4.Right:
+                                vo.x -= vo.moveSpeedPerFrame;
+                                break;
+                            case Direction4.Up:
+                                vo.y -= vo.moveSpeedPerFrame;
+                                break;
+                            case Direction4.Down:
+                                vo.y += vo.moveSpeedPerFrame;
+                                break;
+                        }
+                        vo.hitRect.recountPivotCenter(vo.x, vo.y);
                     }
                 }
             }

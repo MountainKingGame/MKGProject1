@@ -44,4 +44,8 @@ enum BattleFrameOutputKind {
     TankXyChange,
     AddTank,
     AddBullet,
+    BulletHitBullet,
+    BulletHitCell,
+    BulletHitTank,
+    // BulletDump,
 }

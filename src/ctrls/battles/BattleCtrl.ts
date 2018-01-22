@@ -18,6 +18,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	uiHalfHeight: number;
 	public mapSize: Vector2;
 
+	public cellMap: { [key: number]: fuis.elements_1.UI_MapCell } = {};
 	public tankMap: { [key: number]: TankCtrl } = {};
 	myTank: TankCtrl;
 	public bulletMap: { [key: number]: BulletCtrl } = {};
@@ -80,7 +81,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		//-
 		this.clampMapScale();
 	}
-	clampMapScale(){
+	clampMapScale() {
 		let scale = Math.min(
 			MathUtil.clamp(this.eleLayer.scaleX, this.ui.width / this.mapSize.x, 1),
 			MathUtil.clamp(this.eleLayer.scaleY, this.ui.height / this.mapSize.y, 1)
@@ -150,14 +151,13 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	}
 	initMap() {
 		this.mapSize = this.model.size;
-		let stcMapVo: IStcMapVo = this.model.stcMapVo;
-		for (let i = 0; i < stcMapVo.cells.length; i++) {
-			let cellKind = this.model.stcMapVo.cells[i];
-			let grid = CommonHelper.indexToGridH(i, stcMapVo.size.col);
+		for (const key in this.model.cellMap) {
+			const vo = this.model.cellMap[parseInt(key)];
 			let cell: fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
-			cell.m_kind.selectedIndex = cellKind;
-			cell.setXY(models.battles.BattleUtil.gridToPos(grid.col), models.battles.BattleUtil.gridToPos(grid.row));
+			cell.setXY(vo.x, vo.y);
+			cell.m_kind.selectedIndex = vo.sid;
 			this.mapLayer.addChild(cell);
+			this.cellMap[vo.uid] = cell;
 		}
 		this.eleLayer.scaleX = this.eleLayer.scaleY = 0.5;
 		this.clampMapScale();
@@ -198,7 +198,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.tankMap[vo.uid] = tank;
 	}
 	public addBulletById(battleUid: number) {
-		this.addBullet(this.model.bullets[battleUid]);
+		this.addBullet(this.model.bulletMap[battleUid]);
 	}
 	public addBullet(vo: models.battles.BulletVo) {
 		let bullet: BulletCtrl = new BulletCtrl();
@@ -207,5 +207,13 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		bullet.init();
 		this.bulletLayer.addChild(bullet.ui);
 		this.bulletMap[vo.uid] = bullet;
+	}
+	public removeBullet(vo: models.battles.BulletVo) {
+		let bullet: BulletCtrl = this.bulletMap[vo.uid];
+		if (bullet != undefined) {
+			bullet.dispose();
+			this.bulletLayer.removeChild(bullet.ui);
+			delete this.bulletMap[vo.uid];
+		}
 	}
 }

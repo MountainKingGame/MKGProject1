@@ -7,7 +7,6 @@ class Main extends egret.DisplayObjectContainer {
     private onAddToStage(event: egret.Event) {
         console.log('hello,world',"onAddToStage");
         egret.lifecycle.addLifecycleListener((context) => {
-            // custom lifecycle plugin
             // var lastTime:number = new Date().getTime();
             context.onUpdate = () => {
                 // var nowTime:number = new Date().getTime();

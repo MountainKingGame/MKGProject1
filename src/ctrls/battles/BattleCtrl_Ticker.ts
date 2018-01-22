@@ -57,6 +57,14 @@ class BattleCtrl_Ticker {
                     case BattleFrameOutputKind.AddBullet:
                         this.owner.addBulletById(item.data0 as number);
                         break;
+                    case BattleFrameOutputKind.BulletHitCell:
+                        let cellVo:models.battles.CellVo = this.owner.model.cellMap[item.data1];
+                        this.owner.cellMap[cellVo.uid].m_kind.selectedIndex = cellVo.sid;
+                        let bulletVo:models.battles.BulletVo = this.owner.model.bulletMap[item.data0];
+                        if(bulletVo.stateA == models.battles.BattleVoStateA.Dump){
+                            this.owner.removeBullet(bulletVo);
+                        }
+                        break;
                 }
             }
         }
