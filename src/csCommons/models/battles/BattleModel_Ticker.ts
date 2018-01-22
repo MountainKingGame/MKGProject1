@@ -110,6 +110,8 @@ namespace models.battles {
                     if (BattleUtil.checkHit(vo.hitRect, item)) {
                         // console.log("[debug]","hit:",vo.hitRect,item,(<QuadTreeHitRect>item).owner.uid);
                         ((<QuadTreeHitRect>item).owner as CellVo).sid = 0;
+                        QuadTree.removeItem(item);
+                        ((<QuadTreeHitRect>item).owner as CellVo).disposeHitRect();
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitCell, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
                         vo.stateA = BattleVoStateA.Dump;
                     }
@@ -125,6 +127,7 @@ namespace models.battles {
                     if (BattleUtil.checkHit(vo.hitRect, item)) {
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
                         vo.stateA = BattleVoStateA.Dump;
+                        break;//TODO:only hit one tank
                     }
                 }
             }

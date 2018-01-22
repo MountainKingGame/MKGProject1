@@ -53,6 +53,10 @@ namespace models.battles {
         // public row: number;
         public hitRect:QuadTreeHitRect;
         public dispose():void{
+            this.disposeHitRect();
+            super.dispose();
+        }
+        public disposeHitRect():void{
             if(!this.hitRect){
                 this.hitRect.dispose();
                 this.hitRect = null;

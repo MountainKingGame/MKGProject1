@@ -60,20 +60,21 @@ class BattleCtrl_Ticker {
                     case BattleFrameOutputKind.BulletHitCell:
                         let cellVo: models.battles.CellVo = this.owner.model.cellMap[item.data1];
                         this.owner.cellMap[cellVo.uid].m_kind.selectedIndex = cellVo.sid;
+                        /* (discard) replace with BattleFrameOutputKind.BulletRemove
                         let bulletVo: models.battles.BulletVo = this.owner.model.bulletMap[item.data0];
                         if (bulletVo == undefined) {
                             bulletVo = this.owner.model.dumpBulletMap[item.data0];
                             //be dumped
                             this.owner.removeBullet(bulletVo);
                         } else {
-                        }
+                        } */
                         break;
                     case BattleFrameOutputKind.BulletHitBullet:
                         break;
                     case BattleFrameOutputKind.BulletHitTank:
                         break;
                     case BattleFrameOutputKind.BulletRemove:
-                        bulletVo = this.owner.model.dumpBulletMap[item.data0];
+                        let bulletVo = this.owner.model.dumpBulletMap[item.data0];
                         this.owner.removeBullet(bulletVo);
                         break;
                 }

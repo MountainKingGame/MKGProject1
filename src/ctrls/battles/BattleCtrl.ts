@@ -153,11 +153,13 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.mapSize = this.model.size;
 		for (const key in this.model.cellMap) {
 			const vo = this.model.cellMap[parseInt(key)];
+			// if(vo.sid>0){
 			let cell: fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
 			cell.setXY(vo.x, vo.y);
 			cell.m_kind.selectedIndex = vo.sid;
 			this.mapLayer.addChild(cell);
 			this.cellMap[vo.uid] = cell;
+			// }
 		}
 		this.eleLayer.scaleX = this.eleLayer.scaleY = 0.5;
 		this.clampMapScale();
