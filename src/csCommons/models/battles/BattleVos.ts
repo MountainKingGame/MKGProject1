@@ -52,6 +52,12 @@ namespace models.battles {
         // public col: number;
         // public row: number;
         public hitRect:QuadTreeHitRect;
+        public dispose():void{
+            if(!this.hitRect){
+                this.hitRect.dispose();
+                this.hitRect = null;
+            }
+        }
     }
     export class MovableEleVo extends EntityVo {
         /** forward direction */

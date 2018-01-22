@@ -75,12 +75,14 @@ namespace models.battles {
             this.owner.qtTank.refresh();
             for (const uid in this.owner.bulletMap) {
                 let vo: BulletVo = this.owner.bulletMap[uid];
-                if (vo.stateA == BattleVoStateA.Living) {
-                    this.checkBulletHitTest(vo);
-                    if (this.owner.bulletMap[uid].stateA == BattleVoStateA.Dump) {
-                        //don't remove, wait after ctrl used
-                        this.owner.dumpBulletMap[uid] = vo;
-                        delete this.owner.bulletMap[uid];
+                if(QuadTree.isInner(vo.hitRect,this.owner.qtBullet.rect)==false){
+                    this.owner.adder.removeBullet(vo);
+                }else{
+                    if (vo.stateA == BattleVoStateA.Living) {
+                        this.checkBulletHitTest(vo);
+                        if (this.owner.bulletMap[uid].stateA == BattleVoStateA.Dump) {
+                            this.owner.adder.removeBullet(vo);
+                        }
                     }
                 }
             }

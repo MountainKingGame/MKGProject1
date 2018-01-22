@@ -92,17 +92,17 @@ class QuadTree {
                 //
                 index = this.getIndex(item);
                 if (index !== -1) {
-                    this.removeItem(item);
+                    this.__removeItem(item);
                     // this.nodes[index].insert(rect);//There is no need to write like this, because there is already a index value, and subNode can't split at this time
                     this.children[index].addItem(item);
                 }
             }
         }
     }
-    static remove(item: IQuadTreeItem) {
-        item.ownerQuadTree.removeItem(item);
+    static removeItem(item: IQuadTreeItem) {
+        item.ownerQuadTree.__removeItem(item);
     }
-    private removeItem(item: IQuadTreeItem) {
+    private __removeItem(item: IQuadTreeItem) {
         if (item.preItem != null) {
             item.preItem.nextItem = item.nextItem;
         }
@@ -159,7 +159,7 @@ class QuadTree {
                 // 如果矩形不属于该象限， 且该矩形不是root,则将该矩形重新插入root
                 if (!QuadTree.isInner(item, this.rect)) {
                     if (this !== root) {
-                        this.removeItem(item);
+                        this.__removeItem(item);
                         root.insert(item);
                         // this.parent.insert(this.items.splice(i, 1)[0]);
                     }
@@ -169,7 +169,7 @@ class QuadTree {
                     // 如果矩形属于该象限且该象限具有子象限，则将该矩形安插到子象限中
                     index = this.getIndex(item);
                     if (index !== -1) {
-                        this.removeItem(item);
+                        this.__removeItem(item);
                         this.children[index].insert(item);
                     }
                 }

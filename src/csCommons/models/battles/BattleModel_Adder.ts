@@ -55,12 +55,20 @@ namespace models.battles {
                 this.owner.qtCell.insert(vo.hitRect);
             }
         }
+        removeBullet(vo: BulletVo) {
+            QuadTree.removeItem(vo.hitRect);
+            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletRemove, this.owner.currFrame, vo.ownerUid, vo.uid));
+            //don't remove, wait after ctrl used
+            this.owner.dumpBulletMap[vo.uid] = vo;
+            delete this.owner.bulletMap[vo.uid];
+        }
         removeDumpAll() {
             for (const uid in this.owner.dumpCellMap) {
                 delete this.owner.dumpCellMap[uid];
             }
             for (const uid in this.owner.dumpBulletMap) {
-                // let vo: BulletVo = this.owner.bulletMap[uid];
+                let vo: BulletVo = this.owner.dumpBulletMap[uid];
+                vo.dispose();
                 delete this.owner.dumpBulletMap[uid];
             }
             for (const uid in this.owner.dumpTankMap) {

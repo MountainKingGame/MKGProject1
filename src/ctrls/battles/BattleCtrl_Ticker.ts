@@ -12,7 +12,7 @@ class BattleCtrl_Ticker {
     lastFrameMs: number = 0;
     private currMs: number = 0;
     /** 上一帧多出来的时间 */
-    lastFrameExtraMs:number = 0;
+    lastFrameExtraMs: number = 0;
     /** 需要多少ms到下一个关键帧 */
     nextFrameNeedTime: number = 0;
     public tick() {
@@ -24,17 +24,17 @@ class BattleCtrl_Ticker {
             this.nextFrameNeedTime = 0;
         } else {
             let gapMs = this.currMs - this.lastFrameMs;
-            if((gapMs+this.lastFrameExtraMs)>=models.battles.BattleConfig.si.modelMsPerFrame){
+            if ((gapMs + this.lastFrameExtraMs) >= models.battles.BattleConfig.si.modelMsPerFrame) {
                 this.owner.proxy.isFrame = true;
-                this.lastFrameExtraMs = (gapMs+this.lastFrameExtraMs)-models.battles.BattleConfig.si.modelMsPerFrame;
-                if(this.lastFrameExtraMs>=models.battles.BattleConfig.si.modelMsPerFrame){
+                this.lastFrameExtraMs = (gapMs + this.lastFrameExtraMs) - models.battles.BattleConfig.si.modelMsPerFrame;
+                if (this.lastFrameExtraMs >= models.battles.BattleConfig.si.modelMsPerFrame) {
                     this.nextFrameNeedTime = 0;
-                }else{
-                    this.nextFrameNeedTime = models.battles.BattleConfig.si.modelMsPerFrame-this.lastFrameExtraMs;
+                } else {
+                    this.nextFrameNeedTime = models.battles.BattleConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
                 }
-            }else{
-                this.lastFrameExtraMs+=gapMs;
-                this.nextFrameNeedTime = models.battles.BattleConfig.si.modelMsPerFrame-this.lastFrameExtraMs;
+            } else {
+                this.lastFrameExtraMs += gapMs;
+                this.nextFrameNeedTime = models.battles.BattleConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
             }
         }
         //--
@@ -58,15 +58,23 @@ class BattleCtrl_Ticker {
                         this.owner.addBulletById(item.data0 as number);
                         break;
                     case BattleFrameOutputKind.BulletHitCell:
-                        let cellVo:models.battles.CellVo = this.owner.model.cellMap[item.data1];
+                        let cellVo: models.battles.CellVo = this.owner.model.cellMap[item.data1];
                         this.owner.cellMap[cellVo.uid].m_kind.selectedIndex = cellVo.sid;
-                        let bulletVo:models.battles.BulletVo = this.owner.model.bulletMap[item.data0];
-                        if(bulletVo==undefined){
+                        let bulletVo: models.battles.BulletVo = this.owner.model.bulletMap[item.data0];
+                        if (bulletVo == undefined) {
                             bulletVo = this.owner.model.dumpBulletMap[item.data0];
                             //be dumped
                             this.owner.removeBullet(bulletVo);
-                        }else{
+                        } else {
                         }
+                        break;
+                    case BattleFrameOutputKind.BulletHitBullet:
+                        break;
+                    case BattleFrameOutputKind.BulletHitTank:
+                        break;
+                    case BattleFrameOutputKind.BulletRemove:
+                        bulletVo = this.owner.model.dumpBulletMap[item.data0];
+                        this.owner.removeBullet(bulletVo);
                         break;
                 }
             }
@@ -74,7 +82,7 @@ class BattleCtrl_Ticker {
         /** 无论是不是关键帧 ctrl层还是要tick的 */
         this.tickCtrl();
     }
-    tickCtrl(){
+    tickCtrl() {
         for (const uid in this.owner.tankMap) {
             const tank = this.owner.tankMap[uid];
             tank.tick();
