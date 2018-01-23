@@ -3,6 +3,8 @@ namespace models.battles {
         owner: TankVo;
         init() {
         }
+        gapBulletNeed:number = 60;
+        gapBulletCount:number = 0;
         gapMoveNeed: number = 10;
         gapMoveCount: number = 0;
         /** be called only when key frame */
@@ -12,16 +14,22 @@ namespace models.battles {
                     this.gapMoveCount++;
                     if (this.gapMoveCount >= this.gapMoveNeed) {
                         this.gapMoveCount = 0;
-                        this.countMoveDir();
+                        this.doMoveDir();
                     }
                 } else {
                     this.moveDirHistory = [];
                     this.gapMoveCount = 0;
                 }
             }
+            //---bullet
+            this.gapBulletCount++;
+            if(this.gapBulletCount>=this.gapBulletNeed){
+                this.gapBulletCount = 0;
+                this.doBullet();
+            }
         }
         moveDirHistory: Direction4[] = [];
-        countMoveDir() {
+        doMoveDir() {
             let newDir: Direction4;
             do {
                 newDir = MathUtil.randomInt(Direction4.Left, Direction4.Up) as Direction4;
@@ -48,6 +56,11 @@ namespace models.battles {
                     this.lastMoveDir = this.owner.moveDir
                 }
             } */
+        }
+        doBullet(){
+            if(this.owner.skillMap[StcSkillSid.DefaultOne].isTriggering == false){
+                this.owner.skillMap[StcSkillSid.DefaultOne].isTriggerOnce = true;
+            }
         }
         public dispose() {
             this.owner = null;

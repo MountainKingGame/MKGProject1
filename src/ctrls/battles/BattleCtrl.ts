@@ -12,10 +12,11 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	eleLayer: fairygui.GComponent = new fairygui.GComponent;
 	tankLayer: fairygui.GComponent = new fairygui.GComponent;
 	bulletLayer: fairygui.GComponent = new fairygui.GComponent;
-	mapLayer: fairygui.GComponent = new fairygui.GComponent;
+	cellLayer: fairygui.GComponent = new fairygui.GComponent;
+	coverCellLayer: fairygui.GComponent = new fairygui.GComponent;
 
-	uiHalfWidth: number;
-	uiHalfHeight: number;
+	uiWidthHalf: number;
+	uiHeightHalf: number;
 	public mapSize: Vector2;
 
 	public cellMap: { [key: number]: fuis.battles_1.UI_MapCell } = {};
@@ -37,8 +38,8 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.model = this.proxy.model;
 		//
 		this.initUI();
-		this.uiHalfWidth = Math.round(this.ui.width / 2);
-		this.uiHalfHeight = Math.round(this.ui.height / 2);
+		this.uiWidthHalf = Math.round(this.ui.width / 2);
+		this.uiHeightHalf = Math.round(this.ui.height / 2);
 		this.initEvent();
 		//
 		this.initMap();
@@ -55,9 +56,10 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickComp));
 		CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Battle_SkillSection, new SkillSectionCtrl(this.ui.m_skillComp as fuis.joysticks_1.UI_SkillSection));
 		this.ui.addChildAt(this.eleLayer, this.ui.getChildIndex(this.ui.m_bg) + 1);
-		this.eleLayer.addChild(this.mapLayer);
+		this.eleLayer.addChild(this.cellLayer);
 		this.eleLayer.addChild(this.tankLayer);
 		this.eleLayer.addChild(this.bulletLayer);
+		this.eleLayer.addChild(this.coverCellLayer);
 		this.ui.m_touchLayer.alpha = 0;
 	}
 	initEvent() {
@@ -80,20 +82,10 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		// this.eleLayer.globalToLocal(this.mouseStageXY.x, this.mouseStageXY.y, this.tempPoi);
 		// FgUtil.scaleAndMoveByXy(this.eleLayer, this.tempPoi.x, this.tempPoi.y, delta / 10000);
 		//- kind 2
-		if(this.myTank){
+		if (this.myTank) {
 			FgUtil.scaleAndMoveByXy(this.eleLayer, this.myTank.ui.x, this.myTank.ui.y, delta / 1000);
 			this.clampMapScale();
 		}
-		//-
-	}
-	clampMapScale() {
-		let scale = Math.min(
-			MathUtil.clamp(this.eleLayer.scaleX, this.ui.width / this.mapSize.x, 1),
-			MathUtil.clamp(this.eleLayer.scaleY, this.ui.height / this.mapSize.y, 1)
-		);
-		this.eleLayer.scaleX = scale;
-		this.eleLayer.scaleY = scale;
-		// this.clampMapXY(this.eleLayer.x,this.eleLayer.y);//Don't need do this, because every tick will do it
 	}
 	onJoystickChange(dir: Direction4) {
 		this.proxy.onMoveDirChange(dir);
@@ -106,7 +98,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		} else {
 			switch (keyCode) {
 				case KeyBoardCtrl.KEY_SPACE_BAR:
-					this.proxy.onSkillTrigger(1);
+					this.proxy.onSkillTrigger(StcSkillSid.DefaultOne);
 					break;
 			}
 		}
@@ -135,7 +127,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		} else {
 			switch (keyCode) {
 				case KeyBoardCtrl.KEY_SPACE_BAR:
-					this.proxy.onSkillUntrigger(1);
+					this.proxy.onSkillUntrigger(StcSkillSid.DefaultOne);
 					break;
 			}
 		}
@@ -163,21 +155,37 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 			let cell: fuis.battles_1.UI_MapCell = fuis.battles_1.UI_MapCell.createInstance();
 			cell.setXY(vo.x, vo.y);
 			cell.m_kind.selectedIndex = vo.sid;
-			this.mapLayer.addChild(cell);
+			if (vo.sid == StcCellSid.cover) {
+				this.coverCellLayer.addChild(cell);
+			} else {
+				this.cellLayer.addChild(cell);
+			}
 			this.cellMap[vo.uid] = cell;
 			// }
 		}
 		this.eleLayer.scaleX = this.eleLayer.scaleY = 0.5;
 		this.clampMapScale();
 	}
+	/**地图缩放检查,不能过于小或大 */
+	clampMapScale() {
+		let scale = Math.min(
+			MathUtil.clamp(this.eleLayer.scaleX, this.ui.width / this.mapSize.x, 1),
+			MathUtil.clamp(this.eleLayer.scaleY, this.ui.height / this.mapSize.y, 1)
+		);
+		this.eleLayer.scaleX = scale;
+		this.eleLayer.scaleY = scale;
+		// this.clampMapXY(this.eleLayer.x,this.eleLayer.y);//Don't need do this, because every tick will do it
+	}
+	/** 将myTank作为中点 */
 	alginByMyTank() {
-		if(this.myTank){
+		if (this.myTank) {
 			this.clampMapXY(
-				Math.round(this.uiHalfWidth - this.myTank.ui.x * this.eleLayer.scaleX),
-				Math.round(this.uiHalfHeight - this.myTank.ui.y * this.eleLayer.scaleY)
+				Math.round(this.uiWidthHalf - this.myTank.ui.x * this.eleLayer.scaleX),
+				Math.round(this.uiHeightHalf - this.myTank.ui.y * this.eleLayer.scaleY)
 			);
 		}
 	}
+	/** 规范地图,不要出边界 */
 	clampMapXY(x: number, y: number) {
 		let w: number = this.mapSize.x * this.eleLayer.scaleX;
 		if (this.ui.width == w) {
@@ -218,16 +226,16 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.bulletLayer.addChild(bullet.ui);
 		this.bulletMap[vo.uid] = bullet;
 	}
-	public removeBulletByUid(uid:number) {
+	public removeBulletByUid(uid: number) {
 		let bullet: BulletCtrl = this.bulletMap[uid];
 		if (bullet != undefined) {
 			delete this.bulletMap[uid];
 			bullet.dispose();
 		}
 	}
-	public removeTankByUid(uid:number){
-		let tank:TankCtrl = this.tankMap[uid];
-		if(tank != undefined){
+	public removeTankByUid(uid: number) {
+		let tank: TankCtrl = this.tankMap[uid];
+		if (tank != undefined) {
 			delete this.tankMap[uid];
 			tank.dispose();
 		}

@@ -43,11 +43,11 @@ class BattleProxy {
         // console.log("[info]","`onMoveDirChange`",dir,this.myTank.moveDir,this.model.currFrame,this.model.currKeyFrame);
         this.frameInputMgr.add(new BattleFrameIOItem(BattleFrameInputKind.MoveDirChange, 0, this.myTank.uid, dir));
     }
-    onSkillTrigger(skillId: number) {
-        this.frameInputMgr.add(new BattleFrameIOItem(BattleFrameInputKind.SkillTrigger, 0, this.myTank.uid, skillId));
+    onSkillTrigger(skillUid: number) {
+        this.frameInputMgr.add(new BattleFrameIOItem(BattleFrameInputKind.SkillTrigger, 0, this.myTank.uid, skillUid));
     }
-    onSkillUntrigger(skillId: number) {
-        this.frameInputMgr.add(new BattleFrameIOItem(BattleFrameInputKind.SkillUntrigger, 0, this.myTank.uid, skillId));
+    onSkillUntrigger(skillUid: number) {
+        this.frameInputMgr.add(new BattleFrameIOItem(BattleFrameInputKind.SkillUntrigger, 0, this.myTank.uid, skillUid));
     }
 
 }

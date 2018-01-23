@@ -57,7 +57,7 @@ namespace models.battles {
         /*cell's pivot is left-top*/
         addCellVo(vo: CellVo) {
             this.owner.cellMap[vo.uid] = vo;
-            if (vo.sid > 0) {//0 is normal earth
+            if (vo.sid != StcCellSid.floor && vo.sid!=StcCellSid.cover) {
                 vo.hitRect = new QuadTreeHitRect(vo);
                 vo.hitRect.recountLeftTop(vo.x, vo.y, BattleModelConfig.si.cellSize, BattleModelConfig.si.cellSize);
                 this.owner.qtCell.insert(vo.hitRect);

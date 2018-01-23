@@ -46,7 +46,7 @@ namespace models.battles {
         }
         public tick_ai() {
             for (const uid in this.owner.aiTankMap) {
-                const ai:TankAI = this.owner.aiTankMap[uid];
+                const ai: TankAI = this.owner.aiTankMap[uid];
                 ai.tick();
             }
         }
@@ -114,13 +114,16 @@ namespace models.battles {
             hitArr = this.owner.qtCell.retrieve(vo.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
-                if ((<QuadTreeHitRect>item).owner.sid > 0) {
+                let cellVo = ((<QuadTreeHitRect>item).owner as CellVo);
+                if (cellVo.sid != StcCellSid.floor && cellVo.sid != StcCellSid.river) {
                     if (BattleModelUtil.checkHit(vo.hitRect, item)) {
                         // console.log("[debug]","hit:",vo.hitRect,item,(<QuadTreeHitRect>item).owner.uid);
-                        ((<QuadTreeHitRect>item).owner as CellVo).sid = 0;
-                        QuadTree.removeItem(item);
-                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitCell, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
-                        ((<QuadTreeHitRect>item).owner as CellVo).disposeHitRect();
+                        if (cellVo.sid != StcCellSid.block) {
+                            cellVo.sid = StcCellSid.floor;
+                            QuadTree.removeItem(item);
+                            cellVo.disposeHitRect();
+                        }
+                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitCell, this.owner.currFrame, vo.ownerUid, vo.uid, cellVo.uid));
                         vo.stateA = BattleVoStateA.Dump;
                     }
                 }
@@ -131,8 +134,8 @@ namespace models.battles {
             hitArr = this.owner.qtTank.retrieve(vo.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
-                let tank:TankVo = (<QuadTreeHitRect>item).owner as TankVo;
-                if (vo.ownerUid != tank.uid && tank.stateA==BattleVoStateA.Living) {
+                let tank: TankVo = (<QuadTreeHitRect>item).owner as TankVo;
+                if (vo.ownerUid != tank.uid && tank.stateA == BattleVoStateA.Living) {
                     if (BattleModelUtil.checkHit(vo.hitRect, item)) {
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
                         vo.stateA = BattleVoStateA.Dump;

@@ -50,6 +50,7 @@ namespace models.battles {
             //--
             for (let i = 0; i < this.stcMapVo.players.length; i++) {
                 this.adder.addTankByIStcMapVoPlayer(this.stcMapVo.players[i],i!=0);
+                break;
             }
         }
         tankAlignGridX(tank:TankVo){
