@@ -3,16 +3,16 @@ namespace models.battles {
         owner: TankVo;
         init() {
         }
-        gapBulletNeed:number = 60;
-        gapBulletCount:number = 0;
-        gapMoveNeed: number = 10;
+        gapMoveMax: number = 10;
         gapMoveCount: number = 0;
+        gapBulletMax:number = 60;
+        gapBulletCount:number = 0;
         /** be called only when key frame */
         tick() {
             if (this.owner.moveDir != Direction4.None) {
                 if (this.owner.x == this.owner.xOld && this.owner.y == this.owner.yOld) {
                     this.gapMoveCount++;
-                    if (this.gapMoveCount >= this.gapMoveNeed) {
+                    if (this.gapMoveCount >= this.gapMoveMax) {
                         this.gapMoveCount = 0;
                         this.doMoveDir();
                     }
@@ -23,7 +23,7 @@ namespace models.battles {
             }
             //---bullet
             this.gapBulletCount++;
-            if(this.gapBulletCount>=this.gapBulletNeed){
+            if(this.gapBulletCount>=this.gapBulletMax){
                 this.gapBulletCount = 0;
                 this.doBullet();
             }

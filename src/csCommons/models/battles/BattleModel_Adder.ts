@@ -33,6 +33,11 @@ namespace models.battles {
             vo.skillMap[skillVo.sid] = skillVo;
             //-
             this.owner.tankMap[vo.uid] = vo;
+            if(this.owner.groupTankCount[vo.group]==undefined){
+                this.owner.groupTankCount[vo.group]=0;
+            }
+            this.owner.groupTankCount[vo.group]++;
+            //-
             this.owner.qtTank.insert(vo.hitRect);
             this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddTank, this.owner.currFrame,vo.uid));
         }
@@ -68,26 +73,23 @@ namespace models.battles {
             }
         }
         removeBullet(vo: BulletVo) {
+            vo.stateA = BattleVoStateA.Dump;
             QuadTree.removeItem(vo.hitRect);
             this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.RemoveBullet, this.owner.currFrame, vo.ownerUid, vo.uid));
-            //
-            for (const bulletUid in this.owner.bulletMap) {
-                const bulletVo = this.owner.bulletMap[bulletUid];
-                if(bulletVo.ownerUid==vo.uid){
-                    this.removeBullet(bulletVo);
-                }
-            }
             //
             //don't remove, wait after ctrl used
             this.owner.dumpBulletMap[vo.uid] = vo;
             delete this.owner.bulletMap[vo.uid];
         }
         removeTank(vo:TankVo){
-            QuadTree.removeItem(vo.hitRect);
             vo.stateA = BattleVoStateA.Dump;
+            QuadTree.removeItem(vo.hitRect);
             this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.RemoveTank, this.owner.currFrame, vo.uid, vo.uid));
+            //
             this.owner.dumpTankMap[vo.uid] = vo;
             delete this.owner.tankMap[vo.uid];
+            this.owner.groupTankCount[vo.group]--;
+            //
             if(this.owner.aiTankMap[vo.uid]){
                 this.owner.aiTankMap[vo.uid].dispose();
                 delete this.owner.aiTankMap[vo.uid];

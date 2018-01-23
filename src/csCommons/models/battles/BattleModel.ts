@@ -8,11 +8,15 @@ namespace models.battles {
         public tankUId: number = 1;
         /**当前帧*/
         public currFrame: number = 0;
+        public currKeyFrame: number = 0;
+        public isKeyFrame: boolean;
         //---
         public stcMapVo: IStcMapVo;
         public cellMap: { [key: number]: CellVo } = {};//key:Vo.uid
         public tankMap: { [key: number]: TankVo } = {};
         public bulletMap: { [key: number]: BulletVo } = {};
+        /**各group tank数量统计 */
+        groupTankCount:{[key:number]:number} = [];//key:BattleGroup
         //
         public dumpCellMap: { [key: number]: CellVo } = {};
         public dumpTankMap: { [key: number]: TankVo } = {};
@@ -30,6 +34,7 @@ namespace models.battles {
         frameInputs: BattleFrameIOItem[] = [];
         frameOutputs: BattleFrameIOItem[] = [];
         //
+        factories:BattleModelFactory[] = [];
         public init(stcMapId: number) {
             BattleModelConfig.si.init();
             //-
@@ -46,6 +51,7 @@ namespace models.battles {
             //-
             this.initCells();
             this.initTanks();
+            this.initFactories();
         }
         initCells() {
             for (let row = 0; row < this.stcMapVo.cells.length; row++) {
@@ -57,6 +63,16 @@ namespace models.battles {
                     vo.y = models.battles.BattleModelUtil.gridToPos(row);
                     this.adder.addCellVo(vo);
                 }
+            }
+        }
+        initFactories(){
+            for (let i = 0; i < this.stcMapVo.factories.length; i++) {
+                let stcVo = this.stcMapVo.factories[i];
+                let factory:BattleModelFactory = new BattleModelFactory();
+                factory.model = this;
+                factory.stcVo = stcVo;
+                factory.init();
+                this.factories.push(factory);
             }
         }
         initTanks() {
@@ -72,6 +88,7 @@ namespace models.battles {
                     ai.owner = tankVo;
                     this.aiTankMap[tankVo.uid] = ai;
                 }
+                break;//TODO:
             }
         }
         tankAlignGridX(tank: TankVo) {

@@ -8,18 +8,19 @@ namespace models.battles {
          * onFrame
          */
         public tick() {
-            let t0 = SUtil.getTime();
+            let t0 = SUtil.now();
             this.tick_frameInput();
+            this.tick_factories();
             this.tick_ai();
-            let t1 = SUtil.getTime();
+            let t1 = SUtil.now();
             this.tick_bulletHitTest();//先计算hit,因为被hit后的物品是不能在做后面动作了
-            let t2 = SUtil.getTime();
+            let t2 = SUtil.now();
             this.tick_generate();
             //move放最后,因为需要view在这一帧移动到xy,然后下一帧再处理hit等事项
             this.tick_tank_move();
             this.tick_skill();
             this.tick_bullet_move();
-            let te = SUtil.getTime();
+            let te = SUtil.now();
             // console.log(te - t0, t2 - t1, t1 - t0);
         }
         public tick_frameInput() {
@@ -44,6 +45,17 @@ namespace models.battles {
                 }
             }
         }
+        tick_factories(){
+            if(this.owner.isKeyFrame){
+                for (let i = 0; i < this.owner.factories.length; i++) {
+                    let item = this.owner.factories[i];
+                    if(item.tick()){
+                        this.owner.factories.splice(i,1);
+                        i--;
+                    }
+                }
+            }
+        }
         public tick_ai() {
             for (const uid in this.owner.aiTankMap) {
                 const ai: TankAI = this.owner.aiTankMap[uid];
@@ -61,6 +73,7 @@ namespace models.battles {
                         skillVo.castFrame = this.owner.currFrame;
                         var bullet: BulletVo = new BulletVo();
                         bullet.ownerUid = tank.uid;
+                        bullet.group = tank.group;
                         bullet.sid = skillVo.sid;//TODO:
                         bullet.uid = tank.uid * 1000 + tank.bulletUid;
                         tank.bulletUid++;
@@ -134,12 +147,11 @@ namespace models.battles {
             hitArr = this.owner.qtTank.retrieve(vo.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
-                let attackTank: TankVo = this.owner.tankMap[vo.ownerUid];
                 let hitTank: TankVo = (<QuadTreeHitRect>item).owner as TankVo;
                 let canHit: boolean = false;
                 if (hitTank.stateA == BattleVoStateA.Living) {
                     if (vo.ownerUid != hitTank.uid) {
-                        if(attackTank.group == hitTank.group){
+                        if(vo.group == hitTank.group){
                             //TODO: 
                             /* if(attackTank.group==BattleGroup.Player){
                                 canHit = true;
@@ -157,9 +169,9 @@ namespace models.battles {
                         if (hitTank.group == BattleGroup.CPU) {
                             this.owner.adder.removeTank(hitTank);
                         } else if (hitTank.group == BattleGroup.Player) { 
-                            if(attackTank.group == BattleGroup.CPU){
+                            if(vo.group == BattleGroup.CPU){
                                 this.owner.adder.rebirthTank(hitTank);
-                            }else if(attackTank.group == BattleGroup.Player){
+                            }else if(vo.group == BattleGroup.Player){
                                 // this.owner.adder.addBuff(attackTank,)//TODO: add Buff
                             }else{
                                 throw new Error("");

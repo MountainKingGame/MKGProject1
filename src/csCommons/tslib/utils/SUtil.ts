@@ -11,7 +11,7 @@ class SUtil{
         jQuery 获取时间戳 $.now()
         var timestamp = $.now();
     */
-    static getTime():number{
+    static now():number{
         return new Date().getTime();
     }
 }

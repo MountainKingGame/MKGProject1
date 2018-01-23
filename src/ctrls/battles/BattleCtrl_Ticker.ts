@@ -17,7 +17,7 @@ class BattleCtrl_Ticker {
     nextFrameNeedTime: number = 0;
     public tick() {
         this.owner.proxy.isFrame = false;
-        this.currMs = SUtil.getTime();
+        this.currMs = SUtil.now();
         //--
         if (this.owner.proxy.isChaseFrame) {
             this.owner.proxy.isFrame = true;

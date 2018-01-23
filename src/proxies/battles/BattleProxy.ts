@@ -31,9 +31,10 @@ class BattleProxy {
         if (this.isKeyFrame) {
             this.model.adder.removeDumpAll();
             this.model.frameInputs = this.frameInputMgr.optimize(this.currFrame);
-            this.currKeyFrame++;
+            this.model.currKeyFrame = this.currKeyFrame = this.currKeyFrame + 1;
         }
         this.model.frameOutputs = [];
+        this.model.isKeyFrame = this.isKeyFrame;
         this.model.ticker.tick();
         this.model.frameInputs = [];
     }

@@ -88,7 +88,7 @@ namespace models.battles {
             super.dispose();
         }
         /** 阵营 */
-        public group:BattleGroup = BattleGroup.None;
+        public group:BattleGroup;
         public hp:number;
         public ap_tank:number;
         public ap_cell:number;
@@ -101,6 +101,7 @@ namespace models.battles {
         stateA: BattleVoStateA = BattleVoStateA.None;
         /** sender's id   e.g. TankVo.uid */
         ownerUid: number;
+        group: BattleGroup;
     }
     export class SkillVo extends EleVo {
         public isTriggering: boolean = false;

@@ -10,6 +10,11 @@ class StcMap {
                 if (!vo.id) vo.id = i;
                 this.voDict[i] = vo;
                 //-auto fill
+                vo.positionMap = {};
+                for (let i = 0; i < vo.positions.length; i++) {
+                    let item = vo.positions[i];
+                    vo.positionMap[item.sid] = item;
+                }
                 //-
                 i++;
             } else {
@@ -30,10 +35,21 @@ interface IStcMapVo {
     kind?: number;
     cells: number[][];
     positions?: IStcMapPosition[];
+    factories?: IStcMapFactory[];
+    //
+    positionMap?:{[key:number]:IStcMapPosition};
 }
 interface IStcMapPosition {
     sid?: number;
     col?: number;
     row?: number;
     dir?: number;
+}
+interface IStcMapFactory {
+    kind?: StcMapFactoryKind;
+    group?:number;
+    max?:number;
+    delayMs?: number;
+    gapMs?: number;
+    values?: [number, number][];
 }
