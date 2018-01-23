@@ -1,10 +1,10 @@
 namespace models.battles {
-    export class BattleConfig {
+    export class BattleModelConfig {
 
-        public static readonly si: BattleConfig = new BattleConfig();
+        public static readonly si: BattleModelConfig = new BattleModelConfig();
         public modelFrameRate: number = 30;
         /**synchro frame input fate, modelFrameRate  must be the integer multiple of it */
-        public modelKeyFrameRate: number = 10;
+        public modelKeyFrameRate: number = 15;
         public keyFrameMultiple:number;
         public modelMsPerFrame: number;
         public roundDigit: number = 2;

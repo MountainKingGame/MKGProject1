@@ -15,7 +15,7 @@ class MovableEleCtrl extends CtrlBase<fairygui.GComponent>{
             this.frameMoveX = this.vo.x-this.ui.x;
             this.frameMoveY = this.vo.y-this.ui.y;
         }
-        let leavePercent:number = this.battle.partialTick.nextFrameNeedTime/models.battles.BattleConfig.si.modelMsPerFrame;
+        let leavePercent:number = this.battle.partialTick.nextFrameNeedTime/models.battles.BattleModelConfig.si.modelMsPerFrame;
         this.ui.x = this.vo.x-this.frameMoveX*leavePercent;
         this.ui.y = this.vo.y-this.frameMoveY*leavePercent;
     }

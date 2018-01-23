@@ -7,40 +7,48 @@ namespace models.battles {
         constructor(owner: BattleModel) {
             this.owner = owner;
         }
-        addTankByIStcMapVoPlayer(player: IStcMapVoPlayer) {
+        addTankByIStcMapVoPlayer(player: IStcMapVoPlayer,needAI:boolean):TankVo {
             let vo: TankVo = new TankVo();
             vo.sid = 1;
             vo.uid = this.owner.tankUId++;
             // vo.col = player.init.col;
             // vo.row = player.init.row;
-            vo.x = BattleUtil.gridToPos(player.init.col);
-            vo.y = BattleUtil.gridToPos(player.init.row);
+            vo.x = BattleModelUtil.gridToPos(player.init.col);
+            vo.y = BattleModelUtil.gridToPos(player.init.row);
             this.addTankVo(vo);
+            //---ai
+            if(needAI){
+                vo.moveDir = Direction4.Up;
+                let ai:TankAI = new TankAI();
+                ai.owner = vo;
+                this.owner.aiTankMap[vo.uid] = ai;
+            }
+            return vo;
         }
         addTankVo(vo: TankVo) {
             // if (this.owner.tanks[vo.uid] != undefined) {
             // console.log("[fatal]", "tankVo.id is exist!", vo);
             // } else {
-            vo.moveSpeedPerFrame = BattleConfig.si.tankMoveSpeedPerFrame;
+            vo.moveSpeedPerFrame = BattleModelConfig.si.tankMoveSpeedPerFrame;
             vo.hitRect = new QuadTreeHitRect(vo);
-            vo.hitRect.z_w = vo.hitRect.z_h = BattleConfig.si.cellSize;
-            vo.hitRect.recountPivotCenter(vo.x, vo.y);
+            vo.sizeHalf = new Vector2(BattleModelConfig.si.cellSize,BattleModelConfig.si.cellSize);
+            vo.hitRect.recountPivotCenter(vo.x, vo.y,vo.sizeHalf.x,vo.sizeHalf.y);
+            vo.forecastMoveHitRect = new QuadTreeHitRect(vo);
             // }
             let skillVo = new SkillVo();
             skillVo.sid = 1;
-            skillVo.castGapFrame = BattleConfig.si.modelFrameRate / 2;
+            skillVo.castGapFrame = BattleModelConfig.si.modelFrameRate / 2;
             vo.skillMap[skillVo.sid] = skillVo;
             vo.stateA = BattleVoStateA.Living;
             this.owner.tankMap[vo.uid] = vo;
             this.owner.qtTank.insert(vo.hitRect);
-            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddTank, this.owner.currFrame, vo.uid))
+            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddTank, this.owner.currFrame,vo.uid,vo.uid));
         }
         addBulletVo(vo: BulletVo) {
-            vo.moveSpeedPerFrame = BattleConfig.si.bulletMoveSpeedPerFrame;
+            vo.moveSpeedPerFrame = BattleModelConfig.si.bulletMoveSpeedPerFrame;
+            vo.sizeHalf = new Vector2(10,20);
             vo.hitRect = new QuadTreeHitRect(vo);
-            vo.hitRect.z_w = 10;
-            vo.hitRect.z_h = 20;
-            vo.hitRect.recountPivotCenter(vo.x, vo.y);
+            vo.hitRect.recountPivotCenter(vo.x, vo.y,vo.sizeHalf.x,vo.sizeHalf.y);
             vo.stateA = BattleVoStateA.Living;
             this.owner.bulletMap[vo.uid] = vo;
             this.owner.qtBullet.insert(vo.hitRect);
@@ -51,7 +59,7 @@ namespace models.battles {
             this.owner.cellMap[vo.uid] = vo;
             if (vo.sid > 0) {//0 is normal earth
                 vo.hitRect = new QuadTreeHitRect(vo);
-                vo.hitRect.recountLeftTop(vo.x, vo.y, BattleConfig.si.cellSize, BattleConfig.si.cellSize);
+                vo.hitRect.recountLeftTop(vo.x, vo.y, BattleModelConfig.si.cellSize, BattleModelConfig.si.cellSize);
                 this.owner.qtCell.insert(vo.hitRect);
             }
         }
@@ -61,6 +69,11 @@ namespace models.battles {
             //don't remove, wait after ctrl used
             this.owner.dumpBulletMap[vo.uid] = vo;
             delete this.owner.bulletMap[vo.uid];
+            //
+            if(this.owner.aiTankMap[vo.uid]){
+                this.owner.aiTankMap[vo.uid].dispose();
+                delete this.owner.aiTankMap[vo.uid];
+            }
         }
         removeDumpAll() {
             for (const uid in this.owner.dumpCellMap) {

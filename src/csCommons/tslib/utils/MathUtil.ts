@@ -39,4 +39,9 @@ class MathUtil{
     static round(val:number,digit:number=0){
         return Math.round(val)//TODO:
     }
+    static randomInt(min:number,max:number){
+        var val:number = Math.random();
+        val = Math.round(val*(max-min)+min);
+        return val;
+    }
 }

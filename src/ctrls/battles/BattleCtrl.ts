@@ -42,9 +42,6 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.initEvent();
 		//
 		this.initMap();
-		//- TODO:
-		this.addTank(this.proxy.myTank);//TODO:
-		this.myTank = this.tankMap[this.proxy.myTank.uid];
 		//-
 		this.partialTick.init();
 	}
@@ -77,9 +74,11 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		// this.eleLayer.globalToLocal(this.mouseStageXY.x, this.mouseStageXY.y, this.tempPoi);
 		// FgUtil.scaleAndMoveByXy(this.eleLayer, this.tempPoi.x, this.tempPoi.y, delta / 10000);
 		//- kind 2
-		FgUtil.scaleAndMoveByXy(this.eleLayer, this.myTank.ui.x, this.myTank.ui.y, delta / 1000);
+		if(this.myTank){
+			FgUtil.scaleAndMoveByXy(this.eleLayer, this.myTank.ui.x, this.myTank.ui.y, delta / 1000);
+			this.clampMapScale();
+		}
 		//-
-		this.clampMapScale();
 	}
 	clampMapScale() {
 		let scale = Math.min(
@@ -166,10 +165,12 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.clampMapScale();
 	}
 	alginByMyTank() {
-		this.clampMapXY(
-			Math.round(this.uiHalfWidth - this.myTank.ui.x * this.eleLayer.scaleX),
-			Math.round(this.uiHalfHeight - this.myTank.ui.y * this.eleLayer.scaleY)
-		);
+		if(this.myTank){
+			this.clampMapXY(
+				Math.round(this.uiHalfWidth - this.myTank.ui.x * this.eleLayer.scaleX),
+				Math.round(this.uiHalfHeight - this.myTank.ui.y * this.eleLayer.scaleY)
+			);
+		}
 	}
 	clampMapXY(x: number, y: number) {
 		let w: number = this.mapSize.x * this.eleLayer.scaleX;

@@ -16,16 +16,12 @@ class BattleProxy {
         this.model = new models.battles.BattleModel();
         this.model.init(1);
         // this.facade.netMgr.req(123,null);
-        for (const key in this.model.tankMap) {
-            this.myTank = this.model.tankMap[key];
-        }
-
     }
     public tick() {
         this.isKeyFrame = false;
         //
         this.model.currFrame = this.currFrame = this.currFrame+1;
-        if ((this.currFrame) % models.battles.BattleConfig.si.keyFrameMultiple == 0) {
+        if ((this.currFrame) % models.battles.BattleModelConfig.si.keyFrameMultiple == 0) {
             this.isKeyFrame = true;
         }
         if(this.isKeyFrame){
@@ -35,6 +31,10 @@ class BattleProxy {
         }
         this.model.frameOutputs = [];
         this.model.ticker.tick();
+        for (const key in this.model.tankMap) {
+            this.myTank = this.model.tankMap[key];
+            break;
+        }
         this.model.frameInputs = [];
     }
     initEvent() {

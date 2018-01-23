@@ -34,6 +34,8 @@ interface IStcMapVo {
     players?: IStcMapVoPlayer[];
 }
 interface IStcMapVoPlayer {
+    /**kind of tank */
     kind?: number;
+    /** init grid position */
     init?: IGrid;
 }

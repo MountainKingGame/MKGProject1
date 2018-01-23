@@ -5,7 +5,7 @@ class BattleCtrl_Ticker {
     }
     public init() {
         this.lastFrameMs = new Date().getTime();
-        this.nextFrameNeedTime = models.battles.BattleConfig.si.modelMsPerFrame;
+        this.nextFrameNeedTime = models.battles.BattleModelConfig.si.modelMsPerFrame;
         MsgMgr.si.add(CtrlConst.Msg_OnGameTick, this, this.tick);
         // setInterval(this.tick.bind(this), CtrlConfig.si.viewMsPerFrame);
     }
@@ -24,17 +24,17 @@ class BattleCtrl_Ticker {
             this.nextFrameNeedTime = 0;
         } else {
             let gapMs = this.currMs - this.lastFrameMs;
-            if ((gapMs + this.lastFrameExtraMs) >= models.battles.BattleConfig.si.modelMsPerFrame) {
+            if ((gapMs + this.lastFrameExtraMs) >= models.battles.BattleModelConfig.si.modelMsPerFrame) {
                 this.owner.proxy.isFrame = true;
-                this.lastFrameExtraMs = (gapMs + this.lastFrameExtraMs) - models.battles.BattleConfig.si.modelMsPerFrame;
-                if (this.lastFrameExtraMs >= models.battles.BattleConfig.si.modelMsPerFrame) {
+                this.lastFrameExtraMs = (gapMs + this.lastFrameExtraMs) - models.battles.BattleModelConfig.si.modelMsPerFrame;
+                if (this.lastFrameExtraMs >= models.battles.BattleModelConfig.si.modelMsPerFrame) {
                     this.nextFrameNeedTime = 0;
                 } else {
-                    this.nextFrameNeedTime = models.battles.BattleConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
+                    this.nextFrameNeedTime = models.battles.BattleModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
                 }
             } else {
                 this.lastFrameExtraMs += gapMs;
-                this.nextFrameNeedTime = models.battles.BattleConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
+                this.nextFrameNeedTime = models.battles.BattleModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
             }
         }
         //--
@@ -52,7 +52,10 @@ class BattleCtrl_Ticker {
                     // this.owner.tanks[item.playerId].onFrameOutput(item);
                     // break;
                     case BattleFrameOutputKind.AddTank:
-                        // this.owner.AddTank();
+                        this.owner.addTank(this.owner.proxy.model.tankMap[item.data0]);
+                        if (item.data0 == this.owner.proxy.myTank.uid) {
+                            this.owner.myTank = this.owner.tankMap[item.data0];
+                        }
                         break;
                     case BattleFrameOutputKind.AddBullet:
                         this.owner.addBulletById(item.data0 as number);

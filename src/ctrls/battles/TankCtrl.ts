@@ -12,6 +12,8 @@ class TankCtrl extends CtrlBase<fuis.elements_1.UI_Tank>{
         this.movableEleCtrl.vo = this.vo;
         this.movableEleCtrl.battle = this.battle;
         this.movableEleCtrl.init();
+        //
+        this.ui.alpha = 0.3;
     }
 
     tick():void{
