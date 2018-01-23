@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="64,64">
-  <controller name="kind" pages="0,,1,,2,,3,,4,,5,,6,,7,,8,,9," selected="4"/>
+  <controller name="kind" pages="0,,1,,2,,3,,4,,5,,6,,7,,8,,9," selected="0"/>
   <displayList>
-    <loader id="n2_u9bo" name="icon" xy="32,32" pivot="0.5,0.5" anchor="true" size="64,64" url="ui://ybsps8tfu9bob" align="center" vAlign="middle" fill="scaleFree">
+    <loader id="n2_u9bo" name="icon" xy="32,32" pivot="0.5,0.5" anchor="true" size="64,64" url="ui://ybsps8tfe656d" align="center" vAlign="middle" fill="scaleFree">
       <gearIcon controller="kind" pages="0,1,2,3,4,5" values="ui://ybsps8tfe656d|ui://ybsps8tfu9bo8|ui://ybsps8tfu9bo9|ui://ybsps8tfu9boa|ui://ybsps8tfu9bob|ui://ybsps8tfu9bo7" default="ui://ybsps8tfe656i"/>
     </loader>
   </displayList>
