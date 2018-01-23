@@ -8,11 +8,6 @@ namespace models.battles {
          * onFrame
          */
         public tick() {
-            if(this.owner.currFrame==1){
-                for (let i = 0; i < this.owner.stcMapVo.players.length; i++) {
-                    this.owner.adder.addTankByIStcMapVoPlayer(this.owner.stcMapVo.players[i],i!=0);
-                }
-            }
             let t0 = SUtil.getTime();
             this.tick_frameInput();
             this.tick_ai();

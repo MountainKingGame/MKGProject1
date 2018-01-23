@@ -15,19 +15,19 @@ namespace models.battles {
                         this.countMoveDir();
                     }
                 } else {
-                    this.lastMoveDir = Direction4.None;
+                    this.moveDirHistory = [];
                     this.gapMoveCount = 0;
                 }
             }
         }
-        lastMoveDir: Direction4 = Direction4.None;
+        moveDirHistory: Direction4[] = [];
         countMoveDir() {
-            /* let newDir: Direction4;
+            let newDir: Direction4;
             do {
                 newDir = MathUtil.randomInt(Direction4.Left, Direction4.Up) as Direction4;
             } while (this.owner.moveDir == newDir);
-            this.owner.moveDir = newDir; */
-            if (this.lastMoveDir == Direction4.Up) {
+            this.owner.moveDir = newDir;
+            /* if (this.lastMoveDir == Direction4.Up) {
                 this.owner.moveDir = Direction4.Down;
             } else if (this.lastMoveDir == Direction4.Left) {
                 this.owner.moveDir = Direction4.Right;
@@ -47,7 +47,7 @@ namespace models.battles {
                     }
                     this.lastMoveDir = this.owner.moveDir
                 }
-            }
+            } */
         }
         public dispose() {
             this.owner = null;

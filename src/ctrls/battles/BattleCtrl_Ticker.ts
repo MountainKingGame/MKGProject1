@@ -52,10 +52,7 @@ class BattleCtrl_Ticker {
                     // this.owner.tanks[item.playerId].onFrameOutput(item);
                     // break;
                     case BattleFrameOutputKind.AddTank:
-                        this.owner.addTank(this.owner.proxy.model.tankMap[item.data0]);
-                        if (item.data0 == this.owner.proxy.myTank.uid) {
-                            this.owner.myTank = this.owner.tankMap[item.data0];
-                        }
+                        this.owner.addTank(this.owner.proxy.model.tankMap[item.uid]);
                         break;
                     case BattleFrameOutputKind.AddBullet:
                         this.owner.addBulletById(item.data0 as number);

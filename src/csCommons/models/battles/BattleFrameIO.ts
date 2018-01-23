@@ -3,10 +3,24 @@
     public outputs:BattleFrameIOItem[] = [];
 } */
 class BattleFrameIOItem {
-    constructor(kind: BattleFrameInputKind|BattleFrameOutputKind, frame: number, playerUid: number, data0: number = null, data1: number = null, data2: number = null, data3: number = null, data4: number = null, data5: number = null, data6: number = null, data7: number = null) {
+    /**
+     * 
+     * @param kind 
+     * @param frame 
+     * @param uid tankId is same as player id in this map
+     * @param data0 
+     * @param data1 
+     * @param data2 
+     * @param data3 
+     * @param data4 
+     * @param data5 
+     * @param data6 
+     * @param data7 
+     */
+    constructor(kind: BattleFrameInputKind|BattleFrameOutputKind, frame: number, uid: number, data0: number = null, data1: number = null, data2: number = null, data3: number = null, data4: number = null, data5: number = null, data6: number = null, data7: number = null) {
         this.kind = kind;
         this.frame = frame;
-        this.uid = playerUid;
+        this.uid = uid;
         this.data0 = data0;
         this.data1 = data1;
         this.data2 = data2;

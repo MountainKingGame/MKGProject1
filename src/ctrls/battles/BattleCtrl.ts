@@ -42,7 +42,13 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.initEvent();
 		//
 		this.initMap();
-		//-
+		//
+		for (const tankUid in this.model.tankMap) {
+			const element = this.model.tankMap[tankUid];
+			this.addTank(this.model.tankMap[tankUid]);
+		}
+		this.myTank = this.tankMap[this.proxy.myTank.uid];
+		//
 		this.partialTick.init();
 	}
 	initUI() {

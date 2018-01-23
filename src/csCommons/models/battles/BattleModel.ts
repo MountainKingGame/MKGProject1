@@ -47,6 +47,10 @@ namespace models.battles {
                 vo.y = models.battles.BattleModelUtil.gridToPos(grid.row);
                 this.adder.addCellVo(vo);
             }
+            //--
+            for (let i = 0; i < this.stcMapVo.players.length; i++) {
+                this.adder.addTankByIStcMapVoPlayer(this.stcMapVo.players[i],i!=0);
+            }
         }
         tankAlignGridX(tank:TankVo){
             tank.x = BattleModelUtil.gridToPos(BattleModelUtil.alignGrid(tank.x,1, this.stcMapVo.size.col - 1));
