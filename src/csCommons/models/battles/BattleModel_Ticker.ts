@@ -20,7 +20,7 @@ namespace models.battles {
             this.tick_skill();
             this.tick_bullet_move();
             let te = SUtil.getTime();
-            console.log(te - t0, t2 - t1, t1 - t0);
+            // console.log(te - t0, t2 - t1, t1 - t0);
         }
         public tick_frameInput() {
             for (let i = 0; i < this.owner.frameInputs.length; i++) {
@@ -95,7 +95,7 @@ namespace models.battles {
             }
         }
         checkBulletHitTest(vo: BulletVo) {
-            console.log("[info]", vo.uid, "`vo.uid` checkBulletHitTest");
+            // console.log("[info]", vo.uid, "`vo.uid` checkBulletHitTest");
             let hitArr: IQuadTreeItem[] = this.owner.qtBullet.retrieve(vo.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
@@ -131,10 +131,13 @@ namespace models.battles {
             hitArr = this.owner.qtTank.retrieve(vo.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
-                if (vo.ownerUid != (<QuadTreeHitRect>item).owner.uid) {
+                let tank:TankVo = (<QuadTreeHitRect>item).owner as TankVo;
+                if (vo.ownerUid != tank.uid && tank.stateA==BattleVoStateA.Living) {
                     if (BattleModelUtil.checkHit(vo.hitRect, item)) {
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
                         vo.stateA = BattleVoStateA.Dump;
+                        //
+                        this.owner.adder.removeTank(tank);
                         break;//TODO:only hit one tank
                     }
                 }

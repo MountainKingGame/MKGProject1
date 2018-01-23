@@ -61,6 +61,7 @@ enum BattleFrameOutputKind {
     BulletHitBullet,
     BulletHitCell,
     BulletHitTank,
-    BulletRemove,
+    RemoveBullet,
+    RemoveTank,
     // BulletDump,
 }

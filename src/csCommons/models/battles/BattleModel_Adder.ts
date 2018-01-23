@@ -65,11 +65,17 @@ namespace models.battles {
         }
         removeBullet(vo: BulletVo) {
             QuadTree.removeItem(vo.hitRect);
-            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletRemove, this.owner.currFrame, vo.ownerUid, vo.uid));
+            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.RemoveBullet, this.owner.currFrame, vo.ownerUid, vo.uid));
             //don't remove, wait after ctrl used
             this.owner.dumpBulletMap[vo.uid] = vo;
             delete this.owner.bulletMap[vo.uid];
-            //
+        }
+        removeTank(vo:TankVo){
+            QuadTree.removeItem(vo.hitRect);
+            vo.stateA = BattleVoStateA.Dump;
+            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.RemoveTank, this.owner.currFrame, vo.uid, vo.uid));
+            this.owner.dumpTankMap[vo.uid] = vo;
+            delete this.owner.tankMap[vo.uid];
             if(this.owner.aiTankMap[vo.uid]){
                 this.owner.aiTankMap[vo.uid].dispose();
                 delete this.owner.aiTankMap[vo.uid];
@@ -77,6 +83,7 @@ namespace models.battles {
         }
         removeDumpAll() {
             for (const uid in this.owner.dumpCellMap) {
+                this.owner.dumpCellMap[uid].dispose();
                 delete this.owner.dumpCellMap[uid];
             }
             for (const uid in this.owner.dumpBulletMap) {
@@ -85,6 +92,7 @@ namespace models.battles {
                 delete this.owner.dumpBulletMap[uid];
             }
             for (const uid in this.owner.dumpTankMap) {
+                this.owner.dumpTankMap[uid].dispose();
                 delete this.owner.dumpTankMap[uid];
             }
         }

@@ -73,9 +73,12 @@ class BattleCtrl_Ticker {
                         break;
                     case BattleFrameOutputKind.BulletHitTank:
                         break;
-                    case BattleFrameOutputKind.BulletRemove:
-                        let bulletVo = this.owner.model.dumpBulletMap[item.data0];
-                        this.owner.removeBullet(bulletVo);
+                    case BattleFrameOutputKind.RemoveBullet:
+                        // let bulletVo = this.owner.model.dumpBulletMap[item.data0];
+                        this.owner.removeBulletByUid(item.data0);
+                        break;
+                    case BattleFrameOutputKind.RemoveTank:
+                        this.owner.removeTankByUid(item.uid);
                         break;
                 }
             }

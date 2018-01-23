@@ -218,12 +218,18 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.bulletLayer.addChild(bullet.ui);
 		this.bulletMap[vo.uid] = bullet;
 	}
-	public removeBullet(vo: models.battles.BulletVo) {
-		let bullet: BulletCtrl = this.bulletMap[vo.uid];
+	public removeBulletByUid(uid:number) {
+		let bullet: BulletCtrl = this.bulletMap[uid];
 		if (bullet != undefined) {
+			delete this.bulletMap[uid];
 			bullet.dispose();
-			this.bulletLayer.removeChild(bullet.ui);
-			delete this.bulletMap[vo.uid];
+		}
+	}
+	public removeTankByUid(uid:number){
+		let tank:TankCtrl = this.tankMap[uid];
+		if(tank != undefined){
+			delete this.tankMap[uid];
+			tank.dispose();
 		}
 	}
 }
