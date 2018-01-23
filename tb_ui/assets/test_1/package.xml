@@ -2,6 +2,7 @@
 <packageDescription id="hz9k4363" jpegQuality="80" compressPNG="true">
   <resources>
     <component id="eycn0" name="TestComp1.xml" path="/" exported="true"/>
+    <component id="k56p1" name="TestCom2.xml" path="/"/>
   </resources>
   <publish name="test_1"/>
 </packageDescription>
