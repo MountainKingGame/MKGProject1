@@ -7,42 +7,46 @@ namespace models.battles {
         constructor(owner: BattleModel) {
             this.owner = owner;
         }
-        addTankByIStcMapVoPlayer(player: IStcMapVoPlayer,needAI:boolean):TankVo {
+        addTankByIStcMapVoPlayer(player: IStcMapVoPlayer):TankVo {
             let vo: TankVo = new TankVo();
             vo.sid = 1;
             vo.uid = this.owner.tankUId++;
-            // vo.col = player.init.col;
-            // vo.row = player.init.row;
             vo.x = BattleModelUtil.gridToPos(player.init.col);
             vo.y = BattleModelUtil.gridToPos(player.init.row);
+            vo.dir = player.init.dir;
             this.addTankVo(vo);
-            //---ai
-            if(needAI){
-                vo.moveDir = Direction4.Up;
-                let ai:TankAI = new TankAI();
-                ai.owner = vo;
-                this.owner.aiTankMap[vo.uid] = ai;
-            }
             return vo;
         }
         addTankVo(vo: TankVo) {
-            // if (this.owner.tanks[vo.uid] != undefined) {
-            // console.log("[fatal]", "tankVo.id is exist!", vo);
-            // } else {
+            vo.stateA = BattleVoStateA.Living;
+            vo.stateFrame = 0;
+            //-
             vo.moveSpeedPerFrame = BattleModelConfig.si.tankMoveSpeedPerFrame;
-            vo.hitRect = new QuadTreeHitRect(vo);
             vo.sizeHalf = new Vector2(BattleModelConfig.si.cellSize,BattleModelConfig.si.cellSize);
+            vo.hitRect = new QuadTreeHitRect(vo);
             vo.hitRect.recountPivotCenter(vo.x, vo.y,vo.sizeHalf.x,vo.sizeHalf.y);
             vo.forecastMoveHitRect = new QuadTreeHitRect(vo);
-            // }
+            //-
             let skillVo = new SkillVo();
-            skillVo.sid = 1;
+            skillVo.sid = StcSkillSid.DefaultOne;
             skillVo.castGapFrame = BattleModelConfig.si.modelFrameRate / 2;
             vo.skillMap[skillVo.sid] = skillVo;
-            vo.stateA = BattleVoStateA.Living;
+            //-
             this.owner.tankMap[vo.uid] = vo;
             this.owner.qtTank.insert(vo.hitRect);
-            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddTank, this.owner.currFrame,vo.uid,vo.uid));
+            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddTank, this.owner.currFrame,vo.uid));
+        }
+        rebirthTank(vo:TankVo){
+            vo.stateA = BattleVoStateA.Rebirth;
+            vo.stateFrame = 0;
+            vo.moveDir = Direction4.None;
+            vo.x = BattleModelUtil.gridToPos(this.owner.stcMapVo.players[vo.initIndex].init.col);
+            vo.y = BattleModelUtil.gridToPos(this.owner.stcMapVo.players[vo.initIndex].init.row);
+            vo.dir = this.owner.stcMapVo.players[vo.initIndex].init.dir;
+            vo.xOld = vo.x;
+            vo.yOld = vo.y;
+            vo.hitRect.recountPivotCenter(vo.x, vo.y,vo.sizeHalf.x,vo.sizeHalf.y);
+            this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.RebirthTank, this.owner.currFrame,vo.uid));
         }
         addBulletVo(vo: BulletVo) {
             vo.moveSpeedPerFrame = BattleModelConfig.si.bulletMoveSpeedPerFrame;

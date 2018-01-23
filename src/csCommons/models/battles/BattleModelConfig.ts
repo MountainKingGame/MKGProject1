@@ -13,6 +13,8 @@ namespace models.battles {
         public tankMoveSpeedPerFrame: number;
         public bulletMoveSpeedPerSecond: number = 1000;
         public bulletMoveSpeedPerFrame: number;
+        /** 复活需要的分数 */
+        public rebirthNeedCoin:number = 100;
 
         init() {
             if(this.modelFrameRate%this.modelKeyFrameRate!=0){

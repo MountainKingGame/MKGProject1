@@ -42,14 +42,16 @@
             "kind": 0,
             "init": {
                 "col": 6,
-                "row": 25
+                "row": 25,
+                "dir": 4
             }
         },
         {
             "kind": 0,
             "init": {
                 "col": 10,
-                "row": 21
+                "row": 21,
+                "dir": 4
             }
         }
     ]

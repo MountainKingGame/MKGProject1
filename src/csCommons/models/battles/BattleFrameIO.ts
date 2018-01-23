@@ -58,6 +58,7 @@ enum BattleFrameOutputKind {
     TankXyChange,
     AddTank,
     AddBullet,
+    RebirthTank,
     BulletHitBullet,
     BulletHitCell,
     BulletHitTank,

@@ -134,13 +134,17 @@ namespace models.battles {
             hitArr = this.owner.qtTank.retrieve(vo.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
-                let tank: TankVo = (<QuadTreeHitRect>item).owner as TankVo;
-                if (vo.ownerUid != tank.uid && tank.stateA == BattleVoStateA.Living) {
+                let hitTank: TankVo = (<QuadTreeHitRect>item).owner as TankVo;
+                if (vo.ownerUid != hitTank.uid && hitTank.stateA == BattleVoStateA.Living) {
                     if (BattleModelUtil.checkHit(vo.hitRect, item)) {
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
                         vo.stateA = BattleVoStateA.Dump;
                         //
-                        this.owner.adder.removeTank(tank);
+                        if(hitTank.group==BattleGroup.CPU){
+                            this.owner.adder.removeTank(hitTank);
+                        }else{
+                            this.owner.adder.rebirthTank(hitTank);
+                        }
                         break;//TODO:only hit one tank
                     }
                 }

@@ -71,9 +71,12 @@ namespace models.battles {
     }
     //
     export class TankVo extends MovableEleVo {
+        public initIndex:number = 0;
         public xOld: number;
         public yOld: number;
         stateA: BattleVoStateA = BattleVoStateA.None;
+        /**这个状态持续的时间 */
+        stateFrame:number=0;
         public bulletUid = 1;
         public skillMap: { [key: number]: SkillVo } = {};//key:skillSid
         public forecastMoveHitRect: QuadTreeHitRect;
@@ -84,6 +87,15 @@ namespace models.battles {
             }
             super.dispose();
         }
+        /** 阵营 */
+        public group:BattleGroup = BattleGroup.None;
+        public hp:number;
+        public ap_tank:number;
+        public ap_cell:number;
+        /**攻击cell等级 1:wood 2:stone 3:iron*/
+        public attack_cell_lv:number;
+        /** 分数 */
+        public coin:number;
     }
     export class BulletVo extends MovableEleVo {
         stateA: BattleVoStateA = BattleVoStateA.None;
