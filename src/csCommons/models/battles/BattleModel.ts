@@ -24,6 +24,7 @@ namespace models.battles {
         //---
         aiTankMap: { [key: number]: TankAI } = {};
         //---
+        public gridSize:IGrid;
         public size: Vector2;
         //--
         frameInputs: BattleFrameIOItem[] = [];
@@ -31,26 +32,31 @@ namespace models.battles {
         //
         public init(stcMapId: number) {
             BattleModelConfig.si.init();
-            //
+            //-
             this.stcMapVo = StcMap.si.getVo(stcMapId);
-            this.size = new Vector2(this.stcMapVo.size.col * BattleModelConfig.si.cellSize, this.stcMapVo.size.row * BattleModelConfig.si.cellSize);
-            //
+            //-
+            this.gridSize = {};
+            this.gridSize.col = this.stcMapVo.cells[0].length;
+            this.gridSize.row = this.stcMapVo.cells.length;
+            this.size = new Vector2(this.gridSize.col * BattleModelConfig.si.cellSize, this.gridSize.row * BattleModelConfig.si.cellSize);
+            //-
             this.qtCell = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
             this.qtTank = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
             this.qtBullet = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
-            //
+            //-
             this.initCells();
             this.initTanks();
         }
         initCells() {
-            for (let i = 0; i < this.stcMapVo.cells.length; i++) {
-                var vo: CellVo = new CellVo();
-                vo.uid = this.cellUId++;
-                vo.sid = this.stcMapVo.cells[i];
-                let grid = CommonHelper.indexToGridH(i, this.stcMapVo.size.col);
-                vo.x = models.battles.BattleModelUtil.gridToPos(grid.col);
-                vo.y = models.battles.BattleModelUtil.gridToPos(grid.row);
-                this.adder.addCellVo(vo);
+            for (let row = 0; row < this.stcMapVo.cells.length; row++) {
+                for (let col = 0; col < this.stcMapVo.cells[row].length; col++) {
+                    var vo: CellVo = new CellVo();
+                    vo.uid = this.cellUId++;
+                    vo.sid = this.stcMapVo.cells[row][col];
+                    vo.x = models.battles.BattleModelUtil.gridToPos(col);
+                    vo.y = models.battles.BattleModelUtil.gridToPos(row);
+                    this.adder.addCellVo(vo);
+                }
             }
         }
         initTanks() {
@@ -69,10 +75,10 @@ namespace models.battles {
             }
         }
         tankAlignGridX(tank: TankVo) {
-            tank.x = BattleModelUtil.gridToPos(BattleModelUtil.alignGrid(tank.x, 1, this.stcMapVo.size.col - 1));
+            tank.x = BattleModelUtil.gridToPos(BattleModelUtil.alignGrid(tank.x, 1, this.gridSize.col - 1));
         }
         tankAlignGridY(tank: TankVo) {
-            tank.y = BattleModelUtil.gridToPos(BattleModelUtil.alignGrid(tank.y, 1, this.stcMapVo.size.row - 1));
+            tank.y = BattleModelUtil.gridToPos(BattleModelUtil.alignGrid(tank.y, 1, this.gridSize.row - 1));
         }
         validateTankX(tank: TankVo) {
             tank.x = MathUtil.clamp(tank.x, tank.sizeHalf.x, this.size.x - tank.sizeHalf.y);

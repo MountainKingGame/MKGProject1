@@ -10,7 +10,6 @@ class StcMap {
                 if (!vo.id) vo.id = i;
                 this.voDict[i] = vo;
                 //-auto fill
-                vo.size.row = Math.ceil(vo.cells.length/vo.size.col);
                 //-
                 i++;
             } else {
@@ -29,8 +28,7 @@ interface IStcMapVo {
     version?: number;
     id?: number;
     kind?: number;
-    size?: IGrid;
-    cells: number[];
+    cells: number[][];
     positions?: IStcMapPosition[];
 }
 interface IStcMapPosition {

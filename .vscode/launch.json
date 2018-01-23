@@ -25,25 +25,6 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Chrome egret clean",
-            "url": "http://localhost/index.html",
-            "preLaunchTask": "egret clean",
-            // "file": "${workspaceRoot}/index.html",
-            "runtimeExecutable": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
-            "sourceMaps": true,
-            // "userDataDir": "${workspaceRoot}/bin",
-            "runtimeArgs": [
-                "--auto-open-devtools-for-tabs",
-                // "--disable-web-security",
-                // "--nolazy",
-                // "--remote-debugging-port=9222",
-                "--allow-file-access-from-files"
-            ],
-            "webRoot": "${workspaceRoot}"
-        },
-        {
-            "type": "chrome",
-            "request": "launch",
             "name": "QuadTreeHitTest",
             "file": "${workspaceRoot}/test/QuadTreeHitTest.html",
             "runtimeExecutable": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",

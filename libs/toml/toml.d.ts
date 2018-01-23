@@ -1,0 +1,1 @@
+declare function toml(input: string): object;

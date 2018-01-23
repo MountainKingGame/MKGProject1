@@ -10,5 +10,4 @@ interface IVector2{
 interface IGrid{
     col?:number;
     row?:number;
-    dir?:number
 }

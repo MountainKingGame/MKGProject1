@@ -62,6 +62,11 @@ class Main extends egret.DisplayObjectContainer {
         //===test
         // new tests.TestProtobuf();
         // new TestMoveSmooth().init();
+        // console.log("[info]",toml("[x.y.z]\na=13\nb=3"),"`toml`");
+        // let o = RES.getRes("map1_toml");
+        // console.log(o);
+        // let a:any = toml(o);
+        // console.log("[info]",a,"`toml`",a.products.length);
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);

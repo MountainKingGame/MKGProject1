@@ -41,6 +41,10 @@
     {
       "name": "pb",
       "path": "./libs/pb"
+    },
+    {
+      "name": "toml",
+      "path": "./libs/toml"
     }
   ]
 }

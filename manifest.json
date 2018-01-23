@@ -9,7 +9,8 @@
 		"libs/rawinflate/rawinflate.js",
 		"libs/fairygui/fairygui.js",
 		"libs/protobuf/protobuf.js",
-		"libs/pb/pb.js"
+		"libs/pb/pb.js",
+		"libs/toml/toml.js"
 	],
 	"game": [
 		"bin-debug/csCommons/tslib/utils/CallbackPool.js",
