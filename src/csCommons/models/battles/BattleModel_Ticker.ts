@@ -134,16 +134,38 @@ namespace models.battles {
             hitArr = this.owner.qtTank.retrieve(vo.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
+                let attackTank: TankVo = this.owner.tankMap[vo.ownerUid];
                 let hitTank: TankVo = (<QuadTreeHitRect>item).owner as TankVo;
-                if (vo.ownerUid != hitTank.uid && hitTank.stateA == BattleVoStateA.Living) {
+                let canHit: boolean = false;
+                if (hitTank.stateA == BattleVoStateA.Living) {
+                    if (vo.ownerUid != hitTank.uid) {
+                        if(attackTank.group == hitTank.group){
+                            //TODO: 
+                            /* if(attackTank.group==BattleGroup.Player){
+                                canHit = true;
+                            } */
+                        }else{
+                            canHit = true;
+                        }
+                    }
+                }
+                if (canHit) {
                     if (BattleModelUtil.checkHit(vo.hitRect, item)) {
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
                         vo.stateA = BattleVoStateA.Dump;
                         //
-                        if(hitTank.group==BattleGroup.CPU){
+                        if (hitTank.group == BattleGroup.CPU) {
                             this.owner.adder.removeTank(hitTank);
+                        } else if (hitTank.group == BattleGroup.Player) { 
+                            if(attackTank.group == BattleGroup.CPU){
+                                this.owner.adder.rebirthTank(hitTank);
+                            }else if(attackTank.group == BattleGroup.Player){
+                                // this.owner.adder.addBuff(attackTank,)//TODO: add Buff
+                            }else{
+                                throw new Error("");
+                            }
                         }else{
-                            this.owner.adder.rebirthTank(hitTank);
+                            throw new Error("");
                         }
                         break;//TODO:only hit one tank
                     }

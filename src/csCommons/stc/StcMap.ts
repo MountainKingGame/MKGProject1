@@ -31,11 +31,11 @@ interface IStcMapVo {
     kind?: number;
     size?: IGrid;
     cells: number[];
-    players?: IStcMapVoPlayer[];
+    positions?: IStcMapPosition[];
 }
-interface IStcMapVoPlayer {
-    /**kind of tank */
-    kind?: number;
-    /** init grid position */
-    init?: IGrid;
+interface IStcMapPosition {
+    sid?: number;
+    col?: number;
+    row?: number;
+    dir?: number;
 }

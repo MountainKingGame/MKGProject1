@@ -1,4 +1,4 @@
-class StcCellSid{
+class StcCellSid{ 
     static floor = 0; 
     static wood = 1;
     static stone = 2;

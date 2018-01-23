@@ -38,6 +38,11 @@ namespace models.battles {
             this.qtCell = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
             this.qtTank = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
             this.qtBullet = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
+            //
+            this.initCells();
+            this.initTanks();
+        }
+        initCells() {
             for (let i = 0; i < this.stcMapVo.cells.length; i++) {
                 var vo: CellVo = new CellVo();
                 vo.uid = this.cellUId++;
@@ -47,18 +52,19 @@ namespace models.battles {
                 vo.y = models.battles.BattleModelUtil.gridToPos(grid.row);
                 this.adder.addCellVo(vo);
             }
-            //--
-            for (let i = 0; i < this.stcMapVo.players.length; i++) {
-                let tankVo = this.adder.addTankByIStcMapVoPlayer(this.stcMapVo.players[i]);
+        }
+        initTanks() {
+            for (let i = 0; i < this.stcMapVo.positions.length; i++) {
+                let tankVo = this.adder.addTankByIStcMapVoPlayer(this.stcMapVo.positions[i]);
                 tankVo.initIndex = i;
                 if (i == 0) {
                     tankVo.group = BattleGroup.Player;
                 } else {
                     tankVo.group = BattleGroup.CPU;
-                    tankVo.moveDir = Direction4.Up;
-                    let ai:TankAI = new TankAI();
+                    tankVo.moveDir = tankVo.dir;
+                    let ai: TankAI = new TankAI();
                     ai.owner = tankVo;
-                    this.aiTankMap[vo.uid] = ai;
+                    this.aiTankMap[tankVo.uid] = ai;
                 }
             }
         }

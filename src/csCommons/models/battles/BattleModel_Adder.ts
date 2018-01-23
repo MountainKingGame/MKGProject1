@@ -7,13 +7,13 @@ namespace models.battles {
         constructor(owner: BattleModel) {
             this.owner = owner;
         }
-        addTankByIStcMapVoPlayer(player: IStcMapVoPlayer):TankVo {
+        addTankByIStcMapVoPlayer(position: IStcMapPosition):TankVo {
             let vo: TankVo = new TankVo();
             vo.sid = 1;
             vo.uid = this.owner.tankUId++;
-            vo.x = BattleModelUtil.gridToPos(player.init.col);
-            vo.y = BattleModelUtil.gridToPos(player.init.row);
-            vo.dir = player.init.dir;
+            vo.x = BattleModelUtil.gridToPos(position.col);
+            vo.y = BattleModelUtil.gridToPos(position.row);
+            vo.dir = position.dir;
             this.addTankVo(vo);
             return vo;
         }
@@ -37,12 +37,12 @@ namespace models.battles {
             this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddTank, this.owner.currFrame,vo.uid));
         }
         rebirthTank(vo:TankVo){
-            vo.stateA = BattleVoStateA.Rebirth;
+            // vo.stateA = BattleVoStateA.Rebirth;
             vo.stateFrame = 0;
             vo.moveDir = Direction4.None;
-            vo.x = BattleModelUtil.gridToPos(this.owner.stcMapVo.players[vo.initIndex].init.col);
-            vo.y = BattleModelUtil.gridToPos(this.owner.stcMapVo.players[vo.initIndex].init.row);
-            vo.dir = this.owner.stcMapVo.players[vo.initIndex].init.dir;
+            vo.x = BattleModelUtil.gridToPos(this.owner.stcMapVo.positions[vo.initIndex].col);
+            vo.y = BattleModelUtil.gridToPos(this.owner.stcMapVo.positions[vo.initIndex].row);
+            vo.dir = this.owner.stcMapVo.positions[vo.initIndex].dir;
             vo.xOld = vo.x;
             vo.yOld = vo.y;
             vo.hitRect.recountPivotCenter(vo.x, vo.y,vo.sizeHalf.x,vo.sizeHalf.y);
@@ -70,6 +70,14 @@ namespace models.battles {
         removeBullet(vo: BulletVo) {
             QuadTree.removeItem(vo.hitRect);
             this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.RemoveBullet, this.owner.currFrame, vo.ownerUid, vo.uid));
+            //
+            for (const bulletUid in this.owner.bulletMap) {
+                const bulletVo = this.owner.bulletMap[bulletUid];
+                if(bulletVo.ownerUid==vo.uid){
+                    this.removeBullet(bulletVo);
+                }
+            }
+            //
             //don't remove, wait after ctrl used
             this.owner.dumpBulletMap[vo.uid] = vo;
             delete this.owner.bulletMap[vo.uid];
