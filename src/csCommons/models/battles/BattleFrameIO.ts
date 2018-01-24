@@ -65,4 +65,8 @@ enum BattleFrameOutputKind {
     RemoveBullet,
     RemoveTank,
     // BulletDump,
+    AddBuff,
+    RemoveBuff,
+    AddEffect,
+    RemoveEffect,
 }

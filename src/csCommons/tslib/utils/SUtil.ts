@@ -14,4 +14,10 @@ class SUtil{
     static now():number{
         return new Date().getTime();
     }
+    static getValueInMap(map:any,key:any,_default:any):any{
+        if(map[key]==undefined){
+            return _default;
+        }
+        return map[key];
+    }
 }

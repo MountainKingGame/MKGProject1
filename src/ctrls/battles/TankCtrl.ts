@@ -25,4 +25,14 @@ class TankCtrl extends CtrlBase<fuis.elements_1.UI_Tank>{
         this.movableEleCtrl = null;
         super.dispose();
     }
+    effectMap:{[key:number]:fairygui.GComponent} = {};
+    public addBuffEffect(kind:StcEffectSid):void{
+        let comp = fuis.elements_1.UI_InvincibleEffect.createInstance();
+        this.ui.addChild(comp);
+        this.effectMap[kind] = comp;
+    }
+    public removeBuffEffect(kind:StcEffectSid):void{
+        this.effectMap[kind].dispose();
+        delete this.effectMap[kind];
+    }
 }

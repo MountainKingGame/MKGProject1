@@ -15,6 +15,10 @@ namespace models.battles {
         public bulletMoveSpeedPerFrame: number;
         /** 复活需要的分数 */
         public rebirthNeedCoin:number = 100;
+        /**复活后无敌持续时间 */
+        public rebirthInvincibleMs:number = 5000;
+        /**复活后无敌持续帧数 */
+        public rebirthInvincibleFrame:number;
 
         init() {
             if(this.modelFrameRate%this.modelKeyFrameRate!=0){
@@ -24,6 +28,7 @@ namespace models.battles {
             this.modelMsPerFrame = Math.round(1000 / this.modelFrameRate);
             this.tankMoveSpeedPerFrame = MathUtil.round(this.tankMoveSpeedPerSecond / this.modelFrameRate, this.roundDigit);
             this.bulletMoveSpeedPerFrame = MathUtil.round(this.bulletMoveSpeedPerSecond / this.modelFrameRate, this.roundDigit);
+            this.rebirthInvincibleFrame = BattleModelUtil.msToFrame(this.rebirthInvincibleMs);
         }
     }
 }

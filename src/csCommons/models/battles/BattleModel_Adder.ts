@@ -51,6 +51,9 @@ namespace models.battles {
             vo.xOld = vo.x;
             vo.yOld = vo.y;
             vo.hitRect.recountPivotCenter(vo.x, vo.y,vo.sizeHalf.x,vo.sizeHalf.y);
+            //
+            this.owner.buffer.addBuff(vo,StcBuffSid.Invincible,BattleModelConfig.si.rebirthInvincibleFrame);
+            //
             this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.RebirthTank, this.owner.currFrame,vo.uid));
         }
         addBulletVo(vo: BulletVo) {

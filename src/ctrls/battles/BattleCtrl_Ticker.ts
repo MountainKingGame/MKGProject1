@@ -84,6 +84,12 @@ class BattleCtrl_Ticker {
                     case BattleFrameOutputKind.RemoveTank:
                         this.owner.removeTankByUid(item.uid);
                         break;
+                    case BattleFrameOutputKind.AddEffect:
+                        this.owner.tankMap[item.uid].addBuffEffect(item.data0);
+                        break;
+                    case BattleFrameOutputKind.RemoveEffect:
+                        this.owner.tankMap[item.uid].removeBuffEffect(item.data0);
+                        break;
                 }
             }
         }

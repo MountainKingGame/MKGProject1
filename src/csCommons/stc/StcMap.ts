@@ -1,6 +1,5 @@
-class StcMap {
+class StcMap extends StcCacheBase<IStcMapVo>{
     public static readonly si: StcMap = new StcMap();
-    voDict: { [key: number]: IStcMapVo } = {};
     init() {
         var i = 1;
         while (i > 0) {
@@ -21,9 +20,6 @@ class StcMap {
                 break;
             }
         }
-    }
-    getVo(id: number): IStcMapVo {
-        return this.voDict[id];
     }
 }
 /**

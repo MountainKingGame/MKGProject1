@@ -1,5 +1,5 @@
 namespace models.battles {
-    export class BattleModelPartialTick {
+    export class BattleModel_Ticker {
         public owner: BattleModel;
         constructor(owner: BattleModel) {
             this.owner = owner;
@@ -12,6 +12,7 @@ namespace models.battles {
             this.tick_frameInput();
             this.tick_factories();
             this.tick_ai();
+            this.owner.buffer.tick();
             let t1 = SUtil.now();
             this.tick_bulletHitTest();//先计算hit,因为被hit后的物品是不能在做后面动作了
             let t2 = SUtil.now();
@@ -99,12 +100,12 @@ namespace models.battles {
                     this.owner.adder.removeBullet(vo);
                 } else {
                     if (vo.stateA == BattleVoStateA.Living) {
-                        this.checkBulletHitTest(vo);
+                        this.checkBulletHit(vo);
                     }
                 }
             }
         }
-        checkBulletHitTest(vo: BulletVo) {
+        checkBulletHit(vo: BulletVo) {
             // console.log("[info]", vo.uid, "`vo.uid` checkBulletHitTest");
             let hitArr: IQuadTreeItem[] = this.owner.qtBullet.retrieve(vo.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
@@ -114,15 +115,19 @@ namespace models.battles {
                     if (BattleModelUtil.checkHit(vo.hitRect, item)) {
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitBullet, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
                         this.owner.adder.removeBullet(vo);
-                        this.owner.adder.removeBullet((<QuadTreeHitRect>item).owner as BulletVo));
+                        this.owner.adder.removeBullet((<QuadTreeHitRect>item).owner as BulletVo);
                         break;//TODO:only hit one bullet
                     }
                 }
             }
+            //---next
+            this.checkBulletHitBullet(vo);
+        }
+        checkBulletHitBullet(vo){
             if (vo.stateA == BattleVoStateA.Dump) {
                 return;
             }
-            hitArr = this.owner.qtCell.retrieve(vo.hitRect);
+            let hitArr = this.owner.qtCell.retrieve(vo.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 let cellVo = ((<QuadTreeHitRect>item).owner as CellVo);
@@ -139,10 +144,14 @@ namespace models.battles {
                     }
                 }
             }
+            //---next
+            this.checkBulletHitTank(vo);
+        }
+        checkBulletHitTank(vo:BulletVo){
             if (vo.stateA == BattleVoStateA.Dump) {
                 return;
             }
-            hitArr = this.owner.qtTank.retrieve(vo.hitRect);
+            let hitArr = this.owner.qtTank.retrieve(vo.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 let hitTank: TankVo = (<QuadTreeHitRect>item).owner as TankVo;
@@ -162,19 +171,24 @@ namespace models.battles {
                 if (canHit) {
                     if (BattleModelUtil.checkHit(vo.hitRect, item)) {
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
-                        if (hitTank.group == BattleGroup.CPU) {
-                            this.owner.adder.removeTank(hitTank);
-                        } else if (hitTank.group == BattleGroup.Player) { 
-                            if(vo.group == BattleGroup.CPU){
-                                this.owner.adder.rebirthTank(hitTank);
-                            }else if(vo.group == BattleGroup.Player){
-                                // this.owner.adder.addBuff(attackTank,)//TODO: add Buff
+                        if(hitTank.effectMap[StcEffectSid.Invincible]){
+                            //do nothing, only remove bullet
+                        }else{
+                            if (hitTank.group == BattleGroup.CPU) {
+                                this.owner.adder.removeTank(hitTank);
+                            } else if (hitTank.group == BattleGroup.Player) { 
+                                if(vo.group == BattleGroup.CPU){
+                                    this.owner.adder.rebirthTank(hitTank);
+                                }else if(vo.group == BattleGroup.Player){
+                                    // this.owner.adder.addBuff(attackTank,)//TODO: add freeze/palsy
+                                }else{
+                                    throw new Error("");
+                                }
                             }else{
                                 throw new Error("");
                             }
-                        }else{
-                            throw new Error("");
                         }
+                        //-
                         this.owner.adder.removeBullet(vo);
                         break;//TODO:only hit one tank
                     }

@@ -96,6 +96,9 @@ namespace models.battles {
         public attack_cell_lv:number;
         /** 分数 */
         public coin:number;
+
+        public buffMap:{[key:number]:BuffVo} = {};
+        effectMap:{[key:number]:boolean} = {};
     }
     export class BulletVo extends MovableEleVo {
         stateA: BattleVoStateA = BattleVoStateA.None;
@@ -111,6 +114,14 @@ namespace models.battles {
 
     }
     export class BuffVo extends EleVo {
-
+        stc:StcBuffVo;
+        frameMax:number;
+        frame:number = 0;
+    }
+    export class EffectStateVo{
+        /**无敌 */
+        invincible:boolean;
+        /** 透明 */
+        transparent:boolean;
     }
 }

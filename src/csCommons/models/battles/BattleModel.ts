@@ -2,7 +2,8 @@ namespace models.battles {
     export class BattleModel {
         public facade: ModelFacade;
         public adder: BattleModel_Adder = new BattleModel_Adder(this);
-        public ticker: BattleModelPartialTick = new BattleModelPartialTick(this);
+        public ticker: BattleModel_Ticker = new BattleModel_Ticker(this);
+        public buffer:BattleModel_Buffer = new BattleModel_Buffer(this);
         //===
         public cellUId: number = 1;
         public tankUId: number = 1;
@@ -39,6 +40,8 @@ namespace models.battles {
             BattleModelConfig.si.init();
             //-
             this.stcMapVo = StcMap.si.getVo(stcMapId);
+            //
+            this.buffer.init();
             //-
             this.gridSize = {};
             this.gridSize.col = this.stcMapVo.cells[0].length;

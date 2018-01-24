@@ -4,7 +4,7 @@ class ModelFacade {
     constructor() {
     }
     public init(){
-        StcMap.si.init();
+        StcMgr.si.init();
         this.timeMgr = new TimeMgr();
     }
 }

@@ -46,5 +46,6 @@ namespace models.battles {
         static msToKeyFrame(ms: number): number {
             return Math.round(ms * BattleModelConfig.si.modelKeyFrameRate / 1000);
         }
+        
     }
 }
