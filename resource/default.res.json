@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "battles_1_fui,battles_1@atlas0_png,elements_1_fui,joysticks_1_fui,joysticks_1@atlas0_png,map1_json",
+			"keys": "battles_1_fui,battles_1@atlas0_png,elements_1_fui,joysticks_1_fui,joysticks_1@atlas0_png,map1_json,map2_json",
 			"name": "preload"
 		}
 	],
@@ -35,6 +35,11 @@
 			"url": "assets/stc/maps/map1.json",
 			"type": "json",
 			"name": "map1_json"
+		},
+		{
+			"url": "assets/stc/maps/map2.json",
+			"type": "json",
+			"name": "map2_json"
 		}
 	]
 }

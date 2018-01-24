@@ -100,9 +100,6 @@ namespace models.battles {
                 } else {
                     if (vo.stateA == BattleVoStateA.Living) {
                         this.checkBulletHitTest(vo);
-                        if (this.owner.bulletMap[uid].stateA == BattleVoStateA.Dump) {
-                            this.owner.adder.removeBullet(vo);
-                        }
                     }
                 }
             }
@@ -116,7 +113,8 @@ namespace models.battles {
                 if (vo.ownerUid != ((<QuadTreeHitRect>item).owner as BulletVo).ownerUid) {
                     if (BattleModelUtil.checkHit(vo.hitRect, item)) {
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitBullet, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
-                        vo.stateA = BattleVoStateA.Dump;
+                        this.owner.adder.removeBullet(vo);
+                        this.owner.adder.removeBullet((<QuadTreeHitRect>item).owner as BulletVo));
                         break;//TODO:only hit one bullet
                     }
                 }
@@ -137,7 +135,7 @@ namespace models.battles {
                             cellVo.disposeHitRect();
                         }
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitCell, this.owner.currFrame, vo.ownerUid, vo.uid, cellVo.uid));
-                        vo.stateA = BattleVoStateA.Dump;
+                        this.owner.adder.removeBullet(vo);
                     }
                 }
             }
@@ -164,8 +162,6 @@ namespace models.battles {
                 if (canHit) {
                     if (BattleModelUtil.checkHit(vo.hitRect, item)) {
                         this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
-                        vo.stateA = BattleVoStateA.Dump;
-                        //
                         if (hitTank.group == BattleGroup.CPU) {
                             this.owner.adder.removeTank(hitTank);
                         } else if (hitTank.group == BattleGroup.Player) { 
@@ -179,6 +175,7 @@ namespace models.battles {
                         }else{
                             throw new Error("");
                         }
+                        this.owner.adder.removeBullet(vo);
                         break;//TODO:only hit one tank
                     }
                 }

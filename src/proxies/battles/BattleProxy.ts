@@ -14,7 +14,7 @@ class BattleProxy {
         this.isInit = true;
         this.initEvent();
         this.model = new models.battles.BattleModel();
-        this.model.init(1);
+        this.model.init(2);
         // this.facade.netMgr.req(123,null);
         for (const key in this.model.tankMap) {
             this.myTank = this.model.tankMap[key];
