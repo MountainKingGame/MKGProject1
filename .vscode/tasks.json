@@ -4,11 +4,21 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "StaticServer Launch",
+            "label": "StaticServer",
             "type": "shell",
             "command": "node",
             "args": [
                 "..\\..\\tools\\NodeJsTools\\bin\\js\\StaticServer.js"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Yaml2Json",
+            "type": "shell",
+            "command": "node",
+            "args": [
+                "..\\..\\tools\\NodeJsTools\\bin\\js\\YamlToJson.js",
+                "-d","resource/assets/stc/maps"
             ],
             "problemMatcher": []
         },
@@ -22,15 +32,6 @@
         },
         {
             "label": "egret clean",
-            "type": "shell",
-            "command": "egret",
-            "args": [
-                "clean"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "egret build",
             "type": "shell",
             "command": "egret",
             "args": [
