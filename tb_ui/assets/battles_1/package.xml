@@ -22,6 +22,8 @@
     <image id="rluqn" name="tank1.png" path="/images/livings/"/>
     <image id="rluqo" name="tank2.png" path="/images/livings/"/>
     <image id="rluqp" name="tank3.png" path="/images/livings/"/>
+    <image id="787gq" name="ice128.png" path="/images/mapCells/"/>
+    <image id="787gr" name="ice64.png" path="/images/mapCells/"/>
   </resources>
   <publish name="battles_1" genCode="true"/>
 </packageDescription>

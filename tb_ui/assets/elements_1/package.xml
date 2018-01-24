@@ -5,6 +5,7 @@
     <component id="h02b1" name="MapCell.xml" path="/" exported="true"/>
     <component id="h02b2" name="Bullet.xml" path="/" exported="true"/>
     <component id="cqc44" name="TankAvatar.xml" path="/" exported="true"/>
+    <component id="787g5" name="InvincibleEffect.xml" path="/effects/" exported="true"/>
   </resources>
   <publish name="elements_1" genCode="true"/>
 </packageDescription>

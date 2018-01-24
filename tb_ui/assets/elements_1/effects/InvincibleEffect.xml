@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="128,128" bgColor="#ffff00">
+  <displayList>
+    <graph id="n0_787g" name="n0" xy="6,6" size="116,116" aspect="true" type="rect" lineSize="18" lineColor="#ffffff00" fillColor="#5effffff" corner="22"/>
+  </displayList>
+</component>
