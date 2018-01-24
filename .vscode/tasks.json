@@ -17,7 +17,7 @@
             "type": "shell",
             "command": "node",
             "args": [
-                "..\\..\\tools\\NodeJsTools\\bin\\js\\YamlToJson.js",
+                "..\\..\\tools\\NodeJsTools\\bin\\js\\Yaml2Json.js",
                 "-d","resource/assets/stc/maps"
             ],
             "problemMatcher": []
