@@ -18,6 +18,8 @@ namespace models.battles {
             return vo;
         }
         addTankVo(vo: TankVo) {
+            vo.xOld = vo.x;
+            vo.yOld = vo.y;
             vo.stateA = BattleVoStateA.Living;
             vo.stateFrame = 0;
             //-
@@ -57,6 +59,8 @@ namespace models.battles {
             this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.RebirthTank, this.owner.currFrame,vo.uid));
         }
         addBulletVo(vo: BulletVo) {
+            vo.xOld = vo.x;
+            vo.yOld = vo.y;
             vo.moveSpeedPerFrame = BattleModelConfig.si.bulletMoveSpeedPerFrame;
             vo.sizeHalf = new Vector2(10,20);
             vo.hitRect = new QuadTreeHitRect(vo);

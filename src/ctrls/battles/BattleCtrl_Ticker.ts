@@ -15,7 +15,12 @@ class BattleCtrl_Ticker {
     lastFrameExtraMs: number = 0;
     /** 需要多少ms到下一个关键帧 */
     nextFrameNeedTime: number = 0;
+    pausing = false;
     public tick() {
+        if (this.pausing) {
+            this.lastFrameMs = SUtil.now();
+            return;
+        }
         this.owner.proxy.isFrame = false;
         this.currMs = SUtil.now();
         //--
@@ -24,6 +29,12 @@ class BattleCtrl_Ticker {
             this.nextFrameNeedTime = 0;
         } else {
             let gapMs = this.currMs - this.lastFrameMs;
+            if (gapMs > 1000) {
+                this.lastFrameExtraMs = 0;
+                this.nextFrameNeedTime = 0;
+                this.lastFrameMs = this.currMs;
+                return;//TODO: 断线重连
+            }
             if ((gapMs + this.lastFrameExtraMs) >= models.battles.BattleModelConfig.si.modelMsPerFrame) {
                 this.owner.proxy.isFrame = true;
                 this.lastFrameExtraMs = (gapMs + this.lastFrameExtraMs) - models.battles.BattleModelConfig.si.modelMsPerFrame;
@@ -41,6 +52,7 @@ class BattleCtrl_Ticker {
         this.lastFrameMs = this.currMs;
         //---
         if (this.owner.proxy.isFrame) {
+            let hitCellBoomEffMap: { [key: number]: true } = {};//每个子弹可以击中多个cell,但仅显示一次特效
             this.owner.proxy.tick();
             // console.log("[info]","this is frame",this.owner.model.currFrame,this.owner.proxy.isKeyFrame);
             //-- deal frame output
@@ -72,10 +84,29 @@ class BattleCtrl_Ticker {
                             this.owner.removeBullet(bulletVo);
                         } else {
                         } */
+                        if (!hitCellBoomEffMap[item.data0]) {
+                            let bulletVo: models.battles.BulletVo = this.owner.bulletMap[item.data0].vo;
+                            let mv = ResMgr.si.mcBoomQingTong();
+                            this.owner.eleLayer.addChild(mv);
+                            mv.setXY(bulletVo.x, bulletVo.y);
+                            hitCellBoomEffMap[item.data0] = true;
+                        }
+                        this.pausing = DebugConfig.pauseWhenHit;
                         break;
                     case BattleFrameOutputKind.BulletHitBullet:
+                        let bulletVo: models.battles.BulletVo = this.owner.bulletMap[item.data0].vo;
+                        let mv = ResMgr.si.mcBoomBaiYin();
+                        this.owner.eleLayer.addChild(mv);
+                        mv.setScale(0.3, 0.3);
+                        mv.setXY(bulletVo.x, bulletVo.y);
+                        this.pausing = DebugConfig.pauseWhenHit;
                         break;
                     case BattleFrameOutputKind.BulletHitTank:
+                        let bulletVo_t: models.battles.BulletVo = this.owner.bulletMap[item.data0].vo;
+                        let mv_t = ResMgr.si.mcBoomBaiYin();
+                        this.owner.eleLayer.addChild(mv_t);
+                        mv_t.setXY(bulletVo_t.x, bulletVo_t.y);
+                        this.pausing = DebugConfig.pauseWhenHit;
                         break;
                     case BattleFrameOutputKind.RemoveBullet:
                         // let bulletVo = this.owner.model.dumpBulletMap[item.data0];

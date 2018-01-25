@@ -6,6 +6,7 @@ module fuis.elements_1 {
 
 		public m_color:fairygui.Controller;
 		public m_n3:fairygui.GGraph;
+		public m_crack:fairygui.GComponent;
 		public m_n0:fairygui.GGraph;
 		public m_n1:fairygui.GGraph;
 
@@ -24,8 +25,9 @@ module fuis.elements_1 {
 
 			this.m_color = this.getControllerAt(0);
 			this.m_n3 = <fairygui.GGraph><any>(this.getChildAt(0));
-			this.m_n0 = <fairygui.GGraph><any>(this.getChildAt(1));
-			this.m_n1 = <fairygui.GGraph><any>(this.getChildAt(2));
+			this.m_crack = <fairygui.GComponent><any>(this.getChildAt(1));
+			this.m_n0 = <fairygui.GGraph><any>(this.getChildAt(2));
+			this.m_n1 = <fairygui.GGraph><any>(this.getChildAt(3));
 		}
 	}
 }

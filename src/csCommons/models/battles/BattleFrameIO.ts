@@ -60,9 +60,9 @@ enum BattleFrameOutputKind {
     AddBullet,
     RebirthTank,
     BulletHitBullet,
-    BulletHitCell,
+    BulletHitCell,//20007
     BulletHitTank,
-    RemoveBullet,
+    RemoveBullet,//20009
     RemoveTank,
     // BulletDump,
     AddBuff,

@@ -1,5 +1,5 @@
 class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
-	public partialTick: BattleCtrl_Ticker = new BattleCtrl_Ticker(this);
+	public ticker: BattleCtrl_Ticker = new BattleCtrl_Ticker(this);
 	/**
 	 * battle model
 	 */
@@ -50,7 +50,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		}
 		this.myTank = this.tankMap[this.proxy.myTank.uid];
 		//
-		this.partialTick.init();
+		this.ticker.init();
 	}
 	initUI() {
 		CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickComp));
@@ -97,7 +97,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 			this.proxy.onMoveDirChange(<Direction4>(dirKeyCodeIndex + 1));
 		} else {
 			switch (keyCode) {
-				case KeyBoardCtrl.KEY_SPACE_BAR:
+				case KeyBoardCtrl.KEY_J:
 					this.proxy.onSkillTrigger(StcSkillSid.DefaultOne);
 					break;
 			}
@@ -126,8 +126,11 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 			}
 		} else {
 			switch (keyCode) {
-				case KeyBoardCtrl.KEY_SPACE_BAR:
+				case KeyBoardCtrl.KEY_J:
 					this.proxy.onSkillUntrigger(StcSkillSid.DefaultOne);
+					break;
+				case KeyBoardCtrl.KEY_SPACE_BAR:
+					this.ticker.pausing = !this.ticker.pausing;
 					break;
 			}
 		}
@@ -230,14 +233,22 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		let bullet: BulletCtrl = this.bulletMap[uid];
 		if (bullet != undefined) {
 			delete this.bulletMap[uid];
-			bullet.dispose();
+			if(this.ticker.pausing && DebugConfig.unremoveWhenPausing){
+				bullet.ui.alpha = 0.3;
+			}else{
+				bullet.dispose();
+			}
 		}
 	}
 	public removeTankByUid(uid: number) {
 		let tank: TankCtrl = this.tankMap[uid];
 		if (tank != undefined) {
 			delete this.tankMap[uid];
-			tank.dispose();
+			if(this.ticker.pausing && DebugConfig.unremoveWhenPausing){
+				tank.ui.alpha = 0.3;
+			}else{
+				tank.dispose();
+			}
 		}
 	}
 }

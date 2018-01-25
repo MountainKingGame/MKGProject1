@@ -22,6 +22,7 @@ class CtrlFacade{
         fairygui.UIPackage.addPackage("battles_1");
         fairygui.UIPackage.addPackage("elements_1");
         fairygui.UIPackage.addPackage("joysticks_1");
+        fairygui.UIPackage.addPackage("movieClips_1");
         fuis.battles_1.battles_1Binder.bindAll();
         fuis.elements_1.elements_1Binder.bindAll();
         fuis.joysticks_1.joysticks_1Binder.bindAll();

@@ -61,6 +61,8 @@ namespace models.battles {
         }
     }
     export class MovableEleVo extends EntityVo {
+        public xOld: number;
+        public yOld: number;
         /** forward direction */
         public dir: Direction4 = Direction4.Up;
         public moveDir: Direction4 = Direction4.None;
@@ -72,8 +74,6 @@ namespace models.battles {
     //
     export class TankVo extends MovableEleVo {
         public initIndex:number = 0;
-        public xOld: number;
-        public yOld: number;
         stateA: BattleVoStateA = BattleVoStateA.None;
         /**这个状态持续的时间 */
         stateFrame:number=0;

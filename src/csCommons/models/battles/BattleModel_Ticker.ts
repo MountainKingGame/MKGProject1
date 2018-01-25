@@ -46,12 +46,12 @@ namespace models.battles {
                 }
             }
         }
-        tick_factories(){
-            if(this.owner.isKeyFrame){
+        tick_factories() {
+            if (this.owner.isKeyFrame) {
                 for (let i = 0; i < this.owner.factories.length; i++) {
                     let item = this.owner.factories[i];
-                    if(item.tick()){
-                        this.owner.factories.splice(i,1);
+                    if (item.tick()) {
+                        this.owner.factories.splice(i, 1);
                         i--;
                     }
                 }
@@ -96,103 +96,111 @@ namespace models.battles {
             this.owner.qtTank.refresh();
             for (const uid in this.owner.bulletMap) {
                 let vo: BulletVo = this.owner.bulletMap[uid];
-                if (QuadTree.isInner(vo.hitRect, this.owner.qtBullet.rect) == false) {
-                    this.owner.adder.removeBullet(vo);
-                } else {
-                    if (vo.stateA == BattleVoStateA.Living) {
+                if (vo.stateA == BattleVoStateA.Living) {//可能被其它bullet击中了
+                    if (QuadTree.isInner(vo.hitRect, this.owner.qtBullet.rect) == false) {
+                        this.owner.adder.removeBullet(vo);
+                    } else {
                         this.checkBulletHit(vo);
                     }
                 }
             }
         }
-        checkBulletHit(vo: BulletVo) {
+        checkBulletHit(bullet: BulletVo) {
+            let bulletDump: boolean = false;
             // console.log("[info]", vo.uid, "`vo.uid` checkBulletHitTest");
-            let hitArr: IQuadTreeItem[] = this.owner.qtBullet.retrieve(vo.hitRect);
+            let hitArr: IQuadTreeItem[] = this.owner.qtBullet.retrieve(bullet.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
-                //if (vo.uid != ((<QuadTreeHitRect>item).owner as BulletVo).uid) {
-                if (vo.ownerUid != ((<QuadTreeHitRect>item).owner as BulletVo).ownerUid) {
-                    if (BattleModelUtil.checkHit(vo.hitRect, item)) {
-                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitBullet, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
-                        this.owner.adder.removeBullet(vo);
+                let hitBullet: BulletVo = (<QuadTreeHitRect>item).owner as BulletVo;
+                if(bullet.group!=hitBullet.group){
+                    if (BattleModelUtil.checkHit(bullet.hitRect, item)) {
+                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitBullet, this.owner.currFrame, bullet.ownerUid, bullet.uid, (<QuadTreeHitRect>item).owner.uid));
+                        bulletDump = true;
                         this.owner.adder.removeBullet((<QuadTreeHitRect>item).owner as BulletVo);
                         break;//TODO:only hit one bullet
                     }
                 }
             }
             //---next
-            this.checkBulletHitBullet(vo);
-        }
-        checkBulletHitBullet(vo){
-            if (vo.stateA == BattleVoStateA.Dump) {
-                return;
+            if (bulletDump) {
+                this.owner.adder.removeBullet(bullet);
+            } else {
+                this.checkBulletHitCell(bullet);
             }
-            let hitArr = this.owner.qtCell.retrieve(vo.hitRect);
+        }
+        checkBulletHitCell(bullet) {
+            let bulletDump: boolean = false;
+            let hitArr = this.owner.qtCell.retrieve(bullet.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 let cellVo = ((<QuadTreeHitRect>item).owner as CellVo);
                 if (cellVo.sid != StcCellSid.floor && cellVo.sid != StcCellSid.river) {
-                    if (BattleModelUtil.checkHit(vo.hitRect, item)) {
+                    if (BattleModelUtil.checkHit(bullet.hitRect, item)) {
                         // console.log("[debug]","hit:",vo.hitRect,item,(<QuadTreeHitRect>item).owner.uid);
                         if (cellVo.sid != StcCellSid.block) {
                             cellVo.sid = StcCellSid.floor;
                             QuadTree.removeItem(item);
                             cellVo.disposeHitRect();
                         }
-                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitCell, this.owner.currFrame, vo.ownerUid, vo.uid, cellVo.uid));
-                        this.owner.adder.removeBullet(vo);
+                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitCell, this.owner.currFrame, bullet.ownerUid, bullet.uid, cellVo.uid));
+                        bulletDump = true;
                     }
                 }
             }
             //---next
-            this.checkBulletHitTank(vo);
-        }
-        checkBulletHitTank(vo:BulletVo){
-            if (vo.stateA == BattleVoStateA.Dump) {
-                return;
+            if (bulletDump) {
+                this.owner.adder.removeBullet(bullet);
+            } else {
+                this.checkBulletHitTank(bullet);
             }
-            let hitArr = this.owner.qtTank.retrieve(vo.hitRect);
+        }
+        checkBulletHitTank(bullet: BulletVo) {
+            let bulletDump: boolean = false;
+            let hitArr = this.owner.qtTank.retrieve(bullet.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 let hitTank: TankVo = (<QuadTreeHitRect>item).owner as TankVo;
                 let canHit: boolean = false;
                 if (hitTank.stateA == BattleVoStateA.Living) {
-                    if (vo.ownerUid != hitTank.uid) {
-                        if(vo.group == hitTank.group){
+                    if (bullet.ownerUid != hitTank.uid) {
+                        if (bullet.group == hitTank.group) {
                             //TODO: 
                             /* if(attackTank.group==BattleGroup.Player){
                                 canHit = true;
                             } */
-                        }else{
+                        } else {
                             canHit = true;
                         }
                     }
                 }
                 if (canHit) {
-                    if (BattleModelUtil.checkHit(vo.hitRect, item)) {
-                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.owner.currFrame, vo.ownerUid, vo.uid, (<QuadTreeHitRect>item).owner.uid));
-                        if(hitTank.effectMap[StcEffectSid.Invincible]){
+                    if (BattleModelUtil.checkHit(bullet.hitRect, item)) {
+                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.owner.currFrame, bullet.ownerUid, bullet.uid, (<QuadTreeHitRect>item).owner.uid));
+                        if (hitTank.effectMap[StcEffectSid.Invincible]) {
                             //do nothing, only remove bullet
-                        }else{
+                        } else {
                             if (hitTank.group == BattleGroup.CPU) {
                                 this.owner.adder.removeTank(hitTank);
-                            } else if (hitTank.group == BattleGroup.Player) { 
-                                if(vo.group == BattleGroup.CPU){
+                            } else if (hitTank.group == BattleGroup.Player) {
+                                if (bullet.group == BattleGroup.CPU) {
                                     this.owner.adder.rebirthTank(hitTank);
-                                }else if(vo.group == BattleGroup.Player){
+                                } else if (bullet.group == BattleGroup.Player) {
                                     // this.owner.adder.addBuff(attackTank,)//TODO: add freeze/palsy
-                                }else{
+                                } else {
                                     throw new Error("");
                                 }
-                            }else{
+                            } else {
                                 throw new Error("");
                             }
                         }
                         //-
-                        this.owner.adder.removeBullet(vo);
+                        bulletDump = true;
                         break;//TODO:only hit one tank
                     }
                 }
+            }
+            if (bulletDump) {
+                this.owner.adder.removeBullet(bullet);
             }
         }
         checkTankHitTest(vo: TankVo): IQuadTreeItem {
