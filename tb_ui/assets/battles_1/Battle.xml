@@ -13,5 +13,8 @@
     <component id="n4_hrji" name="skillComp" src="hrji1c" pkg="rbw1tvvv" xy="540,1350">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
+    <text id="n6_hz8r" name="txt0" xy="100,0" size="799,305" fontSize="32" color="#ffffff" align="right" ubb="true" autoSize="none" strokeColor="#000000" text="ABC&#xA;">
+      <relation target="" sidePair="right-right,top-top"/>
+    </text>
   </displayList>
 </component>

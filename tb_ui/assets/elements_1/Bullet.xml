@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="64,64">
   <displayList>
-    <graph id="n0_h02b" name="n0" xy="24,24" size="16,16" type="eclipse" lineSize="3" lineColor="#ff333333" fillColor="#ffffff00"/>
+    <graph id="n0_h02b" name="img0" xy="12,22" size="40,20" type="rect" lineSize="3" lineColor="#ff333333" fillColor="#ffffff00" corner="4,36,4,36"/>
   </displayList>
 </component>
