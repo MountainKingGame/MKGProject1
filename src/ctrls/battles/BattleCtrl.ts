@@ -63,9 +63,17 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.ui.m_touchLayer.alpha = 0;
 	}
 	initEvent() {
+		MsgMgr.si.add(FwConsts.MSG_GamePause,this,this.OnMsg_GamePause);
+		MsgMgr.si.add(FwConsts.MSG_GameResume,this,this.OnMsg_GameResume);
 		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchDown, this);
 		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
 		this.initInputEvent();
+	}
+	OnMsg_GamePause(){
+		this.ticker.pausing = true;
+	}
+	OnMsg_GameResume(){
+		this.ticker.pausing = false;
 	}
 	//===input Joystick keyboard mouse
 	initInputEvent() {

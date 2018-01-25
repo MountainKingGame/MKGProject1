@@ -17,6 +17,7 @@ class BattleCtrl_Ticker {
     nextFrameNeedTime: number = 0;
     pausing = false;
     public tick() {
+        // console.log(SUtil.now());
         if (this.pausing) {
             this.lastFrameMs = SUtil.now();
             return;
@@ -52,6 +53,7 @@ class BattleCtrl_Ticker {
         this.lastFrameMs = this.currMs;
         //---
         if (this.owner.proxy.isFrame) {
+            this.owner.ui.m_txt0.text = this.owner.proxy.currFrame.toString() + "-" +this.owner.proxy.currKeyFrame.toString();
             let hitCellBoomEffMap: { [key: number]: true } = {};//每个子弹可以击中多个cell,但仅显示一次特效
             this.owner.proxy.tick();
             // console.log("[info]","this is frame",this.owner.model.currFrame,this.owner.proxy.isKeyFrame);

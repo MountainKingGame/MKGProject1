@@ -8,6 +8,7 @@ module fuis.battles_1 {
 		public m_touchLayer:fairygui.GGraph;
 		public m_joysick:fairygui.GComponent;
 		public m_skillComp:fairygui.GComponent;
+		public m_txt0:fairygui.GTextField;
 
 		public static URL:string = "ui://ybsps8tfqitl0";
 
@@ -26,6 +27,7 @@ module fuis.battles_1 {
 			this.m_touchLayer = <fairygui.GGraph><any>(this.getChildAt(1));
 			this.m_joysick = <fairygui.GComponent><any>(this.getChildAt(2));
 			this.m_skillComp = <fairygui.GComponent><any>(this.getChildAt(3));
+			this.m_txt0 = <fairygui.GTextField><any>(this.getChildAt(4));
 		}
 	}
 }
