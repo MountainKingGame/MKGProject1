@@ -24,6 +24,13 @@
     <image id="rluqp" name="tank3.png" path="/images/livings/"/>
     <image id="787gq" name="ice128.png" path="/images/mapCells/"/>
     <image id="787gr" name="ice64.png" path="/images/mapCells/"/>
+    <image id="nqjqs" name="crack1_128.png" path="/images/others/"/>
+    <image id="nqjqt" name="crack1_64.png" path="/images/others/" exported="true"/>
+    <image id="nqjqu" name="crack2_128.png" path="/images/others/"/>
+    <image id="nqjqv" name="crack2_64.png" path="/images/others/" exported="true"/>
+    <image id="nqjqw" name="crack3_128.png" path="/images/others/"/>
+    <image id="nqjqx" name="crack3_64.png" path="/images/others/" exported="true"/>
+    <component id="hz8ry" name="Crack.xml" path="/" exported="true"/>
   </resources>
   <publish name="battles_1" genCode="true"/>
 </packageDescription>

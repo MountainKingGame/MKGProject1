@@ -4,5 +4,5 @@
     <component id="eycn0" name="TestComp1.xml" path="/" exported="true"/>
     <component id="k56p1" name="TestCom2.xml" path="/"/>
   </resources>
-  <publish name="test_1"/>
+  <publish name="test_1" genCode="true"/>
 </packageDescription>

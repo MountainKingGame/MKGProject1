@@ -6,6 +6,7 @@
     <component id="h02b2" name="Bullet.xml" path="/" exported="true"/>
     <component id="cqc44" name="TankAvatar.xml" path="/" exported="true"/>
     <component id="787g5" name="InvincibleEffect.xml" path="/effects/" exported="true"/>
+    <component id="hz8r6" name="DebugRect.xml" path="/" exported="true"/>
   </resources>
   <publish name="elements_1" genCode="true"/>
 </packageDescription>

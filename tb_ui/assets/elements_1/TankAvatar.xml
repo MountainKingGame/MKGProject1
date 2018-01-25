@@ -2,10 +2,11 @@
 <component size="128,128">
   <controller name="color" pages="0,,1,,2,,3,,4,,5,,6," selected="0"/>
   <displayList>
-    <graph id="n3_cqc4" name="n3" xy="4,4" size="120,120" type="rect" lineSize="6" corner="30"/>
-    <graph id="n0_h02b" name="n0" xy="36,36" size="56,56" type="rect" lineSize="6" corner="30">
+    <graph id="n3_cqc4" name="n3" xy="4,4" size="120,120" locked="true" type="rect" lineSize="6" corner="30"/>
+    <component id="n4_hz8r" name="crack" src="hz8ry" pkg="ybsps8tf" xy="4,4" size="120,120" controller="lv,3"/>
+    <graph id="n0_h02b" name="n0" xy="36,36" size="56,56" locked="true" type="rect" lineSize="6" corner="30">
       <gearColor controller="color" pages="1,2,3,4,5,6" values="#ff0000|#00ff00|#0000ff|#ffff00|#ff00ff|#00ffff" default="#ffffff"/>
     </graph>
-    <graph id="n1_h02b" name="n1" xy="92,54" size="49,20" type="rect" lineSize="6"/>
+    <graph id="n1_h02b" name="n1" xy="92,54" size="49,20" locked="true" type="rect" lineSize="6"/>
   </displayList>
 </component>

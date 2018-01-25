@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="128,128" bgColor="#00ff00">
-  <controller name="kind" pages="0,,1,,2,,3,,4,,5," selected="1"/>
+  <controller name="kind" pages="0,,1,,2,,3,,4,,5," selected="0"/>
   <controller name="color" pages="0,,1,,2,,3,,4,,5,,6," selected="0"/>
   <displayList>
     <component id="n0_h02b" name="avatar" src="cqc44" xy="0,0"/>
-    <text id="n2_cqc4" name="txt_kind" xy="37,38" size="60,53" fontSize="30" align="center" vAlign="middle" autoSize="none" strokeColor="#ffffff" text="K1">
+    <text id="n2_cqc4" name="txt_kind" xy="37,38" size="60,53" fontSize="30" align="center" vAlign="middle" autoSize="none" strokeColor="#ffffff" text="">
       <gearText controller="kind" pages="0,2,3,4,5" values="|K2|K3|K4|K5" default="K1"/>
     </text>
   </displayList>
