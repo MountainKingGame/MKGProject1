@@ -11,4 +11,9 @@ namespace models.battles {
         CPU,
         NPC,
     }
+    export enum CellLv{
+        Wood = 0,
+        Stone = 1,
+        Iron = 2,
+    }
 }

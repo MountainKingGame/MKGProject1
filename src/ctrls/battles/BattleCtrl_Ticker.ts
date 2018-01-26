@@ -1,15 +1,15 @@
 class BattleCtrl_Ticker {
-    public owner: BattleCtrl;
-    constructor(owner: BattleCtrl) {
-        this.owner = owner;
+    public ctrl: BattleCtrl;
+    constructor(ctrl: BattleCtrl) {
+        this.ctrl = ctrl;
     }
     public init() {
-        this.lastFrameMs = new Date().getTime();
+        this.lastMs = new Date().getTime();
         this.nextFrameNeedTime = models.battles.BattleModelConfig.si.modelMsPerFrame;
         MsgMgr.si.add(CtrlConst.Msg_OnGameTick, this, this.tick);
         // setInterval(this.tick.bind(this), CtrlConfig.si.viewMsPerFrame);
     }
-    lastFrameMs: number = 0;
+    lastMs: number = 0;
     private currMs: number = 0;
     /** 上一帧多出来的时间 */
     lastFrameExtraMs: number = 0;
@@ -19,109 +19,123 @@ class BattleCtrl_Ticker {
     public tick() {
         // console.log(SUtil.now());
         if (this.pausing) {
-            this.lastFrameMs = SUtil.now();
+            this.lastMs = SUtil.now();
             return;
         }
-        this.owner.proxy.isFrame = false;
+        this.ctrl.proxy.isFrame = false;
         this.currMs = SUtil.now();
         //--
-        if (this.owner.proxy.isChaseFrame) {
-            this.owner.proxy.isFrame = true;
+        if (this.ctrl.proxy.isChaseFrame) {
+            this.ctrl.proxy.isFrame = true;
             this.nextFrameNeedTime = 0;
         } else {
-            let gapMs = this.currMs - this.lastFrameMs;
-            if (gapMs > 1000) {
+            let deltaMs = this.currMs - this.lastMs;
+            if (deltaMs > 1000) {
                 this.lastFrameExtraMs = 0;
                 this.nextFrameNeedTime = 0;
-                this.lastFrameMs = this.currMs;
+                this.lastMs = this.currMs;
                 return;//TODO: 断线重连
             }
-            if ((gapMs + this.lastFrameExtraMs) >= models.battles.BattleModelConfig.si.modelMsPerFrame) {
-                this.owner.proxy.isFrame = true;
-                this.lastFrameExtraMs = (gapMs + this.lastFrameExtraMs) - models.battles.BattleModelConfig.si.modelMsPerFrame;
+            if ((deltaMs + this.lastFrameExtraMs) >= models.battles.BattleModelConfig.si.modelMsPerFrame) {
+                this.ctrl.proxy.isFrame = true;
+                this.lastFrameExtraMs = (deltaMs + this.lastFrameExtraMs) - models.battles.BattleModelConfig.si.modelMsPerFrame;
                 if (this.lastFrameExtraMs >= models.battles.BattleModelConfig.si.modelMsPerFrame) {
                     this.nextFrameNeedTime = 0;
                 } else {
                     this.nextFrameNeedTime = models.battles.BattleModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
                 }
             } else {
-                this.lastFrameExtraMs += gapMs;
+                this.lastFrameExtraMs += deltaMs;
                 this.nextFrameNeedTime = models.battles.BattleModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
             }
         }
         //--
-        this.lastFrameMs = this.currMs;
+        this.lastMs = this.currMs;
         //---
-        if (this.owner.proxy.isFrame) {
-            this.owner.ui.m_txt0.text = this.owner.proxy.currFrame.toString() + "-" +this.owner.proxy.currKeyFrame.toString();
+        if (this.ctrl.proxy.isFrame) {
+            this.ctrl.ui.m_txt0.text = this.ctrl.proxy.currFrame.toString() + "-" + this.ctrl.proxy.currKeyFrame.toString();
             let hitCellBoomEffMap: { [key: number]: true } = {};//每个子弹可以击中多个cell,但仅显示一次特效
-            this.owner.proxy.tick();
+            this.ctrl.proxy.tick();
             // console.log("[info]","this is frame",this.owner.model.currFrame,this.owner.proxy.isKeyFrame);
             //-- deal frame output
-            for (let i = 0; i < this.owner.proxy.model.frameOutputs.length; i++) {
-                let item = this.owner.proxy.model.frameOutputs[i];
+            for (let i = 0; i < this.ctrl.proxy.model.frameOutputs.length; i++) {
+                let item = this.ctrl.proxy.model.frameOutputs[i];
                 switch (item.kind) {
                     // case BattleFrameOutputKind.TankDirChange:
                     // case BattleFrameOutputKind.TankXyChange:
                     // this.owner.tanks[item.playerId].onFrameOutput(item);
                     // break;
                     case BattleFrameOutputKind.AddTank:
-                        this.owner.addTank(this.owner.proxy.model.tankMap[item.uid]);
+                        this.ctrl.addTank(this.ctrl.proxy.model.tankMap[item.uid]);
                         break;
                     case BattleFrameOutputKind.AddBullet:
-                        this.owner.addBulletById(item.data0 as number);
+                        this.ctrl.addBulletById(item.data0 as number);
                         break;
                     case BattleFrameOutputKind.RebirthTank:
-                        let tank = this.owner.tankMap[item.uid];
+                        let tank = this.ctrl.tankMap[item.uid];
                         tank.movableEleCtrl.moveDirImmediately();
                         break;
+                    case BattleFrameOutputKind.BulletHitBullet:
+                        this.pausing = DebugConfig.pauseWhenHit;
+                        let bullet: BulletCtrl = this.ctrl.bulletMap[item.data0];
+                        this.showBulletHitEff(bullet.vo);
+                        if (bullet.vo.apTank > 0) {
+                            BattleCtrlUtil.refreshCrack(bullet.ui.m_crack as fuis.battles_1.UI_Crack, bullet.vo.apTank, bullet.vo.apTankMax);
+                        }
+                        let hitBullet: BulletCtrl = this.ctrl.bulletMap[item.data1];
+                        if (hitBullet.vo.apTank > 0) {
+                            BattleCtrlUtil.refreshCrack(hitBullet.ui.m_crack as fuis.battles_1.UI_Crack, hitBullet.vo.apTank, hitBullet.vo.apTankMax);
+                        }
+                        break;
                     case BattleFrameOutputKind.BulletHitCell:
-                        let cellVo: models.battles.CellVo = this.owner.model.cellMap[item.data1];
-                        this.owner.cellMap[cellVo.uid].m_kind.selectedIndex = cellVo.sid;
-                        /* (discard) replace with BattleFrameOutputKind.BulletRemove
-                        let bulletVo: models.battles.BulletVo = this.owner.model.bulletMap[item.data0];
-                        if (bulletVo == undefined) {
-                            bulletVo = this.owner.model.dumpBulletMap[item.data0];
-                            //be dumped
-                            this.owner.removeBullet(bulletVo);
-                        } else {
-                        } */
+                        this.pausing = DebugConfig.pauseWhenHit;
                         if (!hitCellBoomEffMap[item.data0]) {
-                            let bulletVo: models.battles.BulletVo = this.owner.bulletMap[item.data0].vo;
-                            let mv = ResMgr.si.mcBoomQingTong();
-                            this.owner.eleLayer.addChild(mv);
-                            mv.setXY(bulletVo.x, bulletVo.y);
+                            this.showBulletHitEff(this.ctrl.bulletMap[item.data0].vo);
                             hitCellBoomEffMap[item.data0] = true;
                         }
-                        this.pausing = DebugConfig.pauseWhenHit;
-                        break;
-                    case BattleFrameOutputKind.BulletHitBullet:
-                        let bulletVo: models.battles.BulletVo = this.owner.bulletMap[item.data0].vo;
-                        let mv = ResMgr.si.mcBoomBaiYin();
-                        this.owner.eleLayer.addChild(mv);
-                        mv.setScale(0.3, 0.3);
-                        mv.setXY(bulletVo.x, bulletVo.y);
-                        this.pausing = DebugConfig.pauseWhenHit;
+                        //-
+                        let hitCellVo: models.battles.CellVo = this.ctrl.model.cellMap[item.data1];
+                        let hitCell: fuis.battles_1.UI_MapCell = this.ctrl.cellMap[hitCellVo.uid];
+                        if (hitCellVo.hp > 0) {
+                            BattleCtrlUtil.refreshCrack(hitCell.m_crack as fuis.battles_1.UI_Crack, hitCellVo.hp, hitCellVo.hpMax);
+                        } else {
+                            hitCell.m_kind.selectedIndex = hitCellVo.sid;
+                            BattleCtrlUtil.initCrack(hitCell.m_crack);
+                            //-
+                            let mc = ResMgr.si.mcBoomQingTong();
+                            this.ctrl.eleLayer.addChild(mc);
+                            mc.setScale(0.6, 0.6);
+                            mc.setXY(hitCellVo.x + models.battles.BattleModelConfig.si.cellSizeHalf, hitCellVo.y + models.battles.BattleModelConfig.si.cellSizeHalf);
+                        }
                         break;
                     case BattleFrameOutputKind.BulletHitTank:
-                        let bulletVo_t: models.battles.BulletVo = this.owner.bulletMap[item.data0].vo;
-                        let mv_t = ResMgr.si.mcBoomBaiYin();
-                        this.owner.eleLayer.addChild(mv_t);
-                        mv_t.setXY(bulletVo_t.x, bulletVo_t.y);
                         this.pausing = DebugConfig.pauseWhenHit;
+                        this.showBulletHitEff(this.ctrl.bulletMap[item.data0].vo);
+                        let hitTank: TankCtrl = this.ctrl.tankMap[item.data1];
+                        if (hitTank.vo.hp > 0) {
+                            BattleCtrlUtil.refreshCrack(hitTank.ui.m_avatar.m_crack as fuis.battles_1.UI_Crack, hitTank.vo.hp, hitTank.vo.hpMax);
+                        }
                         break;
                     case BattleFrameOutputKind.RemoveBullet:
                         // let bulletVo = this.owner.model.dumpBulletMap[item.data0];
-                        this.owner.removeBulletByUid(item.data0);
+                        this.ctrl.removeBulletByUid(item.data0);
                         break;
                     case BattleFrameOutputKind.RemoveTank:
-                        this.owner.removeTankByUid(item.uid);
+                        {
+                            let tank: TankCtrl = this.ctrl.tankMap[item.uid];
+                            let mc = ResMgr.si.mcBoomHuangJin();
+                            this.ctrl.eleLayer.addChild(mc);
+                            // mc.setScale(0.6, 0.6);
+                            mc.setXY(tank.ui.x,tank.ui.y);
+                            this.ctrl.removeTank(tank);
+                        }
+                        //-
                         break;
                     case BattleFrameOutputKind.AddEffect:
-                        this.owner.tankMap[item.uid].addBuffEffect(item.data0);
+                        this.ctrl.tankMap[item.uid].addBuffEffect(item.data0);
                         break;
                     case BattleFrameOutputKind.RemoveEffect:
-                        this.owner.tankMap[item.uid].removeBuffEffect(item.data0);
+                        this.ctrl.tankMap[item.uid].removeBuffEffect(item.data0);
                         break;
                 }
             }
@@ -129,16 +143,22 @@ class BattleCtrl_Ticker {
         /** 无论是不是关键帧 ctrl层还是要tick的 */
         this.tickCtrl();
     }
+    showBulletHitEff(bulletVo: models.battles.BulletVo) {
+        let mc = ResMgr.si.mcBoomBaiYin();
+        this.ctrl.eleLayer.addChild(mc);
+        mc.setScale(0.3, 0.3);
+        mc.setXY(bulletVo.x, bulletVo.y);
+    }
     tickCtrl() {
-        for (const uid in this.owner.tankMap) {
-            const tank = this.owner.tankMap[uid];
+        for (const uid in this.ctrl.tankMap) {
+            const tank = this.ctrl.tankMap[uid];
             tank.tick();
         }
-        for (const uid in this.owner.bulletMap) {
-            const bullet = this.owner.bulletMap[uid];
+        for (const uid in this.ctrl.bulletMap) {
+            const bullet = this.ctrl.bulletMap[uid];
             bullet.tick();
         }
-        this.owner.alginByMyTank();
+        this.ctrl.alginByMyTank();
     }
 
 }

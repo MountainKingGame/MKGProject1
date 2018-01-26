@@ -1,8 +1,8 @@
 namespace models.battles {
     export class BattleModel_Buffer {
         model: BattleModel;
-        constructor(owner: BattleModel) {
-            this.model = owner;
+        constructor(model: BattleModel) {
+            this.model = model;
         }
         private buffEffectSidHandleMap: { [key: number]: Function } = {};
         public buffUid: number = 0;

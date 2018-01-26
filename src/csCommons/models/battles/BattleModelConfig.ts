@@ -9,6 +9,7 @@ namespace models.battles {
         public modelMsPerFrame: number;
         public roundDigit: number = 2;
         public cellSize: number = 64;
+        public cellSizeHalf: number;
         public tankMoveSpeedPerSecond: number = 520;
         public tankMoveSpeedPerFrame: number;
         public bulletMoveSpeedPerSecond: number = 1000;
@@ -20,10 +21,13 @@ namespace models.battles {
         /**复活后无敌持续帧数 */
         public rebirthInvincibleFrame:number;
 
+        cellHpMax = 100;
+
         init() {
             if(this.modelFrameRate%this.modelKeyFrameRate!=0){
                 throw new Error("modelFrameRate must be the integer multiple of modelKeyFrameRate");
             }
+            this.cellSizeHalf = this.cellSize/2;
             this.keyFrameMultiple = Math.ceil(this.modelFrameRate/this.modelKeyFrameRate);
             this.modelMsPerFrame = Math.round(1000 / this.modelFrameRate);
             this.tankMoveSpeedPerFrame = MathUtil.round(this.tankMoveSpeedPerSecond / this.modelFrameRate, this.roundDigit);

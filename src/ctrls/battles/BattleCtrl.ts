@@ -164,6 +164,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 			// if(vo.sid>0){
 			// let cell: fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
 			let cell: fuis.battles_1.UI_MapCell = fuis.battles_1.UI_MapCell.createInstance();
+			BattleCtrlUtil.initCrack(cell.m_crack as fuis.battles_1.UI_Crack);
 			cell.setXY(vo.x, vo.y);
 			cell.m_kind.selectedIndex = vo.sid;
 			if (vo.sid == StcCellSid.cover) {
@@ -248,10 +249,9 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 			}
 		}
 	}
-	public removeTankByUid(uid: number) {
-		let tank: TankCtrl = this.tankMap[uid];
+	public removeTank(tank: TankCtrl) {
 		if (tank != undefined) {
-			delete this.tankMap[uid];
+			delete this.tankMap[tank.vo.uid];
 			if(this.ticker.pausing && DebugConfig.unremoveWhenPausing){
 				tank.ui.alpha = 0.3;
 			}else{

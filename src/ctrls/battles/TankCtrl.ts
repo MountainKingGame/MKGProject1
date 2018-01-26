@@ -7,16 +7,19 @@ class TankCtrl extends CtrlBase<fuis.elements_1.UI_Tank>{
     }
     public init() {
         super.init();
+        if(this.vo.group==models.battles.BattleGroup.CPU){
+            this.ui.m_avatar.m_color.selectedIndex = 1;
+        }else{
+            this.ui.m_avatar.m_color.selectedIndex = MathUtil.randomInt(ColorIndex.Green,ColorIndex.Purple);
+        }
         this.ui.setPivot(0.5, 0.5, true);
+        BattleCtrlUtil.initCrack(this.ui.m_avatar.m_crack as fuis.battles_1.UI_Crack);
         this.movableEleCtrl = new MovableEleCtrl(this.ui);
         this.movableEleCtrl.changeDir = true;
         this.movableEleCtrl.vo = this.vo;
         this.movableEleCtrl.battle = this.battle;
         this.movableEleCtrl.init();
-        //
         // this.ui.alpha = 0.3;
-        //
-        this.refreshCrack();
     }
 
     tick(): void {
@@ -39,8 +42,5 @@ class TankCtrl extends CtrlBase<fuis.elements_1.UI_Tank>{
     public removeBuffEffect(kind: StcEffectSid): void {
         this.effectMap[kind].dispose();
         delete this.effectMap[kind];
-    }
-    refreshCrack() {
-        (this.ui.m_avatar.m_crack as fuis.battles_1.UI_Crack).m_lv.selectedIndex = 2;
     }
 }

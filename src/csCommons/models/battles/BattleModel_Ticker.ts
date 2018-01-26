@@ -1,8 +1,8 @@
 namespace models.battles {
     export class BattleModel_Ticker {
-        public owner: BattleModel;
-        constructor(owner: BattleModel) {
-            this.owner = owner;
+        public model: BattleModel;
+        constructor(model: BattleModel) {
+            this.model = model;
         }
         /**
          * onFrame
@@ -12,9 +12,9 @@ namespace models.battles {
             this.tick_frameInput();
             this.tick_factories();
             this.tick_ai();
-            this.owner.buffer.tick();
+            this.model.buffer.tick();
             let t1 = SUtil.now();
-            this.tick_bulletHitTest();//先计算hit,因为被hit后的物品是不能在做后面动作了
+            this.tick_bulletHit();//先计算hit,因为被hit后的物品是不能在做后面动作了
             let t2 = SUtil.now();
             this.tick_generate();
             //move放最后,因为需要view在这一帧移动到xy,然后下一帧再处理hit等事项
@@ -25,56 +25,58 @@ namespace models.battles {
             // console.log(te - t0, t2 - t1, t1 - t0);
         }
         public tick_frameInput() {
-            for (let i = 0; i < this.owner.frameInputs.length; i++) {
-                let item = this.owner.frameInputs[i];
+            for (let i = 0; i < this.model.frameInputs.length; i++) {
+                let item = this.model.frameInputs[i];
                 switch (item.kind) {
                     case BattleFrameInputKind.MoveDirChange:
-                        this.owner.tankMap[item.uid].moveDir = <Direction4>item.data0;
+                        this.model.tankMap[item.uid].moveDir = <Direction4>item.data0;
                         break;
                     case BattleFrameInputKind.SkillTrigger:
-                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = true;
-                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
+                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = true;
+                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
                         break;
                     case BattleFrameInputKind.SkillUntrigger:
-                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
-                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
+                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
+                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
                         break;
                     case BattleFrameInputKind.SkillTriggerOnce:
-                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = true;
-                        this.owner.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
+                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = true;
+                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
                         break;
                 }
             }
         }
         tick_factories() {
-            if (this.owner.isKeyFrame) {
-                for (let i = 0; i < this.owner.factories.length; i++) {
-                    let item = this.owner.factories[i];
+            if (this.model.isKeyFrame) {
+                for (let i = 0; i < this.model.factories.length; i++) {
+                    let item = this.model.factories[i];
                     if (item.tick()) {
-                        this.owner.factories.splice(i, 1);
+                        this.model.factories.splice(i, 1);
                         i--;
                     }
                 }
             }
         }
         public tick_ai() {
-            for (const uid in this.owner.aiTankMap) {
-                const ai: TankAI = this.owner.aiTankMap[uid];
+            for (const uid in this.model.aiTankMap) {
+                const ai: TankAI = this.model.aiTankMap[uid];
                 ai.tick();
             }
         }
         public tick_generate() {
         }
         public tick_skill() {
-            for (const uid in this.owner.tankMap) {
-                const tank = this.owner.tankMap[uid];
+            for (const uid in this.model.tankMap) {
+                const tank = this.model.tankMap[uid];
                 for (const skillSid in tank.skillMap) {
                     let skillVo = tank.skillMap[skillSid];
-                    if ((skillVo.isTriggering || skillVo.isTriggerOnce) && (this.owner.currFrame - skillVo.castFrame) > skillVo.castGapFrame) {
-                        skillVo.castFrame = this.owner.currFrame;
+                    if ((skillVo.isTriggering || skillVo.isTriggerOnce) && (this.model.currFrame - skillVo.castFrame) > skillVo.castGapFrame) {
+                        skillVo.castFrame = this.model.currFrame;
                         var bullet: BulletVo = new BulletVo();
                         bullet.ownerUid = tank.uid;
                         bullet.group = tank.group;
+                        bullet.apTank = bullet.apTankMax = tank.apTank;
+                        bullet.apCell = tank.apCell;
                         bullet.sid = skillVo.sid;//TODO:
                         bullet.uid = tank.uid * 1000 + tank.bulletUid;
                         tank.bulletUid++;
@@ -84,21 +86,21 @@ namespace models.battles {
                         bullet.x = tank.x;
                         bullet.y = tank.y;
                         bullet.moveDir = tank.dir;
-                        this.owner.adder.addBulletVo(bullet);
+                        this.model.adder.addBulletVo(bullet);
                     }
                     skillVo.isTriggerOnce = false;
                 }
             }
         }
-        public tick_bulletHitTest() {
-            this.owner.qtCell.refresh();
-            this.owner.qtBullet.refresh();
-            this.owner.qtTank.refresh();
-            for (const uid in this.owner.bulletMap) {
-                let vo: BulletVo = this.owner.bulletMap[uid];
+        public tick_bulletHit() {
+            this.model.qtCell.refresh();
+            this.model.qtBullet.refresh();
+            this.model.qtTank.refresh();
+            for (const uid in this.model.bulletMap) {
+                let vo: BulletVo = this.model.bulletMap[uid];
                 if (vo.stateA == BattleVoStateA.Living) {//可能被其它bullet击中了
-                    if (QuadTree.isInner(vo.hitRect, this.owner.qtBullet.rect) == false) {
-                        this.owner.adder.removeBullet(vo);
+                    if (QuadTree.isInner(vo.hitRect, this.model.qtBullet.rect) == false) {
+                        this.model.adder.removeBullet(vo);
                     } else {
                         this.checkBulletHit(vo);
                     }
@@ -108,29 +110,38 @@ namespace models.battles {
         checkBulletHit(bullet: BulletVo) {
             let bulletDump: boolean = false;
             // console.log("[info]", vo.uid, "`vo.uid` checkBulletHitTest");
-            let hitArr: IQuadTreeItem[] = this.owner.qtBullet.retrieve(bullet.hitRect);
+            let hitArr: IQuadTreeItem[] = this.model.qtBullet.retrieve(bullet.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 let hitBullet: BulletVo = (<QuadTreeHitRect>item).owner as BulletVo;
-                if(bullet.group!=hitBullet.group){
+                if (bullet.group != hitBullet.group) {
                     if (BattleModelUtil.checkHit(bullet.hitRect, item)) {
-                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitBullet, this.owner.currFrame, bullet.ownerUid, bullet.uid, (<QuadTreeHitRect>item).owner.uid));
-                        bulletDump = true;
-                        this.owner.adder.removeBullet((<QuadTreeHitRect>item).owner as BulletVo);
-                        break;//TODO:only hit one bullet
+                        this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitBullet, this.model.currFrame,bullet.ownerUid,bullet.uid, hitBullet.uid));
+                        let oldApTank = bullet.apTank;
+                        bullet.apTank -= hitBullet.apTank;
+                        hitBullet.apTank -= oldApTank;
+                        if (hitBullet.apTank <= 0) {
+                            hitBullet.apTank = 0;
+                            this.model.adder.removeBullet(hitBullet);
+                        }
+                        if (bullet.apTank <= 0) {
+                            bullet.apTank = 0;
+                            bulletDump = true;
+                            break;
+                        }
                     }
                 }
             }
             //---next
             if (bulletDump) {
-                this.owner.adder.removeBullet(bullet);
+                this.model.adder.removeBullet(bullet);
             } else {
                 this.checkBulletHitCell(bullet);
             }
         }
-        checkBulletHitCell(bullet) {
+        checkBulletHitCell(bullet:BulletVo) {
             let bulletDump: boolean = false;
-            let hitArr = this.owner.qtCell.retrieve(bullet.hitRect);
+            let hitArr = this.model.qtCell.retrieve(bullet.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 let cellVo = ((<QuadTreeHitRect>item).owner as CellVo);
@@ -138,25 +149,32 @@ namespace models.battles {
                     if (BattleModelUtil.checkHit(bullet.hitRect, item)) {
                         // console.log("[debug]","hit:",vo.hitRect,item,(<QuadTreeHitRect>item).owner.uid);
                         if (cellVo.sid != StcCellSid.block) {
-                            cellVo.sid = StcCellSid.floor;
-                            QuadTree.removeItem(item);
-                            cellVo.disposeHitRect();
+                            let apCellLv:CellLv = <CellLv>(Math.floor(bullet.apCell/BattleModelConfig.si.cellHpMax));
+                            if(apCellLv>=cellVo.cellLv){
+                                cellVo.hp -= bullet.apCell%BattleModelConfig.si.cellHpMax;
+                                if (cellVo.hp <= 0) {
+                                    cellVo.hp = 0;
+                                    cellVo.sid = StcCellSid.floor;
+                                    QuadTree.removeItem(item);
+                                    cellVo.disposeHitRect();
+                                }
+                            }
                         }
-                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitCell, this.owner.currFrame, bullet.ownerUid, bullet.uid, cellVo.uid));
-                        bulletDump = true;
+                        this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitCell, this.model.currFrame, bullet.ownerUid, bullet.uid, cellVo.uid));
+                        bulletDump = true;//不需要break, 因为可以hit多个cell,但只要击中一个就要dump
                     }
                 }
             }
             //---next
             if (bulletDump) {
-                this.owner.adder.removeBullet(bullet);
+                this.model.adder.removeBullet(bullet);
             } else {
                 this.checkBulletHitTank(bullet);
             }
         }
         checkBulletHitTank(bullet: BulletVo) {
             let bulletDump: boolean = false;
-            let hitArr = this.owner.qtTank.retrieve(bullet.hitRect);
+            let hitArr = this.model.qtTank.retrieve(bullet.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 let hitTank: TankVo = (<QuadTreeHitRect>item).owner as TankVo;
@@ -175,15 +193,23 @@ namespace models.battles {
                 }
                 if (canHit) {
                     if (BattleModelUtil.checkHit(bullet.hitRect, item)) {
-                        this.owner.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.owner.currFrame, bullet.ownerUid, bullet.uid, (<QuadTreeHitRect>item).owner.uid));
+                        this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.model.currFrame, bullet.ownerUid, bullet.uid, hitTank.uid));
                         if (hitTank.effectMap[StcEffectSid.Invincible]) {
                             //do nothing, only remove bullet
                         } else {
                             if (hitTank.group == BattleGroup.CPU) {
-                                this.owner.adder.removeTank(hitTank);
+                                hitTank.hp -= bullet.apTankMax;
+                                if (hitTank.hp <= 0) {
+                                    hitTank.hp = 0;
+                                    this.model.adder.removeTank(hitTank);
+                                }
                             } else if (hitTank.group == BattleGroup.Player) {
                                 if (bullet.group == BattleGroup.CPU) {
-                                    this.owner.adder.rebirthTank(hitTank);
+                                    hitTank.hp -= bullet.apTankMax;
+                                    if (hitTank.hp <= 0) {
+                                        hitTank.hp = 0;
+                                        this.model.adder.rebirthTank(hitTank);
+                                    }
                                 } else if (bullet.group == BattleGroup.Player) {
                                     // this.owner.adder.addBuff(attackTank,)//TODO: add freeze/palsy
                                 } else {
@@ -200,11 +226,11 @@ namespace models.battles {
                 }
             }
             if (bulletDump) {
-                this.owner.adder.removeBullet(bullet);
+                this.model.adder.removeBullet(bullet);
             }
         }
         checkTankHitTest(vo: TankVo): IQuadTreeItem {
-            let hitArr: IQuadTreeItem[] = this.owner.qtCell.retrieve(vo.forecastMoveHitRect);
+            let hitArr: IQuadTreeItem[] = this.model.qtCell.retrieve(vo.forecastMoveHitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 if ((<QuadTreeHitRect>item).owner.sid > 0) {
@@ -213,7 +239,7 @@ namespace models.battles {
                     }
                 }
             }
-            hitArr = this.owner.qtTank.retrieve(vo.forecastMoveHitRect);
+            hitArr = this.model.qtTank.retrieve(vo.forecastMoveHitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 if (vo.uid != (<QuadTreeHitRect>item).owner.uid) {
@@ -228,38 +254,38 @@ namespace models.battles {
          * onFrame_move
          */
         public tick_tank_move() {
-            for (const uid in this.owner.tankMap) {
-                const vo = this.owner.tankMap[uid];
+            for (const uid in this.model.tankMap) {
+                const vo = this.model.tankMap[uid];
                 if (vo.moveDir != Direction4.None) {
                     vo.dir = vo.moveDir;
                     switch (vo.moveDir) {
                         case Direction4.Left:
-                            this.owner.tankAlignGridY(vo);
+                            this.model.tankAlignGridY(vo);
                             vo.xOld = vo.x;
                             vo.yOld = vo.y;
                             vo.x += vo.moveSpeedPerFrame;
-                            this.owner.validateTankX(vo);
+                            this.model.validateTankX(vo);
                             break;
                         case Direction4.Right:
-                            this.owner.tankAlignGridY(vo);
+                            this.model.tankAlignGridY(vo);
                             vo.xOld = vo.x;
                             vo.yOld = vo.y;
                             vo.x -= vo.moveSpeedPerFrame;
-                            this.owner.validateTankX(vo);
+                            this.model.validateTankX(vo);
                             break;
                         case Direction4.Up:
-                            this.owner.tankAlignGridX(vo);
+                            this.model.tankAlignGridX(vo);
                             vo.xOld = vo.x;
                             vo.yOld = vo.y;
                             vo.y -= vo.moveSpeedPerFrame;
-                            this.owner.validateTankY(vo);
+                            this.model.validateTankY(vo);
                             break;
                         case Direction4.Down:
-                            this.owner.tankAlignGridX(vo);
+                            this.model.tankAlignGridX(vo);
                             vo.xOld = vo.x;
                             vo.yOld = vo.y;
                             vo.y += vo.moveSpeedPerFrame;
-                            this.owner.validateTankY(vo);
+                            this.model.validateTankY(vo);
                             break;
                     }
                     if (vo.x != vo.xOld || vo.y != vo.yOld) {
@@ -280,9 +306,9 @@ namespace models.battles {
             }
         }
         public tick_bullet_move() {
-            for (const uid in this.owner.bulletMap) {
-                if (this.owner.bulletMap[uid].stateA == BattleVoStateA.Living) {
-                    const vo = this.owner.bulletMap[uid];
+            for (const uid in this.model.bulletMap) {
+                if (this.model.bulletMap[uid].stateA == BattleVoStateA.Living) {
+                    const vo = this.model.bulletMap[uid];
                     if (vo.moveDir != Direction4.None) {
                         vo.dir = vo.moveDir;
                         switch (vo.moveDir) {

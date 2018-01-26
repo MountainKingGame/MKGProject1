@@ -64,6 +64,7 @@ namespace models.battles {
                     vo.sid = this.stcMapVo.cells[row][col];
                     vo.x = models.battles.BattleModelUtil.gridToPos(col);
                     vo.y = models.battles.BattleModelUtil.gridToPos(row);
+                    vo.cellLv = <CellLv>(vo.sid-1);
                     this.adder.addCellVo(vo);
                 }
             }

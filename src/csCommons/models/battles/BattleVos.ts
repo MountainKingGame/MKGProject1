@@ -46,6 +46,8 @@ namespace models.battles {
         public x: number;
         public y: number;
         public sizeHalf: Vector2;
+        public hpMax:number;
+        public hp:number;
         // public col: number;
         // public row: number;
         public hitRect: QuadTreeHitRect;
@@ -69,7 +71,7 @@ namespace models.battles {
         public moveSpeedPerFrame: number;
     }
     export class CellVo extends EntityVo {
-
+        cellLv:CellLv;
     }
     //
     export class TankVo extends MovableEleVo {
@@ -89,22 +91,25 @@ namespace models.battles {
         }
         /** 阵营 */
         public group:BattleGroup;
-        public hp:number;
-        public ap_tank:number;
-        public ap_cell:number;
-        /**攻击cell等级 1:wood 2:stone 3:iron*/
-        public attack_cell_lv:number;
+        /**攻击力 对坦克 */
+        public apTank:number;
+        /**攻击力 对cell 每种cell 100分,*/
+        public apCell:number;
         /** 分数 */
         public coin:number;
 
         public buffMap:{[key:number]:BuffVo} = {};
         effectMap:{[key:number]:boolean} = {};
     }
+    /**bullet没有hp 他的hp就是ap_tank */
     export class BulletVo extends MovableEleVo {
         stateA: BattleVoStateA = BattleVoStateA.None;
         /** sender's id   e.g. TankVo.uid */
         ownerUid: number;
         group: BattleGroup;
+        public apTank:number;
+        public apTankMax:number;
+        public apCell:number;
     }
     export class SkillVo extends EleVo {
         public isTriggering: boolean = false;
