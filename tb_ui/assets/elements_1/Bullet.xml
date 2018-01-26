@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="64,64">
+  <controller name="color" pages="0,,1," selected="0"/>
   <displayList>
-    <graph id="n0_h02b" name="img0" xy="12,22" size="40,20" type="rect" lineSize="3" lineColor="#ff333333" fillColor="#ffffff00" corner="4,36,4,36"/>
+    <graph id="n0_h02b" name="img0" xy="12,22" size="40,20" type="rect" lineSize="3" lineColor="#ff333333" fillColor="#ffffff00" corner="4,36,4,36">
+      <gearColor controller="color" pages="1" values="#cc3300" default="#ffff00"/>
+    </graph>
+    <component id="n1_uw1a" name="crack" src="hz8ry" pkg="ybsps8tf" xy="32,32" pivot="0.5,0.5" anchor="true" size="40,20" controller="lv,0"/>
   </displayList>
 </component>
