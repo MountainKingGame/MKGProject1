@@ -197,28 +197,33 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 			);
 		}
 	}
-	/** 规范地图,不要出边界 */
-	clampMapXY(x: number, y: number) {
-		let w: number = this.mapSize.x * this.eleLayer.scaleX;
-		if (this.ui.width == w) {
-			x = 0;
-		} else if (this.ui.width > w) {
-			x = (this.ui.width - w) / 2;
-		} else {
-			x = MathUtil.clamp(x, this.ui.width - w, 0);
-		}
+	/** 不需要规范出界 */
+	clampMapXY(x:number,y:number){
 		this.eleLayer.x = Math.round(x);
-		//-
-		let h: number = this.mapSize.y * this.eleLayer.scaleY;
-		if (this.ui.height == h) {
-			y = 0;
-		} else if (this.ui.height > h) {
-			y = (this.ui.height - h) / 2;
-		} else {
-			y = MathUtil.clamp(y, this.ui.height - h, 0);
-		}
 		this.eleLayer.y = Math.round(y);
 	}
+	/** 规范地图,不要出边界 */
+	// clampMapXY(x: number, y: number) {
+	// 	let w: number = this.mapSize.x * this.eleLayer.scaleX;
+	// 	if (this.ui.width == w) {
+	// 		x = 0;
+	// 	} else if (this.ui.width > w) {
+	// 		x = (this.ui.width - w) / 2;
+	// 	} else {
+	// 		x = MathUtil.clamp(x, this.ui.width - w, 0);
+	// 	}
+	// 	this.eleLayer.x = Math.round(x);
+	// 	//-
+	// 	let h: number = this.mapSize.y * this.eleLayer.scaleY;
+	// 	if (this.ui.height == h) {
+	// 		y = 0;
+	// 	} else if (this.ui.height > h) {
+	// 		y = (this.ui.height - h) / 2;
+	// 	} else {
+	// 		y = MathUtil.clamp(y, this.ui.height - h, 0);
+	// 	}
+	// 	this.eleLayer.y = Math.round(y);
+	// }
 	public addTank(vo: models.battles.TankVo) {
 		let tank: TankCtrl = new TankCtrl();
 		tank.vo = vo;
