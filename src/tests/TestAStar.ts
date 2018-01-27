@@ -148,12 +148,12 @@ namespace astars {
 				this._index = 0;
 				this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 			}
-			console.log("[debug]",this.aStar.openListKind,"`this.aStar.openListKind`");
-			console.log("[debug]",egret.getTimer() - this.startTime, "`FireMs`", this.aStar.debug_calculateCount, "`calculateCount`",this.aStar.debug_openCompareCount,"`debug_openCompareCount`");
+			console.log("[debug] Kind:", this.aStar.openListKind, "`openListKind`",this.aStar.searchCellKind,"`searchCellKind`");
+			console.log("[debug]", egret.getTimer() - this.startTime, "`FireMs`", this.aStar.debug_calculateCount, "`calculateCount`", this.aStar.debug_openCompareCount, "`debug_openCompareCount`");
 		}
 		private OnKeyBoardUp(keycode: number): void {
 			switch (keycode) {
-				case KeyBoardCtrl.KEY_0:
+				case KeyBoardCtrl.KEY_DOT_BIG:
 					let startNode: Node = this.aStar._grid.startNode;
 					this._player.x = startNode.x * this._cellSize + this._cellSize / 2;
 					this._player.y = startNode.y * this._cellSize + this._cellSize / 2;
@@ -166,6 +166,12 @@ namespace astars {
 					break;
 				case KeyBoardCtrl.KEY_3:
 					this.aStar.openListKind = astars.OpenListKind.ArraySort;
+					break;
+				case KeyBoardCtrl.KEY_6:
+					this.aStar.searchCellKind = astars.SearchCellKind.Normal;
+					break;
+				case KeyBoardCtrl.KEY_7:
+					this.aStar.searchCellKind = astars.SearchCellKind.MinFAround;
 					break;
 			}
 		}

@@ -42,6 +42,7 @@ class KeyBoardCtrl {
     static KeyDown = "KeyBoardCtrl.OnKeyDown";
     static KeyUp = "KeyBoardCtrl.OnKeyUp";
     //
+    static KEY_DOT_BIG = 192;
     static KEY_0 = 48;
     static KEY_1 = 49;
     static KEY_2 = 50;

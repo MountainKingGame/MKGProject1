@@ -21,6 +21,7 @@ namespace astars {
 		/**能否斜着走 */
 		public canDiag: boolean = false;
 		openListKind: OpenListKind = OpenListKind.ArraySort;
+		searchCellKind: SearchCellKind = SearchCellKind.Normal;
 
 		public debug_calculateCount: number;
 		public debug_openCompareCount: number;
@@ -57,7 +58,7 @@ namespace astars {
 		private search(): boolean {
 			var node: Node = this._startNode;
 			while (node != this._endNode) {
-				this.searchAround(node);
+				let minFNode:Node = this.searchAround(node);
 				// for (var o = 0; o < this._open.length; o++) {
 				// }
 				this._closed.push(node);
@@ -65,8 +66,12 @@ namespace astars {
 					console.log("AStar >> no path found");
 					return false;
 				}
-				this.sortOpenList();
-				node = this._open.pop() as Node;
+				if(minFNode!=null){
+					node = minFNode;
+				}else{
+					this.sortOpenList();
+					node = this._open.pop() as Node;
+				}
 			}
 			this.generateResultPath();
 			return true;
@@ -77,6 +82,7 @@ namespace astars {
 
 		/**处理周围的格子 */
 		private searchAround(node: Node) {
+			let minFNode:Node;
 			let roundOffset;
 			if (this.canDiag) {
 				roundOffset = this.roundOffset8;
@@ -117,8 +123,16 @@ namespace astars {
 					test.h = h;
 					test.previous = node;
 					this.openListPush(test);
+					switch(this.searchCellKind){
+						case SearchCellKind.MinFAround:
+						if(minFNode==null || test.f<minFNode.f){
+							minFNode = test;
+						}
+						break;
+					}
 				}
 			}
+			return minFNode;
 		}
 
 		private openListPush(node: Node) {
@@ -232,6 +246,10 @@ namespace astars {
 			var straight = dx + dy;
 			return this._diagCost * diag + this._straightCost * (straight - 2 * diag);
 		}
+	}
+	export enum SearchCellKind {
+		Normal = 1,
+		MinFAround = 2,
 	}
 	export enum OpenListKind {
 		/**冒泡排序 */
