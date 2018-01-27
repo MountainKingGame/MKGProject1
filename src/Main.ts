@@ -70,6 +70,7 @@ class Main extends egret.DisplayObjectContainer {
         this.stage.addChild(new astars.TestAStar());
         // new TestSort().testSortBy1();
         // new TestSort().testSortBy2();
+        new tests.TestSort().testDoubleLinkedList();
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);

@@ -45,6 +45,7 @@
 		"bin-debug/csCommons/tslib/interfaces/FInterface.js",
 		"bin-debug/csCommons/tslib/structs/Vector2.js",
 		"bin-debug/csCommons/CommonHelper.js",
+		"bin-debug/csCommons/tslib/utils/DoubleLinkedList.js",
 		"bin-debug/csCommons/tslib/utils/MathUtil.js",
 		"bin-debug/csCommons/tslib/utils/MsgMgr.js",
 		"bin-debug/csCommons/tslib/utils/ObjectPoolMgr.js",

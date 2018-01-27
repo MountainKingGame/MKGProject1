@@ -164,7 +164,6 @@ namespace astars {
 					break;
 				case KeyBoardCtrl.KEY_DOT_BIG:
 					{
-
 						let startNode: Node = this.aStar._grid.startNode;
 						this._player.x = startNode.x * this._cellSize + this._cellSize / 2;
 						this._player.y = startNode.y * this._cellSize + this._cellSize / 2;

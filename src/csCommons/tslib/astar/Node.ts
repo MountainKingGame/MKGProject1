@@ -3,7 +3,10 @@
  * @since 2017/11/3
  */
 namespace astars{
-	export class Node {
+	export class Node implements IDoubleLinkedListNode {
+		nextNode:IDoubleLinkedListNode
+		prevNode:IDoubleLinkedListNode;
+
 		public x:number;    //列
 		public y:number;    //行
 		public f:number;    //代价 f = g+h
