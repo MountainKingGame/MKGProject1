@@ -57,7 +57,12 @@ class KeyBoardCtrl {
     static KEY_ENTER = 13;
     //
     // 把keyup事件绑定到document中 
+    isInit:boolean;
     init() {
+        if(this.isInit){
+            return;
+        }
+        this.isInit=true;
         if (document.addEventListener) {
             document.addEventListener("keydown", this.onKeyDown.bind(this), false);
             document.addEventListener("keyup", this.onKeyUp.bind(this), false);

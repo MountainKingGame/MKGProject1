@@ -1,6 +1,6 @@
 
 namespace astar {
-	export class Game extends egret.Sprite {
+	export class TestAStar extends egret.Sprite {
 		private _cellSize: number = 30;
 		private _grid: astar.Grid;
 		private _player: egret.Sprite;
@@ -10,12 +10,12 @@ namespace astar {
 
 		public constructor() {
 			super();
-			this.makePlayer();
 			this.makeGrid();
+			this.makePlayer();
 			this.addEventListener(egret.Event.ADDED_TO_STAGE, () => {
 				this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGridClick, this);
 			}, this);
-
+			KeyBoardCtrl.si.init();
 		}
 
 		/**
@@ -26,9 +26,17 @@ namespace astar {
 			this._player.graphics.beginFill(0x0000FF);
 			this._player.graphics.drawCircle(0, 0, 10);
 			this._player.graphics.endFill();
-			this._player.x = Math.random() * 600;
-			this._player.y = Math.random() * 600;
 			this.addChild(this._player);
+			for (let i = 0; i < this._grid.numCols; i++) {
+				for (let j = 0; j < this._grid.numRows; j++) {
+					var node: astar.Node = this._grid.getNode(i, j);
+					if(node.walkable){
+						this._player.x = node.x+0.5*this._cellSize;
+						this._player.y = node.y+0.5*this._cellSize;
+						return;
+					}
+				}
+			}
 		}
 
 
@@ -98,7 +106,6 @@ namespace astar {
 				}
 			}
 			console.log("[log] drawGrid end --------------");
-			this.addChild(this._player);
 			//--
 			// this.graphics.clear();
 			// this.graphics.lineStyle(0);
@@ -126,17 +133,21 @@ namespace astar {
 		private onGridClick(event: egret.TouchEvent): void {
 			var xpos = Math.floor(event.stageX / this._cellSize);
 			var ypos = Math.floor(event.stageY / this._cellSize);
-			this._grid.setEndNode(xpos, ypos);
-
-			xpos = Math.floor(this._player.x / this._cellSize);
-			ypos = Math.floor(this._player.y / this._cellSize);
-			this._grid.setStartNode(xpos, ypos);
-
-			this.drawGrid();
-
-			this.startTime = egret.getTimer();
-			this.findPath();
-			console.log("Timer:", egret.getTimer() - this.startTime);
+			if(KeyBoardCtrl.si.ctrlKey){
+				this._grid.setWalkable(xpos,ypos,!this._grid.getNode(xpos,ypos).walkable);
+				this.drawGrid();
+			}else{
+				this._grid.setEndNode(xpos, ypos);
+				
+				xpos = Math.floor(this._player.x / this._cellSize);
+				ypos = Math.floor(this._player.y / this._cellSize);
+				this._grid.setStartNode(xpos, ypos);
+				this.drawGrid();
+	
+				this.startTime = egret.getTimer();
+				this.findPath();
+				console.log("Timer:", egret.getTimer() - this.startTime);
+			}
 		}
 
 		private startTime = 0;

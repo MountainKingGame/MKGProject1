@@ -14,13 +14,13 @@ namespace astar {
 		private _startNode: Node;                //起点Node
 		private _path: Node[];               //保存路径
 		private _heuristic: Function;            //寻路算法
-		private _straightCost: number = 1.0;     //上下左右走的代价
-		private _diagCost: number = 1.4;//Math.SQRT2;  //diagonal 斜着走的代价 
+		private _straightCost: number = 10;     //上下左右走的代价
+		private _diagCost: number = 14;//Math.SQRT2;  //diagonal 斜着走的代价 
 		/**能否斜着走 */
 		public canDiag: boolean = false;
 
 		public constructor() {
-			this._heuristic = this.manhattan;  
+			this._heuristic = this.manhattan;
 			// this._heuristic = this.euclidian;
 			// this._heuristic = this.diagonal;
 		}
@@ -37,7 +37,7 @@ namespace astar {
 			this._startNode.g = 0;
 			this._startNode.h = this._heuristic(this._startNode);
 			this._startNode.f = this._startNode.g + this._startNode.h;
-			
+
 			return this.search();
 		}
 
@@ -68,10 +68,12 @@ namespace astar {
 						}
 
 						var cost: number = this._straightCost;
-						if (!((node.x == test.x) || (node.y == test.y))) {
-							cost = this._diagCost;
+						if (this.canDiag == true) {
+							if (!((node.x == test.x) || (node.y == test.y))) {
+								cost = this._diagCost;
+							}
 						}
-						var g = node.g + cost * test.costMultiplier;
+						var g = node.g + cost * test.costMultiple;
 						var h = this._heuristic(test);
 						var f = g + h;
 						if (this.isOpen(test) || this.isClosed(test)) {
@@ -79,24 +81,24 @@ namespace astar {
 								test.f = f;
 								test.g = g;
 								test.h = h;
-								test.parent = node;
+								test.previous = node;
 							}
 						}
 						else {
 							test.f = f;
 							test.g = g;
 							test.h = h;
-							test.parent = node;
+							test.previous = node;
 							this._open.push(test);
 						}
 					}
 				}
-				for (var o = 0; o < this._open.length; o++) {
-				}
+				// for (var o = 0; o < this._open.length; o++) {
+				// }
 				this._closed.push(node);
 				if (this._open.length == 0) {
 					console.log("AStar >> no path found");
-					return false
+					return false;
 				}
 
 				let openLen = this._open.length;
@@ -122,12 +124,12 @@ namespace astar {
 			var node: Node = this._endNode;
 			this._path.push(node);
 			while (node != this._startNode) {
-				node = node.parent;
+				node = node.previous;
 				this._path.unshift(node);
 			}
 		}
 
-		public get path():Node[] {
+		public get path(): Node[] {
 			return this._path;
 		}
 

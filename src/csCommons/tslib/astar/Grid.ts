@@ -1,5 +1,4 @@
 /**
- * 网格类
  * @author chenkai
  * @since 2017/11/3
  */
@@ -40,7 +39,7 @@ namespace astar{
 			this._nodes[x][y].walkable = walkable;
 		}
 		public setCostMultiplier(x:number, y:number, cost:number){
-			this._nodes[x][y].costMultiplier = cost;
+			this._nodes[x][y].costMultiple = cost;
 		}
 
 		public get endNode(){
