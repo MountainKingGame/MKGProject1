@@ -18,6 +18,13 @@ namespace astars {
 		private _straightCost: number = 10;     //上下左右走的代价
 		private _diagCost: number = 14;//Math.SQRT2;  //diagonal 斜着走的代价 
 
+		private roundOffset8: IVector2[] = [{ x: 1, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 1 }, { x: -1, y: 1 }, { x: -1, y: 0 }, { x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 }];
+		private roundOffset4: IVector2[] = [{ x: 1, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 0 }, { x: 0, y: -1 }];
+
+		public nodeWalkableOffsetArr: IVector2[] = null;
+		/** 测试物占用4格需要的数据 */
+		// public nodeWalkableOffsetArr: IVector2[] = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 1 }];
+		
 		private openMask: number = 0;
 		private closeMask: number = 0;
 
@@ -90,9 +97,19 @@ namespace astars {
 			return true;
 		}
 
-		private roundOffset8: IVector2[] = [{ x: 1, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 1 }, { x: -1, y: 1 }, { x: -1, y: 0 }, { x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 }];
-		private roundOffset4: IVector2[] = [{ x: 1, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 0 }, { x: 0, y: -1 }];
-
+		private checkWalkable(node:Node):boolean{
+			if(!this.nodeWalkableOffsetArr){
+				return node.walkable;
+			}
+			for (let i = 0; i < this.nodeWalkableOffsetArr.length; i++) {
+				let offset = this.nodeWalkableOffsetArr[i];
+				let item:Node = this._grid.getNodeSafe(node.x+offset.x,node.y+offset.y);
+				if(item==null || item.walkable==false){
+					return false;
+				}
+			}
+			return true;
+		}
 		/**处理周围的格子 */
 		private searchAround(node: Node) {
 			let minFNode: Node;
@@ -119,7 +136,7 @@ namespace astars {
 				// }
 				//--
 				var cost: number = this._straightCost;
-				if (test.walkable == false) {
+				if (this.checkWalkable(test)==false) {
 					cost = 10000;//不可经过地方设置一个很高的值,可以保证目标点无法到达时也能算出路径
 				} else {
 					if (this.canDiag == true) {
@@ -247,7 +264,8 @@ namespace astars {
 			var node: Node = this._endNode;
 			this._path.push(node);
 			while (node != this._startNode) {
-				if (node.walkable == false) {
+				if(this.checkWalkable(node)==false){
+				// if (node.walkable == false) {
 					node = node.previous;
 					this._path = [node];
 				} else {

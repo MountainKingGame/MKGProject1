@@ -29,8 +29,12 @@ namespace astars {
 		 */
 		private makePlayer() {
 			this._player = new egret.Sprite();
-			this._player.graphics.beginFill(0x0000FF);
-			this._player.graphics.drawCircle(0, 0, 10);
+			this._player.graphics.beginFill(0x0000FF,0.6);
+			if(this.aStar.nodeWalkableOffsetArr==null){
+				this._player.graphics.drawCircle(0,0, 10);
+			}else{
+				this._player.graphics.drawRoundRect(-this._cellSize/2, -this._cellSize/2, this._cellSize*2,this._cellSize*2,12,12);
+			}
 			this._player.graphics.endFill();
 			this.addChild(this._player);
 			//find a walkable node
@@ -38,8 +42,8 @@ namespace astars {
 				for (let j = 0; j < this.aStar._grid.numRows; j++) {
 					var node: astars.Node = this.aStar._grid.getNode(i, j);
 					if (node.walkable) {
-						this._player.x = (node.x + 0.5) * this._cellSize;
-						this._player.y = (node.y + 0.5) * this._cellSize;
+						this._player.x = (node.x+0.5) * this._cellSize;
+						this._player.y = (node.y+0.5) * this._cellSize;
 						return;
 					}
 				}
@@ -53,11 +57,11 @@ namespace astars {
 			this.aStar._grid = new astars.Grid(30, 30);
 			for (let i = 0; i < this.aStar._grid.numCols; i++) {
 				for (let j = 0; j < this.aStar._grid.numRows; j++) {
-					this.aStar._grid.setWalkable(i, j, Math.random() > 0.3);
+					this.aStar._grid.setWalkable(i, j, Math.random() > 0.1);
 				}
 			}
 			//
-			this.aStar._grid.setWalkable(0, 0, false);
+			// this.aStar._grid.setWalkable(0, 0, false);
 			//
 			this.drawGrid();
 		}
@@ -151,7 +155,7 @@ namespace astars {
 			}
 			console.log("[debug] Kind:", this.aStar.openListKind, "`openListKind`", this.aStar.searchCellKind, "`searchCellKind`", this.frameGapNeed, "`frameGapNeed`");
 			console.log("[debug]", egret.getTimer() - this.startTime, "`FireMs`", this.aStar.debug_calculateCount, "`calculateCount`", this.aStar.debug_openCompareCount, "`debug_openCompareCount`");
-			alert("[debug]"+","+(egret.getTimer() - this.startTime)+","+"`FireMs`"+","+this.aStar.debug_calculateCount+","+"`calculateCount`"+","+this.aStar.debug_openCompareCount+","+"`debug_openCompareCount`");
+			// alert("[debug]"+","+(egret.getTimer() - this.startTime)+","+"`FireMs`"+","+this.aStar.debug_calculateCount+","+"`calculateCount`"+","+this.aStar.debug_openCompareCount+","+"`debug_openCompareCount`");
 		}
 		private OnKeyBoardUp(keycode: number): void {
 			switch (keycode) {
