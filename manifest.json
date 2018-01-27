@@ -16,7 +16,7 @@
 		"bin-debug/csCommons/stc/StcMgr.js",
 		"bin-debug/csCommons/tslib/utils/CallbackPool.js",
 		"bin-debug/framework/ctrlMgrs/CtrlBase.js",
-		"bin-debug/ctrls/battles/BattleCtrlUtil.js",
+		"bin-debug/ctrls/battles/MovableEleCtrl.js",
 		"bin-debug/csCommons/models/ModelConfig.js",
 		"bin-debug/csCommons/models/ModelFacade.js",
 		"bin-debug/csCommons/models/battles/BattleFrameIO.js",
@@ -55,9 +55,9 @@
 		"bin-debug/ctrls/ResMgr.js",
 		"bin-debug/ctrls/battles/BattleCtrl_Ticker.js",
 		"bin-debug/ctrls/battles/BattleCtrl.js",
-		"bin-debug/adapter_egret/SDKAdapterEgret.js",
+		"bin-debug/ctrls/battles/BattleCtrlUtil.js",
 		"bin-debug/ctrls/battles/BulletCtrl.js",
-		"bin-debug/ctrls/battles/MovableEleCtrl.js",
+		"bin-debug/adapter_egret/SDKAdapterEgret.js",
 		"bin-debug/ctrls/battles/TankCtrl.js",
 		"bin-debug/ctrls/battleSections/JoystickCtrl.js",
 		"bin-debug/ctrls/battleSections/SkillSectionCtrl.js",
@@ -96,6 +96,10 @@
 		"bin-debug/proxies/battles/FrameInputMgr.js",
 		"bin-debug/tests/QuadTreeHitTest.js",
 		"bin-debug/tests/TestMoveSmooth.js",
-		"bin-debug/tests/TestProtobuf.js"
+		"bin-debug/tests/TestProtobuf.js",
+		"bin-debug/tests/astar/AStar.js",
+		"bin-debug/tests/astar/Game.js",
+		"bin-debug/tests/astar/Grid.js",
+		"bin-debug/tests/astar/Node.js"
 	]
 }

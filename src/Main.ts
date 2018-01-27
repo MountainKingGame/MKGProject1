@@ -58,7 +58,7 @@ class Main extends egret.DisplayObjectContainer {
         //===
         CtrlFacade.si = new CtrlFacade();
         CtrlFacade.si.stage = this.stage;
-        CtrlFacade.si.init(true);
+        // CtrlFacade.si.init(true);
         //===test
         // new tests.TestProtobuf();
         // new TestMoveSmooth().init();
@@ -67,6 +67,7 @@ class Main extends egret.DisplayObjectContainer {
         // console.log(o);
         // let a:any = toml(o);
         // console.log("[info]",a,"`toml`",a.products.length);
+        this.stage.addChild(new astar.Game());
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);
