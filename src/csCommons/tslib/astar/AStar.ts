@@ -8,7 +8,8 @@
 namespace astars {
 	export class AStar {
 		public _grid: Grid;               //网格
-		private _open: Node[];               //待考察表
+		// private _open: Node[];               //待考察表
+		private _open: DoubleLinkedList;               //待考察表
 		private _endNode: Node;                  //终点Node
 		private _startNode: Node;                //起点Node
 		private _path: Node[];               //结果路径
@@ -22,7 +23,7 @@ namespace astars {
 
 		/**能否斜着走 */
 		public canDiag: boolean = false;
-		openListKind: OpenListKind = OpenListKind.ArraySort;
+		openListKind: OpenListKind = OpenListKind.PushCompare;
 		searchCellKind: SearchCellKind = SearchCellKind.Normal;
 
 		public debug_calculateCount: number;
@@ -34,6 +35,7 @@ namespace astars {
 		}
 
 		public constructor() {
+			this._open = new DoubleLinkedList();
 			this._heuristic = this.manhattan;
 			// this._heuristic = this.euclidian;
 			// this._heuristic = this.diagonal;
@@ -47,7 +49,7 @@ namespace astars {
 			this.openMask > 99999999 ? this.openMask = 1 : this.openMask++;
 			this.closeMask = this.openMask;
 
-			this._open = [];
+			this._open.clear();
 
 			this._startNode = this._grid.startNode;
 			this._endNode = this._grid.endNode;
@@ -63,8 +65,6 @@ namespace astars {
 			var node: Node = this._startNode;
 			while (node != this._endNode) {
 				let minFNode: Node = this.searchAround(node);
-				// for (var o = 0; o < this._open.length; o++) {
-				// }
 				node.closeMask = this.closeMask;
 				if (this._open.length == 0) {
 					console.log("AStar >> no path found");
@@ -75,6 +75,9 @@ namespace astars {
 				} else {
 					this.sortOpenList();
 					node.openMask = 0;
+					if(this._open.length==0){
+						throw new Error("");
+					}
 					node = this._open.pop() as Node;
 				}
 			}
@@ -167,13 +170,14 @@ namespace astars {
 					if (openLen == 0) {
 						this._open.push(node);
 					} else {
-						for (let i = openLen - 1; i >= 0; i--) {
-							let temp = this._open[i];
+						let item = this._open.head;
+						while(item!=null){
 							this.debug_openCompareCount++;
-							if (node.f <= temp.f) {
-								this._open.splice(i + 1, 0, node);
+							if (node.f < (item as Node).f) {
+								this._open.insertNext(node,item);
 								return;
 							}
+							item = item.prevNode;
 						}
 						//node最大,则放头里去
 						this._open.unshift(node);
@@ -201,7 +205,7 @@ namespace astars {
 					}
 					break;
 				case OpenListKind.ArraySort:
-					this._open.sort(this.arraySortCompare.bind(this));
+					// this._open.sort(this.arraySortCompare.bind(this));
 					break;
 			}
 		}
