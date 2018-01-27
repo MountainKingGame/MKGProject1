@@ -182,10 +182,14 @@ namespace astars {
 								this._openDll.insertNext(node, item);
 								return;
 							}
-							item = item.prevNode;
+							if(item.prevNode==null){
+								//到tail了, node没有插入到队伍里,说明是最大的,则放头里去
+								this._openDll.insertPrev(node,item);
+								return;
+							}else{
+								item = item.prevNode;
+							}
 						}
-						//node没有插入到队伍里,说明是最大的,则放头里去
-						this._openDll.unshift(node);
 					}
 					break;
 			}

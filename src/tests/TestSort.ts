@@ -25,7 +25,7 @@ namespace tests {
             dll.push(n6 = new TestDllNode(6));
             dll.push(new TestDllNode(9));
             dll.insertNext(new TestDllNode(7),n6);
-            dll.unshift(new TestDllNode(2));
+            dll.insertPrev(new TestDllNode(4),n6);
             let rs:number[] = [];
             console.log("[info]",dll.length);
             while(dll.head){

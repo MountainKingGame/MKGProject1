@@ -1,4 +1,8 @@
-/**双向链表 */
+/**
+ * 双向链表 
+ * 结构  null -> node -> .... -> node -> head
+ * 顺序  prev -> prev -> node -> next -> next
+*/
 class DoubleLinkedList {
     public length: number = 0;
     public head: IDoubleLinkedListNode;
@@ -18,18 +22,7 @@ class DoubleLinkedList {
         }
         this.length++;
     }
-    /* insertPrev(node:IDoubleLinkedListNode,old:IDoubleLinkedListNode){
-        if(node==null){
-            throw new Error("");
-        }
-        node.nextNode = old;
-        node.prevNode = old.prevNode;
-        this.length++;
-    } */
     insertNext(node: IDoubleLinkedListNode, old: IDoubleLinkedListNode) {
-        if (node == null) {
-            throw new Error("");
-        }
         node.prevNode = old;
         node.nextNode = old.nextNode;
         if (this.head == old) {
@@ -40,19 +33,14 @@ class DoubleLinkedList {
         old.nextNode = node;
         this.length++;
     }
-    unshift(node: IDoubleLinkedListNode) {
-        if (node == null) {
-            throw new Error("");
+    insertPrev(node: IDoubleLinkedListNode, old: IDoubleLinkedListNode) {
+        node.nextNode = old;
+        node.prevNode = old.prevNode;
+        if(old.prevNode){
+            old.prevNode.nextNode = node;
         }
-        if (this.head == null) {
-            this.push(node);
-        } else {
-            var tail: IDoubleLinkedListNode = this.getTail();
-            node.nextNode = tail;
-            node.prevNode = null;
-            tail.prevNode = node;
-            this.length++;
-        }
+        old.prevNode = node;
+        this.length++;
     }
     remove(node: IDoubleLinkedListNode) {
         if (node.prevNode != null) {
@@ -84,7 +72,7 @@ class DoubleLinkedList {
     }
     /**
      * 
-     * @param clearNode 是否清理 node.next/pre
+     * @param clearNode 是否清理 node.next/prev
      */
     clear(clearNode: boolean) {
         if (clearNode) {
