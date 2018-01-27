@@ -136,9 +136,11 @@ namespace astars {
 				return;
 			}
 			this.aStar._grid.setEndNode(xpos, ypos);
-
-			xpos = Math.floor(this._player.x / this._cellSize);
-			ypos = Math.floor(this._player.y / this._cellSize);
+			this.run();
+		}
+		private run() {
+			var xpos = Math.floor(this._player.x / this._cellSize);
+			var ypos = Math.floor(this._player.y / this._cellSize);
 			this.aStar._grid.setStartNode(xpos, ypos);
 			this.drawGrid();
 
@@ -148,7 +150,7 @@ namespace astars {
 				this._index = 0;
 				this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 			}
-			console.log("[debug] Kind:", this.aStar.openListKind, "`openListKind`",this.aStar.searchCellKind,"`searchCellKind`");
+			console.log("[debug] Kind:", this.aStar.openListKind, "`openListKind`", this.aStar.searchCellKind, "`searchCellKind`");
 			console.log("[debug]", egret.getTimer() - this.startTime, "`FireMs`", this.aStar.debug_calculateCount, "`calculateCount`", this.aStar.debug_openCompareCount, "`debug_openCompareCount`");
 		}
 		private OnKeyBoardUp(keycode: number): void {
@@ -157,6 +159,7 @@ namespace astars {
 					let startNode: Node = this.aStar._grid.startNode;
 					this._player.x = startNode.x * this._cellSize + this._cellSize / 2;
 					this._player.y = startNode.y * this._cellSize + this._cellSize / 2;
+					this.run();
 					break;
 				case KeyBoardCtrl.KEY_1:
 					this.aStar.openListKind = astars.OpenListKind.BubbleSort;
