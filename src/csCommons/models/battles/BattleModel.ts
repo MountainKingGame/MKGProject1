@@ -1,7 +1,7 @@
 namespace models.battles {
     export class BattleModel {
         public facade: ModelFacade;
-        public adder: BattleModel_Adder = new BattleModel_Adder(this);
+        public changer: BattleModel_Changer = new BattleModel_Changer(this);
         public ticker: BattleModel_Ticker = new BattleModel_Ticker(this);
         public buffer:BattleModel_Buffer = new BattleModel_Buffer(this);
         //===
@@ -64,8 +64,7 @@ namespace models.battles {
                     vo.sid = this.stcMapVo.cells[row][col];
                     vo.x = models.battles.BattleModelUtil.gridToPos(col);
                     vo.y = models.battles.BattleModelUtil.gridToPos(row);
-                    vo.cellLv = <CellLv>(vo.sid-1);
-                    this.adder.addCellVo(vo);
+                    this.changer.addCell(vo);
                 }
             }
         }
@@ -81,7 +80,7 @@ namespace models.battles {
         }
         initTanks() {
             for (let i = 0; i < this.stcMapVo.positions.length; i++) {
-                let tankVo = this.adder.addTankByIStcMapVoPlayer(this.stcMapVo.positions[i]);
+                let tankVo = this.changer.addTankByIStcMapVoPlayer(this.stcMapVo.positions[i]);
                 tankVo.initIndex = i;
                 if (i == 0) {
                     tankVo.group = BattleGroup.Player;

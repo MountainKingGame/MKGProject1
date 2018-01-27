@@ -46,6 +46,25 @@ namespace models.battles {
         static msToKeyFrame(ms: number): number {
             return Math.round(ms * BattleModelConfig.si.modelKeyFrameRate / 1000);
         }
+        /**
+         * 得到攻击cell的等级 结果和StcCellSid.Wood/Stone/Iron一致
+         * @param apCell 
+         * 0 => 0
+         * 1~100 => 1
+         * 2~200 => 2
+         * 3~300 => 3
+         */
+        static getApCellLv(apCell:number){
+            return Math.ceil(apCell/BattleModelConfig.si.cellHpMax);
+        }
+        /**
+         * 得到对同级cell造成的伤害 外侧已经计算过对低等级cell的处理
+         * @param apCell 
+         * @param targetCellLv 目标cell的等级
+         */
+        static getApCellReal(apCell:number,targetCellLv:number){
+            return apCell-(targetCellLv-1)*BattleModelConfig.si.cellHpMax;
+        }
         
     }
 }

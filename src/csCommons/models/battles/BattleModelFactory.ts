@@ -31,7 +31,7 @@ namespace models.battles {
                 let ai: TankAI = new TankAI();
                 ai.owner = vo;
                 this.model.aiTankMap[vo.uid] = ai;
-                this.model.adder.addTankVo(vo);
+                this.model.changer.addTank(vo);
                 //
                 this.currIndex++;
                 if(this.currIndex>=this.stcVo.values.length){

@@ -100,9 +100,9 @@ class QuadTree {
         }
     }
     static removeItem(item: IQuadTreeItem) {
-        if(item.ownerQuadTree){
+        // if(item.ownerQuadTree){
             item.ownerQuadTree.__removeItem(item);
-        }
+        // }
     }
     private __removeItem(item: IQuadTreeItem) {
         if (item.preItem != null) {

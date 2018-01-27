@@ -29,7 +29,7 @@ class BattleProxy {
             this.isKeyFrame = true;
         }
         if (this.isKeyFrame) {
-            this.model.adder.removeDumpAll();
+            this.model.changer.removeDumpAll();
             this.model.frameInputs = this.frameInputMgr.optimize(this.currFrame);
             this.model.currKeyFrame = this.currKeyFrame = this.currKeyFrame + 1;
         }

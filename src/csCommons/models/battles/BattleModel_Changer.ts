@@ -2,7 +2,7 @@ namespace models.battles {
     /**
      * 为BattleModel添加新物品的方法集合
      */
-    export class BattleModel_Adder {
+    export class BattleModel_Changer {
         public model: BattleModel;
         constructor(model: BattleModel) {
             this.model = model;
@@ -14,12 +14,12 @@ namespace models.battles {
             vo.x = BattleModelUtil.gridToPos(position.col);
             vo.y = BattleModelUtil.gridToPos(position.row);
             vo.dir = position.dir;
-            this.addTankVo(vo);
+            this.addTank(vo);
             return vo;
         }
-        addTankVo(vo: TankVo) {
+        addTank(vo: TankVo) {
             vo.apTank = 50;
-            vo.apCell = 250;
+            vo.apCell = 220;
             vo.hp = vo.hpMax = 200;
             vo.yOld = vo.y;
             vo.stateA = BattleVoStateA.Living;
@@ -46,7 +46,6 @@ namespace models.battles {
             this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddTank, this.model.currFrame,vo.uid));
         }
         rebirthTank(vo:TankVo){
-            // vo.stateA = BattleVoStateA.Rebirth;
             vo.hp = vo.hpMax;
             vo.stateFrame = 0;
             vo.moveDir = Direction4.None;
@@ -61,7 +60,7 @@ namespace models.battles {
             //
             this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.RebirthTank, this.model.currFrame,vo.uid));
         }
-        addBulletVo(vo: BulletVo) {
+        addBullet(vo: BulletVo) {
             vo.xOld = vo.x;
             vo.yOld = vo.y;
             vo.moveSpeedPerFrame = BattleModelConfig.si.bulletMoveSpeedPerFrame;
@@ -74,7 +73,7 @@ namespace models.battles {
             this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddBullet, this.model.currFrame, vo.ownerUid, vo.uid));
         }
         /*cell's pivot is left-top*/
-        addCellVo(vo: CellVo) {
+        addCell(vo: CellVo) {
             vo.hp = vo.hpMax = BattleModelConfig.si.cellHpMax;
             this.model.cellMap[vo.uid] = vo;
             if (vo.sid != StcCellSid.floor && vo.sid!=StcCellSid.cover) {
@@ -82,6 +81,14 @@ namespace models.battles {
                 vo.hitRect.recountLeftTop(vo.x, vo.y, BattleModelConfig.si.cellSize, BattleModelConfig.si.cellSize);
                 this.model.qtCell.insert(vo.hitRect);
             }
+        }
+        clearCell(cell:CellVo){
+            cell.hp = 0;
+            cell.sid = StcCellSid.floor;
+            if(cell.hitRect){
+                QuadTree.removeItem(cell.hitRect);
+            }
+            cell.disposeHitRect();
         }
         removeBullet(vo: BulletVo) {
             vo.stateA = BattleVoStateA.Dump;

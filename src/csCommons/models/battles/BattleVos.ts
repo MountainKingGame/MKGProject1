@@ -71,7 +71,7 @@ namespace models.battles {
         public moveSpeedPerFrame: number;
     }
     export class CellVo extends EntityVo {
-        cellLv:CellLv;
+        
     }
     //
     export class TankVo extends MovableEleVo {
