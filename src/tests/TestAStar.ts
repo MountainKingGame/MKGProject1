@@ -46,7 +46,6 @@ namespace astars {
 			}
 		}
 
-
 		/**
 		 * Creates a grid with a bunch of random unwalkable nodes.
 		 */
@@ -152,6 +151,7 @@ namespace astars {
 			}
 			console.log("[debug] Kind:", this.aStar.openListKind, "`openListKind`", this.aStar.searchCellKind, "`searchCellKind`", this.frameGapNeed, "`frameGapNeed`");
 			console.log("[debug]", egret.getTimer() - this.startTime, "`FireMs`", this.aStar.debug_calculateCount, "`calculateCount`", this.aStar.debug_openCompareCount, "`debug_openCompareCount`");
+			alert("[debug]"+","+(egret.getTimer() - this.startTime)+","+"`FireMs`"+","+this.aStar.debug_calculateCount+","+"`calculateCount`"+","+this.aStar.debug_openCompareCount+","+"`debug_openCompareCount`");
 		}
 		private OnKeyBoardUp(keycode: number): void {
 			switch (keycode) {
