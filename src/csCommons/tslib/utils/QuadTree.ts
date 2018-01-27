@@ -1,7 +1,7 @@
 /**
  * http://blog.lxjwlt.com/front-end/2014/09/04/quadtree-for-collide-detection.html
  */
-class QuadTree {
+class QuadTree implements IDispose {
     static MAX_NODE = 10;
     static MAX_LEVEL = 5;
     //
@@ -10,8 +10,7 @@ class QuadTree {
     rect: IQuadTreeRect;
     level: number;
     children: QuadTree[];
-    nodeLenght: number = 0;
-    headNode: IQuadTreeNode;
+    nodeList:DoubleLinkedList;
     //---
     static debug_nodePush_count: number = 0;
     static debug_getIndex_count: number = 0;
@@ -19,6 +18,7 @@ class QuadTree {
 
     constructor(rect: IQuadTreeRect, parentQuadTree: QuadTree = null) {
         this.children = [];
+        this.nodeList = new DoubleLinkedList();
         this.parent = parentQuadTree;
         if (this.parent == null) {
             this.level = 0;
@@ -28,12 +28,23 @@ class QuadTree {
         this.rect = rect;
     }
     clear() {
-        this.nodeLenght = 0;
-        this.headNode = null;
+        this.nodeList.clear(true);
         for (let i = 0; i < this.children.length; i++) {
             let child = this.children[i];
             child.clear();
         }
+    }
+
+    dispose(){
+        this.nodeList.dispose();
+        this.nodeList = null;
+        for (let i = 0; i < this.children.length; i++) {
+            let child = this.children[i];
+            child.dispose();
+        }
+        this.children = null;
+        this.rect = null;
+        this.parent = null;
     }
 
     split() {
@@ -81,11 +92,11 @@ class QuadTree {
         //
         this.addItem(node);
         //
-        if (this.nodeLenght > QuadTree.MAX_NODE && this.level < QuadTree.MAX_LEVEL) {
+        if (this.nodeList.length > QuadTree.MAX_NODE && this.level < QuadTree.MAX_LEVEL) {
             if (!this.children.length) {
                 this.split();//拆分
             }
-            let checkNode = this.headNode;
+            let checkNode = this.nodeList.head as IQuadTreeNode;
             while (checkNode != null) {
                 node = checkNode;
                 checkNode = checkNode.prevNode;
@@ -105,30 +116,11 @@ class QuadTree {
         // }
     }
     private __removeItem(node: IQuadTreeNode) {
-        if (node.prevNode != null) {
-            node.prevNode.nextNode = node.nextNode;
-        }
-        if (node.nextNode != null) {
-            node.nextNode.prevNode = node.prevNode;
-        }
-        if (this.headNode == node) {
-            this.headNode = node.prevNode;
-        }
-        node.nextNode = node.prevNode = null;
-        this.nodeLenght--;
+        this.nodeList.remove(node);
         node.ownerQuadTree = null;
     }
     private addItem(node: IQuadTreeNode) {
-        if (this.headNode == null) {
-            this.headNode = node;
-            this.headNode.prevNode = null;
-            this.headNode.nextNode = null;
-        } else {
-            node.prevNode = this.headNode;
-            this.headNode.nextNode = node;
-            this.headNode = node;
-        }
-        this.nodeLenght++;
+        this.nodeList.push(node);
         node.ownerQuadTree = this;
         QuadTree.debug_nodePush_count++;
     }
@@ -148,7 +140,7 @@ class QuadTree {
         }
         var node: IQuadTreeNode, index: number, i: number, len: number;
 
-        let checkNode = this.headNode;
+        let checkNode = this.nodeList.head as IQuadTreeNode;
         while (checkNode != null) {
             node = checkNode;
             checkNode = checkNode.prevNode;
@@ -204,7 +196,7 @@ class QuadTree {
                 }
             }
         }
-        QuadTree.pushNodesInArray(this.headNode, result);
+        QuadTree.pushNodesInArray(this.nodeList.head as IQuadTreeNode, result);
         return result;
     }
     static pushNodesInArray(headNode: IQuadTreeNode, arr: IQuadTreeNode[]) {
@@ -263,7 +255,7 @@ class QuadTreeRect implements IQuadTreeRect {
         this.bottom = bottom;
     }
 }
-interface IQuadTreeNode extends IQuadTreeRect {
+interface IQuadTreeNode extends IQuadTreeRect,IDoubleLinkedListNode {
     prevNode: IQuadTreeNode;
     nextNode: IQuadTreeNode;
     ownerQuadTree: QuadTree;

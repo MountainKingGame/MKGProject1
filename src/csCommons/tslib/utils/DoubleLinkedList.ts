@@ -3,7 +3,7 @@
  * 结构  null -> node -> .... -> node -> head
  * 顺序  prev -> prev -> node -> next -> next
 */
-class DoubleLinkedList {
+class DoubleLinkedList implements IDispose {
     public length: number = 0;
     public head: IDoubleLinkedListNode;
 
@@ -87,6 +87,9 @@ class DoubleLinkedList {
         }
         this.head = null;
         this.length = 0;
+    }
+    dispose(){
+        this.clear(true);
     }
 }
 /**双重链表节点 */

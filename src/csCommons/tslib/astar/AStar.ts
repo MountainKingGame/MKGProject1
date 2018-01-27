@@ -9,7 +9,7 @@ namespace astars {
 	export class AStar {
 		public _grid: Grid;               //网格
 		private _openArr: Node[];               //待考察表
-		private _openDll: DoubleLinkedList;               //待考察表(双链表)
+		private _openList: DoubleLinkedList;               //待考察表(双链表)
 		private _endNode: Node;                  //终点Node
 		private _startNode: Node;                //起点Node
 		private _path: Node[];               //结果路径
@@ -42,7 +42,7 @@ namespace astars {
 		}
 
 		public constructor() {
-			this._openDll = new DoubleLinkedList();
+			this._openList = new DoubleLinkedList();
 			this._heuristic = this.manhattan;
 			// this._heuristic = this.euclidian;
 			// this._heuristic = this.diagonal;
@@ -57,7 +57,7 @@ namespace astars {
 			this.closeMask = this.openMask;
 
 			this._openArr = [];
-			this._openDll.clear(false);
+			this._openList.clear(false);
 
 			this._startNode = this._grid.startNode;
 			this._endNode = this._grid.endNode;
@@ -74,7 +74,7 @@ namespace astars {
 			while (node != this._endNode) {
 				let minFNode: Node = this.searchAround(node);
 				node.closeMask = this.closeMask;
-				if (this._openArr.length == 0 && this._openDll.length==0) {
+				if (this._openArr.length == 0 && this._openList.length==0) {
 					console.log("AStar >> no path found");
 					return false;
 				}
@@ -85,7 +85,7 @@ namespace astars {
 					node.openMask = 0;
 					switch (this.openListKind) {
 						case OpenListKind.PushCompare:
-							node = this._openDll.pop() as Node;
+							node = this._openList.pop() as Node;
 							break;
 						default:
 							node = this._openArr.pop();
@@ -188,20 +188,20 @@ namespace astars {
 					this._openArr.push(node);
 					break;
 				case OpenListKind.PushCompare:
-					let openLen = this._openDll.length;
+					let openLen = this._openList.length;
 					if (openLen == 0) {
-						this._openDll.push(node);
+						this._openList.push(node);
 					} else {
-						let item = this._openDll.head;
+						let item = this._openList.head;
 						while (item != null) {
 							this.debug_openCompareCount++;
 							if (node.f < (item as Node).f) {
-								this._openDll.insertNext(node, item);
+								this._openList.insertNext(node, item);
 								return;
 							}
 							if(item.prevNode==null){
 								//到tail了, node没有插入到队伍里,说明是最大的,则放头里去
-								this._openDll.insertPrev(node,item);
+								this._openList.insertPrev(node,item);
 								return;
 							}else{
 								item = item.prevNode;
