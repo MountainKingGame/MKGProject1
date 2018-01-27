@@ -18,16 +18,12 @@ namespace astar {
 		private _straightCost: number = 10;     //上下左右走的代价
 		private _diagCost: number = 14;//Math.SQRT2;  //diagonal 斜着走的代价 
 
-		public calculateCount:number = 0;
+		public calculateCount: number = 0;
 		/**能否斜着走 */
 		public canDiag: boolean = false;
 
 		public get path(): Node[] {
 			return this._path;
-		}
-
-		public get visited() {
-			return this._closed.concat(this._open);
 		}
 
 		public constructor() {
@@ -56,11 +52,12 @@ namespace astar {
 		private search(): boolean {
 			var node: Node = this._startNode;
 			while (node != this._endNode) {
+				//-计算周围的8格
 				var startX = Math.max(0, node.x - 1);
 				var endX = Math.min(this._grid.numCols - 1, node.x + 1);
 				var startY = Math.max(0, node.y - 1);
 				var endY = Math.min(this._grid.numRows - 1, node.y + 1);
-
+				//-
 				for (var i = startX; i <= endX; i++) {
 					for (var j = startY; j <= endY; j++) {
 						if (this.canDiag == false) {
@@ -70,7 +67,7 @@ namespace astar {
 							}
 						}
 						this.calculateCount++;
-
+						//
 						var test: Node = this._grid.getNode(i, j);
 						if (test == node ||
 							!test.walkable ||
@@ -101,7 +98,7 @@ namespace astar {
 							test.g = g;
 							test.h = h;
 							test.previous = node;
-							this._open.push(test);
+							this.openListPush(test);
 						}
 					}
 				}
@@ -112,26 +109,53 @@ namespace astar {
 					console.log("AStar >> no path found");
 					return false;
 				}
+				this.sortOpenList();
+				node = this._open.pop() as Node;
+			}
+			this.generateResultPath();
+			return true;
+		}
 
+		openListKind: number = 2;
+		private openListPush(node: Node) {
+			if (this.openListKind == 1) {
+				this._open.push(node);
+			} else {
+				let openLen = this._open.length;
+				if (openLen == 0) {
+					this._open.push(node);
+				} else {
+					for (let i = openLen - 1; i >= 0; i--) {
+						let temp = this._open[i];
+						if (node.f <= temp.f) {
+							this._open.splice(i + 1, 0, node);
+							return;
+						}
+					}
+					//node最大,则放头里去
+					this._open.unshift(node);
+				}
+			}
+		}
+
+		/**冒泡算法排序open列表,找到最小f(可以优化) */
+		private sortOpenList() {
+			if (this.openListKind == 1) {
 				let openLen = this._open.length;
 				for (let m = 0; m < openLen; m++) {
 					for (let n = m + 1; n < openLen; n++) {
-						if (this._open[m].f > this._open[n].f) {
+						if (this._open[m].f < this._open[n].f) {
 							let temp = this._open[m];
 							this._open[m] = this._open[n];
 							this._open[n] = temp;
 						}
 					}
 				}
-
-				node = this._open.shift() as Node;
 			}
-			this.buildPath();
-			return true;
 		}
 
-		//获取路径
-		private buildPath(): void {
+		//声生成最终路径
+		private generateResultPath(): void {
 			this._path = new Array();
 			var node: Node = this._endNode;
 			this._path.push(node);

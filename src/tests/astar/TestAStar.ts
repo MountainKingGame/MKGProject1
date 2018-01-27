@@ -10,6 +10,9 @@ namespace astar {
 
 		public constructor() {
 			super();
+			// let a = [2,3,4];
+			// a.splice(1,0,8);
+			// console.log("[info]",a,"`a`");
 			this.aStar = new astar.AStar();
 			this.makeGrid();
 			this.makePlayer();
@@ -18,6 +21,7 @@ namespace astar {
 				this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onGridMove, this);
 			}, this);
 			KeyBoardCtrl.si.init();
+			MsgMgr.si.add(KeyBoardCtrl.KeyUp, this, this.OnKeyBoardUp);
 		}
 
 		/**
@@ -47,10 +51,10 @@ namespace astar {
 		 * Creates a grid with a bunch of random unwalkable nodes.
 		 */
 		private makeGrid() {
-			this.aStar._grid = new astar.Grid(16, 16);
+			this.aStar._grid = new astar.Grid(30, 30);
 			for (let i = 0; i < this.aStar._grid.numCols; i++) {
 				for (let j = 0; j < this.aStar._grid.numRows; j++) {
-					this.aStar._grid.setWalkable(i,j,Math.random()>0.3);
+					this.aStar._grid.setWalkable(i, j, Math.random() > 0.3);
 				}
 			}
 			//
@@ -128,7 +132,7 @@ namespace astar {
 			}
 			var xpos = Math.floor(event.stageX / this._cellSize);
 			var ypos = Math.floor(event.stageY / this._cellSize);
-			if(this.aStar._grid.getNodeSafe(xpos,ypos)==null){
+			if (this.aStar._grid.getNodeSafe(xpos, ypos) == null) {
 				return;
 			}
 			this.aStar._grid.setEndNode(xpos, ypos);
@@ -145,6 +149,21 @@ namespace astar {
 				this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 			}
 			console.log(egret.getTimer() - this.startTime, "`FireMs`", this.aStar.calculateCount, "`this.aStar.calculateCount`");
+		}
+		private OnKeyBoardUp(keycode: number): void {
+			switch (keycode) {
+				case KeyBoardCtrl.KEY_0:
+					let startNode: Node = this.aStar._grid.startNode;
+					this._player.x = startNode.x * this._cellSize + this._cellSize / 2;
+					this._player.y = startNode.y * this._cellSize + this._cellSize / 2;
+					break;
+				case KeyBoardCtrl.KEY_1:
+					this.aStar.openListKind = 1;
+					break;
+				case KeyBoardCtrl.KEY_2:
+					this.aStar.openListKind = 2;
+					break;
+			}
 		}
 		private onGridMove(event: egret.TouchEvent): void {
 			if (KeyBoardCtrl.si.ctrlKey || KeyBoardCtrl.si.altKey) {
@@ -163,6 +182,8 @@ namespace astar {
 		private onEnterFrame(event: egret.Event): void {
 			var targetX = this._path[this._index].x * this._cellSize + this._cellSize / 2;
 			var targetY = this._path[this._index].y * this._cellSize + this._cellSize / 2;
+			this._player.x = targetX;
+			this._player.y = targetY;
 			var dx = targetX - this._player.x;
 			var dy = targetY - this._player.y;
 			var dist = Math.sqrt(dx * dx + dy * dy);

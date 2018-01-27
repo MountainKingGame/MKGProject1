@@ -42,6 +42,17 @@ class KeyBoardCtrl {
     static KeyDown = "KeyBoardCtrl.OnKeyDown";
     static KeyUp = "KeyBoardCtrl.OnKeyUp";
     //
+    static KEY_0 = 48;
+    static KEY_1 = 49;
+    static KEY_2 = 50;
+    static KEY_3 = 51;
+    static KEY_4 = 52;
+    static KEY_5 = 53;
+    static KEY_6 = 54;
+    static KEY_7 = 55;
+    static KEY_8 = 56;
+    static KEY_9 = 57;
+    //
     static KEY_A = 65;
     static KEY_B = 66;
     static KEY_C = 67;
@@ -86,7 +97,7 @@ class KeyBoardCtrl {
     }
     onKeyDown(e) {
         e = e || window.event;
-        var keycode = e.which ? e.which : e.keyCode;
+        var keycode:number = e.which ? e.which : e.keyCode;
         // console.log("[debug]",e.keyCode,"`e.keyCode`","onKeyDown");
         if (!this.keyDownMap[keycode]) {
             this.keyDownMap[keycode] = true;
@@ -95,7 +106,7 @@ class KeyBoardCtrl {
     }
     onKeyUp(e) {
         e = e || window.event;
-        var keycode = e.which ? e.which : e.keyCode;
+        var keycode:number = e.which ? e.which : e.keyCode;
         // console.log("[debug]",e.keyCode,"`e.keyCode`","onKeyUp");
         // if (keycode == 13 || keycode == 108) { //如果按下ENTER键 
         //在这里设置你想绑定的事件 
