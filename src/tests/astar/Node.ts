@@ -11,8 +11,9 @@ namespace astar{
 		public g:number;    //起点到当前点代价
 		public h:number;    //当前点到终点估计代价
 		public walkable:boolean = true;
-		public parent:Node;
 		public costMultiplier:number = 1.0;
+		//
+		public parent:Node;
 	
 		public constructor(x:number , y:number) {
 			this.x = x;

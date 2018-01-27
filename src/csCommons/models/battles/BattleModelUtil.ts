@@ -14,6 +14,12 @@ namespace models.battles {
          public static rowToY(row:number):number{
              return row*BattleConfig.si.cellSize;
          } */
+        public static index2Col(index:number,colPerRow:number):number{
+            return index%colPerRow;
+        }
+        public static index2Row(index:number,colPerRow:number):number{
+            return Math.floor(index/colPerRow);
+        }
         public static gridToPos(gridVal: number): number {
             return gridVal * BattleModelConfig.si.cellSize;
         }

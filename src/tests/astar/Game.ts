@@ -1,11 +1,12 @@
 
 namespace astar {
 	export class Game extends egret.Sprite {
-		private _cellSize: number = 40;
+		private _cellSize: number = 30;
 		private _grid: astar.Grid;
 		private _player: egret.Sprite;
 		private _index: number;
-		private _path: Array<any>;
+		private _path: Node[];
+		private _spArr:egret.Sprite[][];
 
 		public constructor() {
 			super();
@@ -22,8 +23,8 @@ namespace astar {
 		 */
 		private makePlayer() {
 			this._player = new egret.Sprite();
-			this._player.graphics.beginFill(0xff0000);
-			this._player.graphics.drawCircle(0, 0, 5);
+			this._player.graphics.beginFill(0x0000FF);
+			this._player.graphics.drawCircle(0, 0, 10);
 			this._player.graphics.endFill();
 			this._player.x = Math.random() * 600;
 			this._player.y = Math.random() * 600;
@@ -34,12 +35,20 @@ namespace astar {
 		/**
 		 * Creates a grid with a bunch of random unwalkable nodes.
 		 */
-		private makeGrid(): void {
-			this._grid = new astar.Grid(30, 30);
+		private makeGrid() {
+			this._grid = new astar.Grid(31, 30);
 			for (var i = 0; i < 200; i++) {
 				this._grid.setWalkable(Math.floor(Math.random() * 30),
 					Math.floor(Math.random() * 30),
 					false);
+				// if (i % 2 == 0) {
+				// 	console.log("[info] setWalkable",i,models.battles.BattleModelUtil.index2Col(i, this._grid.numCols),
+				// 	models.battles.BattleModelUtil.index2Row(i, this._grid.numCols));
+				// 	this._grid.setWalkable(
+				// 		models.battles.BattleModelUtil.index2Col(i, this._grid.numCols),
+				// 		models.battles.BattleModelUtil.index2Row(i, this._grid.numCols),
+				// 		false);
+				// }
 			}
 			this.drawGrid();
 
@@ -54,34 +63,61 @@ namespace astar {
 		/**
 		 * Draws the given grid, coloring each cell according to its state.
 		 */
-		private drawGrid(): void {
+		private drawGrid() {
 			this.graphics.clear();
+			console.log("[log] drawGrid --------------");
 			for (let i = 0; i < this._grid.numCols; i++) {
 				for (let j = 0; j < this._grid.numRows; j++) {
 					var node: astar.Node = this._grid.getNode(i, j);
-					// this.graphics.lineStyle(0);
+					// console.log("[log] drawGrid node", i, j, node.walkable);
+					//---有bug,连续画图有问题
 					// this.graphics.beginFill(this.getColor(node));
 					// this.graphics.drawRect(i * this._cellSize, j * this._cellSize, this._cellSize, this._cellSize);
-					let sp: egret.Sprite = new egret.Sprite();
+					// this.graphics.endFill();
+					//---
+					let sp: egret.Sprite;
+					if(this._spArr==undefined){
+						this._spArr = [];
+					}
+					if(this._spArr[i]==undefined){
+						this._spArr[i] = [];
+					}
+					if(this._spArr[i][j]==undefined){
+						sp = new egret.Sprite();
+						this._spArr[i][j] = sp;
+						this.addChild(sp);
+						sp.x = i * this._cellSize;
+						sp.y = j * this._cellSize; 
+					}else{
+						sp = this._spArr[i][j];
+					}
+					sp.graphics.clear();
 					sp.graphics.beginFill(this.getColor(node));
 					sp.graphics.drawRect(0, 0, this._cellSize, this._cellSize);
 					sp.graphics.endFill();
-					sp.x = i * this._cellSize;
-					sp.y = j * this._cellSize;
-					this.addChild(sp);
 				}
 			}
+			console.log("[log] drawGrid end --------------");
 			this.addChild(this._player);
+			//--
+			// this.graphics.clear();
+			// this.graphics.lineStyle(0);
+			// this.graphics.beginFill(0x345678);
+			// this.graphics.drawRect(0, 0, 120, 120);
+			// this.graphics.endFill();
+			// this.graphics.beginFill(0x987654);
+			// this.graphics.drawRect(100, 100, 120, 120);
+			// this.graphics.endFill();
 		}
 
 		/**
 		 * Determines the color of a given node based on its state.
 		 */
 		private getColor(node: astar.Node) {
-			if (!node.walkable) return 0;
-			if (node == this._grid.startNode) return 0xcccccc;
-			if (node == this._grid.endNode) return 0xcccccc;
-			return 0xffffff;
+			if (!node.walkable) return 0xFF00FF;
+			if (node == this._grid.startNode) return 0x00FFFF;
+			if (node == this._grid.endNode) return 0xFFFF00;
+			return 0x00FF00;
 		}
 
 		/**

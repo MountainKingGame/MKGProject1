@@ -7,7 +7,7 @@ namespace astar{
 	export  class Grid {
 		private _startNode:Node;    //起点
 		private _endNode:Node;      //终点
-		private _nodes:Array<any>;  //Node数组
+		private _nodes:Node[][];  //Node数组 [col][row]
 		private _numCols:number;    //网格行列
 		private _numRows:number;
 
@@ -36,8 +36,11 @@ namespace astar{
 			this._startNode = this._nodes[x][y];
 		}
 
-		public setWalkable(x:number, y:number, value:boolean){
-			this._nodes[x][y].walkable = value;
+		public setWalkable(x:number, y:number, walkable:boolean){
+			this._nodes[x][y].walkable = walkable;
+		}
+		public setCostMultiplier(x:number, y:number, cost:number){
+			this._nodes[x][y].costMultiplier = cost;
 		}
 
 		public get endNode(){
