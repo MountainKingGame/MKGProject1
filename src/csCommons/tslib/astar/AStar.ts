@@ -17,8 +17,8 @@ namespace astars {
 		private _straightCost: number = 10;     //上下左右走的代价
 		private _diagCost: number = 14;//Math.SQRT2;  //diagonal 斜着走的代价 
 
-		private openMask:number = 0;
-		private closeMask:number = 0;
+		private openMask: number = 0;
+		private closeMask: number = 0;
 
 		/**能否斜着走 */
 		public canDiag: boolean = false;
@@ -44,8 +44,8 @@ namespace astars {
 			this.debug_calculateCount = 0;
 			this.debug_openCompareCount = 0;
 
-			this.openMask>99999999?this.openMask=1:this.openMask++;
-			this.closeMask=this.openMask;
+			this.openMask > 99999999 ? this.openMask = 1 : this.openMask++;
+			this.closeMask = this.openMask;
 
 			this._open = [];
 
@@ -62,7 +62,7 @@ namespace astars {
 		private search(): boolean {
 			var node: Node = this._startNode;
 			while (node != this._endNode) {
-				let minFNode:Node = this.searchAround(node);
+				let minFNode: Node = this.searchAround(node);
 				// for (var o = 0; o < this._open.length; o++) {
 				// }
 				node.closeMask = this.closeMask;
@@ -70,9 +70,9 @@ namespace astars {
 					console.log("AStar >> no path found");
 					return false;
 				}
-				if(minFNode!=null){
+				if (minFNode != null) {
 					node = minFNode;
-				}else{
+				} else {
 					this.sortOpenList();
 					node.openMask = 0;
 					node = this._open.pop() as Node;
@@ -82,12 +82,12 @@ namespace astars {
 			return true;
 		}
 
-		private roundOffset8:IVector2[] = [{x:1,y:0},{x:1,y:1},{x:0,y:1},{x:-1,y:1},{x:-1,y:0},{x:-1,y:-1},{x:0,y:-1},{x:1,y:-1}];
-		private roundOffset4:IVector2[] = [{x:1,y:0},{x:0,y:1},{x:-1,y:0},{x:0,y:-1}];
+		private roundOffset8: IVector2[] = [{ x: 1, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 1 }, { x: -1, y: 1 }, { x: -1, y: 0 }, { x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 }];
+		private roundOffset4: IVector2[] = [{ x: 1, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 0 }, { x: 0, y: -1 }];
 
 		/**处理周围的格子 */
 		private searchAround(node: Node) {
-			let minFNode:Node;
+			let minFNode: Node;
 			let roundOffset;
 			if (this.canDiag) {
 				roundOffset = this.roundOffset8;
@@ -96,25 +96,40 @@ namespace astars {
 			}
 			for (var i = 0; i < roundOffset.length; i++) {
 				this.debug_calculateCount++;
-				let offset:IVector2 = roundOffset[i];
-				var test: Node = this._grid.getNodeSafe(node.x+offset.x,node.y+offset.y);
-				if (test==null || test == node ||
-					!test.walkable ||
-					!this._grid.getNode(node.x, test.y).walkable ||
-					!this._grid.getNode(test.x, node.y).walkable) {
+				let offset: IVector2 = roundOffset[i];
+				var test: Node = this._grid.getNodeSafe(node.x + offset.x, node.y + offset.y);
+				//--kind1
+				if (test == null || test == node) {
 					continue;
 				}
-
+				//--kind2 这种计算会导致 目标点无法到达时 无法算出路径
+				// if (test==null || test == node ||
+				// 	!test.walkable ||
+				// 	!this._grid.getNode(node.x, test.y).walkable ||
+				// 	!this._grid.getNode(test.x, node.y).walkable) {
+				// 	continue;
+				// }
+				//--
 				var cost: number = this._straightCost;
-				if (this.canDiag == true) {
-					if (!((node.x == test.x) || (node.y == test.y))) {
-						cost = this._diagCost;
+				if (test.walkable == false) {
+					cost = 10000;//不可经过地方设置一个很高的值,可以保证目标点无法到达时也能算出路径
+				} else {
+					if (this.canDiag == true) {
+						if (!this._grid.getNode(node.x, test.y).walkable ||
+							!this._grid.getNode(test.x, node.y).walkable) {
+								//夹角 两侧都是不可同行的
+								cost = 3000;
+						} else {
+							if (!((node.x == test.x) || (node.y == test.y))) {
+								cost = this._diagCost;
+							}
+						}
 					}
 				}
 				var g = node.g + cost * test.costMultiplier;
 				var h = this._heuristic(test);
 				var f = g + h;
-				if (test.openMask==this.openMask || test.closeMask==this.closeMask) {
+				if (test.openMask == this.openMask || test.closeMask == this.closeMask) {
 					if (test.f > f) {
 						test.f = f;
 						test.g = g;
@@ -128,12 +143,12 @@ namespace astars {
 					test.h = h;
 					test.previous = node;
 					this.openListPush(test);
-					switch(this.searchCellKind){
+					switch (this.searchCellKind) {
 						case SearchCellKind.MinFAround:
-						if(minFNode==null || test.f<minFNode.f){
-							minFNode = test;
-						}
-						break;
+							if (minFNode == null || test.f < minFNode.f) {
+								minFNode = test;
+							}
+							break;
 					}
 				}
 			}
@@ -204,13 +219,40 @@ namespace astars {
 
 		//声生成最终路径
 		private generateResultPath(): void {
-			this._path = new Array();
+			//---普通
+			// this._path = [];
+			// var node: Node = this._endNode;
+			// this._path.push(node);
+			// while (node != this._startNode) {
+			// 	node = node.previous;
+			// 	this._path.unshift(node);
+			// }
+			//---路径压缩
+			let lastOffsetX:number;
+			let lastOffsetY:number;
+			this._path = [];
 			var node: Node = this._endNode;
 			this._path.push(node);
 			while (node != this._startNode) {
-				node = node.previous;
-				this._path.unshift(node);
+				if(node.walkable==false){
+					node = node.previous;
+					this._path = [node];
+				}else{
+					let offsetX:number = node.previous.x-node.x;
+					let offsetY:number = node.previous.y-node.y;
+					if(lastOffsetX==undefined || lastOffsetX!=offsetX || lastOffsetY!=offsetY){
+						lastOffsetX = offsetX;
+						lastOffsetY = offsetY;
+						node = node.previous;
+						this._path.push(node);
+					}else{
+						node = node.previous;
+						this._path[this._path.length-1] = node;
+					}
+				}
 			}
+			this._path.reverse();
+			//---
 		}
 
 		//曼哈顿算法

@@ -150,16 +150,26 @@ namespace astars {
 				this._index = 0;
 				this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 			}
-			console.log("[debug] Kind:", this.aStar.openListKind, "`openListKind`", this.aStar.searchCellKind, "`searchCellKind`");
+			console.log("[debug] Kind:", this.aStar.openListKind, "`openListKind`", this.aStar.searchCellKind, "`searchCellKind`", this.frameGapNeed, "`frameGapNeed`");
 			console.log("[debug]", egret.getTimer() - this.startTime, "`FireMs`", this.aStar.debug_calculateCount, "`calculateCount`", this.aStar.debug_openCompareCount, "`debug_openCompareCount`");
 		}
 		private OnKeyBoardUp(keycode: number): void {
 			switch (keycode) {
+				case KeyBoardCtrl.KEY_0:
+					{
+						let startNode: Node = this.aStar._grid.startNode;
+						this._player.x = startNode.x * this._cellSize + this._cellSize / 2;
+						this._player.y = startNode.y * this._cellSize + this._cellSize / 2;
+					}
+					break;
 				case KeyBoardCtrl.KEY_DOT_BIG:
-					let startNode: Node = this.aStar._grid.startNode;
-					this._player.x = startNode.x * this._cellSize + this._cellSize / 2;
-					this._player.y = startNode.y * this._cellSize + this._cellSize / 2;
-					this.run();
+					{
+
+						let startNode: Node = this.aStar._grid.startNode;
+						this._player.x = startNode.x * this._cellSize + this._cellSize / 2;
+						this._player.y = startNode.y * this._cellSize + this._cellSize / 2;
+						this.run();
+					}
 					break;
 				case KeyBoardCtrl.KEY_1:
 					this.aStar.openListKind = astars.OpenListKind.BubbleSort;
@@ -170,11 +180,20 @@ namespace astars {
 				case KeyBoardCtrl.KEY_3:
 					this.aStar.openListKind = astars.OpenListKind.ArraySort;
 					break;
-				case KeyBoardCtrl.KEY_6:
+				case KeyBoardCtrl.KEY_4:
 					this.aStar.searchCellKind = astars.SearchCellKind.Normal;
 					break;
-				case KeyBoardCtrl.KEY_7:
+				case KeyBoardCtrl.KEY_5:
 					this.aStar.searchCellKind = astars.SearchCellKind.MinFAround;
+					break;
+				case KeyBoardCtrl.KEY_6:
+					this.frameGapNeed -= 10;
+					if (this.frameGapNeed < 1) {
+						this.frameGapNeed = 1;
+					}
+					break;
+				case KeyBoardCtrl.KEY_7:
+					this.frameGapNeed += 10;
 					break;
 			}
 		}
@@ -188,27 +207,33 @@ namespace astars {
 		}
 
 		private startTime = 0;
-
+		private frameCount = 0;
+		private frameGapNeed = 1;
 		/**
 		 * Finds the next node on the path and eases to it.
 		 */
 		private onEnterFrame(event: egret.Event): void {
-			var targetX = this._path[this._index].x * this._cellSize + this._cellSize / 2;
-			var targetY = this._path[this._index].y * this._cellSize + this._cellSize / 2;
-			this._player.x = targetX;
-			this._player.y = targetY;
-			var dx = targetX - this._player.x;
-			var dy = targetY - this._player.y;
-			var dist = Math.sqrt(dx * dx + dy * dy);
-			if (dist < 1) {
-				this._index++;
-				if (this._index >= this._path.length) {
-					this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+			this.frameCount++;
+			if (this.frameCount >= this.frameGapNeed) {
+				this.frameCount = 0;
+				//
+				var targetX = this._path[this._index].x * this._cellSize + this._cellSize / 2;
+				var targetY = this._path[this._index].y * this._cellSize + this._cellSize / 2;
+				this._player.x = targetX;
+				this._player.y = targetY;
+				var dx = targetX - this._player.x;
+				var dy = targetY - this._player.y;
+				var dist = Math.sqrt(dx * dx + dy * dy);
+				if (dist < 1) {
+					this._index++;
+					if (this._index >= this._path.length) {
+						this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+					}
 				}
-			}
-			else {
-				this._player.x += dx * .5;
-				this._player.y += dy * .5;
+				else {
+					this._player.x += dx * .5;
+					this._player.y += dy * .5;
+				}
 			}
 		}
 	}
