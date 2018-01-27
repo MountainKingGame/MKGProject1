@@ -1,4 +1,5 @@
 /**
+ * 网格类
  * @author chenkai
  * @since 2017/11/3
  */
@@ -23,6 +24,13 @@ namespace astar{
 			}
 		}
 
+		public getNodeSafe(x:number , y:number):Node{
+			if(this._nodes[x]){
+				return this._nodes[x][y];
+			}
+			return undefined;
+		}
+
 		public getNode(x:number , y:number):Node{
 			return this._nodes[x][y];
 		}
@@ -39,7 +47,7 @@ namespace astar{
 			this._nodes[x][y].walkable = walkable;
 		}
 		public setCostMultiplier(x:number, y:number, cost:number){
-			this._nodes[x][y].costMultiple = cost;
+			this._nodes[x][y].costMultiplier = cost;
 		}
 
 		public get endNode(){

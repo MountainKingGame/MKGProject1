@@ -9,7 +9,7 @@ namespace astar{
 		public f:number;    //代价 f = g+h
 		public g:number;    //起点到当前点代价
 		public h:number;    //当前点到终点估计代价
-		public costMultiple:number = 1;//cost倍数
+		public costMultiplier:number = 1;//cost倍数
 		public walkable:boolean = true;
 		//
 		public previous:Node;

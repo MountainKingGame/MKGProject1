@@ -2,7 +2,7 @@
 namespace astar {
 	export class TestAStar extends egret.Sprite {
 		private _cellSize: number = 30;
-		private _grid: astar.Grid;
+		private aStar: astar.AStar;
 		private _player: egret.Sprite;
 		private _index: number;
 		private _path: Node[];
@@ -10,6 +10,7 @@ namespace astar {
 
 		public constructor() {
 			super();
+			this.aStar = new astar.AStar();
 			this.makeGrid();
 			this.makePlayer();
 			this.addEventListener(egret.Event.ADDED_TO_STAGE, () => {
@@ -28,12 +29,13 @@ namespace astar {
 			this._player.graphics.drawCircle(0, 0, 10);
 			this._player.graphics.endFill();
 			this.addChild(this._player);
-			for (let i = 0; i < this._grid.numCols; i++) {
-				for (let j = 0; j < this._grid.numRows; j++) {
-					var node: astar.Node = this._grid.getNode(i, j);
+			//find a walkable node
+			for (let i = 0; i < this.aStar._grid.numCols; i++) {
+				for (let j = 0; j < this.aStar._grid.numRows; j++) {
+					var node: astar.Node = this.aStar._grid.getNode(i, j);
 					if (node.walkable) {
-						this._player.x = node.x + 0.5 * this._cellSize;
-						this._player.y = node.y + 0.5 * this._cellSize;
+						this._player.x = (node.x + 0.5) * this._cellSize;
+						this._player.y = (node.y + 0.5) * this._cellSize;
 						return;
 					}
 				}
@@ -45,28 +47,16 @@ namespace astar {
 		 * Creates a grid with a bunch of random unwalkable nodes.
 		 */
 		private makeGrid() {
-			this._grid = new astar.Grid(31, 30);
-			for (var i = 0; i < 200; i++) {
-				this._grid.setWalkable(Math.floor(Math.random() * 30),
-					Math.floor(Math.random() * 30),
-					false);
-				// if (i % 2 == 0) {
-				// 	console.log("[info] setWalkable",i,models.battles.BattleModelUtil.index2Col(i, this._grid.numCols),
-				// 	models.battles.BattleModelUtil.index2Row(i, this._grid.numCols));
-				// 	this._grid.setWalkable(
-				// 		models.battles.BattleModelUtil.index2Col(i, this._grid.numCols),
-				// 		models.battles.BattleModelUtil.index2Row(i, this._grid.numCols),
-				// 		false);
-				// }
+			this.aStar._grid = new astar.Grid(16, 16);
+			for (let i = 0; i < this.aStar._grid.numCols; i++) {
+				for (let j = 0; j < this.aStar._grid.numRows; j++) {
+					this.aStar._grid.setWalkable(i,j,Math.random()>0.3);
+				}
 			}
+			//
+			this.aStar._grid.setWalkable(0, 0, false);
+			//
 			this.drawGrid();
-
-			// for(let m =0; m<30;m++){
-			// 	for(let n=0;n<30;n++){
-			// 		console.log( (this._grid.getNode(m, n).walkable== true)?1:0);
-			// 	}
-			// 	console.log("===");
-			// }
 		}
 
 		/**
@@ -75,9 +65,9 @@ namespace astar {
 		private drawGrid() {
 			this.graphics.clear();
 			console.log("[log] drawGrid --------------");
-			for (let i = 0; i < this._grid.numCols; i++) {
-				for (let j = 0; j < this._grid.numRows; j++) {
-					var node: astar.Node = this._grid.getNode(i, j);
+			for (let i = 0; i < this.aStar._grid.numCols; i++) {
+				for (let j = 0; j < this.aStar._grid.numRows; j++) {
+					var node: astar.Node = this.aStar._grid.getNode(i, j);
 					// console.log("[log] drawGrid node", i, j, node.walkable);
 					//---有bug,连续画图有问题
 					// this.graphics.beginFill(this.getColor(node));
@@ -123,8 +113,8 @@ namespace astar {
 		 */
 		private getColor(node: astar.Node) {
 			if (!node.walkable) return 0xFF00FF;
-			if (node == this._grid.startNode) return 0x00FFFF;
-			if (node == this._grid.endNode) return 0xFFFF00;
+			if (node == this.aStar._grid.startNode) return 0x00FFFF;
+			if (node == this.aStar._grid.endNode) return 0xFFFF00;
 			return 0x00FF00;
 		}
 
@@ -133,43 +123,39 @@ namespace astar {
 		 */
 		private onGridClick(event: egret.TouchEvent): void {
 			if (KeyBoardCtrl.si.ctrlKey || KeyBoardCtrl.si.altKey) {
+				this.onGridMove(event);
 				return;
 			}
 			var xpos = Math.floor(event.stageX / this._cellSize);
 			var ypos = Math.floor(event.stageY / this._cellSize);
-			this._grid.setEndNode(xpos, ypos);
+			if(this.aStar._grid.getNodeSafe(xpos,ypos)==null){
+				return;
+			}
+			this.aStar._grid.setEndNode(xpos, ypos);
 
 			xpos = Math.floor(this._player.x / this._cellSize);
 			ypos = Math.floor(this._player.y / this._cellSize);
-			this._grid.setStartNode(xpos, ypos);
+			this.aStar._grid.setStartNode(xpos, ypos);
 			this.drawGrid();
 
 			this.startTime = egret.getTimer();
-			this.findPath();
-			console.log("Timer:", egret.getTimer() - this.startTime);
+			if (this.aStar.findPath()) {
+				this._path = this.aStar.path;
+				this._index = 0;
+				this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+			}
+			console.log(egret.getTimer() - this.startTime, "`FireMs`", this.aStar.calculateCount, "`this.aStar.calculateCount`");
 		}
 		private onGridMove(event: egret.TouchEvent): void {
 			if (KeyBoardCtrl.si.ctrlKey || KeyBoardCtrl.si.altKey) {
 				var xpos = Math.floor(event.stageX / this._cellSize);
 				var ypos = Math.floor(event.stageY / this._cellSize);
-				this._grid.setWalkable(xpos, ypos, KeyBoardCtrl.si.altKey);
+				this.aStar._grid.setWalkable(xpos, ypos, KeyBoardCtrl.si.altKey);
 				this.drawGrid();
 			}
 		}
 
 		private startTime = 0;
-
-		/**
-		 * Creates an instance of AStar and uses it to find a path.
-		 */
-		private findPath(): void {
-			var aStar: astar.AStar = new astar.AStar();
-			if (aStar.findPath(this._grid)) {
-				this._path = aStar.path;
-				this._index = 0;
-				this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
-			}
-		}
 
 		/**
 		 * Finds the next node on the path and eases to it.

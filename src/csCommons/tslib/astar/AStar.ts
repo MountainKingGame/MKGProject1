@@ -7,17 +7,28 @@
  */
 namespace astar {
 	export class AStar {
+		public _grid: astar.Grid;               //网格
 		private _open: Node[];               //待考察表
 		private _closed: Node[];             //已考察表
-		private _grid: astar.Grid;               //网格
 		private _endNode: Node;                  //终点Node
 		private _startNode: Node;                //起点Node
-		private _path: Node[];               //保存路径
-		private _heuristic: Function;            //寻路算法
+		private _path: Node[];               //结果路径
+		//
+		private _heuristic: Function;            //计算h的算法
 		private _straightCost: number = 10;     //上下左右走的代价
 		private _diagCost: number = 14;//Math.SQRT2;  //diagonal 斜着走的代价 
+
+		public calculateCount:number = 0;
 		/**能否斜着走 */
 		public canDiag: boolean = false;
+
+		public get path(): Node[] {
+			return this._path;
+		}
+
+		public get visited() {
+			return this._closed.concat(this._open);
+		}
 
 		public constructor() {
 			this._heuristic = this.manhattan;
@@ -26,8 +37,9 @@ namespace astar {
 		}
 
 		//寻路
-		public findPath(grid: Grid): boolean {
-			this._grid = grid;
+		public findPath(): boolean {
+			this.calculateCount = 0;
+
 			this._open = [];
 			this._closed = [];
 
@@ -40,9 +52,8 @@ namespace astar {
 
 			return this.search();
 		}
-
 		//查找路径
-		public search(): boolean {
+		private search(): boolean {
 			var node: Node = this._startNode;
 			while (node != this._endNode) {
 				var startX = Math.max(0, node.x - 1);
@@ -58,6 +69,7 @@ namespace astar {
 								continue;
 							}
 						}
+						this.calculateCount++;
 
 						var test: Node = this._grid.getNode(i, j);
 						if (test == node ||
@@ -73,7 +85,7 @@ namespace astar {
 								cost = this._diagCost;
 							}
 						}
-						var g = node.g + cost * test.costMultiple;
+						var g = node.g + cost * test.costMultiplier;
 						var h = this._heuristic(test);
 						var f = g + h;
 						if (this.isOpen(test) || this.isClosed(test)) {
@@ -129,10 +141,6 @@ namespace astar {
 			}
 		}
 
-		public get path(): Node[] {
-			return this._path;
-		}
-
 		//是否待检查
 		private isOpen(node: Node): boolean {
 			for (var i = 0; i < this._open.length; i++) {
@@ -155,7 +163,7 @@ namespace astar {
 
 		//曼哈顿算法
 		private manhattan(node: Node) {
-			return Math.abs(node.x - this._endNode.x) * this._straightCost + Math.abs(node.y + this._endNode.y) * this._straightCost;
+			return (Math.abs(node.x - this._endNode.x) + Math.abs(node.y + this._endNode.y)) * this._straightCost;
 		}
 
 
@@ -171,10 +179,6 @@ namespace astar {
 			var diag = Math.min(dx, dy);
 			var straight = dx + dy;
 			return this._diagCost * diag + this._straightCost * (straight - 2 * diag);
-		}
-
-		public get visited() {
-			return this._closed.concat(this._open);
 		}
 	}
 
