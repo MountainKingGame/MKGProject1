@@ -20,9 +20,11 @@ namespace astars {
 
 		/**能否斜着走 */
 		public canDiag: boolean = false;
+		openListKind: OpenListKind = OpenListKind.ArraySort;
 
 		public debug_calculateCount: number;
 		public debug_openCompareCount: number;
+
 
 		public get path(): Node[] {
 			return this._path;
@@ -55,56 +57,7 @@ namespace astars {
 		private search(): boolean {
 			var node: Node = this._startNode;
 			while (node != this._endNode) {
-				//-计算周围的8格
-				var startX = Math.max(0, node.x - 1);
-				var endX = Math.min(this._grid.numCols - 1, node.x + 1);
-				var startY = Math.max(0, node.y - 1);
-				var endY = Math.min(this._grid.numRows - 1, node.y + 1);
-				//-
-				for (var i = startX; i <= endX; i++) {
-					for (var j = startY; j <= endY; j++) {
-						if (this.canDiag == false) {
-							//不让斜着走
-							if (i != node.x && j != node.y) {
-								continue;
-							}
-						}
-						this.debug_calculateCount++;
-						//
-						var test: Node = this._grid.getNode(i, j);
-						if (test == node ||
-							!test.walkable ||
-							!this._grid.getNode(node.x, test.y).walkable ||
-							!this._grid.getNode(test.x, node.y).walkable) {
-							continue;
-						}
-
-						var cost: number = this._straightCost;
-						if (this.canDiag == true) {
-							if (!((node.x == test.x) || (node.y == test.y))) {
-								cost = this._diagCost;
-							}
-						}
-						var g = node.g + cost * test.costMultiplier;
-						var h = this._heuristic(test);
-						var f = g + h;
-						if (this.isOpen(test) || this.isClosed(test)) {
-							if (test.f > f) {
-								test.f = f;
-								test.g = g;
-								test.h = h;
-								test.previous = node;
-							}
-						}
-						else {
-							test.f = f;
-							test.g = g;
-							test.h = h;
-							test.previous = node;
-							this.openListPush(test);
-						}
-					}
-				}
+				this.searchAround(node);
 				// for (var o = 0; o < this._open.length; o++) {
 				// }
 				this._closed.push(node);
@@ -119,7 +72,55 @@ namespace astars {
 			return true;
 		}
 
-		openListKind: OpenListKind = OpenListKind.ArraySort;
+		private roundOffset8:IVector2[] = [{x:1,y:0},{x:1,y:1},{x:0,y:1},{x:-1,y:1},{x:-1,y:0},{x:-1,y:-1},{x:0,y:-1},{x:1,y:-1}];
+		private roundOffset4:IVector2[] = [{x:1,y:0},{x:0,y:1},{x:-1,y:0},{x:0,y:-1}];
+
+		/**处理周围的格子 */
+		private searchAround(node: Node) {
+			let roundOffset;
+			if (this.canDiag) {
+				roundOffset = this.roundOffset8;
+			} else {
+				roundOffset = this.roundOffset4;
+			}
+			for (var i = 0; i < roundOffset.length; i++) {
+				this.debug_calculateCount++;
+				let offset:IVector2 = roundOffset[i];
+				var test: Node = this._grid.getNodeSafe(node.x+offset.x,node.y+offset.y);
+				if (test==null || test == node ||
+					!test.walkable ||
+					!this._grid.getNode(node.x, test.y).walkable ||
+					!this._grid.getNode(test.x, node.y).walkable) {
+					continue;
+				}
+
+				var cost: number = this._straightCost;
+				if (this.canDiag == true) {
+					if (!((node.x == test.x) || (node.y == test.y))) {
+						cost = this._diagCost;
+					}
+				}
+				var g = node.g + cost * test.costMultiplier;
+				var h = this._heuristic(test);
+				var f = g + h;
+				if (this.isOpen(test) || this.isClosed(test)) {
+					if (test.f > f) {
+						test.f = f;
+						test.g = g;
+						test.h = h;
+						test.previous = node;
+					}
+				}
+				else {
+					test.f = f;
+					test.g = g;
+					test.h = h;
+					test.previous = node;
+					this.openListPush(test);
+				}
+			}
+		}
+
 		private openListPush(node: Node) {
 			switch (this.openListKind) {
 				case OpenListKind.BubbleSort:
