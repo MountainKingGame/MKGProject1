@@ -1,8 +1,8 @@
 
-class Rect implements IQuadTreeItem {
+class Rect implements IQuadTreeNode {
     ownerQuadTree: QuadTree;
-    preItem:IQuadTreeItem;
-    nextItem:IQuadTreeItem;
+    prevNode:IQuadTreeNode;
+    nextNode:IQuadTreeNode;
     isDirty: boolean;
     speedArr: number[];
     nextSpeedArr: number[];
@@ -306,7 +306,7 @@ class TestQuadTreeShow {
             this.cxt.fill();
         }
         
-        console.info(cTime-this.time,this.collideCount, QuadTree.debug_itemsPush_count, QuadTree.debug_getIndex_count, QuadTree.debug_isInner_count);
+        console.info(cTime-this.time,this.collideCount, QuadTree.debug_nodePush_count, QuadTree.debug_getIndex_count, QuadTree.debug_isInner_count);
         this.time = cTime;
 
         requestAnimationFrame(this.draw.bind(this));

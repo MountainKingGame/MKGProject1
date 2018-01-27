@@ -5,10 +5,10 @@ namespace models.battles {
         public dispose(): void {
         }
     }
-    export class QuadTreeHitRect implements IQuadTreeItem, IDispose {
+    export class QuadTreeHitRect implements IQuadTreeNode, IDispose {
         ownerQuadTree: QuadTree;
-        preItem: IQuadTreeItem;
-        nextItem: IQuadTreeItem;
+        prevNode: IQuadTreeNode;
+        nextNode: IQuadTreeNode;
         //
         owner: EntityVo;
         //
@@ -38,7 +38,7 @@ namespace models.battles {
             this.isDirty = true;
         }
         dispose() {
-            this.ownerQuadTree = this.preItem = this.nextItem = null;
+            this.ownerQuadTree = this.prevNode = this.nextNode = null;
             this.owner = null;
         }
     }

@@ -110,7 +110,7 @@ namespace models.battles {
         checkBulletHitBullet(bullet: BulletVo) {
             let bulletDump: boolean = false;
             // console.log("[info]", vo.uid, "`vo.uid` checkBulletHitTest");
-            let hitArr: IQuadTreeItem[] = this.model.qtBullet.retrieve(bullet.hitRect);
+            let hitArr: IQuadTreeNode[] = this.model.qtBullet.retrieve(bullet.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 let hitBullet: BulletVo = (<QuadTreeHitRect>item).owner as BulletVo;
@@ -228,8 +228,8 @@ namespace models.battles {
                 this.model.changer.removeBullet(bullet);
             }
         }
-        checkTankHitTest(vo: TankVo): IQuadTreeItem {
-            let hitArr: IQuadTreeItem[] = this.model.qtCell.retrieve(vo.forecastMoveHitRect);
+        checkTankHitTest(vo: TankVo): IQuadTreeNode {
+            let hitArr: IQuadTreeNode[] = this.model.qtCell.retrieve(vo.forecastMoveHitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 if ((<QuadTreeHitRect>item).owner.sid > 0) {
@@ -291,7 +291,7 @@ namespace models.battles {
                         //--check hit other, resolve can move
                         // let newRect:QuadTreeHitRect = new QuadTreeHitRect();
                         vo.forecastMoveHitRect.recountPivotCenter(vo.x, vo.y, vo.sizeHalf.x, vo.sizeHalf.y);
-                        let hitItem: IQuadTreeItem = this.checkTankHitTest(vo);
+                        let hitItem: IQuadTreeNode = this.checkTankHitTest(vo);
                         //--
                         if (hitItem != null) {
                             //restore

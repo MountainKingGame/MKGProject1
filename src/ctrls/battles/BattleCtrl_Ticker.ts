@@ -71,10 +71,6 @@ class BattleCtrl_Ticker {
                     case BattleFrameOutputKind.AddBullet:
                         this.ctrl.addBulletById(item.data0 as number);
                         break;
-                    case BattleFrameOutputKind.RebirthTank:
-                        let tank = this.ctrl.tankMap[item.uid];
-                        tank.movableEleCtrl.moveDirImmediately();
-                        break;
                     case BattleFrameOutputKind.BulletHitBullet:
                         this.pausing = DebugConfig.pauseWhenHit;
                         let bullet: BulletCtrl = this.ctrl.bulletMap[item.data0];
@@ -123,13 +119,16 @@ class BattleCtrl_Ticker {
                     case BattleFrameOutputKind.RemoveTank:
                         {
                             let tank: TankCtrl = this.ctrl.tankMap[item.uid];
-                            let mc = ResMgr.si.mcBoomHuangJin();
-                            this.ctrl.eleLayer.addChild(mc);
-                            // mc.setScale(0.6, 0.6);
-                            mc.setXY(tank.ui.x,tank.ui.y);
+                            this.showTankDeadEff(tank);
                             this.ctrl.removeTank(tank);
                         }
-                        //-
+                        break;
+                    case BattleFrameOutputKind.RebirthTank:
+                        {
+                            let tank = this.ctrl.tankMap[item.uid];
+                            this.showTankDeadEff(tank);
+                            tank.movableEleCtrl.moveDirImmediately();
+                        }
                         break;
                     case BattleFrameOutputKind.AddEffect:
                         this.ctrl.tankMap[item.uid].addBuffEffect(item.data0);
@@ -142,6 +141,11 @@ class BattleCtrl_Ticker {
         }
         /** 无论是不是关键帧 ctrl层还是要tick的 */
         this.tickCtrl();
+    }
+    showTankDeadEff(tank: TankCtrl) {
+        let mc = ResMgr.si.mcBoomHuangJin();
+        this.ctrl.eleLayer.addChild(mc);
+        mc.setXY(tank.ui.x, tank.ui.y);
     }
     showBulletHitEff(bulletVo: models.battles.BulletVo) {
         let mc = ResMgr.si.mcBoomBaiYin();
