@@ -12,6 +12,9 @@ namespace astars{
 		public costMultiplier:number = 1;//cost倍数
 		public walkable:boolean = true;
 		//
+		public openMask:number = 0;
+		public closeMask:number = 0;
+		//
 		public previous:Node;
 	
 		public constructor(x:number , y:number) {

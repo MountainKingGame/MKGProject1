@@ -9,7 +9,6 @@ namespace astars {
 	export class AStar {
 		public _grid: Grid;               //网格
 		private _open: Node[];               //待考察表
-		private _closed: Node[];             //已考察表
 		private _endNode: Node;                  //终点Node
 		private _startNode: Node;                //起点Node
 		private _path: Node[];               //结果路径
@@ -17,6 +16,9 @@ namespace astars {
 		private _heuristic: Function;            //计算h的算法
 		private _straightCost: number = 10;     //上下左右走的代价
 		private _diagCost: number = 14;//Math.SQRT2;  //diagonal 斜着走的代价 
+
+		private openMask:number = 0;
+		private closeMask:number = 0;
 
 		/**能否斜着走 */
 		public canDiag: boolean = false;
@@ -42,8 +44,10 @@ namespace astars {
 			this.debug_calculateCount = 0;
 			this.debug_openCompareCount = 0;
 
+			this.openMask>99999999?this.openMask=1:this.openMask++;
+			this.closeMask=this.openMask;
+
 			this._open = [];
-			this._closed = [];
 
 			this._startNode = this._grid.startNode;
 			this._endNode = this._grid.endNode;
@@ -61,7 +65,7 @@ namespace astars {
 				let minFNode:Node = this.searchAround(node);
 				// for (var o = 0; o < this._open.length; o++) {
 				// }
-				this._closed.push(node);
+				node.closeMask = this.closeMask;
 				if (this._open.length == 0) {
 					console.log("AStar >> no path found");
 					return false;
@@ -70,6 +74,7 @@ namespace astars {
 					node = minFNode;
 				}else{
 					this.sortOpenList();
+					node.openMask = 0;
 					node = this._open.pop() as Node;
 				}
 			}
@@ -109,7 +114,7 @@ namespace astars {
 				var g = node.g + cost * test.costMultiplier;
 				var h = this._heuristic(test);
 				var f = g + h;
-				if (this.isOpen(test) || this.isClosed(test)) {
+				if (test.openMask==this.openMask || test.closeMask==this.closeMask) {
 					if (test.f > f) {
 						test.f = f;
 						test.g = g;
@@ -136,6 +141,7 @@ namespace astars {
 		}
 
 		private openListPush(node: Node) {
+			node.openMask = this.openMask;
 			switch (this.openListKind) {
 				case OpenListKind.BubbleSort:
 				case OpenListKind.ArraySort:
@@ -205,26 +211,6 @@ namespace astars {
 				node = node.previous;
 				this._path.unshift(node);
 			}
-		}
-
-		//是否待检查
-		private isOpen(node: Node): boolean {
-			for (var i = 0; i < this._open.length; i++) {
-				if (this._open[i] == node) {
-					return true;
-				}
-			}
-			return false;
-		}
-
-		//是否已检查
-		private isClosed(node: Node): boolean {
-			for (var i = 0; i < this._closed.length; i++) {
-				if (this._closed[i] == node) {
-					return true;
-				}
-			}
-			return false;
 		}
 
 		//曼哈顿算法
