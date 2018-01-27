@@ -8,8 +8,8 @@
 namespace astars {
 	export class AStar {
 		public _grid: Grid;               //网格
-		// private _open: Node[];               //待考察表
-		private _open: DoubleLinkedList;               //待考察表
+		private _openArr: Node[];               //待考察表
+		private _openDll: DoubleLinkedList;               //待考察表(双链表)
 		private _endNode: Node;                  //终点Node
 		private _startNode: Node;                //起点Node
 		private _path: Node[];               //结果路径
@@ -35,7 +35,7 @@ namespace astars {
 		}
 
 		public constructor() {
-			this._open = new DoubleLinkedList();
+			this._openDll = new DoubleLinkedList();
 			this._heuristic = this.manhattan;
 			// this._heuristic = this.euclidian;
 			// this._heuristic = this.diagonal;
@@ -49,7 +49,8 @@ namespace astars {
 			this.openMask > 99999999 ? this.openMask = 1 : this.openMask++;
 			this.closeMask = this.openMask;
 
-			this._open.clear();
+			this._openArr = [];
+			this._openDll.clear(false);
 
 			this._startNode = this._grid.startNode;
 			this._endNode = this._grid.endNode;
@@ -66,7 +67,7 @@ namespace astars {
 			while (node != this._endNode) {
 				let minFNode: Node = this.searchAround(node);
 				node.closeMask = this.closeMask;
-				if (this._open.length == 0) {
+				if (this._openArr.length == 0 && this._openDll.length==0) {
 					console.log("AStar >> no path found");
 					return false;
 				}
@@ -75,10 +76,14 @@ namespace astars {
 				} else {
 					this.sortOpenList();
 					node.openMask = 0;
-					if(this._open.length==0){
-						throw new Error("");
+					switch (this.openListKind) {
+						case OpenListKind.PushCompare:
+							node = this._openDll.pop() as Node;
+							break;
+						default:
+							node = this._openArr.pop();
+							break;
 					}
-					node = this._open.pop() as Node;
 				}
 			}
 			this.generateResultPath();
@@ -120,8 +125,8 @@ namespace astars {
 					if (this.canDiag == true) {
 						if (!this._grid.getNode(node.x, test.y).walkable ||
 							!this._grid.getNode(test.x, node.y).walkable) {
-								//夹角 两侧都是不可同行的
-								cost = 3000;
+							//夹角 两侧都是不可同行的
+							cost = 3000;
 						} else {
 							if (!((node.x == test.x) || (node.y == test.y))) {
 								cost = this._diagCost;
@@ -163,24 +168,24 @@ namespace astars {
 			switch (this.openListKind) {
 				case OpenListKind.BubbleSort:
 				case OpenListKind.ArraySort:
-					this._open.push(node);
+					this._openArr.push(node);
 					break;
 				case OpenListKind.PushCompare:
-					let openLen = this._open.length;
+					let openLen = this._openDll.length;
 					if (openLen == 0) {
-						this._open.push(node);
+						this._openDll.push(node);
 					} else {
-						let item = this._open.head;
-						while(item!=null){
+						let item = this._openDll.head;
+						while (item != null) {
 							this.debug_openCompareCount++;
 							if (node.f < (item as Node).f) {
-								this._open.insertNext(node,item);
+								this._openDll.insertNext(node, item);
 								return;
 							}
 							item = item.prevNode;
 						}
-						//node最大,则放头里去
-						this._open.unshift(node);
+						//node没有插入到队伍里,说明是最大的,则放头里去
+						this._openDll.unshift(node);
 					}
 					break;
 			}
@@ -191,21 +196,21 @@ namespace astars {
 			switch (this.openListKind) {
 				case OpenListKind.BubbleSort:
 					if (this.openListKind == 1) {
-						let openLen = this._open.length;
+						let openLen = this._openArr.length;
 						for (let m = 0; m < openLen; m++) {
 							for (let n = m + 1; n < openLen; n++) {
 								this.debug_openCompareCount++;
-								if (this._open[m].f < this._open[n].f) {
-									let temp = this._open[m];
-									this._open[m] = this._open[n];
-									this._open[n] = temp;
+								if (this._openArr[m].f < this._openArr[n].f) {
+									let temp = this._openArr[m];
+									this._openArr[m] = this._openArr[n];
+									this._openArr[n] = temp;
 								}
 							}
 						}
 					}
 					break;
 				case OpenListKind.ArraySort:
-					// this._open.sort(this.arraySortCompare.bind(this));
+					this._openArr.sort(this.arraySortCompare.bind(this));
 					break;
 			}
 		}
@@ -232,26 +237,26 @@ namespace astars {
 			// 	this._path.unshift(node);
 			// }
 			//---路径压缩
-			let lastOffsetX:number;
-			let lastOffsetY:number;
+			let lastOffsetX: number;
+			let lastOffsetY: number;
 			this._path = [];
 			var node: Node = this._endNode;
 			this._path.push(node);
 			while (node != this._startNode) {
-				if(node.walkable==false){
+				if (node.walkable == false) {
 					node = node.previous;
 					this._path = [node];
-				}else{
-					let offsetX:number = node.previous.x-node.x;
-					let offsetY:number = node.previous.y-node.y;
-					if(lastOffsetX==undefined || lastOffsetX!=offsetX || lastOffsetY!=offsetY){
+				} else {
+					let offsetX: number = node.previous.x - node.x;
+					let offsetY: number = node.previous.y - node.y;
+					if (lastOffsetX == undefined || lastOffsetX != offsetX || lastOffsetY != offsetY) {
 						lastOffsetX = offsetX;
 						lastOffsetY = offsetY;
 						node = node.previous;
 						this._path.push(node);
-					}else{
+					} else {
 						node = node.previous;
-						this._path[this._path.length-1] = node;
+						this._path[this._path.length - 1] = node;
 					}
 				}
 			}
