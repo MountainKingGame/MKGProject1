@@ -11,3 +11,8 @@ interface IGrid{
     col?:number;
     row?:number;
 }
+/**双重链表节点 */
+interface IDoubleLinkedListNode{
+    preNode:IDoubleLinkedListNode;
+    nextNode:IDoubleLinkedListNode;
+}

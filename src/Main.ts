@@ -67,7 +67,9 @@ class Main extends egret.DisplayObjectContainer {
         // console.log(o);
         // let a:any = toml(o);
         // console.log("[info]",a,"`toml`",a.products.length);
-        this.stage.addChild(new astar.TestAStar());
+        this.stage.addChild(new astars.TestAStar());
+        // new TestSort().testSortBy1();
+        // new TestSort().testSortBy2();
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);

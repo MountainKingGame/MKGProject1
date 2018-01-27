@@ -2,7 +2,7 @@
  * @author chenkai
  * @since 2017/11/3
  */
-namespace astar{
+namespace astars{
 	export class Node {
 		public x:number;    //列
 		public y:number;    //行

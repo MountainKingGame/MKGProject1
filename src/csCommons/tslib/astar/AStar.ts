@@ -5,9 +5,9 @@
  * @see https://www.cnblogs.com/gamedaybyday/p/7778995.html
  * @since 2017/11/3
  */
-namespace astar {
+namespace astars {
 	export class AStar {
-		public _grid: astar.Grid;               //网格
+		public _grid: Grid;               //网格
 		private _open: Node[];               //待考察表
 		private _closed: Node[];             //已考察表
 		private _endNode: Node;                  //终点Node
@@ -18,9 +18,11 @@ namespace astar {
 		private _straightCost: number = 10;     //上下左右走的代价
 		private _diagCost: number = 14;//Math.SQRT2;  //diagonal 斜着走的代价 
 
-		public calculateCount: number = 0;
 		/**能否斜着走 */
 		public canDiag: boolean = false;
+
+		public debug_calculateCount: number;
+		public debug_openCompareCount: number;
 
 		public get path(): Node[] {
 			return this._path;
@@ -34,7 +36,8 @@ namespace astar {
 
 		//寻路
 		public findPath(): boolean {
-			this.calculateCount = 0;
+			this.debug_calculateCount = 0;
+			this.debug_openCompareCount = 0;
 
 			this._open = [];
 			this._closed = [];
@@ -66,7 +69,7 @@ namespace astar {
 								continue;
 							}
 						}
-						this.calculateCount++;
+						this.debug_calculateCount++;
 						//
 						var test: Node = this._grid.getNode(i, j);
 						if (test == node ||
@@ -116,42 +119,66 @@ namespace astar {
 			return true;
 		}
 
-		openListKind: number = 2;
+		openListKind: OpenListKind = OpenListKind.ArraySort;
 		private openListPush(node: Node) {
-			if (this.openListKind == 1) {
-				this._open.push(node);
-			} else {
-				let openLen = this._open.length;
-				if (openLen == 0) {
+			switch (this.openListKind) {
+				case OpenListKind.BubbleSort:
+				case OpenListKind.ArraySort:
 					this._open.push(node);
-				} else {
-					for (let i = openLen - 1; i >= 0; i--) {
-						let temp = this._open[i];
-						if (node.f <= temp.f) {
-							this._open.splice(i + 1, 0, node);
-							return;
+					break;
+				case OpenListKind.PushCompare:
+					let openLen = this._open.length;
+					if (openLen == 0) {
+						this._open.push(node);
+					} else {
+						for (let i = openLen - 1; i >= 0; i--) {
+							let temp = this._open[i];
+							this.debug_openCompareCount++;
+							if (node.f <= temp.f) {
+								this._open.splice(i + 1, 0, node);
+								return;
+							}
 						}
+						//node最大,则放头里去
+						this._open.unshift(node);
 					}
-					//node最大,则放头里去
-					this._open.unshift(node);
-				}
+					break;
 			}
 		}
 
 		/**冒泡算法排序open列表,找到最小f(可以优化) */
 		private sortOpenList() {
-			if (this.openListKind == 1) {
-				let openLen = this._open.length;
-				for (let m = 0; m < openLen; m++) {
-					for (let n = m + 1; n < openLen; n++) {
-						if (this._open[m].f < this._open[n].f) {
-							let temp = this._open[m];
-							this._open[m] = this._open[n];
-							this._open[n] = temp;
+			switch (this.openListKind) {
+				case OpenListKind.BubbleSort:
+					if (this.openListKind == 1) {
+						let openLen = this._open.length;
+						for (let m = 0; m < openLen; m++) {
+							for (let n = m + 1; n < openLen; n++) {
+								this.debug_openCompareCount++;
+								if (this._open[m].f < this._open[n].f) {
+									let temp = this._open[m];
+									this._open[m] = this._open[n];
+									this._open[n] = temp;
+								}
+							}
 						}
 					}
-				}
+					break;
+				case OpenListKind.ArraySort:
+					this._open.sort(this.arraySortCompare.bind(this));
+					break;
 			}
+		}
+		private arraySortCompare(a: Node, b: Node): number {
+			this.debug_openCompareCount++;
+			if (a.f < b.f) {
+				return 1;
+			} else if (a.f > b.f) {
+				this.debug_openCompareCount++;
+				return -1;
+			}
+			this.debug_openCompareCount++;
+			return 0;
 		}
 
 		//声生成最终路径
@@ -205,5 +232,12 @@ namespace astar {
 			return this._diagCost * diag + this._straightCost * (straight - 2 * diag);
 		}
 	}
-
+	export enum OpenListKind {
+		/**冒泡排序 */
+		BubbleSort = 1,
+		/**push时普通排序 */
+		PushCompare = 2,
+		/**js默认的sort排序 */
+		ArraySort = 3,
+	}
 }

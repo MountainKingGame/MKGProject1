@@ -1,8 +1,8 @@
 
-namespace astar {
+namespace astars {
 	export class TestAStar extends egret.Sprite {
 		private _cellSize: number = 30;
-		private aStar: astar.AStar;
+		private aStar: astars.AStar;
 		private _player: egret.Sprite;
 		private _index: number;
 		private _path: Node[];
@@ -13,7 +13,7 @@ namespace astar {
 			// let a = [2,3,4];
 			// a.splice(1,0,8);
 			// console.log("[info]",a,"`a`");
-			this.aStar = new astar.AStar();
+			this.aStar = new astars.AStar();
 			this.makeGrid();
 			this.makePlayer();
 			this.addEventListener(egret.Event.ADDED_TO_STAGE, () => {
@@ -36,7 +36,7 @@ namespace astar {
 			//find a walkable node
 			for (let i = 0; i < this.aStar._grid.numCols; i++) {
 				for (let j = 0; j < this.aStar._grid.numRows; j++) {
-					var node: astar.Node = this.aStar._grid.getNode(i, j);
+					var node: astars.Node = this.aStar._grid.getNode(i, j);
 					if (node.walkable) {
 						this._player.x = (node.x + 0.5) * this._cellSize;
 						this._player.y = (node.y + 0.5) * this._cellSize;
@@ -51,7 +51,7 @@ namespace astar {
 		 * Creates a grid with a bunch of random unwalkable nodes.
 		 */
 		private makeGrid() {
-			this.aStar._grid = new astar.Grid(30, 30);
+			this.aStar._grid = new astars.Grid(30, 30);
 			for (let i = 0; i < this.aStar._grid.numCols; i++) {
 				for (let j = 0; j < this.aStar._grid.numRows; j++) {
 					this.aStar._grid.setWalkable(i, j, Math.random() > 0.3);
@@ -71,7 +71,7 @@ namespace astar {
 			console.log("[log] drawGrid --------------");
 			for (let i = 0; i < this.aStar._grid.numCols; i++) {
 				for (let j = 0; j < this.aStar._grid.numRows; j++) {
-					var node: astar.Node = this.aStar._grid.getNode(i, j);
+					var node: astars.Node = this.aStar._grid.getNode(i, j);
 					// console.log("[log] drawGrid node", i, j, node.walkable);
 					//---有bug,连续画图有问题
 					// this.graphics.beginFill(this.getColor(node));
@@ -115,7 +115,7 @@ namespace astar {
 		/**
 		 * Determines the color of a given node based on its state.
 		 */
-		private getColor(node: astar.Node) {
+		private getColor(node: astars.Node) {
 			if (!node.walkable) return 0xFF00FF;
 			if (node == this.aStar._grid.startNode) return 0x00FFFF;
 			if (node == this.aStar._grid.endNode) return 0xFFFF00;
@@ -148,7 +148,8 @@ namespace astar {
 				this._index = 0;
 				this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 			}
-			console.log(egret.getTimer() - this.startTime, "`FireMs`", this.aStar.calculateCount, "`this.aStar.calculateCount`");
+			console.log("[debug]",this.aStar.openListKind,"`this.aStar.openListKind`");
+			console.log("[debug]",egret.getTimer() - this.startTime, "`FireMs`", this.aStar.debug_calculateCount, "`calculateCount`",this.aStar.debug_openCompareCount,"`debug_openCompareCount`");
 		}
 		private OnKeyBoardUp(keycode: number): void {
 			switch (keycode) {
@@ -158,10 +159,13 @@ namespace astar {
 					this._player.y = startNode.y * this._cellSize + this._cellSize / 2;
 					break;
 				case KeyBoardCtrl.KEY_1:
-					this.aStar.openListKind = 1;
+					this.aStar.openListKind = astars.OpenListKind.BubbleSort;
 					break;
 				case KeyBoardCtrl.KEY_2:
-					this.aStar.openListKind = 2;
+					this.aStar.openListKind = astars.OpenListKind.PushCompare;
+					break;
+				case KeyBoardCtrl.KEY_3:
+					this.aStar.openListKind = astars.OpenListKind.ArraySort;
 					break;
 			}
 		}

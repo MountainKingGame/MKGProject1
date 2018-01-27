@@ -42,7 +42,7 @@
 		"bin-debug/csCommons/tslib/consts/Color.js",
 		"bin-debug/csCommons/tslib/consts/Direction4.js",
 		"bin-debug/csCommons/tslib/consts/SConst.js",
-		"bin-debug/csCommons/tslib/interfaces/SInterface.js",
+		"bin-debug/csCommons/tslib/interfaces/FInterface.js",
 		"bin-debug/csCommons/tslib/structs/Vector2.js",
 		"bin-debug/csCommons/CommonHelper.js",
 		"bin-debug/csCommons/tslib/utils/MathUtil.js",
@@ -98,8 +98,9 @@
 		"bin-debug/proxies/battles/BattleProxy.js",
 		"bin-debug/proxies/battles/FrameInputMgr.js",
 		"bin-debug/tests/QuadTreeHitTest.js",
+		"bin-debug/tests/TestAStar.js",
 		"bin-debug/tests/TestMoveSmooth.js",
 		"bin-debug/tests/TestProtobuf.js",
-		"bin-debug/tests/astar/TestAStar.js"
+		"bin-debug/tests/TestSort.js"
 	]
 }

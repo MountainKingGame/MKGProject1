@@ -3,7 +3,7 @@
  * @author chenkai
  * @since 2017/11/3
  */
-namespace astar{
+namespace astars{
 	export  class Grid {
 		private _startNode:Node;    //起点
 		private _endNode:Node;      //终点
