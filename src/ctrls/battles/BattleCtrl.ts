@@ -10,10 +10,13 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 
 	/**all element in here */
 	eleLayer: fairygui.GComponent = new fairygui.GComponent;
+	/** */
+	cellLayer: fairygui.GComponent = new fairygui.GComponent;
 	tankLayer: fairygui.GComponent = new fairygui.GComponent;
 	bulletLayer: fairygui.GComponent = new fairygui.GComponent;
-	cellLayer: fairygui.GComponent = new fairygui.GComponent;
+	/**在坦克和子弹上面cell层 */
 	coverCellLayer: fairygui.GComponent = new fairygui.GComponent;
+	topEffLayer:fairygui.GComponent = new fairygui.GComponent();
 
 	uiWidthHalf: number;
 	uiHeightHalf: number;
@@ -60,6 +63,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.eleLayer.addChild(this.tankLayer);
 		this.eleLayer.addChild(this.bulletLayer);
 		this.eleLayer.addChild(this.coverCellLayer);
+		this.eleLayer.addChild(this.topEffLayer);
 		this.ui.m_touchLayer.alpha = 0;
 	}
 	initEvent() {
@@ -157,8 +161,12 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		this.mouseStageXY.x = e.stageX,
 			this.mouseStageXY.y = e.stageY;
 	}
+	floor:fairygui.GComponent;
 	initMap() {
+		this.floor = fuis.battles_1.UI_MapFloor.createInstance();
+		this.cellLayer.addChild(this.floor);
 		this.mapSize = this.model.size;
+		this.floor.setSize(this.mapSize.x,this.mapSize.y);
 		for (const key in this.model.cellMap) {
 			const vo = this.model.cellMap[parseInt(key)];
 			// if(vo.sid>0){

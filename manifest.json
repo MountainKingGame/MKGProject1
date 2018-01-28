@@ -77,6 +77,7 @@
 		"bin-debug/fuis/battles_1/UI_Battle.js",
 		"bin-debug/fuis/battles_1/UI_Crack.js",
 		"bin-debug/fuis/battles_1/UI_MapCell.js",
+		"bin-debug/fuis/battles_1/UI_MapFloor.js",
 		"bin-debug/fuis/battles_1/UI_Tank.js",
 		"bin-debug/fuis/elements_1/elements_1Binder.js",
 		"bin-debug/fuis/elements_1/UI_Bullet.js",

@@ -19,18 +19,18 @@ namespace tests {
             console.info("[debug]", a);
         }
         testDoubleLinkedList() {
-            let dll:DoubleLinkedList = new DoubleLinkedList();
+            let list:DoubleLinkedList = new DoubleLinkedList();
             let n6:TestDllNode;
-            dll.push(new TestDllNode(3));
-            dll.push(n6 = new TestDllNode(6));
-            dll.push(new TestDllNode(9));
-            dll.insertNext(new TestDllNode(7),n6);
-            dll.insertPrev(new TestDllNode(4),n6);
+            list.push(new TestDllNode(3));
+            list.push(n6 = new TestDllNode(6));
+            list.push(new TestDllNode(9));
+            list.insertNext(new TestDllNode(7),n6);
+            list.insertPrev(new TestDllNode(4),n6);
             let rs:number[] = [];
-            console.log("[info]",dll.length);
-            while(dll.head){
-                rs.push((dll.head as TestDllNode).data);
-                dll.pop();
+            console.log("[info]",list.length);
+            while(list.head){
+                rs.push((list.head as TestDllNode).data);
+                list.pop();
             }
             console.log("[info]",rs.join(","));
         }

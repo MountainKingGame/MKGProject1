@@ -99,7 +99,7 @@ class BattleCtrl_Ticker {
                             BattleCtrlUtil.initCrack(hitCell.m_crack);
                             //-
                             let mc = ResMgr.si.mcBoomQingTong();
-                            this.ctrl.eleLayer.addChild(mc);
+                            this.ctrl.topEffLayer.addChild(mc);
                             mc.setScale(0.6, 0.6);
                             mc.setXY(hitCellVo.x + models.battles.BattleModelConfig.si.cellSizeHalf, hitCellVo.y + models.battles.BattleModelConfig.si.cellSizeHalf);
                         }
@@ -144,12 +144,12 @@ class BattleCtrl_Ticker {
     }
     showTankDeadEff(tank: TankCtrl) {
         let mc = ResMgr.si.mcBoomHuangJin();
-        this.ctrl.eleLayer.addChild(mc);
+        this.ctrl.topEffLayer.addChild(mc);
         mc.setXY(tank.ui.x, tank.ui.y);
     }
     showBulletHitEff(bulletVo: models.battles.BulletVo) {
         let mc = ResMgr.si.mcBoomBaiYin();
-        this.ctrl.eleLayer.addChild(mc);
+        this.ctrl.topEffLayer.addChild(mc);
         mc.setScale(0.3, 0.3);
         mc.setXY(bulletVo.x, bulletVo.y);
     }
