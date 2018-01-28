@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="64,64">
+  <displayList>
+    <loader id="n0_ced5" name="img" xy="0,0" size="64,64" url="ui://ybsps8tfced510" fill="scaleFree" playing="false">
+      <relation target="" sidePair="width-width,height-height"/>
+    </loader>
+  </displayList>
+</component>

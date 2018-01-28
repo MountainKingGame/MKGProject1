@@ -3,11 +3,11 @@
   <resources>
     <component id="qitl0" name="Battle.xml" path="/" exported="true"/>
     <component id="u9bo3" name="Tank.xml" path="/" exported="true"/>
-    <image id="u9bo7" name="brick5.png" path="/images/mapCells/"/>
+    <image id="u9bo7" name="color_blue.png" path="/images/mapCells/"/>
     <image id="u9bo8" name="brick1.png" path="/images/mapCells/"/>
     <image id="u9bo9" name="brick2.png" path="/images/mapCells/"/>
     <image id="u9boa" name="brick3.png" path="/images/mapCells/"/>
-    <image id="u9bob" name="brick4.png" path="/images/mapCells/"/>
+    <image id="u9bob" name="color_red.png" path="/images/mapCells/"/>
     <component id="u9boc" name="MapCell.xml" path="/" exported="true"/>
     <image id="e656d" name="floor1.png" path="/images/mapCells/"/>
     <image id="e656e" name="floor2.png" path="/images/mapCells/"/>
@@ -31,6 +31,9 @@
     <image id="nqjqw" name="crack3_128.png" path="/images/others/"/>
     <image id="nqjqx" name="crack3_64.png" path="/images/others/" exported="true"/>
     <component id="hz8ry" name="Crack.xml" path="/" exported="true"/>
+    <image id="ced5z" name="color_black.png" path="/images/mapCells/"/>
+    <image id="ced510" name="floor0.png" path="/images/mapCells/" scale="9grid" scale9grid="16,16,32,32" smoothing="false"/>
+    <component id="ced511" name="MapFloor.xml" path="/" exported="true"/>
   </resources>
   <publish name="battles_1" genCode="true"/>
 </packageDescription>
