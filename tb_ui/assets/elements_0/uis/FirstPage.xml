@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="400,400">
+  <displayList>
+    <component id="n0_ysfl" name="btnFight" src="ysfl14" xy="70,120">
+      <Button title="fight"/>
+    </component>
+    <component id="n1_ysfl" name="btnTool" src="ysfl14" xy="230,120">
+      <Button title="tool"/>
+    </component>
+  </displayList>
+</component>

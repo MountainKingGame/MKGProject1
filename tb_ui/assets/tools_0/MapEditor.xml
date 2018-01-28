@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="600,800">
+  <displayList>
+    <component id="n3_ysfl" name="mapArea" src="ced511" pkg="ybsps8tf" xy="199,0" size="600,600"/>
+    <graph id="n17_ysfl" name="menuBg" xy="0,0" size="190,700" group="n16_ysfl" type="rect" lineSize="2" fillColor="#ffcccccc" corner="32"/>
+    <list id="n0_ysfl" name="list_cell" xy="4,4" size="160,459" group="n16_ysfl" selectionMode="none" overflow="scroll" lineGap="10" defaultItem="ui://i6vaqd5aysfl1">
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+    </list>
+    <component id="n10_ysfl" name="txtMapId" src="ysfl15" pkg="ybsps8tf" xy="4,494" size="180,30" group="n14_ysfl" tooltips="mapId">
+      <Label title="12"/>
+    </component>
+    <component id="n7_ysfl" name="txtCol" src="ysfl15" pkg="ybsps8tf" xy="4,587" size="80,30" group="n12_ysfl" tooltips="col">
+      <Label title="999"/>
+    </component>
+    <component id="n9_ysfl" name="x" src="ysfl16" pkg="ybsps8tf" xy="84,584" size="20,30" group="n12_ysfl">
+      <Label title="x"/>
+    </component>
+    <component id="n8_ysfl" name="txtRow" src="ysfl15" pkg="ybsps8tf" xy="104,587" size="80,30" group="n12_ysfl" tooltips="row">
+      <Label title="999"/>
+    </component>
+    <group id="n12_ysfl" name="n12" xy="4,584" size="180,33" group="n14_ysfl"/>
+    <component id="n5_ysfl" name="btnSave" src="ysfl14" pkg="ybsps8tf" xy="103,534" size="82,40" group="n13_ysfl">
+      <Button title="Save"/>
+    </component>
+    <component id="n11_ysfl" name="btnOpen" src="ysfl14" pkg="ybsps8tf" xy="4,534" size="82,40" group="n13_ysfl">
+      <Button title="Open"/>
+    </component>
+    <group id="n13_ysfl" name="n13" xy="4,534" size="181,40" group="n14_ysfl"/>
+    <component id="n15_ysfl" name="btnSetSize" src="ysfl14" pkg="ybsps8tf" xy="104,624" size="82,40" group="n14_ysfl">
+      <Button title="SetSize"/>
+    </component>
+    <group id="n14_ysfl" name="n14" xy="4,494" size="182,170" group="n16_ysfl"/>
+    <group id="n16_ysfl" name="groupMenu" xy="0,0" size="190,700" advanced="true"/>
+  </displayList>
+</component>

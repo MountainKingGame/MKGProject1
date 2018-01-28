@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="i6vaqd5a" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="ysfl0" name="MapEditor.xml" path="/" exported="true"/>
+    <component id="ysfl1" name="MapCellListItem.xml" path="/" exported="true"/>
+    <component id="ysfl2" name="MapCell4.xml" path="/" exported="true"/>
+  </resources>
+  <publish name="tools_0" genCode="true"/>
+</packageDescription>

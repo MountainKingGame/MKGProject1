@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="134,64">
+  <displayList>
+    <component id="n8_ysfl" name="cell1" src="u9boc" pkg="ybsps8tf" xy="12,10" scale="0.7,0.7" controller="kind,2"/>
+    <component id="n6_ysfl" name="cell4" src="ysfl2" xy="70,0"/>
+  </displayList>
+</component>

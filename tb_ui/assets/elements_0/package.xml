@@ -34,6 +34,11 @@
     <image id="ced5z" name="color_black.png" path="/images/mapCells/"/>
     <image id="ced510" name="floor0.png" path="/images/mapCells/" scale="9grid" scale9grid="16,16,32,32" smoothing="false"/>
     <component id="ced511" name="MapFloor.xml" path="/" exported="true"/>
+    <component id="ysfl12" name="EmptyComp.xml" path="/" exported="true"/>
+    <component id="ysfl14" name="Button1.xml" path="/comps/" exported="true"/>
+    <component id="ysfl15" name="TextInput1.xml" path="/comps/" exported="true"/>
+    <component id="ysfl16" name="Label1.xml" path="/comps/" exported="true"/>
+    <component id="ysfl17" name="FirstPage.xml" path="/uis/" exported="true"/>
   </resources>
   <publish name="elements_0" genCode="true"/>
 </packageDescription>
