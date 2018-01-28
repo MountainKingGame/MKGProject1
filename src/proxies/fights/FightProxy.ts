@@ -16,8 +16,8 @@ class FightProxy {
         this.model = new models.fights.FightModel();
         this.model.init(2);
         // this.facade.netMgr.req(123,null);
-        for (const key in this.model.tankMap) {
-            this.myTank = this.model.tankMap[key];
+        for (const key in this.model.tankDic) {
+            this.myTank = this.model.tankDic[key];
             break;
         }
     }

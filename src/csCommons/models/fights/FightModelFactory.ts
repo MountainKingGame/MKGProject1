@@ -30,7 +30,7 @@ namespace models.fights {
                 vo.moveDir = vo.dir;
                 let ai: TankAI = new TankAI();
                 ai.owner = vo;
-                this.model.aiTankMap[vo.uid] = ai;
+                this.model.aiTankDic[vo.uid] = ai;
                 this.model.changer.addTank(vo);
                 //
                 this.currIndex++;

@@ -80,7 +80,7 @@ namespace models.fights {
         /**这个状态持续的时间 */
         stateFrame:number=0;
         public bulletUid = 1;
-        public skillMap: { [key: number]: SkillVo } = {};//key:skillSid
+        public skillDic: { [key: number]: SkillVo } = {};//key:skillSid
         public forecastMoveHitRect: QuadTreeHitRect;
         public dispose() {
             if (this.forecastMoveHitRect) {

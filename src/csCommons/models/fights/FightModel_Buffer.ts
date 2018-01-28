@@ -4,14 +4,14 @@ namespace models.fights {
         constructor(model: FightModel) {
             this.model = model;
         }
-        private buffEffectSidHandleMap: { [key: number]: Function } = {};
+        private buffEffectSidHandleDic: { [key: number]: Function } = {};
         public buffUid: number = 0;
         init() {
-            this.buffEffectSidHandleMap[StcEffectSid.Invincible] = this.countInvincible;
+            this.buffEffectSidHandleDic[StcEffectSid.Invincible] = this.countInvincible;
         }
         tick() {
-            for (const uid in this.model.tankMap) {
-                const vo = this.model.tankMap[uid];
+            for (const uid in this.model.tankDic) {
+                const vo = this.model.tankDic[uid];
                 this.tick_tank(vo);
             }
         }
@@ -42,7 +42,7 @@ namespace models.fights {
         }
         onChangeBuff(tank: TankVo, buff: BuffVo): void {
             for (const effectSid in buff.stc.effectMap) {
-                this.buffEffectSidHandleMap[effectSid].call(this, tank);
+                this.buffEffectSidHandleDic[effectSid].call(this, tank);
             }
         }
         countInvincible(tank: TankVo) {

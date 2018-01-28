@@ -34,9 +34,9 @@ namespace models.fights {
             let skillVo = new SkillVo();
             skillVo.sid = StcSkillSid.DefaultOne;
             skillVo.castGapFrame = FightModelConfig.si.modelFrameRate / 2;
-            vo.skillMap[skillVo.sid] = skillVo;
+            vo.skillDic[skillVo.sid] = skillVo;
             //-
-            this.model.tankMap[vo.uid] = vo;
+            this.model.tankDic[vo.uid] = vo;
             if(this.model.groupTankCount[vo.group]==undefined){
                 this.model.groupTankCount[vo.group]=0;
             }
@@ -68,14 +68,14 @@ namespace models.fights {
             vo.hitRect = new QuadTreeHitRect(vo);
             vo.hitRect.recountPivotCenter(vo.x, vo.y,vo.sizeHalf.x,vo.sizeHalf.y);
             vo.stateA = FightVoStateA.Living;
-            this.model.bulletMap[vo.uid] = vo;
+            this.model.bulletDic[vo.uid] = vo;
             this.model.qtBullet.insert(vo.hitRect);
             this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.AddBullet, this.model.currFrame, vo.ownerUid, vo.uid));
         }
         /*cell's pivot is left-top*/
         addCell(vo: CellVo) {
             vo.hp = vo.hpMax = FightModelConfig.si.cellHpMax;
-            this.model.cellMap[vo.uid] = vo;
+            this.model.cellDic[vo.uid] = vo;
             if (vo.sid != StcCellSid.floor && vo.sid!=StcCellSid.cover) {
                 vo.hitRect = new QuadTreeHitRect(vo);
                 vo.hitRect.recountLeftTop(vo.x, vo.y, FightModelConfig.si.cellSize, FightModelConfig.si.cellSize);
@@ -96,36 +96,36 @@ namespace models.fights {
             this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.RemoveBullet, this.model.currFrame, vo.ownerUid, vo.uid));
             //
             //don't remove, wait after ctrl used
-            this.model.dumpBulletMap[vo.uid] = vo;
-            delete this.model.bulletMap[vo.uid];
+            this.model.dumpBulletDic[vo.uid] = vo;
+            delete this.model.bulletDic[vo.uid];
         }
         removeTank(vo:TankVo){
             vo.stateA = FightVoStateA.Dump;
             QuadTree.removeItem(vo.hitRect);
             this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.RemoveTank, this.model.currFrame, vo.uid, vo.uid));
             //
-            this.model.dumpTankMap[vo.uid] = vo;
-            delete this.model.tankMap[vo.uid];
+            this.model.dumpTankDic[vo.uid] = vo;
+            delete this.model.tankDic[vo.uid];
             this.model.groupTankCount[vo.group]--;
             //
-            if(this.model.aiTankMap[vo.uid]){
-                this.model.aiTankMap[vo.uid].dispose();
-                delete this.model.aiTankMap[vo.uid];
+            if(this.model.aiTankDic[vo.uid]){
+                this.model.aiTankDic[vo.uid].dispose();
+                delete this.model.aiTankDic[vo.uid];
             }
         }
         removeDumpAll() {
-            for (const uid in this.model.dumpCellMap) {
-                this.model.dumpCellMap[uid].dispose();
-                delete this.model.dumpCellMap[uid];
+            for (const uid in this.model.dumpCellDic) {
+                this.model.dumpCellDic[uid].dispose();
+                delete this.model.dumpCellDic[uid];
             }
-            for (const uid in this.model.dumpBulletMap) {
-                let vo: BulletVo = this.model.dumpBulletMap[uid];
+            for (const uid in this.model.dumpBulletDic) {
+                let vo: BulletVo = this.model.dumpBulletDic[uid];
                 vo.dispose();
-                delete this.model.dumpBulletMap[uid];
+                delete this.model.dumpBulletDic[uid];
             }
-            for (const uid in this.model.dumpTankMap) {
-                this.model.dumpTankMap[uid].dispose();
-                delete this.model.dumpTankMap[uid];
+            for (const uid in this.model.dumpTankDic) {
+                this.model.dumpTankDic[uid].dispose();
+                delete this.model.dumpTankDic[uid];
             }
         }
     }

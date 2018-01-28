@@ -1,5 +1,8 @@
 class MouseWheelCtrl {
-    static OnChange = "MouseWheelCtrl.OnChange";
+    /**
+     * (delta:number,sender:MouseWheelCtrl)
+     */
+    static Msg_OnChange = "MouseWheelCtrl.Msg_OnChange";
 
     private static _si: MouseWheelCtrl;
     public static get si(): MouseWheelCtrl {
@@ -20,7 +23,7 @@ class MouseWheelCtrl {
             delta = e.detail;
         }
         // console.log("[info]",delta,"`delta`",e.screenX,e.screenY);
-        MsgMgr.si.send(MouseWheelCtrl.OnChange,delta,this);
+        MsgMgr.si.send(MouseWheelCtrl.Msg_OnChange,delta,this);
     }
 
 }

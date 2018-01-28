@@ -1,15 +1,13 @@
 class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	public ticker: FightCtrl_Ticker = new FightCtrl_Ticker(this);
-	/**
-	 * battle model
-	 */
+   //---
 	public proxy: FightProxy;
 	public model: models.fights.FightModel;
-
+	//---
 	public joystick: JoystickCtrl;
-
 	/**all element in here */
 	eleLayer: fairygui.GComponent = new fairygui.GComponent;
+	//---
 	/** */
 	cellLayer: fairygui.GComponent = new fairygui.GComponent;
 	tankLayer: fairygui.GComponent = new fairygui.GComponent;
@@ -17,15 +15,17 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	/**在坦克和子弹上面cell层 */
 	coverCellLayer: fairygui.GComponent = new fairygui.GComponent;
 	topEffLayer:fairygui.GComponent = new fairygui.GComponent();
-
+	//---
 	uiWidthHalf: number;
 	uiHeightHalf: number;
 	public mapSize: Vector2;
-
-	public cellMap: { [key: number]: fuis.elements_0.UI_MapCell } = {};
-	public tankMap: { [key: number]: TankCtrl } = {};
+	//---
+	floor:fairygui.GComponent;
+	cellDic: { [key: number]: fuis.elements_0.UI_MapCell } = {};
+	tankDic: { [key: number]: TankCtrl } = {};
 	myTank: TankCtrl;
-	public bulletMap: { [key: number]: BulletCtrl } = {};
+	bulletDic: { [key: number]: BulletCtrl } = {};
+	//---
 	public dispose(): void {
 		if (this.ui != null) {
 			this.ui.dispose();
@@ -47,11 +47,11 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		//
 		this.initMap();
 		//
-		for (const tankUid in this.model.tankMap) {
-			const element = this.model.tankMap[tankUid];
-			this.addTank(this.model.tankMap[tankUid]);
+		for (const tankUid in this.model.tankDic) {
+			const element = this.model.tankDic[tankUid];
+			this.addTank(this.model.tankDic[tankUid]);
 		}
-		this.myTank = this.tankMap[this.proxy.myTank.uid];
+		this.myTank = this.tankDic[this.proxy.myTank.uid];
 		//
 		this.ticker.init();
 	}
@@ -67,7 +67,7 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		this.ui.m_touchLayer.alpha = 0;
 	}
 	initEvent() {
-		MsgMgr.si.add(FwConsts.MSG_GamePause,this,this.OnMsg_GamePause);
+		MsgMgr.si.add(FwConsts.Msg_GamePause,this,this.OnMsg_GamePause);
 		MsgMgr.si.add(FwConsts.MSG_GameResume,this,this.OnMsg_GameResume);
 		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchDown, this);
 		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
@@ -81,10 +81,10 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	}
 	//===input Joystick keyboard mouse
 	initInputEvent() {
-		MsgMgr.si.add(JoystickCtrl.JoystickChange, this, this.onJoystickChange);
+		MsgMgr.si.add(JoystickCtrl.Msg_OnChange, this, this.onJoystickChange);
 		MsgMgr.si.add(KeyBoardCtrl.KeyDown, this, this.onKeyDown);
 		MsgMgr.si.add(KeyBoardCtrl.KeyUp, this, this.onKeyUp);
-		MsgMgr.si.add(MouseWheelCtrl.OnChange, this, this.onMouseWheelChange)
+		MsgMgr.si.add(MouseWheelCtrl.Msg_OnChange, this, this.onMouseWheelChange)
 	}
 	mouseStageXY: egret.Point = new egret.Point();
 	tempPoi: egret.Point = new egret.Point();
@@ -161,14 +161,13 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		this.mouseStageXY.x = e.stageX,
 			this.mouseStageXY.y = e.stageY;
 	}
-	floor:fairygui.GComponent;
 	initMap() {
 		this.floor = fuis.elements_0.UI_MapFloor.createInstance();
 		this.cellLayer.addChild(this.floor);
 		this.mapSize = this.model.size;
 		this.floor.setSize(this.mapSize.x,this.mapSize.y);
-		for (const key in this.model.cellMap) {
-			const vo = this.model.cellMap[parseInt(key)];
+		for (const key in this.model.cellDic) {
+			const vo = this.model.cellDic[parseInt(key)];
 			// if(vo.sid>0){
 			// let cell: fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
 			let cell: fuis.elements_0.UI_MapCell = fuis.elements_0.UI_MapCell.createInstance();
@@ -180,7 +179,7 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 			} else {
 				this.cellLayer.addChild(cell);
 			}
-			this.cellMap[vo.uid] = cell;
+			this.cellDic[vo.uid] = cell;
 			// }
 		}
 		this.eleLayer.scaleX = this.eleLayer.scaleY = 0.5;
@@ -238,10 +237,10 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		tank.battle = this;
 		tank.init();
 		this.tankLayer.addChild(tank.ui);
-		this.tankMap[vo.uid] = tank;
+		this.tankDic[vo.uid] = tank;
 	}
 	public addBulletById(battleUid: number) {
-		this.addBullet(this.model.bulletMap[battleUid]);
+		this.addBullet(this.model.bulletDic[battleUid]);
 	}
 	public addBullet(vo: models.fights.BulletVo) {
 		let bullet: BulletCtrl = new BulletCtrl();
@@ -249,12 +248,12 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		bullet.battle = this;
 		bullet.init();
 		this.bulletLayer.addChild(bullet.ui);
-		this.bulletMap[vo.uid] = bullet;
+		this.bulletDic[vo.uid] = bullet;
 	}
 	public removeBulletByUid(uid: number) {
-		let bullet: BulletCtrl = this.bulletMap[uid];
+		let bullet: BulletCtrl = this.bulletDic[uid];
 		if (bullet != undefined) {
-			delete this.bulletMap[uid];
+			delete this.bulletDic[uid];
 			if(this.ticker.pausing && DebugConfig.unremoveWhenPausing){
 				bullet.ui.alpha = 0.3;
 			}else{
@@ -264,7 +263,7 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	}
 	public removeTank(tank: TankCtrl) {
 		if (tank != undefined) {
-			delete this.tankMap[tank.vo.uid];
+			delete this.tankDic[tank.vo.uid];
 			if(this.ticker.pausing && DebugConfig.unremoveWhenPausing){
 				tank.ui.alpha = 0.3;
 			}else{

@@ -13,21 +13,21 @@ namespace models.fights {
         public isKeyFrame: boolean;
         //---
         public stcMapVo: IStcMapVo;
-        public cellMap: { [key: number]: CellVo } = {};//key:Vo.uid
-        public tankMap: { [key: number]: TankVo } = {};
-        public bulletMap: { [key: number]: BulletVo } = {};
+        public cellDic: { [key: number]: CellVo } = {};//key:Vo.uid
+        public tankDic: { [key: number]: TankVo } = {};
+        public bulletDic: { [key: number]: BulletVo } = {};
         /**各group tank数量统计 */
         groupTankCount:{[key:number]:number} = [];//key:BattleGroup
         //
-        public dumpCellMap: { [key: number]: CellVo } = {};
-        public dumpTankMap: { [key: number]: TankVo } = {};
-        public dumpBulletMap: { [key: number]: BulletVo } = {};
+        public dumpCellDic: { [key: number]: CellVo } = {};
+        public dumpTankDic: { [key: number]: TankVo } = {};
+        public dumpBulletDic: { [key: number]: BulletVo } = {};
         //---
         qtCell: QuadTree;
         qtTank: QuadTree;
         qtBullet: QuadTree;
         //---
-        aiTankMap: { [key: number]: TankAI } = {};
+        aiTankDic: { [key: number]: TankAI } = {};
         //---
         public gridSize:IGrid;
         public size: Vector2;
@@ -89,7 +89,7 @@ namespace models.fights {
                     tankVo.moveDir = tankVo.dir;
                     let ai: TankAI = new TankAI();
                     ai.owner = tankVo;
-                    this.aiTankMap[tankVo.uid] = ai;
+                    this.aiTankDic[tankVo.uid] = ai;
                 }
                 break;//TODO:
             }

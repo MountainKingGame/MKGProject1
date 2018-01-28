@@ -17,7 +17,7 @@ class Main extends egret.DisplayObjectContainer {
         })
         egret.lifecycle.onPause = () => {
             // console.log("[info]", "egret.lifecycle.onPause");
-            MsgMgr.si.send(FwConsts.MSG_GamePause);
+            MsgMgr.si.send(FwConsts.Msg_GamePause);
             egret.ticker.pause();
         }
 

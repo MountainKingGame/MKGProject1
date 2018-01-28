@@ -58,8 +58,8 @@ namespace models.fights {
             } */
         }
         doBullet(){
-            if(this.owner.skillMap[StcSkillSid.DefaultOne].isTriggering == false){
-                this.owner.skillMap[StcSkillSid.DefaultOne].isTriggerOnce = true;
+            if(this.owner.skillDic[StcSkillSid.DefaultOne].isTriggering == false){
+                this.owner.skillDic[StcSkillSid.DefaultOne].isTriggerOnce = true;
             }
         }
         public dispose() {

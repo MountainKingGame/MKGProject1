@@ -29,19 +29,19 @@ namespace models.fights {
                 let item = this.model.frameInputs[i];
                 switch (item.kind) {
                     case FightFrameInputKind.MoveDirChange:
-                        this.model.tankMap[item.uid].moveDir = <Direction4>item.data0;
+                        this.model.tankDic[item.uid].moveDir = <Direction4>item.data0;
                         break;
                     case FightFrameInputKind.SkillTrigger:
-                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = true;
-                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
+                        this.model.tankDic[item.uid].skillDic[<number>item.data0].isTriggering = true;
+                        this.model.tankDic[item.uid].skillDic[<number>item.data0].isTriggerOnce = false;
                         break;
                     case FightFrameInputKind.SkillUntrigger:
-                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
-                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
+                        this.model.tankDic[item.uid].skillDic[<number>item.data0].isTriggering = false;
+                        this.model.tankDic[item.uid].skillDic[<number>item.data0].isTriggerOnce = false;
                         break;
                     case FightFrameInputKind.SkillTriggerOnce:
-                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = true;
-                        this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
+                        this.model.tankDic[item.uid].skillDic[<number>item.data0].isTriggerOnce = true;
+                        this.model.tankDic[item.uid].skillDic[<number>item.data0].isTriggering = false;
                         break;
                 }
             }
@@ -58,18 +58,18 @@ namespace models.fights {
             }
         }
         public tick_ai() {
-            for (const uid in this.model.aiTankMap) {
-                const ai: TankAI = this.model.aiTankMap[uid];
+            for (const uid in this.model.aiTankDic) {
+                const ai: TankAI = this.model.aiTankDic[uid];
                 ai.tick();
             }
         }
         public tick_generate() {
         }
         public tick_skill() {
-            for (const uid in this.model.tankMap) {
-                const tank = this.model.tankMap[uid];
-                for (const skillSid in tank.skillMap) {
-                    let skillVo = tank.skillMap[skillSid];
+            for (const uid in this.model.tankDic) {
+                const tank = this.model.tankDic[uid];
+                for (const skillSid in tank.skillDic) {
+                    let skillVo = tank.skillDic[skillSid];
                     if ((skillVo.isTriggering || skillVo.isTriggerOnce) && (this.model.currFrame - skillVo.castFrame) > skillVo.castGapFrame) {
                         skillVo.castFrame = this.model.currFrame;
                         var bullet: BulletVo = new BulletVo();
@@ -96,8 +96,8 @@ namespace models.fights {
             this.model.qtCell.refresh();
             this.model.qtBullet.refresh();
             this.model.qtTank.refresh();
-            for (const uid in this.model.bulletMap) {
-                let vo: BulletVo = this.model.bulletMap[uid];
+            for (const uid in this.model.bulletDic) {
+                let vo: BulletVo = this.model.bulletDic[uid];
                 if (vo.stateA == FightVoStateA.Living) {//可能被其它bullet击中了
                     if (QuadTree.isInner(vo.hitRect, this.model.qtBullet.rect) == false) {
                         this.model.changer.removeBullet(vo);
@@ -253,8 +253,8 @@ namespace models.fights {
          * onFrame_move
          */
         public tick_tank_move() {
-            for (const uid in this.model.tankMap) {
-                const vo = this.model.tankMap[uid];
+            for (const uid in this.model.tankDic) {
+                const vo = this.model.tankDic[uid];
                 if (vo.moveDir != Direction4.None) {
                     vo.dir = vo.moveDir;
                     switch (vo.moveDir) {
@@ -305,9 +305,9 @@ namespace models.fights {
             }
         }
         public tick_bullet_move() {
-            for (const uid in this.model.bulletMap) {
-                if (this.model.bulletMap[uid].stateA == FightVoStateA.Living) {
-                    const vo = this.model.bulletMap[uid];
+            for (const uid in this.model.bulletDic) {
+                if (this.model.bulletDic[uid].stateA == FightVoStateA.Living) {
+                    const vo = this.model.bulletDic[uid];
                     if (vo.moveDir != Direction4.None) {
                         vo.dir = vo.moveDir;
                         switch (vo.moveDir) {

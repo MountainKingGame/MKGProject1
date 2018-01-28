@@ -18,9 +18,9 @@ class ServiceMgr {
 		this.netMgr.res(cmd,res);
 	}
 	//===
-	private battle:BattleService;
+	private battle:FightService;
 	public init(){
-		this.battle = new BattleService();
+		this.battle = new FightService();
 		this.battle.mgr = this;
 		this.battle.init();
 	}

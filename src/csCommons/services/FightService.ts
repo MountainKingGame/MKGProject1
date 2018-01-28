@@ -1,7 +1,7 @@
 /*
 * name;
 */
-class BattleService {
+class FightService {
   public mgr: ServiceMgr;
   public init(): void {
     this.mgr.add(123, this,this.req);

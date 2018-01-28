@@ -30,7 +30,7 @@
 		"bin-debug/csCommons/models/fights/FightModelUtil.js",
 		"bin-debug/csCommons/models/fights/FightVos.js",
 		"bin-debug/csCommons/models/fights/ai/TankAI.js",
-		"bin-debug/csCommons/services/BattleService.js",
+		"bin-debug/csCommons/services/FightService.js",
 		"bin-debug/csCommons/services/ServiceMgr.js",
 		"bin-debug/csCommons/stc/StcBuffVo.js",
 		"bin-debug/csCommons/stc/StcConst.js",

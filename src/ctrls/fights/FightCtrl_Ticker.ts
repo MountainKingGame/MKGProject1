@@ -54,7 +54,7 @@ class FightCtrl_Ticker {
         //---
         if (this.ctrl.proxy.isFrame) {
             this.ctrl.ui.m_txt0.text = this.ctrl.proxy.currFrame.toString() + "-" + this.ctrl.proxy.currKeyFrame.toString();
-            let hitCellBoomEffMap: { [key: number]: true } = {};//每个子弹可以击中多个cell,但仅显示一次特效
+            let hitCellBoomEffDic: { [key: number]: true } = {};//每个子弹可以击中多个cell,但仅显示一次特效
             this.ctrl.proxy.tick();
             // console.log("[info]","this is frame",this.owner.model.currFrame,this.owner.proxy.isKeyFrame);
             //-- deal frame output
@@ -66,32 +66,32 @@ class FightCtrl_Ticker {
                     // this.owner.tanks[item.playerId].onFrameOutput(item);
                     // break;
                     case FightFrameOutputKind.AddTank:
-                        this.ctrl.addTank(this.ctrl.proxy.model.tankMap[item.uid]);
+                        this.ctrl.addTank(this.ctrl.proxy.model.tankDic[item.uid]);
                         break;
                     case FightFrameOutputKind.AddBullet:
                         this.ctrl.addBulletById(item.data0 as number);
                         break;
                     case FightFrameOutputKind.BulletHitBullet:
                         this.pausing = DebugConfig.pauseWhenHit;
-                        let bullet: BulletCtrl = this.ctrl.bulletMap[item.data0];
+                        let bullet: BulletCtrl = this.ctrl.bulletDic[item.data0];
                         this.showBulletHitEff(bullet.vo);
                         if (bullet.vo.apTank > 0) {
                             FightCtrlUtil.refreshCrack(bullet.ui.m_crack as fuis.elements_0.UI_Crack, bullet.vo.apTank, bullet.vo.apTankMax);
                         }
-                        let hitBullet: BulletCtrl = this.ctrl.bulletMap[item.data1];
+                        let hitBullet: BulletCtrl = this.ctrl.bulletDic[item.data1];
                         if (hitBullet.vo.apTank > 0) {
                             FightCtrlUtil.refreshCrack(hitBullet.ui.m_crack as fuis.elements_0.UI_Crack, hitBullet.vo.apTank, hitBullet.vo.apTankMax);
                         }
                         break;
                     case FightFrameOutputKind.BulletHitCell:
                         this.pausing = DebugConfig.pauseWhenHit;
-                        if (!hitCellBoomEffMap[item.data0]) {
-                            this.showBulletHitEff(this.ctrl.bulletMap[item.data0].vo);
-                            hitCellBoomEffMap[item.data0] = true;
+                        if (!hitCellBoomEffDic[item.data0]) {
+                            this.showBulletHitEff(this.ctrl.bulletDic[item.data0].vo);
+                            hitCellBoomEffDic[item.data0] = true;
                         }
                         //-
-                        let hitCellVo: models.fights.CellVo = this.ctrl.model.cellMap[item.data1];
-                        let hitCell: fuis.elements_0.UI_MapCell = this.ctrl.cellMap[hitCellVo.uid];
+                        let hitCellVo: models.fights.CellVo = this.ctrl.model.cellDic[item.data1];
+                        let hitCell: fuis.elements_0.UI_MapCell = this.ctrl.cellDic[hitCellVo.uid];
                         if (hitCellVo.hp > 0) {
                             FightCtrlUtil.refreshCrack(hitCell.m_crack as fuis.elements_0.UI_Crack, hitCellVo.hp, hitCellVo.hpMax);
                         } else {
@@ -106,35 +106,35 @@ class FightCtrl_Ticker {
                         break;
                     case FightFrameOutputKind.BulletHitTank:
                         this.pausing = DebugConfig.pauseWhenHit;
-                        this.showBulletHitEff(this.ctrl.bulletMap[item.data0].vo);
-                        let hitTank: TankCtrl = this.ctrl.tankMap[item.data1];
+                        this.showBulletHitEff(this.ctrl.bulletDic[item.data0].vo);
+                        let hitTank: TankCtrl = this.ctrl.tankDic[item.data1];
                         if (hitTank.vo.hp > 0) {
                             FightCtrlUtil.refreshCrack(hitTank.ui.m_avatar.m_crack as fuis.elements_0.UI_Crack, hitTank.vo.hp, hitTank.vo.hpMax);
                         }
                         break;
                     case FightFrameOutputKind.RemoveBullet:
-                        // let bulletVo = this.owner.model.dumpBulletMap[item.data0];
+                        // let bulletVo = this.owner.model.dumpBulletDic[item.data0];
                         this.ctrl.removeBulletByUid(item.data0);
                         break;
                     case FightFrameOutputKind.RemoveTank:
                         {
-                            let tank: TankCtrl = this.ctrl.tankMap[item.uid];
+                            let tank: TankCtrl = this.ctrl.tankDic[item.uid];
                             this.showTankDeadEff(tank);
                             this.ctrl.removeTank(tank);
                         }
                         break;
                     case FightFrameOutputKind.RebirthTank:
                         {
-                            let tank = this.ctrl.tankMap[item.uid];
+                            let tank = this.ctrl.tankDic[item.uid];
                             this.showTankDeadEff(tank);
                             tank.movableEleCtrl.moveDirImmediately();
                         }
                         break;
                     case FightFrameOutputKind.AddEffect:
-                        this.ctrl.tankMap[item.uid].addBuffEffect(item.data0);
+                        this.ctrl.tankDic[item.uid].addBuffEffect(item.data0);
                         break;
                     case FightFrameOutputKind.RemoveEffect:
-                        this.ctrl.tankMap[item.uid].removeBuffEffect(item.data0);
+                        this.ctrl.tankDic[item.uid].removeBuffEffect(item.data0);
                         break;
                 }
             }
@@ -154,12 +154,12 @@ class FightCtrl_Ticker {
         mc.setXY(bulletVo.x, bulletVo.y);
     }
     tickCtrl() {
-        for (const uid in this.ctrl.tankMap) {
-            const tank = this.ctrl.tankMap[uid];
+        for (const uid in this.ctrl.tankDic) {
+            const tank = this.ctrl.tankDic[uid];
             tank.tick();
         }
-        for (const uid in this.ctrl.bulletMap) {
-            const bullet = this.ctrl.bulletMap[uid];
+        for (const uid in this.ctrl.bulletDic) {
+            const bullet = this.ctrl.bulletDic[uid];
             bullet.tick();
         }
         this.ctrl.alginByMyTank();

@@ -14,7 +14,10 @@ class JoystickCtrl extends CtrlBase<fuis.joysticks_1.UI_JoystickComp> {
     private _tweener: egret.Tween;
     private _curPos: egret.Point;//only for temp
     //===config properties
-    public static JoystickChange: string = "JoystickMoving";
+    /**
+     * (direction:Direction4,sender:JoystickCtrl)=>{}
+     */
+    public static Msg_OnChange: string = "JoystickCtrl.Msg_OnChange";
     /** Max distance between button and center in visual */
     public radius: number = 150;
     /** When touchStart trigger, if beyond this value then move immediately else move center only */
@@ -46,7 +49,7 @@ class JoystickCtrl extends CtrlBase<fuis.joysticks_1.UI_JoystickComp> {
         this.ui.m_joystick_dir.visible = false;
         this.ui.m_txt_log.visible = false;
         //
-        MsgMgr.si.add(FwConsts.MSG_GamePause,this,this.OnMsg_GamePause);
+        MsgMgr.si.add(FwConsts.Msg_GamePause,this,this.OnMsg_GamePause);
     }
     public dispose(): void {
         this.ui = null;
@@ -114,7 +117,7 @@ class JoystickCtrl extends CtrlBase<fuis.joysticks_1.UI_JoystickComp> {
                 this.ui.m_joystick_dir.setXY(this.ui.m_joystick_center.x, this.ui.m_joystick_center.y);
             }
             //
-            MsgMgr.si.send(JoystickCtrl.JoystickChange, this.direction, this);
+            MsgMgr.si.send(JoystickCtrl.Msg_OnChange, this.direction, this);
         }
     }
 
@@ -143,7 +146,7 @@ class JoystickCtrl extends CtrlBase<fuis.joysticks_1.UI_JoystickComp> {
         //
         this.ui.m_joystick_dir.visible = false;
         //
-        MsgMgr.si.send(JoystickCtrl.JoystickChange, Direction4.None, this);
+        MsgMgr.si.send(JoystickCtrl.Msg_OnChange, Direction4.None, this);
     }
     private resetTouchPosition() {
         this._tweener = null;
