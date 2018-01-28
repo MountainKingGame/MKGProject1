@@ -23,6 +23,9 @@ namespace models.fights {
         public static gridToPos(gridVal: number): number {
             return gridVal * FightModelConfig.si.cellSize;
         }
+        public static posToGrid(pos: number): number {
+            return Math.floor(pos / FightModelConfig.si.cellSize);
+        }
         static alignGrid(pos: number, min: number = 0, max: number = -1): number {
             var rs: number = Math.round(pos / FightModelConfig.si.cellSize);
             if (rs < min) {

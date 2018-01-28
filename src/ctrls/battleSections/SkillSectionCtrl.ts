@@ -1,7 +1,7 @@
 class SkillSectionCtrl extends CtrlBase<fuis.joysticks_1.UI_SkillSection>{
     proxy:FightProxy;
     public init(){
-        this.proxy = CtrlFacade.si.ctrlMgr.getCtrl<FightCtrl>(CtrlId.Battle).proxy;
+        this.proxy = CtrlFacade.si.ctrlMgr.getCtrl<FightCtrl>(CtrlId.Fight).proxy;
         //
         this.ui.m_btn0.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onBtn0_down,this);
         this.ui.m_btn0.addEventListener(egret.TouchEvent.TOUCH_END,this.onBtn0_up,this);

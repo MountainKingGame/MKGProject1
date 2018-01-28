@@ -56,6 +56,7 @@ class Main extends egret.DisplayObjectContainer {
     }
     private createGameScene(): void {
         //===
+        new Imports();
         CtrlFacade.si = new CtrlFacade();
         CtrlFacade.si.stage = this.stage;
         CtrlFacade.si.init(true);

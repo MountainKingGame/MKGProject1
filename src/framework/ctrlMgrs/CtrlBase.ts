@@ -1,11 +1,12 @@
 interface ICtrlBase extends IDispose{
 	ctrlId:CtrlId;
+	ui:fairygui.GComponent;
 	init();
-	open();
-	close();
+	__open();
+	__close();
 	getUIAsGComponent():fairygui.GComponent;
 }
-class CtrlBase<T> implements ICtrlBase  {
+class CtrlBase<T extends fairygui.GComponent> implements ICtrlBase  {
 	public ctrlId:CtrlId;
 	public ui:T;
 	public constructor(ui:T) {
@@ -13,17 +14,20 @@ class CtrlBase<T> implements ICtrlBase  {
 	}
 	public init(){
 	}
-	public open(){
+	public __open(){
 	}
-	public close(){
+	public __close(){
 	}
-	public dispose():void{
+	public dispose(){
 		if(this.ui!=null){
-			(<IDispose><any>this.ui).dispose();
+			this.ui.dispose();
 			this.ui = null;
 		}
 	}
 	public getUIAsGComponent():fairygui.GComponent{
-		return <fairygui.GComponent><any>this.ui;
+		return this.ui;
+	}
+	public closeThis(){
+		CtrlMgr.si.closeCtrl(this.ctrlId);
 	}
 }

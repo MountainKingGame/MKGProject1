@@ -9,6 +9,11 @@ module fuis.elements_0 {
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_Fight.URL, UI_Fight);
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_Tank.URL, UI_Tank);
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_MapCell.URL, UI_MapCell);
+			fairygui.UIObjectFactory.setPackageItemExtension(UI_EmptyComp.URL, UI_EmptyComp);
+			fairygui.UIObjectFactory.setPackageItemExtension(UI_Button1.URL, UI_Button1);
+			fairygui.UIObjectFactory.setPackageItemExtension(UI_TextInput1.URL, UI_TextInput1);
+			fairygui.UIObjectFactory.setPackageItemExtension(UI_Label1.URL, UI_Label1);
+			fairygui.UIObjectFactory.setPackageItemExtension(UI_FirstPage.URL, UI_FirstPage);
 		}
 	}
 }

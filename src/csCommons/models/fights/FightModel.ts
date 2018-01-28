@@ -46,7 +46,8 @@ namespace models.fights {
             this.gridSize = {};
             this.gridSize.col = this.stcMapVo.cells[0].length;
             this.gridSize.row = this.stcMapVo.cells.length;
-            this.size = new Vector2(this.gridSize.col * FightModelConfig.si.cellSize, this.gridSize.row * FightModelConfig.si.cellSize);
+            this.size = new Vector2(FightModelUtil.gridToPos(this.gridSize.col),FightModelUtil.gridToPos(this.gridSize.row));
+            // * FightModelConfig.si.cellSize, this.gridSize.row * FightModelConfig.si.cellSize);
             //-
             this.qtCell = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
             this.qtTank = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));

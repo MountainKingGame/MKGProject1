@@ -26,14 +26,10 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	myTank: TankCtrl;
 	bulletDic: { [key: number]: BulletCtrl } = {};
 	//---
-	public dispose(): void {
-		if (this.ui != null) {
-			this.ui.dispose();
-			this.ui = null;
-		}
-		super.dispose();
-	}
-	public init() {
+	// dispose() {
+	// 	super.dispose();
+	// }
+	init() {
 		super.init();
 		//
 		this.proxy = new FightProxy();
@@ -57,7 +53,7 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	}
 	initUI() {
 		CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Joysick, this.joystick = new JoystickCtrl(this.ui.m_joysick as fuis.joysticks_1.UI_JoystickComp));
-		CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Battle_SkillSection, new SkillSectionCtrl(this.ui.m_skillComp as fuis.joysticks_1.UI_SkillSection));
+		CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Fight_SkillSection, new SkillSectionCtrl(this.ui.m_skillComp as fuis.joysticks_1.UI_SkillSection));
 		this.ui.addChildAt(this.eleLayer, this.ui.getChildIndex(this.ui.m_bg) + 1);
 		this.eleLayer.addChild(this.cellLayer);
 		this.eleLayer.addChild(this.tankLayer);
