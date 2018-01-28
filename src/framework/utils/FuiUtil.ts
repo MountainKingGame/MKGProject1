@@ -1,4 +1,4 @@
-class FgUtil {
+class FuiUtil {
     /**
      * scale a object when scale it by a xy in it as anchor
      * @param obj 

@@ -67,8 +67,8 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		this.ui.m_touchLayer.alpha = 0;
 	}
 	initEvent() {
-		MsgMgr.si.add(FwConsts.Msg_GamePause,this,this.OnMsg_GamePause);
-		MsgMgr.si.add(FwConsts.MSG_GameResume,this,this.OnMsg_GameResume);
+		MsgMgr.si.add(FConst.Msg_GamePause,this,this.OnMsg_GamePause);
+		MsgMgr.si.add(FConst.MSG_GameResume,this,this.OnMsg_GameResume);
 		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchDown, this);
 		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
 		this.initInputEvent();
@@ -95,7 +95,7 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		// FgUtil.scaleAndMoveByXy(this.eleLayer, this.tempPoi.x, this.tempPoi.y, delta / 10000);
 		//- kind 2
 		if (this.myTank) {
-			FgUtil.scaleAndMoveByXy(this.eleLayer, this.myTank.ui.x, this.myTank.ui.y, delta / 1000);
+			FuiUtil.scaleAndMoveByXy(this.eleLayer, this.myTank.ui.x, this.myTank.ui.y, delta / 1000);
 			this.clampMapScale();
 		}
 	}

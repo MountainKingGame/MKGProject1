@@ -19,11 +19,11 @@ class FightCtrl_Ticker {
     public tick() {
         // console.log(SUtil.now());
         if (this.pausing) {
-            this.lastMs = SUtil.now();
+            this.lastMs = FUtil.now();
             return;
         }
         this.ctrl.proxy.isFrame = false;
-        this.currMs = SUtil.now();
+        this.currMs = FUtil.now();
         //--
         if (this.ctrl.proxy.isChaseFrame) {
             this.ctrl.proxy.isFrame = true;

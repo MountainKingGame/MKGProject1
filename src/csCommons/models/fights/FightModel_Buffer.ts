@@ -53,7 +53,7 @@ namespace models.fights {
                     break;
                 }
             }
-            if(SUtil.getValueInMap(tank.effectMap,StcEffectSid.Invincible,false)!=is){
+            if(FUtil.getValueInMap(tank.effectMap,StcEffectSid.Invincible,false)!=is){
                 tank.effectMap[StcEffectSid.Invincible] = is;
                 if (is) {
                     this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.AddEffect, this.model.currFrame, tank.uid, StcEffectSid.Invincible));

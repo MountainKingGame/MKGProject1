@@ -1,4 +1,4 @@
-class SUtil{
+class FUtil{
     /**
     * 获取当前时间戳
     * 

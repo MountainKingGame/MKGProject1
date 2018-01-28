@@ -8,20 +8,20 @@ namespace models.fights {
          * onFrame
          */
         public tick() {
-            let t0 = SUtil.now();
+            let t0 = FUtil.now();
             this.tick_frameInput();
             this.tick_factories();
             this.tick_ai();
             this.model.buffer.tick();
-            let t1 = SUtil.now();
+            let t1 = FUtil.now();
             this.tick_bulletHit();//先计算hit,因为被hit后的物品是不能在做后面动作了
-            let t2 = SUtil.now();
+            let t2 = FUtil.now();
             this.tick_generate();
             //move放最后,因为需要view在这一帧移动到xy,然后下一帧再处理hit等事项
             this.tick_tank_move();
             this.tick_skill();
             this.tick_bullet_move();
-            let te = SUtil.now();
+            let te = FUtil.now();
             // console.log(te - t0, t2 - t1, t1 - t0);
         }
         public tick_frameInput() {
