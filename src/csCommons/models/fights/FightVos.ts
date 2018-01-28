@@ -1,4 +1,4 @@
-namespace models.battles {
+namespace models.fights {
     export class EleVo implements IDispose {
         public uid: number;
         public sid: number;
@@ -76,7 +76,7 @@ namespace models.battles {
     //
     export class TankVo extends MovableEleVo {
         public initIndex:number = 0;
-        stateA: BattleVoStateA = BattleVoStateA.None;
+        stateA: FightVoStateA = FightVoStateA.None;
         /**这个状态持续的时间 */
         stateFrame:number=0;
         public bulletUid = 1;
@@ -90,7 +90,7 @@ namespace models.battles {
             super.dispose();
         }
         /** 阵营 */
-        public group:BattleGroup;
+        public group:FightGroup;
         /**攻击力 对坦克 */
         public apTank:number;
         /**攻击力 对cell 每种cell 100分,*/
@@ -103,10 +103,10 @@ namespace models.battles {
     }
     /**bullet没有hp 他的hp就是ap_tank */
     export class BulletVo extends MovableEleVo {
-        stateA: BattleVoStateA = BattleVoStateA.None;
+        stateA: FightVoStateA = FightVoStateA.None;
         /** sender's id   e.g. TankVo.uid */
         ownerUid: number;
-        group: BattleGroup;
+        group: FightGroup;
         public apTank:number;
         public apTankMax:number;
         public apCell:number;

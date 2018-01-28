@@ -1,6 +1,6 @@
 class MovableEleCtrl extends CtrlBase<fairygui.GComponent>{
-    vo: models.battles.MovableEleVo;
-    battle: BattleCtrl;
+    vo: models.fights.MovableEleVo;
+    battle: FightCtrl;
     changeDir: boolean;
     init(): void {
         super.init();
@@ -16,7 +16,7 @@ class MovableEleCtrl extends CtrlBase<fairygui.GComponent>{
             this.frameMoveX = this.vo.x - this.ui.x;
             this.frameMoveY = this.vo.y - this.ui.y;
         }
-        let leavePercent: number = this.battle.ticker.nextFrameNeedTime / models.battles.BattleModelConfig.si.modelMsPerFrame;
+        let leavePercent: number = this.battle.ticker.nextFrameNeedTime / models.fights.FightModelConfig.si.modelMsPerFrame;
         this.ui.x = this.vo.x - this.frameMoveX * leavePercent;
         this.ui.y = this.vo.y - this.frameMoveY * leavePercent;
     }

@@ -1,9 +1,9 @@
-namespace models.battles {
-    export class BattleModel {
+namespace models.fights {
+    export class FightModel {
         public facade: ModelFacade;
-        public changer: BattleModel_Changer = new BattleModel_Changer(this);
-        public ticker: BattleModel_Ticker = new BattleModel_Ticker(this);
-        public buffer:BattleModel_Buffer = new BattleModel_Buffer(this);
+        public changer: FightModel_Changer = new FightModel_Changer(this);
+        public ticker: FightModel_Ticker = new FightModel_Ticker(this);
+        public buffer:FightModel_Buffer = new FightModel_Buffer(this);
         //===
         public cellUId: number = 1;
         public tankUId: number = 1;
@@ -32,12 +32,12 @@ namespace models.battles {
         public gridSize:IGrid;
         public size: Vector2;
         //--
-        frameInputs: BattleFrameIOItem[] = [];
-        frameOutputs: BattleFrameIOItem[] = [];
+        frameInputs: FightFrameIOItem[] = [];
+        frameOutputs: FightFrameIOItem[] = [];
         //
-        factories:BattleModelFactory[] = [];
+        factories:FightModelFactory[] = [];
         public init(stcMapId: number) {
-            BattleModelConfig.si.init();
+            FightModelConfig.si.init();
             //-
             this.stcMapVo = StcMap.si.getVo(stcMapId);
             //
@@ -46,7 +46,7 @@ namespace models.battles {
             this.gridSize = {};
             this.gridSize.col = this.stcMapVo.cells[0].length;
             this.gridSize.row = this.stcMapVo.cells.length;
-            this.size = new Vector2(this.gridSize.col * BattleModelConfig.si.cellSize, this.gridSize.row * BattleModelConfig.si.cellSize);
+            this.size = new Vector2(this.gridSize.col * FightModelConfig.si.cellSize, this.gridSize.row * FightModelConfig.si.cellSize);
             //-
             this.qtCell = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
             this.qtTank = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
@@ -62,8 +62,8 @@ namespace models.battles {
                     var vo: CellVo = new CellVo();
                     vo.uid = this.cellUId++;
                     vo.sid = this.stcMapVo.cells[row][col];
-                    vo.x = models.battles.BattleModelUtil.gridToPos(col);
-                    vo.y = models.battles.BattleModelUtil.gridToPos(row);
+                    vo.x = models.fights.FightModelUtil.gridToPos(col);
+                    vo.y = models.fights.FightModelUtil.gridToPos(row);
                     this.changer.addCell(vo);
                 }
             }
@@ -71,7 +71,7 @@ namespace models.battles {
         initFactories(){
             for (let i = 0; i < this.stcMapVo.factories.length; i++) {
                 let stcVo = this.stcMapVo.factories[i];
-                let factory:BattleModelFactory = new BattleModelFactory();
+                let factory:FightModelFactory = new FightModelFactory();
                 factory.model = this;
                 factory.stcVo = stcVo;
                 factory.init();
@@ -83,9 +83,9 @@ namespace models.battles {
                 let tankVo = this.changer.addTankByIStcMapVoPlayer(this.stcMapVo.positions[i]);
                 tankVo.initIndex = i;
                 if (i == 0) {
-                    tankVo.group = BattleGroup.Player;
+                    tankVo.group = FightGroup.Player;
                 } else {
-                    tankVo.group = BattleGroup.CPU;
+                    tankVo.group = FightGroup.CPU;
                     tankVo.moveDir = tankVo.dir;
                     let ai: TankAI = new TankAI();
                     ai.owner = tankVo;
@@ -95,10 +95,10 @@ namespace models.battles {
             }
         }
         tankAlignGridX(tank: TankVo) {
-            tank.x = BattleModelUtil.gridToPos(BattleModelUtil.alignGrid(tank.x, 1, this.gridSize.col - 1));
+            tank.x = FightModelUtil.gridToPos(FightModelUtil.alignGrid(tank.x, 1, this.gridSize.col - 1));
         }
         tankAlignGridY(tank: TankVo) {
-            tank.y = BattleModelUtil.gridToPos(BattleModelUtil.alignGrid(tank.y, 1, this.gridSize.row - 1));
+            tank.y = FightModelUtil.gridToPos(FightModelUtil.alignGrid(tank.y, 1, this.gridSize.row - 1));
         }
         validateTankX(tank: TankVo) {
             tank.x = MathUtil.clamp(tank.x, tank.sizeHalf.x, this.size.x - tank.sizeHalf.y);

@@ -1,20 +1,20 @@
 {
 	"groups": [
 		{
-			"keys": "battles_1_fui,battles_1@atlas0_png,elements_1_fui,joysticks_1_fui,joysticks_1@atlas0_png,movieClips_1_fui,movieClips_1@atlas_hz8r1_png,movieClips_1@atlas_hz8r2_png,movieClips_1@atlas_hz8r3_png,movieClips_1@atlas_hz8r4_png,movieClips_1@atlas_hz8r5_png,map1_json,map2_json",
+			"keys": "elements_0_fui,elements_0@atlas0_png,elements_1_fui,joysticks_1_fui,joysticks_1@atlas0_png,movieClips_1_fui,movieClips_1@atlas_hz8r1_png,movieClips_1@atlas_hz8r2_png,movieClips_1@atlas_hz8r3_png,movieClips_1@atlas_hz8r4_png,movieClips_1@atlas_hz8r5_png,map1_json,map2_json",
 			"name": "preload"
 		}
 	],
 	"resources": [
 		{
-			"url": "assets/fuis/battles_1.fui",
+			"url": "assets/fuis/elements_0.fui",
 			"type": "bin",
-			"name": "battles_1_fui"
+			"name": "elements_0_fui"
 		},
 		{
-			"url": "assets/fuis/battles_1@atlas0.png",
+			"url": "assets/fuis/elements_0@atlas0.png",
 			"type": "image",
-			"name": "battles_1@atlas0_png"
+			"name": "elements_0@atlas0_png"
 		},
 		{
 			"url": "assets/fuis/elements_1.fui",

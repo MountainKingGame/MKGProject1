@@ -1,8 +1,4 @@
-/* class BattleFrameIOMgr{
-    public inputs:BattleFrameIOItem[] = [];
-    public outputs:BattleFrameIOItem[] = [];
-} */
-class BattleFrameIOItem {
+class FightFrameIOItem {
     /**
      * 
      * @param kind 
@@ -17,7 +13,7 @@ class BattleFrameIOItem {
      * @param data6 
      * @param data7 
      */
-    constructor(kind: BattleFrameInputKind|BattleFrameOutputKind, frame: number, uid: number, data0: number = null, data1: number = null, data2: number = null, data3: number = null, data4: number = null, data5: number = null, data6: number = null, data7: number = null) {
+    constructor(kind: FightFrameInputKind|FightFrameOutputKind, frame: number, uid: number, data0: number = null, data1: number = null, data2: number = null, data3: number = null, data4: number = null, data5: number = null, data6: number = null, data7: number = null) {
         this.kind = kind;
         this.frame = frame;
         this.uid = uid;
@@ -30,7 +26,7 @@ class BattleFrameIOItem {
         this.data6 = data6;
         this.data7 = data7;
     }
-    kind: BattleFrameInputKind|BattleFrameOutputKind;
+    kind: FightFrameInputKind|FightFrameOutputKind;
     frame: number;
     uid: number;
     //
@@ -43,7 +39,7 @@ class BattleFrameIOItem {
     data6: number;
     data7: number;
 }
-enum BattleFrameInputKind {
+enum FightFrameInputKind {
     //===frame input
     MoveDirChange = 10001,
     /** skill trigger start  */
@@ -53,7 +49,7 @@ enum BattleFrameInputKind {
     /** skill trigger end */
     SkillUntrigger,
 }
-enum BattleFrameOutputKind {
+enum FightFrameOutputKind {
     TankDirChange = 20001,
     TankXyChange,
     AddTank,

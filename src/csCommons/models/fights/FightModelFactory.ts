@@ -1,19 +1,19 @@
-namespace models.battles {
-    export class BattleModelFactory implements IDispose {
-        model: BattleModel;
+namespace models.fights {
+    export class FightModelFactory implements IDispose {
+        model: FightModel;
         stcVo: IStcMapFactory;
         //-
         private delayFrame: number;
         private gapFrame: number;
         private currIndex: number = 0;
         init() {
-            this.delayFrame = BattleModelUtil.msToKeyFrame(this.stcVo.delayMs);
+            this.delayFrame = FightModelUtil.msToKeyFrame(this.stcVo.delayMs);
             this.delayFrame = Math.max(this.delayFrame, 1);
-            this.gapFrame = BattleModelUtil.msToKeyFrame(this.stcVo.gapMs);
+            this.gapFrame = FightModelUtil.msToKeyFrame(this.stcVo.gapMs);
         }
         frameCount:number = 0;
         tick():boolean {
-            if(this.model.groupTankCount[BattleGroup.CPU]>=this.stcVo.max){
+            if(this.model.groupTankCount[FightGroup.CPU]>=this.stcVo.max){
                 return false;
             }
             this.frameCount++;
@@ -23,10 +23,10 @@ namespace models.battles {
                 vo.sid = this.stcVo.values[this.currIndex][0];
                 vo.uid = this.model.tankUId++;
                 let position: IStcMapPosition = this.model.stcMapVo.positionMap[this.stcVo.values[this.currIndex][1]];
-                vo.x = BattleModelUtil.gridToPos(position.col);
-                vo.y = BattleModelUtil.gridToPos(position.row);
+                vo.x = FightModelUtil.gridToPos(position.col);
+                vo.y = FightModelUtil.gridToPos(position.row);
                 vo.dir = position.dir;
-                vo.group = BattleGroup.CPU;
+                vo.group = FightGroup.CPU;
                 vo.moveDir = vo.dir;
                 let ai: TankAI = new TankAI();
                 ai.owner = vo;

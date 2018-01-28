@@ -1,11 +1,11 @@
-class BattleCtrl_Ticker {
-    public ctrl: BattleCtrl;
-    constructor(ctrl: BattleCtrl) {
+class FightCtrl_Ticker {
+    public ctrl: FightCtrl;
+    constructor(ctrl: FightCtrl) {
         this.ctrl = ctrl;
     }
     public init() {
         this.lastMs = new Date().getTime();
-        this.nextFrameNeedTime = models.battles.BattleModelConfig.si.modelMsPerFrame;
+        this.nextFrameNeedTime = models.fights.FightModelConfig.si.modelMsPerFrame;
         MsgMgr.si.add(CtrlConst.Msg_OnGameTick, this, this.tick);
         // setInterval(this.tick.bind(this), CtrlConfig.si.viewMsPerFrame);
     }
@@ -36,17 +36,17 @@ class BattleCtrl_Ticker {
                 this.lastMs = this.currMs;
                 return;//TODO: 断线重连
             }
-            if ((deltaMs + this.lastFrameExtraMs) >= models.battles.BattleModelConfig.si.modelMsPerFrame) {
+            if ((deltaMs + this.lastFrameExtraMs) >= models.fights.FightModelConfig.si.modelMsPerFrame) {
                 this.ctrl.proxy.isFrame = true;
-                this.lastFrameExtraMs = (deltaMs + this.lastFrameExtraMs) - models.battles.BattleModelConfig.si.modelMsPerFrame;
-                if (this.lastFrameExtraMs >= models.battles.BattleModelConfig.si.modelMsPerFrame) {
+                this.lastFrameExtraMs = (deltaMs + this.lastFrameExtraMs) - models.fights.FightModelConfig.si.modelMsPerFrame;
+                if (this.lastFrameExtraMs >= models.fights.FightModelConfig.si.modelMsPerFrame) {
                     this.nextFrameNeedTime = 0;
                 } else {
-                    this.nextFrameNeedTime = models.battles.BattleModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
+                    this.nextFrameNeedTime = models.fights.FightModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
                 }
             } else {
                 this.lastFrameExtraMs += deltaMs;
-                this.nextFrameNeedTime = models.battles.BattleModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
+                this.nextFrameNeedTime = models.fights.FightModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
             }
         }
         //--
@@ -65,75 +65,75 @@ class BattleCtrl_Ticker {
                     // case BattleFrameOutputKind.TankXyChange:
                     // this.owner.tanks[item.playerId].onFrameOutput(item);
                     // break;
-                    case BattleFrameOutputKind.AddTank:
+                    case FightFrameOutputKind.AddTank:
                         this.ctrl.addTank(this.ctrl.proxy.model.tankMap[item.uid]);
                         break;
-                    case BattleFrameOutputKind.AddBullet:
+                    case FightFrameOutputKind.AddBullet:
                         this.ctrl.addBulletById(item.data0 as number);
                         break;
-                    case BattleFrameOutputKind.BulletHitBullet:
+                    case FightFrameOutputKind.BulletHitBullet:
                         this.pausing = DebugConfig.pauseWhenHit;
                         let bullet: BulletCtrl = this.ctrl.bulletMap[item.data0];
                         this.showBulletHitEff(bullet.vo);
                         if (bullet.vo.apTank > 0) {
-                            BattleCtrlUtil.refreshCrack(bullet.ui.m_crack as fuis.battles_1.UI_Crack, bullet.vo.apTank, bullet.vo.apTankMax);
+                            FightCtrlUtil.refreshCrack(bullet.ui.m_crack as fuis.elements_0.UI_Crack, bullet.vo.apTank, bullet.vo.apTankMax);
                         }
                         let hitBullet: BulletCtrl = this.ctrl.bulletMap[item.data1];
                         if (hitBullet.vo.apTank > 0) {
-                            BattleCtrlUtil.refreshCrack(hitBullet.ui.m_crack as fuis.battles_1.UI_Crack, hitBullet.vo.apTank, hitBullet.vo.apTankMax);
+                            FightCtrlUtil.refreshCrack(hitBullet.ui.m_crack as fuis.elements_0.UI_Crack, hitBullet.vo.apTank, hitBullet.vo.apTankMax);
                         }
                         break;
-                    case BattleFrameOutputKind.BulletHitCell:
+                    case FightFrameOutputKind.BulletHitCell:
                         this.pausing = DebugConfig.pauseWhenHit;
                         if (!hitCellBoomEffMap[item.data0]) {
                             this.showBulletHitEff(this.ctrl.bulletMap[item.data0].vo);
                             hitCellBoomEffMap[item.data0] = true;
                         }
                         //-
-                        let hitCellVo: models.battles.CellVo = this.ctrl.model.cellMap[item.data1];
-                        let hitCell: fuis.battles_1.UI_MapCell = this.ctrl.cellMap[hitCellVo.uid];
+                        let hitCellVo: models.fights.CellVo = this.ctrl.model.cellMap[item.data1];
+                        let hitCell: fuis.elements_0.UI_MapCell = this.ctrl.cellMap[hitCellVo.uid];
                         if (hitCellVo.hp > 0) {
-                            BattleCtrlUtil.refreshCrack(hitCell.m_crack as fuis.battles_1.UI_Crack, hitCellVo.hp, hitCellVo.hpMax);
+                            FightCtrlUtil.refreshCrack(hitCell.m_crack as fuis.elements_0.UI_Crack, hitCellVo.hp, hitCellVo.hpMax);
                         } else {
                             hitCell.m_kind.selectedIndex = hitCellVo.sid;
-                            BattleCtrlUtil.initCrack(hitCell.m_crack);
+                            FightCtrlUtil.initCrack(hitCell.m_crack);
                             //-
                             let mc = ResMgr.si.mcBoomQingTong();
                             this.ctrl.topEffLayer.addChild(mc);
                             mc.setScale(0.6, 0.6);
-                            mc.setXY(hitCellVo.x + models.battles.BattleModelConfig.si.cellSizeHalf, hitCellVo.y + models.battles.BattleModelConfig.si.cellSizeHalf);
+                            mc.setXY(hitCellVo.x + models.fights.FightModelConfig.si.cellSizeHalf, hitCellVo.y + models.fights.FightModelConfig.si.cellSizeHalf);
                         }
                         break;
-                    case BattleFrameOutputKind.BulletHitTank:
+                    case FightFrameOutputKind.BulletHitTank:
                         this.pausing = DebugConfig.pauseWhenHit;
                         this.showBulletHitEff(this.ctrl.bulletMap[item.data0].vo);
                         let hitTank: TankCtrl = this.ctrl.tankMap[item.data1];
                         if (hitTank.vo.hp > 0) {
-                            BattleCtrlUtil.refreshCrack(hitTank.ui.m_avatar.m_crack as fuis.battles_1.UI_Crack, hitTank.vo.hp, hitTank.vo.hpMax);
+                            FightCtrlUtil.refreshCrack(hitTank.ui.m_avatar.m_crack as fuis.elements_0.UI_Crack, hitTank.vo.hp, hitTank.vo.hpMax);
                         }
                         break;
-                    case BattleFrameOutputKind.RemoveBullet:
+                    case FightFrameOutputKind.RemoveBullet:
                         // let bulletVo = this.owner.model.dumpBulletMap[item.data0];
                         this.ctrl.removeBulletByUid(item.data0);
                         break;
-                    case BattleFrameOutputKind.RemoveTank:
+                    case FightFrameOutputKind.RemoveTank:
                         {
                             let tank: TankCtrl = this.ctrl.tankMap[item.uid];
                             this.showTankDeadEff(tank);
                             this.ctrl.removeTank(tank);
                         }
                         break;
-                    case BattleFrameOutputKind.RebirthTank:
+                    case FightFrameOutputKind.RebirthTank:
                         {
                             let tank = this.ctrl.tankMap[item.uid];
                             this.showTankDeadEff(tank);
                             tank.movableEleCtrl.moveDirImmediately();
                         }
                         break;
-                    case BattleFrameOutputKind.AddEffect:
+                    case FightFrameOutputKind.AddEffect:
                         this.ctrl.tankMap[item.uid].addBuffEffect(item.data0);
                         break;
-                    case BattleFrameOutputKind.RemoveEffect:
+                    case FightFrameOutputKind.RemoveEffect:
                         this.ctrl.tankMap[item.uid].removeBuffEffect(item.data0);
                         break;
                 }
@@ -147,7 +147,7 @@ class BattleCtrl_Ticker {
         this.ctrl.topEffLayer.addChild(mc);
         mc.setXY(tank.ui.x, tank.ui.y);
     }
-    showBulletHitEff(bulletVo: models.battles.BulletVo) {
+    showBulletHitEff(bulletVo: models.fights.BulletVo) {
         let mc = ResMgr.si.mcBoomBaiYin();
         this.ctrl.topEffLayer.addChild(mc);
         mc.setScale(0.3, 0.3);

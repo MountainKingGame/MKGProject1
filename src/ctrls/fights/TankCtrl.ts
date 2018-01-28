@@ -1,19 +1,19 @@
 class TankCtrl extends CtrlBase<fuis.elements_1.UI_Tank>{
-    vo: models.battles.TankVo;
-    battle: BattleCtrl;
+    vo: models.fights.TankVo;
+    battle: FightCtrl;
     movableEleCtrl: MovableEleCtrl;
     constructor() {
         super(fuis.elements_1.UI_Tank.createInstance());
     }
     public init() {
         super.init();
-        if(this.vo.group==models.battles.BattleGroup.CPU){
+        if(this.vo.group==models.fights.FightGroup.CPU){
             this.ui.m_avatar.m_color.selectedIndex = 1;
         }else{
             this.ui.m_avatar.m_color.selectedIndex = MathUtil.randomInt(ColorIndex.Green,ColorIndex.Purple);
         }
         this.ui.setPivot(0.5, 0.5, true);
-        BattleCtrlUtil.initCrack(this.ui.m_avatar.m_crack as fuis.battles_1.UI_Crack);
+        FightCtrlUtil.initCrack(this.ui.m_avatar.m_crack as fuis.elements_0.UI_Crack);
         this.movableEleCtrl = new MovableEleCtrl(this.ui);
         this.movableEleCtrl.changeDir = true;
         this.movableEleCtrl.vo = this.vo;
@@ -23,7 +23,7 @@ class TankCtrl extends CtrlBase<fuis.elements_1.UI_Tank>{
     }
 
     tick(): void {
-        if (this.vo.stateA == models.battles.BattleVoStateA.Living) {
+        if (this.vo.stateA == models.fights.FightVoStateA.Living) {
             this.movableEleCtrl.tick();
         }
     }

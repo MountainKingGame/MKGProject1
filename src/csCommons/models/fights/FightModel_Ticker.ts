@@ -1,7 +1,7 @@
-namespace models.battles {
-    export class BattleModel_Ticker {
-        public model: BattleModel;
-        constructor(model: BattleModel) {
+namespace models.fights {
+    export class FightModel_Ticker {
+        public model: FightModel;
+        constructor(model: FightModel) {
             this.model = model;
         }
         /**
@@ -28,18 +28,18 @@ namespace models.battles {
             for (let i = 0; i < this.model.frameInputs.length; i++) {
                 let item = this.model.frameInputs[i];
                 switch (item.kind) {
-                    case BattleFrameInputKind.MoveDirChange:
+                    case FightFrameInputKind.MoveDirChange:
                         this.model.tankMap[item.uid].moveDir = <Direction4>item.data0;
                         break;
-                    case BattleFrameInputKind.SkillTrigger:
+                    case FightFrameInputKind.SkillTrigger:
                         this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = true;
                         this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
                         break;
-                    case BattleFrameInputKind.SkillUntrigger:
+                    case FightFrameInputKind.SkillUntrigger:
                         this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
                         this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = false;
                         break;
-                    case BattleFrameInputKind.SkillTriggerOnce:
+                    case FightFrameInputKind.SkillTriggerOnce:
                         this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggerOnce = true;
                         this.model.tankMap[item.uid].skillMap[<number>item.data0].isTriggering = false;
                         break;
@@ -98,7 +98,7 @@ namespace models.battles {
             this.model.qtTank.refresh();
             for (const uid in this.model.bulletMap) {
                 let vo: BulletVo = this.model.bulletMap[uid];
-                if (vo.stateA == BattleVoStateA.Living) {//可能被其它bullet击中了
+                if (vo.stateA == FightVoStateA.Living) {//可能被其它bullet击中了
                     if (QuadTree.isInner(vo.hitRect, this.model.qtBullet.rect) == false) {
                         this.model.changer.removeBullet(vo);
                     } else {
@@ -115,8 +115,8 @@ namespace models.battles {
                 let item = hitArr[i];
                 let hitBullet: BulletVo = (<QuadTreeHitRect>item).owner as BulletVo;
                 if (bullet.group != hitBullet.group) {
-                    if (BattleModelUtil.checkHit(bullet.hitRect, item)) {
-                        this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitBullet, this.model.currFrame, bullet.ownerUid, bullet.uid, hitBullet.uid));
+                    if (FightModelUtil.checkHit(bullet.hitRect, item)) {
+                        this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.BulletHitBullet, this.model.currFrame, bullet.ownerUid, bullet.uid, hitBullet.uid));
                         let oldApTank = bullet.apTank;
                         bullet.apTank -= hitBullet.apTank;
                         hitBullet.apTank -= oldApTank;
@@ -147,19 +147,19 @@ namespace models.battles {
                 let hitItem = hitArr[i];
                 let hitCellVo = ((<QuadTreeHitRect>hitItem).owner as CellVo);
                 if (hitCellVo.sid != StcCellSid.floor && hitCellVo.sid != StcCellSid.river) {
-                    if (BattleModelUtil.checkHit(bullet.hitRect, hitItem)) {
+                    if (FightModelUtil.checkHit(bullet.hitRect, hitItem)) {
                         if (hitCellVo.sid != StcCellSid.block) {
-                            let apCellLv: number = BattleModelUtil.getApCellLv(bullet.apCell);
+                            let apCellLv: number = FightModelUtil.getApCellLv(bullet.apCell);
                             if (apCellLv > hitCellVo.sid) {
                                 this.model.changer.clearCell(hitCellVo)
                             } else if (apCellLv == hitCellVo.sid) {
-                                hitCellVo.hp -= BattleModelUtil.getApCellReal(bullet.apCell,hitCellVo.sid);
+                                hitCellVo.hp -= FightModelUtil.getApCellReal(bullet.apCell,hitCellVo.sid);
                                 if (hitCellVo.hp <= 0) {
                                     this.model.changer.clearCell(hitCellVo)
                                 }
                             }
                         }
-                        this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitCell, this.model.currFrame, bullet.ownerUid, bullet.uid, hitCellVo.uid));
+                        this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.BulletHitCell, this.model.currFrame, bullet.ownerUid, bullet.uid, hitCellVo.uid));
                         bulletDump = true;//不需要break, 因为可以hit多个cell,但只要击中一个就要dump
                     }
                 }
@@ -178,7 +178,7 @@ namespace models.battles {
                 let item = hitArr[i];
                 let hitTank: TankVo = (<QuadTreeHitRect>item).owner as TankVo;
                 let canHit: boolean = false;
-                if (hitTank.stateA == BattleVoStateA.Living) {
+                if (hitTank.stateA == FightVoStateA.Living) {
                     if (bullet.ownerUid != hitTank.uid) {
                         if (bullet.group == hitTank.group) {
                             //TODO: 
@@ -191,25 +191,25 @@ namespace models.battles {
                     }
                 }
                 if (canHit) {
-                    if (BattleModelUtil.checkHit(bullet.hitRect, item)) {
-                        this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.BulletHitTank, this.model.currFrame, bullet.ownerUid, bullet.uid, hitTank.uid));
+                    if (FightModelUtil.checkHit(bullet.hitRect, item)) {
+                        this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.BulletHitTank, this.model.currFrame, bullet.ownerUid, bullet.uid, hitTank.uid));
                         if (hitTank.effectMap[StcEffectSid.Invincible]) {
                             //do nothing, only remove bullet
                         } else {
-                            if (hitTank.group == BattleGroup.CPU) {
+                            if (hitTank.group == FightGroup.CPU) {
                                 hitTank.hp -= bullet.apTankMax;
                                 if (hitTank.hp <= 0) {
                                     hitTank.hp = 0;
                                     this.model.changer.removeTank(hitTank);
                                 }
-                            } else if (hitTank.group == BattleGroup.Player) {
-                                if (bullet.group == BattleGroup.CPU) {
+                            } else if (hitTank.group == FightGroup.Player) {
+                                if (bullet.group == FightGroup.CPU) {
                                     hitTank.hp -= bullet.apTankMax;
                                     if (hitTank.hp <= 0) {
                                         hitTank.hp = 0;
                                         this.model.changer.rebirthTank(hitTank);
                                     }
-                                } else if (bullet.group == BattleGroup.Player) {
+                                } else if (bullet.group == FightGroup.Player) {
                                     // this.owner.adder.addBuff(attackTank,)//TODO: add freeze/palsy
                                 } else {
                                     throw new Error("");
@@ -233,7 +233,7 @@ namespace models.battles {
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 if ((<QuadTreeHitRect>item).owner.sid > 0) {
-                    if (BattleModelUtil.checkHit(vo.forecastMoveHitRect, item) && BattleModelUtil.checkHit(vo.hitRect, item) == false) {
+                    if (FightModelUtil.checkHit(vo.forecastMoveHitRect, item) && FightModelUtil.checkHit(vo.hitRect, item) == false) {
                         return item;
                     }
                 }
@@ -242,7 +242,7 @@ namespace models.battles {
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 if (vo.uid != (<QuadTreeHitRect>item).owner.uid) {
-                    if (BattleModelUtil.checkHit(vo.forecastMoveHitRect, item) && BattleModelUtil.checkHit(vo.hitRect, item) == false) {
+                    if (FightModelUtil.checkHit(vo.forecastMoveHitRect, item) && FightModelUtil.checkHit(vo.hitRect, item) == false) {
                         return item;
                     }
                 }
@@ -306,7 +306,7 @@ namespace models.battles {
         }
         public tick_bullet_move() {
             for (const uid in this.model.bulletMap) {
-                if (this.model.bulletMap[uid].stateA == BattleVoStateA.Living) {
+                if (this.model.bulletMap[uid].stateA == FightVoStateA.Living) {
                     const vo = this.model.bulletMap[uid];
                     if (vo.moveDir != Direction4.None) {
                         vo.dir = vo.moveDir;

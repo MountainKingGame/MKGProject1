@@ -1,7 +1,7 @@
-namespace models.battles {
-    export class BattleModelConfig {
+namespace models.fights {
+    export class FightModelConfig {
 
-        public static readonly si: BattleModelConfig = new BattleModelConfig();
+        public static readonly si: FightModelConfig = new FightModelConfig();
         public modelFrameRate: number = 30;
         /**synchro frame input fate, modelFrameRate  must be the integer multiple of it */
         public modelKeyFrameRate: number = 15;
@@ -32,7 +32,7 @@ namespace models.battles {
             this.modelMsPerFrame = Math.round(1000 / this.modelFrameRate);
             this.tankMoveSpeedPerFrame = MathUtil.round(this.tankMoveSpeedPerSecond / this.modelFrameRate, this.roundDigit);
             this.bulletMoveSpeedPerFrame = MathUtil.round(this.bulletMoveSpeedPerSecond / this.modelFrameRate, this.roundDigit);
-            this.rebirthInvincibleFrame = BattleModelUtil.msToFrame(this.rebirthInvincibleMs);
+            this.rebirthInvincibleFrame = FightModelUtil.msToFrame(this.rebirthInvincibleMs);
         }
     }
 }

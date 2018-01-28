@@ -1,6 +1,6 @@
 /** This is an automatically generated class by FairyGUI. Please do not modify it. **/
 
-module fuis.battles_1 {
+module fuis.elements_0 {
 
 	export class UI_Tank extends fairygui.GComponent {
 
@@ -10,7 +10,7 @@ module fuis.battles_1 {
 		public static URL:string = "ui://ybsps8tfu9bo3";
 
 		public static createInstance():UI_Tank {
-			return <UI_Tank><any>(fairygui.UIPackage.createObject("battles_1","Tank"));
+			return <UI_Tank><any>(fairygui.UIPackage.createObject("elements_0","Tank"));
 		}
 
 		public constructor() {

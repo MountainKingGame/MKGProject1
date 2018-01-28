@@ -1,10 +1,10 @@
-class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
-	public ticker: BattleCtrl_Ticker = new BattleCtrl_Ticker(this);
+class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
+	public ticker: FightCtrl_Ticker = new FightCtrl_Ticker(this);
 	/**
 	 * battle model
 	 */
-	public proxy: BattleProxy;
-	public model: models.battles.BattleModel;
+	public proxy: FightProxy;
+	public model: models.fights.FightModel;
 
 	public joystick: JoystickCtrl;
 
@@ -22,7 +22,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	uiHeightHalf: number;
 	public mapSize: Vector2;
 
-	public cellMap: { [key: number]: fuis.battles_1.UI_MapCell } = {};
+	public cellMap: { [key: number]: fuis.elements_0.UI_MapCell } = {};
 	public tankMap: { [key: number]: TankCtrl } = {};
 	myTank: TankCtrl;
 	public bulletMap: { [key: number]: BulletCtrl } = {};
@@ -36,7 +36,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	public init() {
 		super.init();
 		//
-		this.proxy = new BattleProxy();
+		this.proxy = new FightProxy();
 		this.proxy.init();
 		this.model = this.proxy.model;
 		//
@@ -163,7 +163,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	}
 	floor:fairygui.GComponent;
 	initMap() {
-		this.floor = fuis.battles_1.UI_MapFloor.createInstance();
+		this.floor = fuis.elements_0.UI_MapFloor.createInstance();
 		this.cellLayer.addChild(this.floor);
 		this.mapSize = this.model.size;
 		this.floor.setSize(this.mapSize.x,this.mapSize.y);
@@ -171,8 +171,8 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 			const vo = this.model.cellMap[parseInt(key)];
 			// if(vo.sid>0){
 			// let cell: fuis.elements_1.UI_MapCell = fuis.elements_1.UI_MapCell.createInstance();
-			let cell: fuis.battles_1.UI_MapCell = fuis.battles_1.UI_MapCell.createInstance();
-			BattleCtrlUtil.initCrack(cell.m_crack as fuis.battles_1.UI_Crack);
+			let cell: fuis.elements_0.UI_MapCell = fuis.elements_0.UI_MapCell.createInstance();
+			FightCtrlUtil.initCrack(cell.m_crack as fuis.elements_0.UI_Crack);
 			cell.setXY(vo.x, vo.y);
 			cell.m_kind.selectedIndex = vo.sid;
 			if (vo.sid == StcCellSid.cover) {
@@ -206,33 +206,33 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 		}
 	}
 	/** 不需要规范出界 */
-	clampMapXY(x:number,y:number){
-		this.eleLayer.x = Math.round(x);
-		this.eleLayer.y = Math.round(y);
-	}
-	/** 规范地图,不要出边界 */
-	// clampMapXY(x: number, y: number) {
-	// 	let w: number = this.mapSize.x * this.eleLayer.scaleX;
-	// 	if (this.ui.width == w) {
-	// 		x = 0;
-	// 	} else if (this.ui.width > w) {
-	// 		x = (this.ui.width - w) / 2;
-	// 	} else {
-	// 		x = MathUtil.clamp(x, this.ui.width - w, 0);
-	// 	}
+	// clampMapXY(x:number,y:number){
 	// 	this.eleLayer.x = Math.round(x);
-	// 	//-
-	// 	let h: number = this.mapSize.y * this.eleLayer.scaleY;
-	// 	if (this.ui.height == h) {
-	// 		y = 0;
-	// 	} else if (this.ui.height > h) {
-	// 		y = (this.ui.height - h) / 2;
-	// 	} else {
-	// 		y = MathUtil.clamp(y, this.ui.height - h, 0);
-	// 	}
 	// 	this.eleLayer.y = Math.round(y);
 	// }
-	public addTank(vo: models.battles.TankVo) {
+	/** 规范地图,不要出边界 */
+	clampMapXY(x: number, y: number) {
+		let w: number = this.mapSize.x * this.eleLayer.scaleX;
+		if (this.ui.width == w) {
+			x = 0;
+		} else if (this.ui.width > w) {
+			x = (this.ui.width - w) / 2;
+		} else {
+			x = MathUtil.clamp(x, this.ui.width - w, 0);
+		}
+		this.eleLayer.x = Math.round(x);
+		//-
+		let h: number = this.mapSize.y * this.eleLayer.scaleY;
+		if (this.ui.height == h) {
+			y = 0;
+		} else if (this.ui.height > h) {
+			y = (this.ui.height - h) / 2;
+		} else {
+			y = MathUtil.clamp(y, this.ui.height - h, 0);
+		}
+		this.eleLayer.y = Math.round(y);
+	}
+	public addTank(vo: models.fights.TankVo) {
 		let tank: TankCtrl = new TankCtrl();
 		tank.vo = vo;
 		tank.battle = this;
@@ -243,7 +243,7 @@ class BattleCtrl extends CtrlBase<fuis.battles_1.UI_Battle> {
 	public addBulletById(battleUid: number) {
 		this.addBullet(this.model.bulletMap[battleUid]);
 	}
-	public addBullet(vo: models.battles.BulletVo) {
+	public addBullet(vo: models.fights.BulletVo) {
 		let bullet: BulletCtrl = new BulletCtrl();
 		bullet.vo = vo;
 		bullet.battle = this;

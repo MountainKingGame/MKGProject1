@@ -19,11 +19,11 @@ class CtrlFacade{
         CtrlConfig.si.viewFrameRate = this.stage.frameRate;
         CtrlConfig.si.init();
         //===
-        fairygui.UIPackage.addPackage("battles_1");
+        fairygui.UIPackage.addPackage("elements_0");
         fairygui.UIPackage.addPackage("elements_1");
         fairygui.UIPackage.addPackage("joysticks_1");
         fairygui.UIPackage.addPackage("movieClips_1");
-        fuis.battles_1.battles_1Binder.bindAll();
+        fuis.elements_0.elements_0Binder.bindAll();
         fuis.elements_1.elements_1Binder.bindAll();
         fuis.joysticks_1.joysticks_1Binder.bindAll();
         //===
@@ -34,7 +34,7 @@ class CtrlFacade{
         fairygui.GRoot.inst.addChild(this.root);
         //---
         if(runBattle){
-            let battle: BattleCtrl = new BattleCtrl(fuis.battles_1.UI_Battle.createInstance());
+            let battle: FightCtrl = new FightCtrl(fuis.elements_0.UI_Fight.createInstance());
             CtrlFacade.si.ctrlMgr.addCtrl(CtrlId.Battle, battle);
             battle.ui.setSize(this.stage.stageWidth, this.stage.stageHeight);
             this.stage.dirtyRegionPolicy  = "off";

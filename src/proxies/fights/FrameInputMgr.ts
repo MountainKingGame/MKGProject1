@@ -1,25 +1,25 @@
 class FrameInputMgr {
-    private frameInputs: BattleFrameIOItem[] = [];
-    add(item: BattleFrameIOItem) {
+    private frameInputs: FightFrameIOItem[] = [];
+    add(item: FightFrameIOItem) {
         this.frameInputs.push(item);
     }
-    optimize(frame: number): BattleFrameIOItem[] {
-        let rs: BattleFrameIOItem[] = [];
-        let moveChangeItem: BattleFrameIOItem;
-        let skillMap: { [key: number]: BattleFrameIOItem[] } = {};//key:skillSid
+    optimize(frame: number): FightFrameIOItem[] {
+        let rs: FightFrameIOItem[] = [];
+        let moveChangeItem: FightFrameIOItem;
+        let skillMap: { [key: number]: FightFrameIOItem[] } = {};//key:skillSid
         for (let i = 0; i < this.frameInputs.length; i++) {
             let item = this.frameInputs[i];
             switch (item.kind) {
-                case BattleFrameInputKind.MoveDirChange:
+                case FightFrameInputKind.MoveDirChange:
                     moveChangeItem = item;//MoveDir only use lastest 
                     break;
-                case BattleFrameInputKind.SkillTrigger:
+                case FightFrameInputKind.SkillTrigger:
                     if (!skillMap[item.data0]) {
                         skillMap[item.data0] = [null, null];
                     }
                     skillMap[item.data0] = [item, null];//只要有trigger就把untrigger覆盖掉
                     break;
-                case BattleFrameInputKind.SkillUntrigger:
+                case FightFrameInputKind.SkillUntrigger:
                     if (!skillMap[item.data0]) {
                         skillMap[item.data0] = [null, null];
                     }
@@ -31,7 +31,7 @@ class FrameInputMgr {
                     //--
                     if (!skillMap[item.data0][0]) {
                         skillMap[item.data0] = [item, null];
-                    } else if (skillMap[item.data0][0].kind == BattleFrameInputKind.SkillTrigger) {
+                    } else if (skillMap[item.data0][0].kind == FightFrameInputKind.SkillTrigger) {
                         skillMap[item.data0][1] = item;
                     }
                     break;
@@ -48,7 +48,7 @@ class FrameInputMgr {
                 rs.push(skillMap[skillSid][0]);
             } else {
                 // [0]:trigger[1]:untrigger
-                rs.push(new BattleFrameIOItem(BattleFrameInputKind.SkillTriggerOnce, frame, skillMap[skillSid][1].uid, skillSid));
+                rs.push(new FightFrameIOItem(FightFrameInputKind.SkillTriggerOnce, frame, skillMap[skillSid][1].uid, skillSid));
             }
         }
         this.frameInputs = [];

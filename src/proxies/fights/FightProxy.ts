@@ -1,7 +1,7 @@
-class BattleProxy {
+class FightProxy {
     public isInit: boolean = false;
-    public model: models.battles.BattleModel;
-    public myTank: models.battles.TankVo;
+    public model: models.fights.FightModel;
+    public myTank: models.fights.TankVo;
     /**same as model.currFrame */
     currFrame: number = 0;
     currKeyFrame: number = 0;
@@ -13,7 +13,7 @@ class BattleProxy {
     public init() {
         this.isInit = true;
         this.initEvent();
-        this.model = new models.battles.BattleModel();
+        this.model = new models.fights.FightModel();
         this.model.init(2);
         // this.facade.netMgr.req(123,null);
         for (const key in this.model.tankMap) {
@@ -25,7 +25,7 @@ class BattleProxy {
         this.isKeyFrame = false;
         //
         this.model.currFrame = this.currFrame = this.currFrame + 1;
-        if ((this.currFrame) % models.battles.BattleModelConfig.si.keyFrameMultiple == 0) {
+        if ((this.currFrame) % models.fights.FightModelConfig.si.keyFrameMultiple == 0) {
             this.isKeyFrame = true;
         }
         if (this.isKeyFrame) {
@@ -42,13 +42,13 @@ class BattleProxy {
     }
     onMoveDirChange(dir: Direction4) {
         // console.log("[info]","`onMoveDirChange`",dir,this.myTank.moveDir,this.model.currFrame,this.model.currKeyFrame);
-        this.frameInputMgr.add(new BattleFrameIOItem(BattleFrameInputKind.MoveDirChange, 0, this.myTank.uid, dir));
+        this.frameInputMgr.add(new FightFrameIOItem(FightFrameInputKind.MoveDirChange, 0, this.myTank.uid, dir));
     }
     onSkillTrigger(skillUid: number) {
-        this.frameInputMgr.add(new BattleFrameIOItem(BattleFrameInputKind.SkillTrigger, 0, this.myTank.uid, skillUid));
+        this.frameInputMgr.add(new FightFrameIOItem(FightFrameInputKind.SkillTrigger, 0, this.myTank.uid, skillUid));
     }
     onSkillUntrigger(skillUid: number) {
-        this.frameInputMgr.add(new BattleFrameIOItem(BattleFrameInputKind.SkillUntrigger, 0, this.myTank.uid, skillUid));
+        this.frameInputMgr.add(new FightFrameIOItem(FightFrameInputKind.SkillUntrigger, 0, this.myTank.uid, skillUid));
     }
 
 }

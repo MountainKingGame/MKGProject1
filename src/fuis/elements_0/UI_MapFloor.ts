@@ -1,6 +1,6 @@
 /** This is an automatically generated class by FairyGUI. Please do not modify it. **/
 
-module fuis.battles_1 {
+module fuis.elements_0 {
 
 	export class UI_MapFloor extends fairygui.GComponent {
 
@@ -9,7 +9,7 @@ module fuis.battles_1 {
 		public static URL:string = "ui://ybsps8tfced511";
 
 		public static createInstance():UI_MapFloor {
-			return <UI_MapFloor><any>(fairygui.UIPackage.createObject("battles_1","MapFloor"));
+			return <UI_MapFloor><any>(fairygui.UIPackage.createObject("elements_0","MapFloor"));
 		}
 
 		public constructor() {

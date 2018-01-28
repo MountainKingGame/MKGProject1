@@ -1,7 +1,7 @@
-namespace models.battles {
-    export class BattleModel_Buffer {
-        model: BattleModel;
-        constructor(model: BattleModel) {
+namespace models.fights {
+    export class FightModel_Buffer {
+        model: FightModel;
+        constructor(model: FightModel) {
             this.model = model;
         }
         private buffEffectSidHandleMap: { [key: number]: Function } = {};
@@ -32,13 +32,13 @@ namespace models.battles {
             buff.frameMax = frameMax;
             tank.buffMap[buff.uid] = buff;
             this.onChangeBuff(tank, buff);
-            this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddBuff, this.model.currFrame, tank.uid, buff.uid));
+            this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.AddBuff, this.model.currFrame, tank.uid, buff.uid));
         }
         removeBuffVo(tank: TankVo, buff: BuffVo): void {
             delete tank.buffMap[buff.uid];
             this.onChangeBuff(tank, buff);
             buff.stc = null;
-            this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.RemoveBuff, this.model.currFrame, tank.uid, buff.uid));
+            this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.RemoveBuff, this.model.currFrame, tank.uid, buff.uid));
         }
         onChangeBuff(tank: TankVo, buff: BuffVo): void {
             for (const effectSid in buff.stc.effectMap) {
@@ -56,9 +56,9 @@ namespace models.battles {
             if(SUtil.getValueInMap(tank.effectMap,StcEffectSid.Invincible,false)!=is){
                 tank.effectMap[StcEffectSid.Invincible] = is;
                 if (is) {
-                    this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.AddEffect, this.model.currFrame, tank.uid, StcEffectSid.Invincible));
+                    this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.AddEffect, this.model.currFrame, tank.uid, StcEffectSid.Invincible));
                 } else {
-                    this.model.frameOutputs.push(new BattleFrameIOItem(BattleFrameOutputKind.RemoveEffect, this.model.currFrame, tank.uid, StcEffectSid.Invincible));
+                    this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.RemoveEffect, this.model.currFrame, tank.uid, StcEffectSid.Invincible));
                 }
             }
         }

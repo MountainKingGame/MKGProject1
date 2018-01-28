@@ -1,6 +1,6 @@
 /** This is an automatically generated class by FairyGUI. Please do not modify it. **/
 
-module fuis.battles_1 {
+module fuis.elements_0 {
 
 	export class UI_Crack extends fairygui.GComponent {
 
@@ -10,7 +10,7 @@ module fuis.battles_1 {
 		public static URL:string = "ui://ybsps8tfhz8ry";
 
 		public static createInstance():UI_Crack {
-			return <UI_Crack><any>(fairygui.UIPackage.createObject("battles_1","Crack"));
+			return <UI_Crack><any>(fairygui.UIPackage.createObject("elements_0","Crack"));
 		}
 
 		public constructor() {

@@ -1,4 +1,4 @@
-namespace models.battles {
+namespace models.fights {
     export class TankAI implements IDispose {
         owner: TankVo;
         init() {
