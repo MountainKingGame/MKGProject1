@@ -9,6 +9,7 @@ interface ICtrlBase extends IDispose{
 class CtrlBase<T extends fairygui.GComponent> implements ICtrlBase  {
 	public ctrlId:CtrlId;
 	public ui:T;
+	autoDisposeList:IDispose[] = [];
 	public constructor(ui:T) {
 		this.ui = ui;
 	}
@@ -19,6 +20,13 @@ class CtrlBase<T extends fairygui.GComponent> implements ICtrlBase  {
 	public __close(){
 	}
 	public dispose(){
+		if(this.autoDisposeList){
+			for (let i = 0; i < this.autoDisposeList.length; i++) {
+				let item = this.autoDisposeList[i];
+				item.dispose();
+			}
+			this.autoDisposeList = null;
+		}
 		if(this.ui!=null){
 			this.ui.dispose();
 			this.ui = null;

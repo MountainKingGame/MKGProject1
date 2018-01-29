@@ -1,11 +1,6 @@
 namespace tools {
     export class MapEditorCtrl extends CtrlBase<fuis.tools_0.UI_MapEditor>{
         private dragHelper:FuiDragHelper;
-        public dispose(){
-            this.dragHelper.dispose();
-            this.dragHelper = null;
-            super.dispose();
-        }
         init() {
             super.init();
             this.ui.m_txtCol.text = "20";
@@ -34,6 +29,7 @@ namespace tools {
             this.ui.m_mapArea.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMapArea_TouchMove, this);
             this.ui.m_mapArea.addEventListener(egret.TouchEvent.TOUCH_END, this.onMapArea_TouchEnd, this);
             this.dragHelper = new FuiDragHelper(this.ui.m_mapArea);
+            this.autoDisposeList.push(this.dragHelper);
             this.dragHelper.autoTouchMove = true;
         }
         private list_cell_itemRenderer(i: number, item: fuis.tools_0.UI_MapCellListItem) {
