@@ -75,6 +75,7 @@
 		"bin-debug/framework/plugins/Imports.js",
 		"bin-debug/framework/plugins/KeyBoardCtrl.js",
 		"bin-debug/framework/plugins/MouseWheelCtrl.js",
+		"bin-debug/framework/utils/FuiDragHelper.js",
 		"bin-debug/framework/utils/FuiUtil.js",
 		"bin-debug/fuis/elements_0/elements_0Binder.js",
 		"bin-debug/fuis/elements_0/UI_Button1.js",

@@ -1,10 +1,13 @@
 namespace tools {
     export class MapEditorCtrl extends CtrlBase<fuis.tools_0.UI_MapEditor>{
+        private dragHelper:FuiDragHelper;
+        public dispose(){
+            this.dragHelper.dispose();
+            this.dragHelper = null;
+            super.dispose();
+        }
         init() {
             super.init();
-            this.ui.m_mapArea.width = this.ui.m_mapArea.height = 1;
-            this.ui.m_mapArea.y = 10;
-            this.ui.m_mapArea.filters = [new egret.GlowFilter(0xDCBA98, 0.8, 15, 15, 2)];
             this.ui.m_txtCol.text = "20";
             this.ui.m_txtRow.text = "20";
             this.ui.m_btnOpen.addClickListener(this.onBtnOpen, this);
@@ -24,9 +27,14 @@ namespace tools {
             this.ui.m_list_cell.refreshVirtualList();
         }
         initMapArea() {
+            this.ui.m_mapArea.width = this.ui.m_mapArea.height = 1;
+            this.ui.m_mapArea.y = 10;
+            this.ui.m_mapArea.filters = [new egret.GlowFilter(0xDCBA98, 0.8, 15, 15, 2)];
             this.ui.m_mapArea.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onMapArea_TouchBegin, this);
             this.ui.m_mapArea.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMapArea_TouchMove, this);
             this.ui.m_mapArea.addEventListener(egret.TouchEvent.TOUCH_END, this.onMapArea_TouchEnd, this);
+            this.dragHelper = new FuiDragHelper(this.ui.m_mapArea);
+            this.dragHelper.autoTouchMove = true;
         }
         private list_cell_itemRenderer(i: number, item: fuis.tools_0.UI_MapCellListItem) {
             let sid: StcCellSid = this.ui.m_list_cell.data[i] as StcCellSid;
@@ -164,11 +172,7 @@ namespace tools {
         private cells: UI_MapCell[][] = [];
         private currOverCell: UI_MapCell;
 
-        lastTouchX: number = 0;
-        lastTouchY: number = 0;
         private onMapArea_TouchBegin(e: egret.TouchEvent) {
-            this.lastTouchX = e.stageX;
-            this.lastTouchY = e.stageY;
             this.onMapArea_TouchMove(e);
         }
         private onMapArea_TouchMove(e: egret.TouchEvent) {
@@ -196,13 +200,7 @@ namespace tools {
                         this.setCellSidSafe(col + 1, row + 1, this.currCellSid, -1, -1);
                     }
                 } else {
-                    //drag
-                    // let currTouchX = e.stageX;
-                    // let currTouchY = e.stageY;
-                    this.ui.m_mapArea.x += e.stageX - this.lastTouchX;
-                    this.ui.m_mapArea.y += e.stageY - this.lastTouchY;
-                    this.lastTouchX = e.stageX;
-                    this.lastTouchY = e.stageY;
+                    this.dragHelper.onTouchMove(e);
                 }
             } else {
                 this.onMapArea_TouchEnd(e);
