@@ -1,7 +1,3 @@
-class StcBuffVo{
-    sid:number;
-    effectMap:{[key:number]:boolean} = {};
-}
 enum StcBuffSid{
     Invincible = 1,
     Transparent = 2,
@@ -15,6 +11,10 @@ enum StcEffectSid{
     Defend,
     MoveSpeed,
     AttackSpeed,
+}
+class StcBuffVo{
+    sid:number;
+    effectMap:{[key:number]:boolean} = {};
 }
 
 class StcBuff extends StcCacheBase<StcBuffVo>{

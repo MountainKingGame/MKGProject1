@@ -1,12 +1,34 @@
+enum StcCellSid{ 
+    floor = 0, 
+    wood = 1,
+    stone = 2,
+    iron = 3,
+    block = 4,
+    river = 5,
+    cover = 6,
+}
+enum StcMapVersion{
+    v1 = 1,
+}
+enum StcMapKind{
+    Kind1 = 1,
+}
+enum StcMapFactoryKind{
+    Normal = 1,
+    Loop = 2,
+}
 class StcMap extends StcCacheBase<IStcMapVo>{
     public static readonly si: StcMap = new StcMap();
+    static mapPath(sid:number):string{
+        return `resource/assets/stc/maps/map_${sid}.json`;
+    }
     init() {
         var i = 1;
         while (i > 0) {
             let resName: string = `map${i}_json`;
             if (RES.hasRes(resName)) {
                 let vo: IStcMapVo = RES.getRes(resName);
-                if (!vo.id) vo.id = i;
+                if (!vo.sid) vo.sid = i;
                 this.voDict[i] = vo;
                 //-auto fill
                 vo.positionMap = {};
@@ -26,9 +48,9 @@ class StcMap extends StcCacheBase<IStcMapVo>{
  * e.g. C:\fox\projects\MKGProject1\tb_client\resource\assets\stc\maps\map1.json
  */
 interface IStcMapVo {
-    version?: number;
-    id?: number;
-    kind?: number;
+    sid?: number;
+    version?: StcMapVersion;
+    kind?: StcMapKind;
     cells: number[][];
     positions?: IStcMapPosition[];
     factories?: IStcMapFactory[];

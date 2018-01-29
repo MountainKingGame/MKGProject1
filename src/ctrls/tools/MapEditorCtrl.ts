@@ -51,7 +51,7 @@ namespace tools {
             this.currCellNum = 4;
         }
         onBtnOpen() {
-            let mapSid: number = this.getMapId();
+            let sid: number = this.getMapSid();
             var progressHandler = function (evt: egret.ProgressEvent): void {
                 console.log("progress:", evt.bytesLoaded, evt.bytesTotal);
             }
@@ -60,17 +60,17 @@ namespace tools {
             request.once(egret.Event.COMPLETE, this.openMapRespHandler.bind(this), null);
             request.once(egret.IOErrorEvent.IO_ERROR, this.openMapRespHandler.bind(this), null);
             request.once(egret.ProgressEvent.PROGRESS, progressHandler.bind(this), null);
-            var url = `resource/assets/stc/maps/map${mapSid}.json?r=${Math.random()}`;
+            var url = StcMap.mapPath(sid)+ `?r=${Math.random()}`;
             request.open(url, egret.HttpMethod.GET);
             request.send();
         }
         openMapRespHandler(evt: egret.Event): void {
             switch (evt.type) {
                 case egret.Event.COMPLETE:
-                    var request: egret.HttpRequest = evt.currentTarget;
-                    // console.log("respHandler:n", request.response);
-                    this.openMapJsonStr(request.response);
-                    break;
+                var request: egret.HttpRequest = evt.currentTarget;
+                // console.log("respHandler:n", request.response);
+                this.openMapJsonStr(request.response);
+                break;
                 case egret.IOErrorEvent.IO_ERROR:
                     console.log("respHandler io error");
                     break;
@@ -80,17 +80,45 @@ namespace tools {
             }
         }
         openMapJsonStr(jsonStr: string) {
-            let vo: IStcMapVo = JSON.parse(jsonStr);
-            this.ui.m_txtCol.text = vo.cells.length.toString();
-            this.ui.m_txtRow.text = vo.cells[0].length.toString();
+            let mapVo: IStcMapVo = JSON.parse(jsonStr);
+            this.ui.m_txtCol.text = mapVo.cells.length.toString();
+            this.ui.m_txtRow.text = mapVo.cells[0].length.toString();
             this.onBtnSetSize();
+            for (let i = 0; i < this.cells.length; i++) {
+                for (let j = 0; j < this.cells[0].length; j++) {
+                    let cell:UI_MapCell = this.cells[i][j];
+                    cell.m_kind.selectedIndex = mapVo.cells[i][j];
+                }
+            }
         }
         onBtnSave() {
-
+            let sid:number = parseInt(this.ui.m_txtMapId.text);
+            let mapVo:IStcMapVo = {kind:StcMapKind.Kind1,cells:[]};
+            mapVo.version = StcMapVersion.v1;
+            mapVo.sid = sid;
+            mapVo.positions=[];
+            for (let i = 0; i < this.cells.length; i++) {
+                mapVo.cells[i] = []
+                for (let j = 0; j < this.cells[0].length; j++) {
+                    let cell:UI_MapCell = this.cells[i][j];
+                    mapVo.cells[i][j] = cell.m_kind.selectedIndex;
+                }
+            }
+            let jsonStr = JSON.stringify(mapVo);
+            console.log("[debug]",jsonStr,"`jsonStr`");
+            //---
+            var params = `?file=${StcMap.mapPath(sid)}&content=${jsonStr}`;
+            var request = new egret.HttpRequest();
+            request.responseType = egret.HttpResponseType.TEXT;
+            request.open("savefile"+params,egret.HttpMethod.GET);
+            request.send();
         }
         onBtnSetSize() {
             let col = parseInt(this.ui.m_txtCol.text);
+            col = MathUtil.clamp(isNaN(col)?1:col,1,200);
             let row = parseInt(this.ui.m_txtRow.text);
+            row = MathUtil.clamp(isNaN(row)?1:row,1,200);
+            //-
             this.ui.m_mapArea.width = models.fights.FightModelUtil.gridToPos(col);
             this.ui.m_mapArea.height = models.fights.FightModelUtil.gridToPos(row);
             for (let i = 0; i < this.cells.length; i++) {
@@ -116,7 +144,7 @@ namespace tools {
                 (this.ui.height - this.ui.m_mapArea.y - 10) / this.ui.m_mapArea.height);
             this.ui.m_mapArea.scaleX = this.ui.m_mapArea.scaleY = scale;
         }
-        private getMapId(): number {
+        private getMapSid(): number {
             return parseInt(this.ui.m_txtMapId.text);
         }
 
@@ -157,9 +185,9 @@ namespace tools {
                 } else if (KeyBoardCtrl.si.ctrlKey) {
                     this.setCellSidSafe(col, row, this.currCellSid);
                     if (KeyBoardCtrl.si.shiftKey) {
-                        this.setCellSidSafe(col + 1, row, this.currCellSid,-1,1);
-                        this.setCellSidSafe(col, row + 1, this.currCellSid,1,-1);
-                        this.setCellSidSafe(col + 1, row + 1, this.currCellSid,-1,-1);
+                        this.setCellSidSafe(col + 1, row, this.currCellSid, -1, 1);
+                        this.setCellSidSafe(col, row + 1, this.currCellSid, 1, -1);
+                        this.setCellSidSafe(col + 1, row + 1, this.currCellSid, -1, -1);
                     }
                 } else {
                     //drag
@@ -174,9 +202,9 @@ namespace tools {
                 this.onMapArea_TouchEnd(e);
             }
         }
-        private setCellSidSafe(col: number, row: number, sid: StcCellSid,sx:number=1,sy:number=1) {
+        private setCellSidSafe(col: number, row: number, sid: StcCellSid, sx: number = 1, sy: number = 1) {
             if (this.cells[col] && this.cells[col][row]) {
-                this.cells[col][row].setPivot(0.5,0.5);
+                this.cells[col][row].setPivot(0.5, 0.5);
                 this.cells[col][row].m_kind.selectedIndex = sid;
                 this.cells[col][row].scaleX = sx;
                 this.cells[col][row].scaleY = sy;
