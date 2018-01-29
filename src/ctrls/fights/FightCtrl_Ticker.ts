@@ -3,11 +3,25 @@ class FightCtrl_Ticker {
     constructor(ctrl: FightCtrl) {
         this.ctrl = ctrl;
     }
+    private frameOutCallbackDic: { [key: number]: Function } = {};
     public init() {
         this.lastMs = new Date().getTime();
         this.nextFrameNeedTime = models.fights.FightModelConfig.si.modelMsPerFrame;
         MsgMgr.si.add(CtrlConst.Msg_OnGameTick, this, this.tick);
-        // setInterval(this.tick.bind(this), CtrlConfig.si.viewMsPerFrame);
+        //===
+        // this.frameOutCallbackDic[FightFrameOutputKind.TankDirChange] = ;//TODO:
+        // this.frameOutCallbackDic[FightFrameOutputKind.TankXyChange] = ;//TODO:
+        this.frameOutCallbackDic[FightFrameOutputKind.AddTank] = this.frameOut_AddTank;
+        this.frameOutCallbackDic[FightFrameOutputKind.AddBullet] = this.frameOut_AddBullet;
+        this.frameOutCallbackDic[FightFrameOutputKind.BulletHitBullet] = this.frameOut_BulletHitBullet;
+        this.frameOutCallbackDic[FightFrameOutputKind.BulletHitCell] = this.frameOut_BulletHitCell;
+        this.frameOutCallbackDic[FightFrameOutputKind.BulletHitTank] = this.frameOut_BulletHitTank;
+        this.frameOutCallbackDic[FightFrameOutputKind.RemoveBullet] = this.frameOut_RemoveBullet;
+        this.frameOutCallbackDic[FightFrameOutputKind.RemoveTank] = this.frameOut_RemoveTank;
+        this.frameOutCallbackDic[FightFrameOutputKind.RebirthTank] = this.frameOut_RebirthTank;
+        this.frameOutCallbackDic[FightFrameOutputKind.AddEffect] = this.frameOut_AddEffect;
+        this.frameOutCallbackDic[FightFrameOutputKind.RemoveEffect] = this.frameOut_RemoveEffect;
+        //===
     }
     lastMs: number = 0;
     private currMs: number = 0;
@@ -16,6 +30,9 @@ class FightCtrl_Ticker {
     /** 需要多少ms到下一个关键帧 */
     nextFrameNeedTime: number = 0;
     pausing = false;
+
+    private hitCellBoomEffDic: { [key: number]: true };//一个子弹可以击中多个cell,但每帧仅为这个子弹显示一次特效
+
     public tick() {
         // console.log(SUtil.now());
         if (this.pausing) {
@@ -53,95 +70,91 @@ class FightCtrl_Ticker {
         this.lastMs = this.currMs;
         //---
         if (this.ctrl.proxy.isFrame) {
-            this.ctrl.ui.m_txt0.text = this.ctrl.proxy.currFrame.toString() + "-" + this.ctrl.proxy.currKeyFrame.toString();
-            let hitCellBoomEffDic: { [key: number]: true } = {};//每个子弹可以击中多个cell,但仅显示一次特效
+            //--
             this.ctrl.proxy.tick();
+            //--
+            this.ctrl.ui.m_txt0.text = this.ctrl.proxy.currFrame.toString() + "-" + this.ctrl.proxy.currKeyFrame.toString();
             // console.log("[info]","this is frame",this.owner.model.currFrame,this.owner.proxy.isKeyFrame);
             //-- deal frame output
+            this.hitCellBoomEffDic = {};//每帧都要清空
             for (let i = 0; i < this.ctrl.proxy.model.frameOutputs.length; i++) {
                 let item = this.ctrl.proxy.model.frameOutputs[i];
-                switch (item.kind) {
-                    // case BattleFrameOutputKind.TankDirChange:
-                    // case BattleFrameOutputKind.TankXyChange:
-                    // this.owner.tanks[item.playerId].onFrameOutput(item);
-                    // break;
-                    case FightFrameOutputKind.AddTank:
-                        this.ctrl.addTank(this.ctrl.proxy.model.tankDic[item.uid]);
-                        break;
-                    case FightFrameOutputKind.AddBullet:
-                        this.ctrl.addBulletById(item.data0 as number);
-                        break;
-                    case FightFrameOutputKind.BulletHitBullet:
-                        this.pausing = DebugConfig.pauseWhenHit;
-                        let bullet: BulletCtrl = this.ctrl.bulletDic[item.data0];
-                        this.showBulletHitEff(bullet.vo);
-                        if (bullet.vo.apTank > 0) {
-                            FightCtrlUtil.refreshCrack(bullet.ui.m_crack as fuis.elements_0.UI_Crack, bullet.vo.apTank, bullet.vo.apTankMax);
-                        }
-                        let hitBullet: BulletCtrl = this.ctrl.bulletDic[item.data1];
-                        if (hitBullet.vo.apTank > 0) {
-                            FightCtrlUtil.refreshCrack(hitBullet.ui.m_crack as fuis.elements_0.UI_Crack, hitBullet.vo.apTank, hitBullet.vo.apTankMax);
-                        }
-                        break;
-                    case FightFrameOutputKind.BulletHitCell:
-                        this.pausing = DebugConfig.pauseWhenHit;
-                        if (!hitCellBoomEffDic[item.data0]) {
-                            this.showBulletHitEff(this.ctrl.bulletDic[item.data0].vo);
-                            hitCellBoomEffDic[item.data0] = true;
-                        }
-                        //-
-                        let hitCellVo: models.fights.CellVo = this.ctrl.model.cellDic[item.data1];
-                        let hitCell: fuis.elements_0.UI_MapCell = this.ctrl.cellDic[hitCellVo.uid];
-                        if (hitCellVo.hp > 0) {
-                            FightCtrlUtil.refreshCrack(hitCell.m_crack as fuis.elements_0.UI_Crack, hitCellVo.hp, hitCellVo.hpMax);
-                        } else {
-                            hitCell.m_kind.selectedIndex = hitCellVo.sid;
-                            FightCtrlUtil.initCrack(hitCell.m_crack);
-                            //-
-                            let mc = ResMgr.si.mcBoomQingTong();
-                            this.ctrl.topEffLayer.addChild(mc);
-                            mc.setScale(0.6, 0.6);
-                            mc.setXY(hitCellVo.x + models.fights.FightModelConfig.si.cellSizeHalf, hitCellVo.y + models.fights.FightModelConfig.si.cellSizeHalf);
-                        }
-                        break;
-                    case FightFrameOutputKind.BulletHitTank:
-                        this.pausing = DebugConfig.pauseWhenHit;
-                        this.showBulletHitEff(this.ctrl.bulletDic[item.data0].vo);
-                        let hitTank: TankCtrl = this.ctrl.tankDic[item.data1];
-                        if (hitTank.vo.hp > 0) {
-                            FightCtrlUtil.refreshCrack(hitTank.ui.m_avatar.m_crack as fuis.elements_0.UI_Crack, hitTank.vo.hp, hitTank.vo.hpMax);
-                        }
-                        break;
-                    case FightFrameOutputKind.RemoveBullet:
-                        // let bulletVo = this.owner.model.dumpBulletDic[item.data0];
-                        this.ctrl.removeBulletByUid(item.data0);
-                        break;
-                    case FightFrameOutputKind.RemoveTank:
-                        {
-                            let tank: TankCtrl = this.ctrl.tankDic[item.uid];
-                            this.showTankDeadEff(tank);
-                            this.ctrl.removeTank(tank);
-                        }
-                        break;
-                    case FightFrameOutputKind.RebirthTank:
-                        {
-                            let tank = this.ctrl.tankDic[item.uid];
-                            this.showTankDeadEff(tank);
-                            tank.movableEleCtrl.moveDirImmediately();
-                        }
-                        break;
-                    case FightFrameOutputKind.AddEffect:
-                        this.ctrl.tankDic[item.uid].addBuffEffect(item.data0);
-                        break;
-                    case FightFrameOutputKind.RemoveEffect:
-                        this.ctrl.tankDic[item.uid].removeBuffEffect(item.data0);
-                        break;
-                }
+                this.frameOutCallbackDic[item.kind].call(this, item);
             }
         }
-        /** 无论是不是关键帧 ctrl层还是要tick的 */
+        /** 无论是不是帧 ctrl层还是要tick的 */
         this.tickCtrl();
     }
+    frameOut_AddTank(item: FightFrameIOItem) {
+        this.ctrl.addTank(this.ctrl.proxy.model.tankDic[item.uid]);
+    }
+    frameOut_AddBullet(item: FightFrameIOItem) {
+        this.ctrl.addBulletById(item.data0 as number);
+    }
+    frameOut_BulletHitBullet(item: FightFrameIOItem) {
+        this.pausing = DebugConfig.pauseWhenHit;
+        let bullet: BulletCtrl = this.ctrl.bulletDic[item.data0];
+        this.showBulletHitEff(bullet.vo);
+        if (bullet.vo.apTank > 0) {
+            FightCtrlUtil.refreshCrack(bullet.ui.m_crack as fuis.elements_0.UI_Crack, bullet.vo.apTank, bullet.vo.apTankMax);
+        }
+        let hitBullet: BulletCtrl = this.ctrl.bulletDic[item.data1];
+        if (hitBullet.vo.apTank > 0) {
+            FightCtrlUtil.refreshCrack(hitBullet.ui.m_crack as fuis.elements_0.UI_Crack, hitBullet.vo.apTank, hitBullet.vo.apTankMax);
+        }
+    }
+    frameOut_BulletHitCell(item: FightFrameIOItem) {
+        this.pausing = DebugConfig.pauseWhenHit;
+        if (!this.hitCellBoomEffDic[item.data0]) {
+            this.showBulletHitEff(this.ctrl.bulletDic[item.data0].vo);
+            this.hitCellBoomEffDic[item.data0] = true;
+        }
+        //-
+        let hitCellVo: models.fights.CellVo = this.ctrl.model.cellDic[item.data1];
+        let hitCell: fuis.elements_0.UI_MapCell = this.ctrl.cellDic[hitCellVo.uid];
+        if (hitCellVo.hp > 0) {
+            FightCtrlUtil.refreshCrack(hitCell.m_crack as fuis.elements_0.UI_Crack, hitCellVo.hp, hitCellVo.hpMax);
+        } else {
+            hitCell.m_kind.selectedIndex = hitCellVo.sid;
+            FightCtrlUtil.initCrack(hitCell.m_crack);
+            //-
+            let mc = ResMgr.si.mcBoomQingTong();
+            this.ctrl.topEffLayer.addChild(mc);
+            mc.setScale(0.6, 0.6);
+            mc.setXY(hitCellVo.x + models.fights.FightModelConfig.si.cellSizeHalf, hitCellVo.y + models.fights.FightModelConfig.si.cellSizeHalf);
+        }
+    }
+    frameOut_BulletHitTank(item: FightFrameIOItem) {
+        this.pausing = DebugConfig.pauseWhenHit;
+        this.showBulletHitEff(this.ctrl.bulletDic[item.data0].vo);
+        let hitTank: TankCtrl = this.ctrl.tankDic[item.data1];
+        if (hitTank.vo.hp > 0) {
+            FightCtrlUtil.refreshCrack(hitTank.ui.m_avatar.m_crack as fuis.elements_0.UI_Crack, hitTank.vo.hp, hitTank.vo.hpMax);
+        }
+    }
+    frameOut_RemoveBullet(item: FightFrameIOItem) {
+        // let bulletVo = this.owner.model.dumpBulletDic[item.data0];
+        this.ctrl.removeBulletByUid(item.data0);
+    }
+    frameOut_RemoveTank(item: FightFrameIOItem) {
+        let tank: TankCtrl = this.ctrl.tankDic[item.uid];
+        this.showTankDeadEff(tank);
+        this.ctrl.removeTank(tank);
+    }
+    frameOut_RebirthTank(item: FightFrameIOItem) {
+        {
+            let tank = this.ctrl.tankDic[item.uid];
+            this.showTankDeadEff(tank);
+            tank.movableEleCtrl.moveDirImmediately();
+        }
+    }
+    frameOut_AddEffect(item: FightFrameIOItem) {
+        this.ctrl.tankDic[item.uid].addBuffEffect(item.data0);
+    }
+    frameOut_RemoveEffect(item: FightFrameIOItem) {
+        this.ctrl.tankDic[item.uid].removeBuffEffect(item.data0);
+    }
+    //===
     showTankDeadEff(tank: TankCtrl) {
         let mc = ResMgr.si.mcBoomHuangJin();
         this.ctrl.topEffLayer.addChild(mc);
