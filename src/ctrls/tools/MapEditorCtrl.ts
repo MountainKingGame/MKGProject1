@@ -2,14 +2,14 @@ namespace tools {
     export class MapEditorCtrl extends CtrlBase<fuis.tools_0.UI_MapEditor>{
         private cellLayer: fairygui.GComponent = new fairygui.GComponent();
         private dragHelper: FuiDragHelper;
-        private mapPostionDic: { [key: string]: UI_MapCell } = {};
         private menuCellRim: fuis.tools_0.UI_CellRimGreen;
         private mapAreaCellRim: fuis.tools_0.UI_CellRimGreen;
         private cells: UI_MapCell[][] = [];
         private currCellSid: StcCellSid = StcCellSid.wood;
         private currPositionSelected: boolean = false;
+        private mapPostionDic: { [key: string]: [UI_MapCell,fuis.elements_0.UI_Label1] } = {};
+        private currMapTouchOverCell: UI_MapCell;
         private curMapPositionSize: StcCellSid = StcCellSid.star4;
-        private currOverCell: UI_MapCell;
         public dispose() {
             this.dragHelper = null;
             super.dispose();
@@ -246,7 +246,8 @@ namespace tools {
                 if (this.currPositionSelected) {
                     let positionSid: string = this.ui.m_txtPositionSid.text;
                     if (this.mapPostionDic[positionSid]) {
-                        this.mapPostionDic[positionSid].m_kind.selectedIndex = StcCellSid.floor;
+                        this.mapPostionDic[positionSid][0].m_kind.selectedIndex = StcCellSid.floor;
+                        this.mapPostionDic[positionSid][1].dispose();
                     }
                     delete this.mapPostionDic[positionSid];
                 } else {
@@ -258,9 +259,16 @@ namespace tools {
                     this.currCellSid = KeyBoardCtrl.si.shiftKey ? StcCellSid.star4 : StcCellSid.star1;
                     let positionSid: string = this.ui.m_txtPositionSid.text;
                     if (this.mapPostionDic[positionSid]) {
-                        this.mapPostionDic[positionSid].m_kind.selectedIndex = StcCellSid.floor;
+                        this.mapPostionDic[positionSid][0].m_kind.selectedIndex = StcCellSid.floor;
+                    }else{
+                        let uiLabel = fuis.elements_0.UI_Label1.createInstance();
+                        uiLabel.text = positionSid;
+                        uiLabel.touchable = false;
+                        this.ui.m_mapArea.addChild(uiLabel);
+                        this.mapPostionDic[positionSid] = [null,uiLabel];
                     }
-                    this.mapPostionDic[positionSid] = this.cells[col][row];
+                    this.mapPostionDic[positionSid][0] = this.cells[col][row];
+                    this.mapPostionDic[positionSid][1].setXY( this.mapPostionDic[positionSid][0].x, this.mapPostionDic[positionSid][0].y);
                     this.setCellSidSafe(col, row, this.currCellSid);
                 } else {
                     this.setCellSidSafe(col, row, this.currCellSid);
@@ -295,15 +303,15 @@ namespace tools {
             this.setCurrOverCell(null);
         }
         private setCurrOverCell(cell: UI_MapCell, isSize4: boolean = false) {
-            if (this.currOverCell != null) {
+            if (this.currMapTouchOverCell != null) {
                 // this.currOverCell.m_crack.m_lv.selectedIndex = 0;
                 // this.currOverCell.filters = null;
-                this.currOverCell = null;
+                this.currMapTouchOverCell = null;
                 this.mapAreaCellRim.visible = false;
             }
             if (cell) {
-                this.currOverCell = cell;
-                this.mapAreaCellRim.setXY(this.currOverCell.x, this.currOverCell.y);
+                this.currMapTouchOverCell = cell;
+                this.mapAreaCellRim.setXY(this.currMapTouchOverCell.x, this.currMapTouchOverCell.y);
                 this.mapAreaCellRim.visible = true;
                 this.mapAreaCellRim.setScale(isSize4 ? 2 : 1, isSize4 ? 2 : 1);
                 // this.currOverCell.m_crack.m_lv.selectedIndex = 2;
