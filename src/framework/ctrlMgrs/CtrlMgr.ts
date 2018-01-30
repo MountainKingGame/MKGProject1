@@ -23,10 +23,10 @@ class CtrlMgr {
     public openCtrl(id: CtrlId): ICtrlBase {
         let types:[any,any,boolean] = this.regCtrlDic[id];
         let ctrl:ICtrlBase = new types[0](types[1]["createInstance"]());
-        this.addCtrl(id,ctrl);
-        if(types[2]){
+        if(types[2]){//必须在init前设置好
             ctrl.ui.setSize(CtrlFacade.si.stage.stageWidth, CtrlFacade.si.stage.stageHeight);
         }
+        this.addCtrl(id,ctrl);
         ctrl.__open();
         return ctrl;
     }

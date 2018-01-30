@@ -78,8 +78,11 @@ class FightCtrl_Ticker {
             //-- deal frame output
             this.hitCellBoomEffDic = {};//每帧都要清空
             for (let i = 0; i < this.ctrl.proxy.model.frameOutputs.length; i++) {
-                let item = this.ctrl.proxy.model.frameOutputs[i];
-                this.frameOutCallbackDic[item.kind].call(this, item);
+                let item = this.ctrl.proxy.model.frameOutputs[i]
+                let callback = this.frameOutCallbackDic[item.kind];
+                if(callback){
+                    callback.call(this,item);
+                }
             }
         }
         /** 无论是不是帧 ctrl层还是要tick的 */

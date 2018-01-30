@@ -184,11 +184,10 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	/**地图缩放检查,不能过于小或大 */
 	clampMapScale() {
 		let scale = Math.min(
-			MathUtil.clamp(this.eleLayer.scaleX, this.ui.width / this.mapSize.x, 1),
-			MathUtil.clamp(this.eleLayer.scaleY, this.ui.height / this.mapSize.y, 1)
+			MathUtil.clamp(this.eleLayer.scaleX, this.ui.width / this.mapSize.x, 2),
+			MathUtil.clamp(this.eleLayer.scaleY, this.ui.height / this.mapSize.y, 2)
 		);
-		this.eleLayer.scaleX = scale;
-		this.eleLayer.scaleY = scale;
+		this.eleLayer.setScale(scale,scale);
 		// this.clampMapXY(this.eleLayer.x,this.eleLayer.y);//Don't need do this, because every tick will do it
 	}
 	/** 将myTank作为中点 */
@@ -201,32 +200,32 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		}
 	}
 	/** 不需要规范出界 */
-	// clampMapXY(x:number,y:number){
-	// 	this.eleLayer.x = Math.round(x);
-	// 	this.eleLayer.y = Math.round(y);
-	// }
-	/** 规范地图,不要出边界 */
-	clampMapXY(x: number, y: number) {
-		let w: number = this.mapSize.x * this.eleLayer.scaleX;
-		if (this.ui.width == w) {
-			x = 0;
-		} else if (this.ui.width > w) {
-			x = (this.ui.width - w) / 2;
-		} else {
-			x = MathUtil.clamp(x, this.ui.width - w, 0);
-		}
+	clampMapXY(x:number,y:number){
 		this.eleLayer.x = Math.round(x);
-		//-
-		let h: number = this.mapSize.y * this.eleLayer.scaleY;
-		if (this.ui.height == h) {
-			y = 0;
-		} else if (this.ui.height > h) {
-			y = (this.ui.height - h) / 2;
-		} else {
-			y = MathUtil.clamp(y, this.ui.height - h, 0);
-		}
 		this.eleLayer.y = Math.round(y);
 	}
+	/** 规范地图,不要出边界 */
+	// clampMapXY(x: number, y: number) {
+	// 	let w: number = this.mapSize.x * this.eleLayer.scaleX;
+	// 	if (this.ui.width == w) {
+	// 		x = 0;
+	// 	} else if (this.ui.width > w) {
+	// 		x = (this.ui.width - w) / 2;
+	// 	} else {
+	// 		x = MathUtil.clamp(x, this.ui.width - w, 0);
+	// 	}
+	// 	this.eleLayer.x = Math.round(x);
+	// 	//-
+	// 	let h: number = this.mapSize.y * this.eleLayer.scaleY;
+	// 	if (this.ui.height == h) {
+	// 		y = 0;
+	// 	} else if (this.ui.height > h) {
+	// 		y = (this.ui.height - h) / 2;
+	// 	} else {
+	// 		y = MathUtil.clamp(y, this.ui.height - h, 0);
+	// 	}
+	// 	this.eleLayer.y = Math.round(y);
+	// }
 	public addTank(vo: models.fights.TankVo) {
 		let tank: TankCtrl = new TankCtrl();
 		tank.vo = vo;
