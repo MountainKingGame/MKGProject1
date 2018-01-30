@@ -44,6 +44,7 @@
 		"bin-debug/csCommons/tslib/consts/SConst.js",
 		"bin-debug/csCommons/tslib/interfaces/FInterface.js",
 		"bin-debug/csCommons/tslib/structs/Vector2.js",
+		"bin-debug/csCommons/tslib/utils/BinaryHeapUtil.js",
 		"bin-debug/csCommons/CommonHelper.js",
 		"bin-debug/csCommons/tslib/utils/DoubleLinkedList.js",
 		"bin-debug/csCommons/tslib/utils/FUtil.js",
@@ -112,11 +113,12 @@
 		"bin-debug/fuis/tools_0/UI_MapEditor.js",
 		"bin-debug/proxies/fights/FightProxy.js",
 		"bin-debug/proxies/fights/FrameInputMgr.js",
-		"bin-debug/tests/QuadTreeHitTest.js",
 		"bin-debug/tests/TestAStar.js",
+		"bin-debug/tests/TestBinaryHeap.js",
 		"bin-debug/tests/TestHttp.js",
 		"bin-debug/tests/TestMoveSmooth.js",
 		"bin-debug/tests/TestProtobuf.js",
+		"bin-debug/tests/TestQuadTreeHit.js",
 		"bin-debug/tests/TestSort.js"
 	]
 }

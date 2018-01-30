@@ -39,8 +39,8 @@ class KeyBoardCtrl {
         return KeyBoardCtrl._si;
     }
     //
-    static KeyDown = "KeyBoardCtrl.OnKeyDown";
-    static KeyUp = "KeyBoardCtrl.OnKeyUp";
+    static KeyDown = "KeyBoardCtrl.KeyDown";
+    static KeyUp = "KeyBoardCtrl.KeyUp";
     //
     static KEY_DOT_BIG = 192;
     static KEY_0 = 48;

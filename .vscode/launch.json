@@ -26,7 +26,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "QuadTreeHitTest",
-            "file": "${workspaceRoot}/test/QuadTreeHitTest.html",
+            "file": "${workspaceRoot}/test/TestQuadTreeHit.html",
             "runtimeExecutable": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
             "sourceMaps": true,
             "runtimeArgs": [

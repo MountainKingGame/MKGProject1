@@ -59,7 +59,7 @@ class Main extends egret.DisplayObjectContainer {
         new Imports();
         CtrlFacade.si = new CtrlFacade();
         CtrlFacade.si.stage = this.stage;
-        CtrlFacade.si.init(true);
+        // CtrlFacade.si.init(true);
         //===test
         // new tests.TestProtobuf();
         // new TestMoveSmooth().init();
@@ -68,11 +68,12 @@ class Main extends egret.DisplayObjectContainer {
         // console.log(o);
         // let a:any = toml(o);
         // console.log("[info]",a,"`toml`",a.products.length);
-        // this.stage.addChild(new astars.TestAStar());
+        this.stage.addChild(new astars.TestAStar());
         // new TestSort().testSortBy1();
         // new TestSort().testSortBy2();
         // new tests.TestSort().testDoubleLinkedList();
         // new TestHttp().get1();
+        // new TestBinaryHeap().test0();
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);

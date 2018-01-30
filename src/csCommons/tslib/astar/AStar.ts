@@ -24,13 +24,16 @@ namespace astars {
 		public nodeWalkableOffsetArr: IVector2[] = null;
 		/** 测试物占用4格需要的数据 */
 		// public nodeWalkableOffsetArr: IVector2[] = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 1 }];
-		
+
 		private openMask: number = 0;
 		private closeMask: number = 0;
 
 		/**能否斜着走 */
-		public canDiag: boolean = false;
-		openListKind: OpenListKind = OpenListKind.PushCompare;
+		canDiag: boolean = false;
+		/**不可行走区域的cost,如果是0则不可以过去,但这样会导致 目标点无法到达时 无法算出路径 */
+		costWalkDisable: boolean = true;
+		//
+		openListKind: OpenListKind = OpenListKind.BinaryHeap;
 		searchCellKind: SearchCellKind = SearchCellKind.Normal;
 
 		public debug_calculateCount: number;
@@ -74,7 +77,7 @@ namespace astars {
 			while (node != this._endNode) {
 				let minFNode: Node = this.searchAround(node);
 				node.closeMask = this.closeMask;
-				if (this._openArr.length == 0 && this._openList.length==0) {
+				if (this._openArr.length == 0 && this._openList.length == 0) {
 					console.log("AStar >> no path found");
 					return false;
 				}
@@ -87,6 +90,9 @@ namespace astars {
 						case OpenListKind.PushCompare:
 							node = this._openList.pop() as Node;
 							break;
+						case OpenListKind.BinaryHeap:
+							node = BinaryHeapUtil.popMin(this._openArr, Node.Word_f);
+							break;
 						default:
 							node = this._openArr.pop();
 							break;
@@ -97,14 +103,17 @@ namespace astars {
 			return true;
 		}
 
-		private checkWalkable(node:Node):boolean{
-			if(!this.nodeWalkableOffsetArr){
+		private checkWalkable(node: Node, endNodeCanWalk: boolean): boolean {
+			if (endNodeCanWalk == true && node == this._endNode) {
+				return true;
+			}
+			if (!this.nodeWalkableOffsetArr) {
 				return node.walkable;
 			}
 			for (let i = 0; i < this.nodeWalkableOffsetArr.length; i++) {
 				let offset = this.nodeWalkableOffsetArr[i];
-				let item:Node = this._grid.getNodeSafe(node.x+offset.x,node.y+offset.y);
-				if(item==null || item.walkable==false){
+				let item: Node = this._grid.getNodeSafe(node.x + offset.x, node.y + offset.y);
+				if (item == null || item.walkable == false) {
 					return false;
 				}
 			}
@@ -123,27 +132,27 @@ namespace astars {
 				this.debug_calculateCount++;
 				let offset: IVector2 = roundOffset[i];
 				var test: Node = this._grid.getNodeSafe(node.x + offset.x, node.y + offset.y);
-				//--kind1
 				if (test == null || test == node) {
 					continue;
 				}
-				//--kind2 这种计算会导致 目标点无法到达时 无法算出路径
-				// if (test==null || test == node ||
-				// 	!test.walkable ||
-				// 	!this._grid.getNode(node.x, test.y).walkable ||
-				// 	!this._grid.getNode(test.x, node.y).walkable) {
-				// 	continue;
-				// }
-				//--
 				var cost: number = this._straightCost;
-				if (this.checkWalkable(test)==false) {
-					cost = 10000;//不可经过地方设置一个很高的值,可以保证目标点无法到达时也能算出路径
+				if (this.checkWalkable(test, true) == false) {
+					if (this.costWalkDisable) {
+						cost = 10000;//不可经过地方设置一个很高的值,可以保证目标点无法到达时也能算出路径
+					} else {
+						//这种计算会导致 目标点无法到达时 无法算出路径
+						continue;
+					}
 				} else {
 					if (this.canDiag == true) {
 						if (!this._grid.getNode(node.x, test.y).walkable ||
 							!this._grid.getNode(test.x, node.y).walkable) {
-							//夹角 两侧都是不可同行的
-							cost = 3000;
+							if (this.costWalkDisable) {
+								//夹角 两侧都是不可同行的
+								cost = 3000;
+							} else {
+								continue;
+							}
 						} else {
 							if (!((node.x == test.x) || (node.y == test.y))) {
 								cost = this._diagCost;
@@ -199,15 +208,18 @@ namespace astars {
 								this._openList.insertNext(node, item);
 								return;
 							}
-							if(item.prevNode==null){
+							if (item.prevNode == null) {
 								//到tail了, node没有插入到队伍里,说明是最大的,则放头里去
-								this._openList.insertPrev(node,item);
+								this._openList.insertPrev(node, item);
 								return;
-							}else{
+							} else {
 								item = item.prevNode;
 							}
 						}
 					}
+					break;
+				case OpenListKind.BinaryHeap:
+					BinaryHeapUtil.pushMin(this._openArr, node, Node.Word_f);
 					break;
 			}
 		}
@@ -233,6 +245,7 @@ namespace astars {
 				case OpenListKind.ArraySort:
 					this._openArr.sort(this.arraySortCompare.bind(this));
 					break;
+				//default://其它方法不需要额外排序
 			}
 		}
 		private arraySortCompare(a: Node, b: Node): number {
@@ -247,7 +260,7 @@ namespace astars {
 			return 0;
 		}
 
-		//声生成最终路径
+		//生成最终路径
 		private generateResultPath(): void {
 			//---普通
 			// this._path = [];
@@ -264,8 +277,8 @@ namespace astars {
 			var node: Node = this._endNode;
 			this._path.push(node);
 			while (node != this._startNode) {
-				if(this.checkWalkable(node)==false){
-				// if (node.walkable == false) {
+				if (this.checkWalkable(node, false) == false) {
+					// if (node.walkable == false) {
 					node = node.previous;
 					this._path = [node];
 				} else {
@@ -308,14 +321,17 @@ namespace astars {
 	}
 	export enum SearchCellKind {
 		Normal = 1,
+		/** 直接用周围的最小f 但效果并不好,还是用回normal吧 */
 		MinFAround = 2,
 	}
 	export enum OpenListKind {
 		/**冒泡排序 */
 		BubbleSort = 1,
-		/**push时普通排序 */
-		PushCompare = 2,
 		/**js默认的sort排序 */
-		ArraySort = 3,
+		ArraySort = 2,
+		/**push时普通排序 */
+		PushCompare = 3,
+		/**二叉堆 */
+		BinaryHeap = 4,
 	}
 }
