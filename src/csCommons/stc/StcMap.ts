@@ -25,10 +25,6 @@ class StcMapPositionSidKind{
     static Enemy = "e";
     static Boss = "b";
 }
-enum StcMapCellSize{
-    Size1 = 1,
-    Size4 = 4,
-}
 class StcMap extends StcCacheBase<IStcMapVo>{
     public static readonly si: StcMap = new StcMap();
     static mapPath(sid:number):string{

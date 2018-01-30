@@ -7,10 +7,10 @@ namespace tools {
         private mapAreaCellRim: fuis.tools_0.UI_CellRimGreen;
         private cells: UI_MapCell[][] = [];
         private currCellSid: StcCellSid = StcCellSid.wood;
-        private currPositionSelected:boolean=false;
-        private curMapPositionSize: StcMapCellSize = StcMapCellSize.Size4;
+        private currPositionSelected: boolean = false;
+        private curMapPositionSize: StcCellSid = StcCellSid.star4;
         private currOverCell: UI_MapCell;
-        public dispose(){
+        public dispose() {
             this.dragHelper = null;
             super.dispose();
         }
@@ -26,21 +26,22 @@ namespace tools {
             this.ui.m_btnSave.addClickListener(this.onBtnSave, this);
             this.ui.m_btnSetSize.addClickListener(this.onBtnSetSize, this);
             this.ui.m_btnPostionSelected.addClickListener(this.onBtnPositionSelected, this);
-            this.ui.m_btnPostionSize.addClickListener(this.onBtnPositionSize, this);
-            this.ui.m_btnPostionPlayer.addClickListener(()=>{this.onBtnPositionSidKind(StcMapPositionSidKind.Player)}, this);
-            this.ui.m_btnPostionHome.addClickListener(()=>{this.onBtnPositionSidKind(StcMapPositionSidKind.Home)}, this);
-            this.ui.m_btnPostionEnemy.addClickListener(()=>{this.onBtnPositionSidKind(StcMapPositionSidKind.Enemy)}, this);
-            this.ui.m_btnPostionBoss.addClickListener(()=>{this.onBtnPositionSidKind(StcMapPositionSidKind.Boss)}, this);
-            
+            // this.ui.m_btnPostionSize.addClickListener(this.onBtnPositionSize, this);
+            this.ui.m_btnPostionSize.visible = false;//TODO:
+            this.ui.m_btnPostionPlayer.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Player) }, this);
+            this.ui.m_btnPostionHome.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Home) }, this);
+            this.ui.m_btnPostionEnemy.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Enemy) }, this);
+            this.ui.m_btnPostionBoss.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Boss) }, this);
+
             this.ui.m_txtMapId.text = "1";
             this.initList();
-            this.curMapPositionSize = StcMapCellSize.Size4;
+            this.curMapPositionSize = StcCellSid.star4;
             this.ui.m_btnPostionSize.title = "Size4";
             this.initMapArea();
             //---
             MsgMgr.si.add(MouseWheelCtrl.Msg_OnChange, this, this.onMouseWheelChange);
             //
-            this.autoDisposeList.push(this.menuCellRim,this.mapAreaCellRim);
+            this.autoDisposeList.push(this.menuCellRim, this.mapAreaCellRim);
         }
         initList() {
             this.ui.m_list_cell.setVirtual();
@@ -83,7 +84,7 @@ namespace tools {
             FuiUtil.copyProp4(this.menuCellRim, target);
             //
             this.currCellSid = target.data;
-            this.currPositionSelected=false;
+            this.currPositionSelected = false;
             // this.currCellNum = 1;
         }
         // private onItemCell4(e: egret.TouchEvent) {
@@ -193,15 +194,14 @@ namespace tools {
         private onBtnPositionSelected() {
             this.ui.m_txtPositionSid.parent.addChild(this.menuCellRim);
             FuiUtil.copyProp4(this.menuCellRim, this.ui.m_txtPositionSid);
-            this.currCellSid = StcCellSid.star4;
-            this.currPositionSelected=true;
+            this.currPositionSelected = true;
         }
         private onBtnPositionSize() {
-            if (this.curMapPositionSize == StcMapCellSize.Size1) {
-                this.curMapPositionSize = StcMapCellSize.Size4;
+            if (this.curMapPositionSize == StcCellSid.star1) {
+                this.curMapPositionSize = StcCellSid.star4;
                 this.ui.m_btnPostionSize.title = "Size4";
             } else {
-                this.curMapPositionSize = StcMapCellSize.Size1;
+                this.curMapPositionSize = StcCellSid.star1;
                 this.ui.m_btnPostionSize.title = "Size1";
             }
         }
@@ -216,7 +216,7 @@ namespace tools {
                 }
                 i++;
             }
-            return sidKind+i.toString();
+            return sidKind + i.toString();
         }
         private addCell(col: number, row: number) {
             let cell: UI_MapCell = UI_MapCell.createInstance();
@@ -234,47 +234,49 @@ namespace tools {
             this.onMapArea_TouchMove(e);
         }
         private onMapArea_TouchMove(e: egret.TouchEvent) {
-            if (e.touchDown) {
-                // console.log(e.stageX, e.stageY);
-                let tempXY = new egret.Point();
-                this.ui.m_mapArea.globalToLocal(e.stageX, e.stageY, tempXY);
-                var col = models.fights.FightModelUtil.posToGrid(tempXY.x);
-                var row = models.fights.FightModelUtil.posToGrid(tempXY.y);
-                if (this.cells[col] && this.cells[col][row]) {
-                    this.setCurrOverCell(this.cells[col][row]);
-                }
-                if (KeyBoardCtrl.si.altKey) {
-                    this.clearCell(col,row,KeyBoardCtrl.si.shiftKey?StcMapCellSize.Size4:StcMapCellSize.Size1);
-                    if(this.currPositionSelected){
-                        let positionSid:string = this.ui.m_txtPositionSid.text;
-                        delete this.mapPostionDic[positionSid];
-                    }
-                } else if (KeyBoardCtrl.si.ctrlKey) {
-                    if(this.currPositionSelected){
-                        let positionSid:string = this.ui.m_txtPositionSid.text;
-                        if(this.mapPostionDic[positionSid]){
-                            this.mapPostionDic[positionSid].m_kind.selectedIndex = StcCellSid.floor;
-                        }
-                        this.setCellSidSafe(col, row, this.currCellSid);
-                        this.mapPostionDic[positionSid] = this.cells[col][row];
-                    }else{
-                        this.setCellSidSafe(col, row, this.currCellSid);
-                        if (KeyBoardCtrl.si.shiftKey) {
-                            this.setCellSidSafe(col + 1, row, this.currCellSid, -1, 1);
-                            this.setCellSidSafe(col, row + 1, this.currCellSid, 1, -1);
-                            this.setCellSidSafe(col + 1, row + 1, this.currCellSid, -1, -1);
-                        }
-                    }
-                } else {
-                    this.dragHelper.onTouchMove(e);
-                }
-            } else {
-                this.onMapArea_TouchEnd(e);
+            let tempXY = new egret.Point();
+            this.ui.m_mapArea.globalToLocal(e.stageX, e.stageY, tempXY);
+            var col = models.fights.FightModelUtil.posToGrid(tempXY.x);
+            var row = models.fights.FightModelUtil.posToGrid(tempXY.y);
+            if (this.cells[col] && this.cells[col][row]) {
+                this.setCurrOverCell(this.cells[col][row], KeyBoardCtrl.si.shiftKey);
             }
+            // console.log(e.stageX, e.stageY);
+            if (KeyBoardCtrl.si.altKey) {
+                if (this.currPositionSelected) {
+                    let positionSid: string = this.ui.m_txtPositionSid.text;
+                    if (this.mapPostionDic[positionSid]) {
+                        this.mapPostionDic[positionSid].m_kind.selectedIndex = StcCellSid.floor;
+                    }
+                    delete this.mapPostionDic[positionSid];
+                } else {
+                    this.clearCell(col, row, KeyBoardCtrl.si.shiftKey);
+                }
+            } else if (KeyBoardCtrl.si.ctrlKey) {
+                if (this.currPositionSelected) {
+                    this.clearCell(col, row, KeyBoardCtrl.si.shiftKey);
+                    this.currCellSid = KeyBoardCtrl.si.shiftKey ? StcCellSid.star4 : StcCellSid.star1;
+                    let positionSid: string = this.ui.m_txtPositionSid.text;
+                    if (this.mapPostionDic[positionSid]) {
+                        this.mapPostionDic[positionSid].m_kind.selectedIndex = StcCellSid.floor;
+                    }
+                    this.mapPostionDic[positionSid] = this.cells[col][row];
+                    this.setCellSidSafe(col, row, this.currCellSid);
+                } else {
+                    this.setCellSidSafe(col, row, this.currCellSid);
+                    if (KeyBoardCtrl.si.shiftKey) {
+                        this.setCellSidSafe(col + 1, row, this.currCellSid, -1, 1);
+                        this.setCellSidSafe(col, row + 1, this.currCellSid, 1, -1);
+                        this.setCellSidSafe(col + 1, row + 1, this.currCellSid, -1, -1);
+                    }
+                }
+            }
+            //
+            this.dragHelper.onTouchMove(e);
         }
-        private clearCell(col:number,row:number, size:StcMapCellSize){
+        private clearCell(col: number, row: number, isSize4: boolean) {
             this.setCellSidSafe(col, row, StcCellSid.floor);
-            if (size==StcMapCellSize.Size4) {
+            if (isSize4) {
                 this.setCellSidSafe(col + 1, row, StcCellSid.floor);
                 this.setCellSidSafe(col, row + 1, StcCellSid.floor);
                 this.setCellSidSafe(col + 1, row + 1, StcCellSid.floor);
@@ -292,7 +294,7 @@ namespace tools {
         private onMapArea_TouchEnd(e: egret.TouchEvent) {
             this.setCurrOverCell(null);
         }
-        private setCurrOverCell(cell: UI_MapCell) {
+        private setCurrOverCell(cell: UI_MapCell, isSize4: boolean = false) {
             if (this.currOverCell != null) {
                 // this.currOverCell.m_crack.m_lv.selectedIndex = 0;
                 // this.currOverCell.filters = null;
@@ -303,6 +305,7 @@ namespace tools {
                 this.currOverCell = cell;
                 this.mapAreaCellRim.setXY(this.currOverCell.x, this.currOverCell.y);
                 this.mapAreaCellRim.visible = true;
+                this.mapAreaCellRim.setScale(isSize4 ? 2 : 1, isSize4 ? 2 : 1);
                 // this.currOverCell.m_crack.m_lv.selectedIndex = 2;
                 // this.currOverCell.filters = [new egret.GlowFilter(0xFFFF00, 0.8, 12, 12, 2)];
             }
