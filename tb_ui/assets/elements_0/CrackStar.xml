@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="128,128">
+  <controller name="lv" exported="true" pages="0,,1,,2,,3," selected="3"/>
+  <displayList>
+    <loader id="n3_nqjq" name="imgCrack" xy="0,0" size="128,128" url="ui://ybsps8tfxk2t1i" align="center" vAlign="middle" fill="scaleFree">
+      <gearIcon controller="lv" pages="0,1,2,3" values="|ui://ybsps8tfxk2t1g|ui://ybsps8tfxk2t1h|ui://ybsps8tfxk2t1i"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </loader>
+  </displayList>
+</component>

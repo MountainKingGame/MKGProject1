@@ -22,12 +22,9 @@
     <image id="rluqo" name="tank2.png" path="/images/livings/"/>
     <image id="rluqp" name="tank3.png" path="/images/livings/"/>
     <image id="787gr" name="ice64.png" path="/images/mapCells/"/>
-    <image id="nqjqs" name="crack1_128.png" path="/images/others/"/>
-    <image id="nqjqt" name="crack1_64.png" path="/images/others/" exported="true"/>
-    <image id="nqjqu" name="crack2_128.png" path="/images/others/"/>
-    <image id="nqjqv" name="crack2_64.png" path="/images/others/" exported="true"/>
-    <image id="nqjqw" name="crack3_128.png" path="/images/others/"/>
-    <image id="nqjqx" name="crack3_64.png" path="/images/others/" exported="true"/>
+    <image id="nqjqt" name="crack1.64.png" path="/images/cracks/" exported="true"/>
+    <image id="nqjqv" name="crack2.64.png" path="/images/cracks/" exported="true"/>
+    <image id="nqjqx" name="crack3.64.png" path="/images/cracks/" exported="true"/>
     <component id="hz8ry" name="Crack.xml" path="/" exported="true"/>
     <image id="ced5z" name="color_black.png" path="/images/mapCells/"/>
     <image id="ced510" name="floor0.png" path="/images/mapCells/" scale="9grid" scale9grid="16,16,32,32" smoothing="false"/>
@@ -36,11 +33,19 @@
     <component id="ysfl14" name="Button1.xml" path="/comps/" exported="true"/>
     <component id="ysfl15" name="TextInput1.xml" path="/comps/" exported="true"/>
     <component id="ysfl16" name="Label1.xml" path="/comps/" exported="true"/>
-    <component id="ysfl17" name="FirstPage.xml" path="/uis/" exported="true"/>
+    <component id="ysfl17" name="FirstPage.xml" path="/pages/" exported="true"/>
     <image id="xk2t18" name="iron3.png" path="/images/mapCells/"/>
     <image id="xk2t19" name="river1.png" path="/images/mapCells/"/>
     <image id="xk2t1a" name="stone1.png" path="/images/mapCells/"/>
     <image id="xk2t1b" name="stone2.png" path="/images/mapCells/"/>
+    <image id="xk2t1c" name="star1.128.png" path="/images/mapCells/"/>
+    <image id="xk2t1d" name="star1.64.png" path="/images/mapCells/"/>
+    <component id="xk2t1e" name="Star1.xml" path="/" exported="true"/>
+    <component id="xk2t1f" name="Star4.xml" path="/" exported="true"/>
+    <image id="xk2t1g" name="crack1_star.128.png" path="/images/cracks/" exported="true"/>
+    <image id="xk2t1h" name="crack2_star.128.png" path="/images/cracks/" exported="true"/>
+    <image id="xk2t1i" name="crack3_star.128.png" path="/images/cracks/" exported="true"/>
+    <component id="xk2t1j" name="CrackStar.xml" path="/" exported="true"/>
   </resources>
   <publish name="elements_0" genCode="true"/>
 </packageDescription>

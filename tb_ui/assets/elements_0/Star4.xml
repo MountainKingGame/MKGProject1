@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="128,128">
+  <displayList>
+    <loader id="n0_xk2t" name="img" xy="0,0" size="128,128" url="ui://ybsps8tfxk2t1c"/>
+    <component id="n2_xk2t" name="crack" src="xk2t1j" xy="0,0" filter="color" filterData="0.00,0.00,0.00,0.00" controller="lv,3"/>
+  </displayList>
+</component>
