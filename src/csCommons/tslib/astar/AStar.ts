@@ -7,22 +7,22 @@
  */
 namespace astars {
 	export class AStar {
-		public _grid: Grid;               //网格
-		private _openArr: Node[];               //待考察表
-		private _openList: DoubleLinkedList;               //待考察表(双链表)
-		private _endNode: Node;                  //终点Node
-		private _startNode: Node;                //起点Node
-		private _path: Node[];               //结果路径
+		public grid: Grid;               //网格
+		private openArr: INode[];               //待考察表
+		private openList: DoubleLinkedList;               //待考察表(双链表)
+		endNode: INode;                  //终点Node
+		startNode: INode;                //起点Node
+		resultPath: INode[];               //结果路径
 		//
-		private _heuristic: Function;            //计算h的算法
-		private _straightCost: number = 10;     //上下左右走的代价
-		private _diagCost: number = 14;//Math.SQRT2;  //diagonal 斜着走的代价 
+		private funcHeuristic: Function;            //计算h的算法
+		private straightCost: number = 10;     //上下左右走的代价
+		private diagCost: number = 14;//Math.SQRT2;  //diagonal 斜着走的代价 
 
 		private roundOffset8: IVector2[] = [{ x: 1, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 1 }, { x: -1, y: 1 }, { x: -1, y: 0 }, { x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 }];
 		private roundOffset4: IVector2[] = [{ x: 1, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 0 }, { x: 0, y: -1 }];
-
+		/** 寻路物体仅占用1格 */
 		public nodeWalkableOffsetArr: IVector2[] = null;
-		/** 测试物占用4格需要的数据 */
+		/** 寻路物体占用4格需要的数据 */
 		// public nodeWalkableOffsetArr: IVector2[] = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 1 }];
 
 		private openMask: number = 0;
@@ -40,15 +40,19 @@ namespace astars {
 		public debug_openCompareCount: number;
 
 
-		public get path(): Node[] {
-			return this._path;
-		}
-
 		public constructor() {
-			this._openList = new DoubleLinkedList();
-			this._heuristic = this.manhattan;
+			this.openList = new DoubleLinkedList();
+			this.funcHeuristic = this.manhattan;
 			// this._heuristic = this.euclidian;
 			// this._heuristic = this.diagonal;
+		}
+
+		public setEndNode(x:number, y:number){
+			this.endNode = this.grid.nodes[x][y];
+		}
+
+		public setStartNode(x:number, y:number){
+			this.startNode = this.grid.nodes[x][y];
 		}
 
 		//寻路
@@ -59,25 +63,22 @@ namespace astars {
 			this.openMask > 99999999 ? this.openMask = 1 : this.openMask++;
 			this.closeMask = this.openMask;
 
-			this._openArr = [];
-			this._openList.clear(false);
+			this.openArr = [];
+			this.openList.clear(false);
 
-			this._startNode = this._grid.startNode;
-			this._endNode = this._grid.endNode;
-
-			this._startNode.g = 0;
-			this._startNode.h = this._heuristic(this._startNode);
-			this._startNode.f = this._startNode.g + this._startNode.h;
+			this.startNode.g = 0;
+			this.startNode.h = this.funcHeuristic(this.startNode);
+			this.startNode.f = this.startNode.g + this.startNode.h;
 
 			return this.search();
 		}
 		//查找路径
 		private search(): boolean {
-			var node: Node = this._startNode;
-			while (node != this._endNode) {
-				let minFNode: Node = this.searchAround(node);
+			var node: INode = this.startNode;
+			while (node != this.endNode) {
+				let minFNode: INode = this.searchAround(node);
 				node.closeMask = this.closeMask;
-				if (this._openArr.length == 0 && this._openList.length == 0) {
+				if (this.openArr.length == 0 && this.openList.length == 0) {
 					console.log("AStar >> no path found");
 					return false;
 				}
@@ -88,13 +89,13 @@ namespace astars {
 					node.openMask = 0;
 					switch (this.openListKind) {
 						case OpenListKind.PushCompare:
-							node = this._openList.pop() as Node;
+							node = this.openList.pop() as INode;
 							break;
 						case OpenListKind.BinaryHeap:
-							node = BinaryHeapUtil.popMin(this._openArr, Node.Word_f);
+							node = BinaryHeapUtil.popMin(this.openArr, Node.Word_f);
 							break;
 						default:
-							node = this._openArr.pop();
+							node = this.openArr.pop();
 							break;
 					}
 				}
@@ -103,16 +104,20 @@ namespace astars {
 			return true;
 		}
 
-		private checkWalkable(node: Node, endNodeCanWalk: boolean): boolean {
-			if (endNodeCanWalk == true && node == this._endNode) {
+		private checkWalkable(node: INode, endNodeCanWalk: boolean): boolean {
+			if (endNodeCanWalk == true && node == this.endNode) {
 				return true;
 			}
 			if (!this.nodeWalkableOffsetArr) {
 				return node.walkable;
 			}
+			//---寻路物体占用多格时
 			for (let i = 0; i < this.nodeWalkableOffsetArr.length; i++) {
 				let offset = this.nodeWalkableOffsetArr[i];
-				let item: Node = this._grid.getNodeSafe(node.x + offset.x, node.y + offset.y);
+				let item: INode = this.grid.getNodeSafe(node.col + offset.x, node.row + offset.y);
+				if (endNodeCanWalk == true && item == this.endNode) {
+					return true;
+				}
 				if (item == null || item.walkable == false) {
 					return false;
 				}
@@ -120,8 +125,8 @@ namespace astars {
 			return true;
 		}
 		/**处理周围的格子 */
-		private searchAround(node: Node) {
-			let minFNode: Node;
+		private searchAround(node: INode) {
+			let minFNode: INode;
 			let roundOffset;
 			if (this.canDiag) {
 				roundOffset = this.roundOffset8;
@@ -131,11 +136,11 @@ namespace astars {
 			for (var i = 0; i < roundOffset.length; i++) {
 				this.debug_calculateCount++;
 				let offset: IVector2 = roundOffset[i];
-				var test: Node = this._grid.getNodeSafe(node.x + offset.x, node.y + offset.y);
+				var test: INode = this.grid.getNodeSafe(node.col + offset.x, node.row + offset.y);
 				if (test == null || test == node) {
 					continue;
 				}
-				var cost: number = this._straightCost;
+				var cost: number = this.straightCost;
 				if (this.checkWalkable(test, true) == false) {
 					if (this.costWalkDisable) {
 						cost = 10000;//不可经过地方设置一个很高的值,可以保证目标点无法到达时也能算出路径
@@ -145,8 +150,8 @@ namespace astars {
 					}
 				} else {
 					if (this.canDiag == true) {
-						if (!this._grid.getNode(node.x, test.y).walkable ||
-							!this._grid.getNode(test.x, node.y).walkable) {
+						if (!this.grid.nodes[node.col][test.row].walkable ||
+							!this.grid.nodes[test.col][node.row].walkable) {
 							if (this.costWalkDisable) {
 								//夹角 两侧都是不可同行的
 								cost = 3000;
@@ -154,14 +159,14 @@ namespace astars {
 								continue;
 							}
 						} else {
-							if (!((node.x == test.x) || (node.y == test.y))) {
-								cost = this._diagCost;
+							if (!((node.col == test.col) || (node.row == test.row))) {
+								cost = this.diagCost;
 							}
 						}
 					}
 				}
 				var g = node.g + cost * test.costMultiplier;
-				var h = this._heuristic(test);
+				var h = this.funcHeuristic(test);
 				var f = g + h;
 				if (test.openMask == this.openMask || test.closeMask == this.closeMask) {
 					if (test.f > f) {
@@ -189,28 +194,28 @@ namespace astars {
 			return minFNode;
 		}
 
-		private openListPush(node: Node) {
+		private openListPush(node: INode) {
 			node.openMask = this.openMask;
 			switch (this.openListKind) {
 				case OpenListKind.BubbleSort:
 				case OpenListKind.ArraySort:
-					this._openArr.push(node);
+					this.openArr.push(node);
 					break;
 				case OpenListKind.PushCompare:
-					let openLen = this._openList.length;
+					let openLen = this.openList.length;
 					if (openLen == 0) {
-						this._openList.push(node);
+						this.openList.push(node);
 					} else {
-						let item = this._openList.head;
+						let item = this.openList.head;
 						while (item != null) {
 							this.debug_openCompareCount++;
-							if (node.f < (item as Node).f) {
-								this._openList.insertNext(node, item);
+							if (node.f < (item as INode).f) {
+								this.openList.insertNext(node, item);
 								return;
 							}
 							if (item.prevNode == null) {
 								//到tail了, node没有插入到队伍里,说明是最大的,则放头里去
-								this._openList.insertPrev(node, item);
+								this.openList.insertPrev(node, item);
 								return;
 							} else {
 								item = item.prevNode;
@@ -219,7 +224,7 @@ namespace astars {
 					}
 					break;
 				case OpenListKind.BinaryHeap:
-					BinaryHeapUtil.pushMin(this._openArr, node, Node.Word_f);
+					BinaryHeapUtil.pushMin(this.openArr, node, Node.Word_f);
 					break;
 			}
 		}
@@ -229,26 +234,26 @@ namespace astars {
 			switch (this.openListKind) {
 				case OpenListKind.BubbleSort:
 					if (this.openListKind == 1) {
-						let openLen = this._openArr.length;
+						let openLen = this.openArr.length;
 						for (let m = 0; m < openLen; m++) {
 							for (let n = m + 1; n < openLen; n++) {
 								this.debug_openCompareCount++;
-								if (this._openArr[m].f < this._openArr[n].f) {
-									let temp = this._openArr[m];
-									this._openArr[m] = this._openArr[n];
-									this._openArr[n] = temp;
+								if (this.openArr[m].f < this.openArr[n].f) {
+									let temp = this.openArr[m];
+									this.openArr[m] = this.openArr[n];
+									this.openArr[n] = temp;
 								}
 							}
 						}
 					}
 					break;
 				case OpenListKind.ArraySort:
-					this._openArr.sort(this.arraySortCompare.bind(this));
+					this.openArr.sort(this.arraySortCompare.bind(this));
 					break;
 				//default://其它方法不需要额外排序
 			}
 		}
-		private arraySortCompare(a: Node, b: Node): number {
+		private arraySortCompare(a: INode, b: INode): number {
 			this.debug_openCompareCount++;
 			if (a.f < b.f) {
 				return 1;
@@ -273,50 +278,50 @@ namespace astars {
 			//---路径压缩
 			let lastOffsetX: number;
 			let lastOffsetY: number;
-			this._path = [];
-			var node: Node = this._endNode;
-			this._path.push(node);
-			while (node != this._startNode) {
+			this.resultPath = [];
+			var node: INode = this.endNode;
+			this.resultPath.push(node);
+			while (node != this.startNode) {
 				if (this.checkWalkable(node, false) == false) {
 					// if (node.walkable == false) {
 					node = node.previous;
-					this._path = [node];
+					this.resultPath = [node];
 				} else {
-					let offsetX: number = node.previous.x - node.x;
-					let offsetY: number = node.previous.y - node.y;
+					let offsetX: number = node.previous.col - node.col;
+					let offsetY: number = node.previous.row - node.row;
 					if (lastOffsetX == undefined || lastOffsetX != offsetX || lastOffsetY != offsetY) {
 						lastOffsetX = offsetX;
 						lastOffsetY = offsetY;
 						node = node.previous;
-						this._path.push(node);
+						this.resultPath.push(node);
 					} else {
 						node = node.previous;
-						this._path[this._path.length - 1] = node;
+						this.resultPath[this.resultPath.length - 1] = node;
 					}
 				}
 			}
-			this._path.reverse();
+			this.resultPath.reverse();
 			//---
 		}
 
 		//曼哈顿算法
-		private manhattan(node: Node) {
-			return (Math.abs(node.x - this._endNode.x) + Math.abs(node.y + this._endNode.y)) * this._straightCost;
+		private manhattan(node: INode) {
+			return (Math.abs(node.col - this.endNode.col) + Math.abs(node.row + this.endNode.row)) * this.straightCost;
 		}
 
 
-		private euclidian(node: Node) {
-			var dx = node.x - this._endNode.x;
-			var dy = node.y - this._endNode.y;
-			return Math.sqrt(dx * dx + dy * dy) * this._straightCost;
+		private euclidian(node: INode) {
+			var dx = node.col - this.endNode.col;
+			var dy = node.row - this.endNode.row;
+			return Math.sqrt(dx * dx + dy * dy) * this.straightCost;
 		}
 
-		private diagonal(node: Node) {
-			var dx = Math.abs(node.x - this._endNode.x);
-			var dy = Math.abs(node.y - this._endNode.y);
+		private diagonal(node: INode) {
+			var dx = Math.abs(node.col - this.endNode.col);
+			var dy = Math.abs(node.row - this.endNode.row);
 			var diag = Math.min(dx, dy);
 			var straight = dx + dy;
-			return this._diagCost * diag + this._straightCost * (straight - 2 * diag);
+			return this.diagCost * diag + this.straightCost * (straight - 2 * diag);
 		}
 	}
 	export enum SearchCellKind {

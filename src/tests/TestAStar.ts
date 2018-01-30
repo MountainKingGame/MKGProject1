@@ -5,7 +5,7 @@ namespace astars {
 		private aStar: astars.AStar;
 		private _player: egret.Sprite;
 		private _index: number;
-		private _path: Node[];
+		private _path: INode[];
 		private _spArr: egret.Sprite[][];
 
 		public constructor() {
@@ -38,12 +38,12 @@ namespace astars {
 			this._player.graphics.endFill();
 			this.addChild(this._player);
 			//find a walkable node
-			for (let i = 0; i < this.aStar._grid.numCols; i++) {
-				for (let j = 0; j < this.aStar._grid.numRows; j++) {
-					var node: astars.Node = this.aStar._grid.getNode(i, j);
+			for (let i = 0; i < this.aStar.grid.colLen; i++) {
+				for (let j = 0; j < this.aStar.grid.rowLen; j++) {
+					var node: astars.INode = this.aStar.grid.nodes[i][j];
 					if (node.walkable) {
-						this._player.x = (node.x + 0.5) * this._cellSize;
-						this._player.y = (node.y + 0.5) * this._cellSize;
+						this._player.x = (node.col + 0.5) * this._cellSize;
+						this._player.y = (node.row + 0.5) * this._cellSize;
 						return;
 					}
 				}
@@ -54,10 +54,10 @@ namespace astars {
 		 * Creates a grid with a bunch of random unwalkable nodes.
 		 */
 		private makeGrid() {
-			this.aStar._grid = new astars.Grid(30, 30);
-			for (let i = 0; i < this.aStar._grid.numCols; i++) {
-				for (let j = 0; j < this.aStar._grid.numRows; j++) {
-					this.aStar._grid.setWalkable(i, j, Math.random() > 0.3);
+			this.aStar.grid = new astars.Grid(30, 30);
+			for (let i = 0; i < this.aStar.grid.colLen; i++) {
+				for (let j = 0; j < this.aStar.grid.rowLen; j++) {
+					this.aStar.grid.setWalkable(i, j, Math.random() > 0.3);
 				}
 			}
 			//
@@ -72,9 +72,9 @@ namespace astars {
 		private drawGrid() {
 			this.graphics.clear();
 			console.log("[log] drawGrid --------------");
-			for (let i = 0; i < this.aStar._grid.numCols; i++) {
-				for (let j = 0; j < this.aStar._grid.numRows; j++) {
-					var node: astars.Node = this.aStar._grid.getNode(i, j);
+			for (let i = 0; i < this.aStar.grid.colLen; i++) {
+				for (let j = 0; j < this.aStar.grid.rowLen; j++) {
+					var node: astars.INode = this.aStar.grid.nodes[i][j];
 					// console.log("[log] drawGrid node", i, j, node.walkable);
 					//---有bug,连续画图有问题
 					// this.graphics.beginFill(this.getColor(node));
@@ -118,10 +118,10 @@ namespace astars {
 		/**
 		 * Determines the color of a given node based on its state.
 		 */
-		private getColor(node: astars.Node) {
+		private getColor(node: astars.INode) {
 			if (!node.walkable) return 0xFF00FF;
-			if (node == this.aStar._grid.startNode) return 0x00FFFF;
-			if (node == this.aStar._grid.endNode) return 0xFFFF00;
+			if (node == this.aStar.startNode) return 0x00FFFF;
+			if (node == this.aStar.endNode) return 0xFFFF00;
 			return 0x00FF00;
 		}
 
@@ -135,21 +135,21 @@ namespace astars {
 			}
 			var xpos = Math.floor(event.stageX / this._cellSize);
 			var ypos = Math.floor(event.stageY / this._cellSize);
-			if (this.aStar._grid.getNodeSafe(xpos, ypos) == null) {
+			if (this.aStar.grid.getNodeSafe(xpos, ypos) == null) {
 				return;
 			}
-			this.aStar._grid.setEndNode(xpos, ypos);
+			this.aStar.setEndNode(xpos, ypos);
 			this.run();
 		}
 		private run() {
 			var xpos = Math.floor(this._player.x / this._cellSize);
 			var ypos = Math.floor(this._player.y / this._cellSize);
-			this.aStar._grid.setStartNode(xpos, ypos);
+			this.aStar.setStartNode(xpos, ypos);
 			this.drawGrid();
 
 			this.startTime = egret.getTimer();
 			if (this.aStar.findPath()) {
-				this._path = this.aStar.path;
+				this._path = this.aStar.resultPath;
 				this._index = 0;
 				this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 			}
@@ -161,16 +161,16 @@ namespace astars {
 			switch (keycode) {
 				case KeyBoardCtrl.KEY_0:
 					{
-						let startNode: Node = this.aStar._grid.startNode;
-						this._player.x = startNode.x * this._cellSize + this._cellSize / 2;
-						this._player.y = startNode.y * this._cellSize + this._cellSize / 2;
+						let startNode: INode = this.aStar.startNode;
+						this._player.x = startNode.col * this._cellSize + this._cellSize / 2;
+						this._player.y = startNode.row * this._cellSize + this._cellSize / 2;
 					}
 					break;
 				case KeyBoardCtrl.KEY_DOT_BIG:
 					{
-						let startNode: Node = this.aStar._grid.startNode;
-						this._player.x = startNode.x * this._cellSize + this._cellSize / 2;
-						this._player.y = startNode.y * this._cellSize + this._cellSize / 2;
+						let startNode: INode = this.aStar.startNode;
+						this._player.x = startNode.col * this._cellSize + this._cellSize / 2;
+						this._player.y = startNode.row * this._cellSize + this._cellSize / 2;
 						this.run();
 					}
 					break;
@@ -210,7 +210,7 @@ namespace astars {
 			if (KeyBoardCtrl.si.ctrlKey || KeyBoardCtrl.si.altKey) {
 				var xpos = Math.floor(event.stageX / this._cellSize);
 				var ypos = Math.floor(event.stageY / this._cellSize);
-				this.aStar._grid.setWalkable(xpos, ypos, KeyBoardCtrl.si.altKey);
+				this.aStar.grid.setWalkable(xpos, ypos, KeyBoardCtrl.si.altKey);
 				this.drawGrid();
 			}
 		}
@@ -226,8 +226,8 @@ namespace astars {
 			if (this.frameCount >= this.frameGapNeed) {
 				this.frameCount = 0;
 				//
-				var targetX = this._path[this._index].x * this._cellSize + this._cellSize / 2;
-				var targetY = this._path[this._index].y * this._cellSize + this._cellSize / 2;
+				var targetX = this._path[this._index].col * this._cellSize + this._cellSize / 2;
+				var targetY = this._path[this._index].row * this._cellSize + this._cellSize / 2;
 				this._player.x = targetX;
 				this._player.y = targetY;
 				var dx = targetX - this._player.x;
