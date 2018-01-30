@@ -63,10 +63,10 @@ interface IStcMapVo {
     positions?: IStcMapPosition[];
     factories?: IStcMapFactory[];
     //
-    positionMap?:{[key:number]:IStcMapPosition};
+    positionMap?:{[key:string]:IStcMapPosition};
 }
 interface IStcMapPosition {
-    sid?: number;
+    sid?: string;
     col?: number;
     row?: number;
     dir?: number;
@@ -77,5 +77,5 @@ interface IStcMapFactory {
     max?:number;
     delayMs?: number;
     gapMs?: number;
-    values?: [number, number][];
+    values?: [number, string][];
 }

@@ -7,7 +7,7 @@ namespace tools {
         private cells: UI_MapCell[][] = [];
         private currCellSid: StcCellSid = StcCellSid.wood;
         private currPositionSelected: boolean = false;
-        private mapPostionDic: { [key: string]: [UI_MapCell,fuis.elements_0.UI_Label1] } = {};
+        private mapPostionDic: { [key: string]: [UI_MapCell, fuis.elements_0.UI_Label1] } = {};
         private currMapTouchOverCell: UI_MapCell;
         private curMapPositionSize: StcCellSid = StcCellSid.star4;
         public dispose() {
@@ -28,6 +28,7 @@ namespace tools {
             this.ui.m_btnPostionSelected.addClickListener(this.onBtnPositionSelected, this);
             // this.ui.m_btnPostionSize.addClickListener(this.onBtnPositionSize, this);
             this.ui.m_btnPostionSize.visible = false;//TODO:
+            this.ui.m_txtPositionSid.text = "p0";
             this.ui.m_btnPostionPlayer.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Player) }, this);
             this.ui.m_btnPostionHome.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Home) }, this);
             this.ui.m_btnPostionEnemy.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Enemy) }, this);
@@ -131,6 +132,15 @@ namespace tools {
                     cell.m_kind.selectedIndex = mapVo.cells[i][j];
                 }
             }
+            for (let i = 0; i < mapVo.positions.length; i++) {
+                let item = mapVo.positions[i];
+                this.cells[item.col][item.row].m_kind.selectedIndex = StcCellSid.star4;
+                let positionSid = item.sid;
+                this.addPositionLabel(positionSid)
+                this.mapPostionDic[positionSid] = [null, this.addPositionLabel(positionSid)];
+                this.mapPostionDic[positionSid][0] = this.cells[item.col][item.row];
+                this.mapPostionDic[positionSid][1].setXY(this.mapPostionDic[positionSid][0].x, this.mapPostionDic[positionSid][0].y);
+            }
         }
         onBtnSave() {
             let sid: number = parseInt(this.ui.m_txtMapId.text);
@@ -142,8 +152,21 @@ namespace tools {
                 mapVo.cells[i] = []
                 for (let j = 0; j < this.cells[0].length; j++) {
                     let cell: UI_MapCell = this.cells[i][j];
-                    mapVo.cells[i][j] = cell.m_kind.selectedIndex;
+                    if (cell.m_kind.selectedIndex == StcCellSid.star1 || cell.m_kind.selectedIndex == StcCellSid.star4) {
+
+                    } else {
+                        mapVo.cells[i][j] = cell.m_kind.selectedIndex;
+                    }
                 }
+            }
+            for (const key in this.mapPostionDic) {
+                const element = this.mapPostionDic[key];
+                let vo: IStcMapPosition = {};
+                vo.sid = key;
+                vo.col = models.fights.FightModelUtil.posToGrid(element[0].x);
+                vo.row = models.fights.FightModelUtil.posToGrid(element[0].y);
+                vo.dir = Direction4.Up;
+                mapVo.positions.push(vo);
             }
             let jsonStr = JSON.stringify(mapVo);
             console.log("[debug]", jsonStr, "`jsonStr`");
@@ -260,15 +283,12 @@ namespace tools {
                     let positionSid: string = this.ui.m_txtPositionSid.text;
                     if (this.mapPostionDic[positionSid]) {
                         this.mapPostionDic[positionSid][0].m_kind.selectedIndex = StcCellSid.floor;
-                    }else{
-                        let uiLabel = fuis.elements_0.UI_Label1.createInstance();
-                        uiLabel.text = positionSid;
-                        uiLabel.touchable = false;
-                        this.ui.m_mapArea.addChild(uiLabel);
-                        this.mapPostionDic[positionSid] = [null,uiLabel];
+                    } else {
+                        this.addPositionLabel(positionSid)
+                        this.mapPostionDic[positionSid] = [null, this.addPositionLabel(positionSid)];
                     }
                     this.mapPostionDic[positionSid][0] = this.cells[col][row];
-                    this.mapPostionDic[positionSid][1].setXY( this.mapPostionDic[positionSid][0].x, this.mapPostionDic[positionSid][0].y);
+                    this.mapPostionDic[positionSid][1].setXY(this.mapPostionDic[positionSid][0].x, this.mapPostionDic[positionSid][0].y);
                     this.setCellSidSafe(col, row, this.currCellSid);
                 } else {
                     this.setCellSidSafe(col, row, this.currCellSid);
@@ -281,6 +301,13 @@ namespace tools {
             }
             //
             this.dragHelper.onTouchMove(e);
+        }
+        private addPositionLabel(positionSid: string): fuis.elements_0.UI_Label1 {
+            let uiLabel = fuis.elements_0.UI_Label1.createInstance();
+            uiLabel.text = positionSid;
+            uiLabel.touchable = false;
+            this.ui.m_mapArea.addChild(uiLabel);
+            return uiLabel;
         }
         private clearCell(col: number, row: number, isSize4: boolean) {
             this.setCellSidSafe(col, row, StcCellSid.floor);
