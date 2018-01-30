@@ -9,6 +9,9 @@ module fuis.elements_0 {
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_Fight.URL, UI_Fight);
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_Tank.URL, UI_Tank);
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_MapCell.URL, UI_MapCell);
+			fairygui.UIObjectFactory.setPackageItemExtension(UI_Star1.URL, UI_Star1);
+			fairygui.UIObjectFactory.setPackageItemExtension(UI_Star4.URL, UI_Star4);
+			fairygui.UIObjectFactory.setPackageItemExtension(UI_CrackStar.URL, UI_CrackStar);
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_EmptyComp.URL, UI_EmptyComp);
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_Button1.URL, UI_Button1);
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_TextInput1.URL, UI_TextInput1);

@@ -6,6 +6,8 @@ enum StcCellSid{
     block = 4,
     river = 5,
     cover = 6,
+    star1 = 10,
+    star4 = 11,
 }
 enum StcMapVersion{
     v1 = 1,
@@ -16,6 +18,16 @@ enum StcMapKind{
 enum StcMapFactoryKind{
     Normal = 1,
     Loop = 2,
+}
+class StcMapPositionSidKind{
+    static Player = "p";
+    static Home = "h";
+    static Enemy = "e";
+    static Boss = "b";
+}
+enum StcMapCellSize{
+    Size1 = 1,
+    Size4 = 4,
 }
 class StcMap extends StcCacheBase<IStcMapVo>{
     public static readonly si: StcMap = new StcMap();

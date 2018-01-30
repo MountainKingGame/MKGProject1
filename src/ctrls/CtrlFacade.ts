@@ -20,11 +20,11 @@ class CtrlFacade{
         CtrlConfig.si.init();
         //===
         fairygui.UIPackage.addPackage("test_1");
-        fairygui.UIPackage.addPackage("tools_0");
         fairygui.UIPackage.addPackage("elements_0");
         fairygui.UIPackage.addPackage("elements_1");
         fairygui.UIPackage.addPackage("joysticks_1");
         fairygui.UIPackage.addPackage("movieClips_1");
+        fairygui.UIPackage.addPackage("tools_0");
         fuis.elements_0.elements_0Binder.bindAll();
         fuis.elements_1.elements_1Binder.bindAll();
         fuis.joysticks_1.joysticks_1Binder.bindAll();

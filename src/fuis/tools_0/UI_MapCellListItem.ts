@@ -5,7 +5,6 @@ module fuis.tools_0 {
 	export class UI_MapCellListItem extends fairygui.GComponent {
 
 		public m_cell1:fairygui.GComponent;
-		public m_cell4:UI_MapCell4;
 
 		public static URL:string = "ui://i6vaqd5aysfl1";
 
@@ -21,7 +20,6 @@ module fuis.tools_0 {
 			super.constructFromXML(xml);
 
 			this.m_cell1 = <fairygui.GComponent><any>(this.getChildAt(0));
-			this.m_cell4 = <UI_MapCell4><any>(this.getChildAt(1));
 		}
 	}
 }

@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "tools_0_fui,test_1_fui,elements_0_fui,elements_0@atlas0_png,elements_1_fui,joysticks_1_fui,joysticks_1@atlas0_png,movieClips_1_fui,movieClips_1@atlas_hz8r1_png,movieClips_1@atlas_hz8r2_png,movieClips_1@atlas_hz8r3_png,movieClips_1@atlas_hz8r4_png,movieClips_1@atlas_hz8r5_png,map1_json,map2_json",
+			"keys": "tools_0_fui,tools_0@atlas0_png,test_1_fui,elements_0_fui,elements_0@atlas0_png,elements_1_fui,joysticks_1_fui,joysticks_1@atlas0_png,movieClips_1_fui,movieClips_1@atlas_hz8r1_png,movieClips_1@atlas_hz8r2_png,movieClips_1@atlas_hz8r3_png,movieClips_1@atlas_hz8r4_png,movieClips_1@atlas_hz8r5_png,map1_json,map2_json",
 			"name": "preload"
 		}
 	],
@@ -10,6 +10,11 @@
 			"url": "assets/fuis/tools_0.fui",
 			"type": "bin",
 			"name": "tools_0_fui"
+		},
+		{
+			"url": "assets/fuis/tools_0@atlas0.png",
+			"type": "image",
+			"name": "tools_0@atlas0_png"
 		},
 		{
 			"url": "assets/fuis/test_1.fui",

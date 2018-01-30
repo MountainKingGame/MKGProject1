@@ -24,4 +24,8 @@ class FuiUtil {
         obj.setXY(obj.x + (xa0-xa1),obj.y + (xa0-xa1)); 
         */
     }
+    static copyProp4(target:fairygui.GComponent,from:fairygui.GComponent){
+        target.setXY(from.x,from.y);
+        target.setSize(from.width,from.height);
+    }
 }

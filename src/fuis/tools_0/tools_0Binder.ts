@@ -4,6 +4,7 @@ module fuis.tools_0 {
 
 	export class tools_0Binder{
 		public static bindAll():void {
+			fairygui.UIObjectFactory.setPackageItemExtension(UI_CellRimGreen.URL, UI_CellRimGreen);
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_MapEditor.URL, UI_MapEditor);
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_MapCellListItem.URL, UI_MapCellListItem);
 			fairygui.UIObjectFactory.setPackageItemExtension(UI_MapCell4.URL, UI_MapCell4);

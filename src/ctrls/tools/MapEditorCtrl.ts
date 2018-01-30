@@ -1,18 +1,46 @@
 namespace tools {
     export class MapEditorCtrl extends CtrlBase<fuis.tools_0.UI_MapEditor>{
-        private dragHelper:FuiDragHelper;
+        private cellLayer: fairygui.GComponent = new fairygui.GComponent();
+        private dragHelper: FuiDragHelper;
+        private mapPostionDic: { [key: string]: UI_MapCell } = {};
+        private menuCellRim: fuis.tools_0.UI_CellRimGreen;
+        private mapAreaCellRim: fuis.tools_0.UI_CellRimGreen;
+        private cells: UI_MapCell[][] = [];
+        private currCellSid: StcCellSid = StcCellSid.wood;
+        private currPositionSelected:boolean=false;
+        private curMapPositionSize: StcMapCellSize = StcMapCellSize.Size4;
+        private currOverCell: UI_MapCell;
+        public dispose(){
+            this.dragHelper = null;
+            super.dispose();
+        }
         init() {
             super.init();
+            this.menuCellRim = fuis.tools_0.UI_CellRimGreen.createInstance();
+            this.menuCellRim.touchable = false;
+            this.mapAreaCellRim = fuis.tools_0.UI_CellRimGreen.createInstance();
+            this.mapAreaCellRim.touchable = false;
             this.ui.m_txtCol.text = "20";
             this.ui.m_txtRow.text = "20";
             this.ui.m_btnOpen.addClickListener(this.onBtnOpen, this);
             this.ui.m_btnSave.addClickListener(this.onBtnSave, this);
             this.ui.m_btnSetSize.addClickListener(this.onBtnSetSize, this);
+            this.ui.m_btnPostionSelected.addClickListener(this.onBtnPositionSelected, this);
+            this.ui.m_btnPostionSize.addClickListener(this.onBtnPositionSize, this);
+            this.ui.m_btnPostionPlayer.addClickListener(()=>{this.onBtnPositionSidKind(StcMapPositionSidKind.Player)}, this);
+            this.ui.m_btnPostionHome.addClickListener(()=>{this.onBtnPositionSidKind(StcMapPositionSidKind.Home)}, this);
+            this.ui.m_btnPostionEnemy.addClickListener(()=>{this.onBtnPositionSidKind(StcMapPositionSidKind.Enemy)}, this);
+            this.ui.m_btnPostionBoss.addClickListener(()=>{this.onBtnPositionSidKind(StcMapPositionSidKind.Boss)}, this);
+            
             this.ui.m_txtMapId.text = "1";
             this.initList();
+            this.curMapPositionSize = StcMapCellSize.Size4;
+            this.ui.m_btnPostionSize.title = "Size4";
             this.initMapArea();
             //---
             MsgMgr.si.add(MouseWheelCtrl.Msg_OnChange, this, this.onMouseWheelChange);
+            //
+            this.autoDisposeList.push(this.menuCellRim,this.mapAreaCellRim);
         }
         initList() {
             this.ui.m_list_cell.setVirtual();
@@ -22,6 +50,10 @@ namespace tools {
             this.ui.m_list_cell.refreshVirtualList();
         }
         initMapArea() {
+            this.ui.m_mapArea.addChild(this.cellLayer);
+            this.ui.m_mapArea.addChild(this.mapAreaCellRim);
+            this.mapAreaCellRim.visible = false;
+            //
             this.ui.m_mapArea.width = this.ui.m_mapArea.height = 1;
             this.ui.m_mapArea.y = 10;
             this.ui.m_mapArea.filters = [new egret.GlowFilter(0xDCBA98, 0.8, 15, 15, 2)];
@@ -30,30 +62,34 @@ namespace tools {
             this.ui.m_mapArea.addEventListener(egret.TouchEvent.TOUCH_END, this.onMapArea_TouchEnd, this);
             this.dragHelper = new FuiDragHelper(this.ui.m_mapArea);
             this.autoDisposeList.push(this.dragHelper);
-            this.dragHelper.autoTouchMove = true;
+            this.dragHelper.autoTouchMove = false;
         }
         private list_cell_itemRenderer(i: number, item: fuis.tools_0.UI_MapCellListItem) {
             let sid: StcCellSid = this.ui.m_list_cell.data[i] as StcCellSid;
             item.m_cell1.data = sid;
             (item.m_cell1 as fuis.elements_0.UI_MapCell).m_kind.selectedIndex = sid;
-            item.m_cell4.data = sid;
-            (item.m_cell4.m_n0 as fuis.elements_0.UI_MapCell).m_kind.selectedIndex = sid;
-            (item.m_cell4.m_n1 as fuis.elements_0.UI_MapCell).m_kind.selectedIndex = sid;
-            (item.m_cell4.m_n2 as fuis.elements_0.UI_MapCell).m_kind.selectedIndex = sid;
-            (item.m_cell4.m_n3 as fuis.elements_0.UI_MapCell).m_kind.selectedIndex = sid;
             item.m_cell1.addClickListener(this.onItemCell1.bind(this), this);
-            item.m_cell4.addClickListener(this.onItemCell4.bind(this), this);
+            // item.m_cell4.data = sid;
+            // (item.m_cell4.m_n0 as fuis.elements_0.UI_MapCell).m_kind.selectedIndex = sid;
+            // (item.m_cell4.m_n1 as fuis.elements_0.UI_MapCell).m_kind.selectedIndex = sid;
+            // (item.m_cell4.m_n2 as fuis.elements_0.UI_MapCell).m_kind.selectedIndex = sid;
+            // (item.m_cell4.m_n3 as fuis.elements_0.UI_MapCell).m_kind.selectedIndex = sid;
+            // item.m_cell4.addClickListener(this.onItemCell4.bind(this), this);
         }
-        private currCellSid: StcCellSid = StcCellSid.wood;
-        private currCellNum: number = 1;
+        // private currCellNum: number = 1;
         private onItemCell1(e: egret.TouchEvent) {
-            this.currCellSid = e.currentTarget.data;
-            this.currCellNum = 1;
+            let target: UI_MapCell = e.currentTarget;
+            target.parent.addChild(this.menuCellRim);
+            FuiUtil.copyProp4(this.menuCellRim, target);
+            //
+            this.currCellSid = target.data;
+            this.currPositionSelected=false;
+            // this.currCellNum = 1;
         }
-        private onItemCell4(e: egret.TouchEvent) {
-            this.currCellSid = e.currentTarget.data;
-            this.currCellNum = 4;
-        }
+        // private onItemCell4(e: egret.TouchEvent) {
+        //     this.currCellSid = e.currentTarget.data;
+        //     this.currCellNum = 4;
+        // }
         onBtnOpen() {
             let sid: number = this.getMapSid();
             var progressHandler = function (evt: egret.ProgressEvent): void {
@@ -154,19 +190,45 @@ namespace tools {
                 (this.ui.height - this.ui.m_mapArea.y - 10) / this.ui.m_mapArea.height);
             this.ui.m_mapArea.scaleX = this.ui.m_mapArea.scaleY = scale;
         }
+        private onBtnPositionSelected() {
+            this.ui.m_txtPositionSid.parent.addChild(this.menuCellRim);
+            FuiUtil.copyProp4(this.menuCellRim, this.ui.m_txtPositionSid);
+            this.currCellSid = StcCellSid.star4;
+            this.currPositionSelected=true;
+        }
+        private onBtnPositionSize() {
+            if (this.curMapPositionSize == StcMapCellSize.Size1) {
+                this.curMapPositionSize = StcMapCellSize.Size4;
+                this.ui.m_btnPostionSize.title = "Size4";
+            } else {
+                this.curMapPositionSize = StcMapCellSize.Size1;
+                this.ui.m_btnPostionSize.title = "Size1";
+            }
+        }
+        private onBtnPositionSidKind(sidKind: string) {
+            this.ui.m_txtPositionSid.text = this.findMapPositionNextSid(sidKind);
+        }
+        private findMapPositionNextSid(sidKind: string) {
+            let i = 0;
+            while (i) {
+                if (this.mapPostionDic[sidKind + i.toString()] == undefined) {
+                    break;
+                }
+                i++;
+            }
+            return sidKind+i.toString();
+        }
         private addCell(col: number, row: number) {
             let cell: UI_MapCell = UI_MapCell.createInstance();
+            cell.m_crack.m_lv.selectedIndex = 0;
             this.cells[col][row] = cell;
             cell.setXY(models.fights.FightModelUtil.gridToPos(col), models.fights.FightModelUtil.gridToPos(row));
-            this.ui.m_mapArea.addChild(cell);
+            this.cellLayer.addChild(cell);
             cell.m_kind.selectedIndex = StcCellSid.floor;
         }
         private getMapSid(): number {
             return parseInt(this.ui.m_txtMapId.text);
         }
-
-        private cells: UI_MapCell[][] = [];
-        private currOverCell: UI_MapCell;
 
         private onMapArea_TouchBegin(e: egret.TouchEvent) {
             this.onMapArea_TouchMove(e);
@@ -182,18 +244,26 @@ namespace tools {
                     this.setCurrOverCell(this.cells[col][row]);
                 }
                 if (KeyBoardCtrl.si.altKey) {
-                    this.setCellSidSafe(col, row, StcCellSid.floor);
-                    if (KeyBoardCtrl.si.shiftKey) {
-                        this.setCellSidSafe(col + 1, row, StcCellSid.floor);
-                        this.setCellSidSafe(col, row + 1, StcCellSid.floor);
-                        this.setCellSidSafe(col + 1, row + 1, StcCellSid.floor);
+                    this.clearCell(col,row,KeyBoardCtrl.si.shiftKey?StcMapCellSize.Size4:StcMapCellSize.Size1);
+                    if(this.currPositionSelected){
+                        let positionSid:string = this.ui.m_txtPositionSid.text;
+                        delete this.mapPostionDic[positionSid];
                     }
                 } else if (KeyBoardCtrl.si.ctrlKey) {
-                    this.setCellSidSafe(col, row, this.currCellSid);
-                    if (KeyBoardCtrl.si.shiftKey) {
-                        this.setCellSidSafe(col + 1, row, this.currCellSid, -1, 1);
-                        this.setCellSidSafe(col, row + 1, this.currCellSid, 1, -1);
-                        this.setCellSidSafe(col + 1, row + 1, this.currCellSid, -1, -1);
+                    if(this.currPositionSelected){
+                        let positionSid:string = this.ui.m_txtPositionSid.text;
+                        if(this.mapPostionDic[positionSid]){
+                            this.mapPostionDic[positionSid].m_kind.selectedIndex = StcCellSid.floor;
+                        }
+                        this.setCellSidSafe(col, row, this.currCellSid);
+                        this.mapPostionDic[positionSid] = this.cells[col][row];
+                    }else{
+                        this.setCellSidSafe(col, row, this.currCellSid);
+                        if (KeyBoardCtrl.si.shiftKey) {
+                            this.setCellSidSafe(col + 1, row, this.currCellSid, -1, 1);
+                            this.setCellSidSafe(col, row + 1, this.currCellSid, 1, -1);
+                            this.setCellSidSafe(col + 1, row + 1, this.currCellSid, -1, -1);
+                        }
                     }
                 } else {
                     this.dragHelper.onTouchMove(e);
@@ -202,13 +272,21 @@ namespace tools {
                 this.onMapArea_TouchEnd(e);
             }
         }
+        private clearCell(col:number,row:number, size:StcMapCellSize){
+            this.setCellSidSafe(col, row, StcCellSid.floor);
+            if (size==StcMapCellSize.Size4) {
+                this.setCellSidSafe(col + 1, row, StcCellSid.floor);
+                this.setCellSidSafe(col, row + 1, StcCellSid.floor);
+                this.setCellSidSafe(col + 1, row + 1, StcCellSid.floor);
+            }
+        }
         private setCellSidSafe(col: number, row: number, sid: StcCellSid, sx: number = 1, sy: number = 1) {
             if (this.cells[col] && this.cells[col][row]) {
                 this.cells[col][row].setPivot(0.5, 0.5);
                 this.cells[col][row].m_kind.selectedIndex = sid;
-                this.cells[col][row].scaleX = sx;
-                this.cells[col][row].scaleY = sy;
-                this.cells[col][row].rotation = 180;
+                // this.cells[col][row].scaleX = sx;
+                // this.cells[col][row].scaleY = sy;
+                // this.cells[col][row].rotation = 180;
             }
         }
         private onMapArea_TouchEnd(e: egret.TouchEvent) {
@@ -216,14 +294,17 @@ namespace tools {
         }
         private setCurrOverCell(cell: UI_MapCell) {
             if (this.currOverCell != null) {
-                this.currOverCell.m_crack.m_lv.selectedIndex = 0;
-                this.currOverCell.filters = null;
+                // this.currOverCell.m_crack.m_lv.selectedIndex = 0;
+                // this.currOverCell.filters = null;
                 this.currOverCell = null;
+                this.mapAreaCellRim.visible = false;
             }
             if (cell) {
                 this.currOverCell = cell;
-                this.currOverCell.m_crack.m_lv.selectedIndex = 2;
-                this.currOverCell.filters = [new egret.GlowFilter(0xFFFF00, 0.8, 12, 12, 2)];
+                this.mapAreaCellRim.setXY(this.currOverCell.x, this.currOverCell.y);
+                this.mapAreaCellRim.visible = true;
+                // this.currOverCell.m_crack.m_lv.selectedIndex = 2;
+                // this.currOverCell.filters = [new egret.GlowFilter(0xFFFF00, 0.8, 12, 12, 2)];
             }
         }
         private onMouseWheelChange(delta: number) {
