@@ -19,8 +19,6 @@ namespace astars{
 		previous:INode;
 	}
 	export class Node implements INode {
-		static Word_f = "f";
-		//
 		nextNode:IDoubleLinkedListNode
 		prevNode:IDoubleLinkedListNode;
 		//
@@ -41,6 +39,17 @@ namespace astars{
 		public constructor(col:number , row:number) {
 			this.col = col;
 			this.row = row;
+		}
+
+		public static newNodes(colLen:number,rowLen:number):INode[][]{
+			let nodes:INode[][] = [];
+			for(let i:number=0;i<colLen;i++){
+				nodes[i] = [];
+				for(let j:number=0;j<rowLen;j++){
+					nodes[i][j] = new Node(i,j);
+				}
+			}
+			return nodes;
 		}
 	}
 }

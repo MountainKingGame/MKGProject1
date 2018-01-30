@@ -7,6 +7,8 @@
  */
 namespace astars {
 	export class AStar {
+		static Word_f = "f";
+
 		public grid: Grid;               //网格
 		private openArr: INode[];               //待考察表
 		private openList: DoubleLinkedList;               //待考察表(双链表)
@@ -92,7 +94,7 @@ namespace astars {
 							node = this.openList.pop() as INode;
 							break;
 						case OpenListKind.BinaryHeap:
-							node = BinaryHeapUtil.popMin(this.openArr, Node.Word_f);
+							node = BinaryHeapUtil.popMin(this.openArr, AStar.Word_f);
 							break;
 						default:
 							node = this.openArr.pop();
@@ -224,7 +226,7 @@ namespace astars {
 					}
 					break;
 				case OpenListKind.BinaryHeap:
-					BinaryHeapUtil.pushMin(this.openArr, node, Node.Word_f);
+					BinaryHeapUtil.pushMin(this.openArr, node, AStar.Word_f);
 					break;
 			}
 		}

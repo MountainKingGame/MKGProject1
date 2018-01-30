@@ -54,10 +54,11 @@ namespace astars {
 		 * Creates a grid with a bunch of random unwalkable nodes.
 		 */
 		private makeGrid() {
-			this.aStar.grid = new astars.Grid(30, 30);
+			this.aStar.grid = new astars.Grid();
+			this.aStar.grid.init(Node.newNodes(30,30));
 			for (let i = 0; i < this.aStar.grid.colLen; i++) {
 				for (let j = 0; j < this.aStar.grid.rowLen; j++) {
-					this.aStar.grid.setWalkable(i, j, Math.random() > 0.3);
+					this.aStar.grid.nodes[i][j].walkable = Math.random() > 0.3;
 				}
 			}
 			//
@@ -210,7 +211,7 @@ namespace astars {
 			if (KeyBoardCtrl.si.ctrlKey || KeyBoardCtrl.si.altKey) {
 				var xpos = Math.floor(event.stageX / this._cellSize);
 				var ypos = Math.floor(event.stageY / this._cellSize);
-				this.aStar.grid.setWalkable(xpos, ypos, KeyBoardCtrl.si.altKey);
+				this.aStar.grid[xpos][ypos] = KeyBoardCtrl.si.altKey;
 				this.drawGrid();
 			}
 		}
