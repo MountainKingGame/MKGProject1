@@ -15,14 +15,12 @@
     <image id="e656g" name="floor4.png" path="/images/mapCells/"/>
     <image id="e656h" name="floor5.png" path="/images/mapCells/"/>
     <image id="e656i" name="wood1.png" path="/images/mapCells/"/>
-    <image id="e656j" name="wood2.png" path="/images/mapCells/"/>
     <image id="e656k" name="bullet1.png" path="/images/livings/"/>
     <image id="e656l" name="bullet2.png" path="/images/livings/"/>
     <image id="e656m" name="tank.png" path="/images/livings/"/>
     <image id="rluqn" name="tank1.png" path="/images/livings/"/>
     <image id="rluqo" name="tank2.png" path="/images/livings/"/>
     <image id="rluqp" name="tank3.png" path="/images/livings/"/>
-    <image id="787gq" name="ice128.png" path="/images/mapCells/"/>
     <image id="787gr" name="ice64.png" path="/images/mapCells/"/>
     <image id="nqjqs" name="crack1_128.png" path="/images/others/"/>
     <image id="nqjqt" name="crack1_64.png" path="/images/others/" exported="true"/>
@@ -39,6 +37,10 @@
     <component id="ysfl15" name="TextInput1.xml" path="/comps/" exported="true"/>
     <component id="ysfl16" name="Label1.xml" path="/comps/" exported="true"/>
     <component id="ysfl17" name="FirstPage.xml" path="/uis/" exported="true"/>
+    <image id="xk2t18" name="iron3.png" path="/images/mapCells/"/>
+    <image id="xk2t19" name="river1.png" path="/images/mapCells/"/>
+    <image id="xk2t1a" name="stone1.png" path="/images/mapCells/"/>
+    <image id="xk2t1b" name="stone2.png" path="/images/mapCells/"/>
   </resources>
   <publish name="elements_0" genCode="true"/>
 </packageDescription>
