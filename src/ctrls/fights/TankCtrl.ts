@@ -1,6 +1,6 @@
 class TankCtrl extends CtrlBase<fuis.elements_1.UI_Tank>{
     vo: models.fights.TankVo;
-    battle: FightCtrl;
+    fight: FightCtrl;
     movableEleCtrl: MovableEleCtrl;
     constructor() {
         super(fuis.elements_1.UI_Tank.createInstance());
@@ -17,7 +17,7 @@ class TankCtrl extends CtrlBase<fuis.elements_1.UI_Tank>{
         this.movableEleCtrl = new MovableEleCtrl(this.ui);
         this.movableEleCtrl.changeDir = true;
         this.movableEleCtrl.vo = this.vo;
-        this.movableEleCtrl.battle = this.battle;
+        this.movableEleCtrl.fight = this.fight;
         this.movableEleCtrl.init();
         // this.ui.alpha = 0.3;
     }

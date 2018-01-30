@@ -6,7 +6,7 @@ class FightCtrl_Ticker {
     private frameOutCallbackDic: { [key: number]: Function } = {};
     public init() {
         this.lastMs = new Date().getTime();
-        this.nextFrameNeedTime = models.fights.FightModelConfig.si.modelMsPerFrame;
+        this.nextFrameNeedMs = models.fights.FightModelConfig.si.modelMsPerFrame;
         MsgMgr.si.add(CtrlConst.Msg_OnGameTick, this, this.tick);
         //===
         // this.frameOutCallbackDic[FightFrameOutputKind.TankDirChange] = ;//TODO:
@@ -28,7 +28,7 @@ class FightCtrl_Ticker {
     /** 上一帧多出来的时间 */
     lastFrameExtraMs: number = 0;
     /** 需要多少ms到下一个关键帧 */
-    nextFrameNeedTime: number = 0;
+    nextFrameNeedMs: number = 0;
     pausing = false;
 
     private hitCellBoomEffDic: { [key: number]: true };//一个子弹可以击中多个cell,但每帧仅为这个子弹显示一次特效
@@ -44,12 +44,12 @@ class FightCtrl_Ticker {
         //--
         if (this.ctrl.proxy.isChaseFrame) {
             this.ctrl.proxy.isFrame = true;
-            this.nextFrameNeedTime = 0;
+            this.nextFrameNeedMs = 0;
         } else {
             let deltaMs = this.currMs - this.lastMs;
             if (deltaMs > 1000) {
                 this.lastFrameExtraMs = 0;
-                this.nextFrameNeedTime = 0;
+                this.nextFrameNeedMs = 0;
                 this.lastMs = this.currMs;
                 return;//TODO: 断线重连
             }
@@ -57,13 +57,13 @@ class FightCtrl_Ticker {
                 this.ctrl.proxy.isFrame = true;
                 this.lastFrameExtraMs = (deltaMs + this.lastFrameExtraMs) - models.fights.FightModelConfig.si.modelMsPerFrame;
                 if (this.lastFrameExtraMs >= models.fights.FightModelConfig.si.modelMsPerFrame) {
-                    this.nextFrameNeedTime = 0;
+                    this.nextFrameNeedMs = 0;
                 } else {
-                    this.nextFrameNeedTime = models.fights.FightModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
+                    this.nextFrameNeedMs = models.fights.FightModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
                 }
             } else {
                 this.lastFrameExtraMs += deltaMs;
-                this.nextFrameNeedTime = models.fights.FightModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
+                this.nextFrameNeedMs = models.fights.FightModelConfig.si.modelMsPerFrame - this.lastFrameExtraMs;
             }
         }
         //--

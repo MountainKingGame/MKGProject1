@@ -230,7 +230,7 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	public addTank(vo: models.fights.TankVo) {
 		let tank: TankCtrl = new TankCtrl();
 		tank.vo = vo;
-		tank.battle = this;
+		tank.fight = this;
 		tank.init();
 		this.tankLayer.addChild(tank.ui);
 		this.tankDic[vo.uid] = tank;
@@ -241,7 +241,7 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	public addBullet(vo: models.fights.BulletVo) {
 		let bullet: BulletCtrl = new BulletCtrl();
 		bullet.vo = vo;
-		bullet.battle = this;
+		bullet.fight = this;
 		bullet.init();
 		this.bulletLayer.addChild(bullet.ui);
 		this.bulletDic[vo.uid] = bullet;

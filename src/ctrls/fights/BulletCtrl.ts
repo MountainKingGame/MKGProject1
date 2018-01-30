@@ -1,6 +1,6 @@
 class BulletCtrl extends CtrlBase<fuis.elements_1.UI_Bullet>{
     vo: models.fights.BulletVo;
-    battle: FightCtrl;
+    fight: FightCtrl;
     movableEleCtrl: MovableEleCtrl;
     constructor() {
         super(fuis.elements_1.UI_Bullet.createInstance());
@@ -14,7 +14,7 @@ class BulletCtrl extends CtrlBase<fuis.elements_1.UI_Bullet>{
         this.movableEleCtrl = new MovableEleCtrl(this.ui);
         this.movableEleCtrl.changeDir = true;
         this.movableEleCtrl.vo = this.vo;
-        this.movableEleCtrl.battle = this.battle;
+        this.movableEleCtrl.fight = this.fight;
         this.movableEleCtrl.init();
     }
     tick(): void {
@@ -28,7 +28,7 @@ class BulletCtrl extends CtrlBase<fuis.elements_1.UI_Bullet>{
     }
     public dispose(): void {
         this.vo = null;
-        this.battle = null;
+        this.fight = null;
         this.movableEleCtrl.dispose();
         this.movableEleCtrl = null;
         super.dispose();
