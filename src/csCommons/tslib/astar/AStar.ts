@@ -102,7 +102,7 @@ namespace astars {
 					}
 				}
 			}
-			this.generateResultPath();
+			this.optimizeResultPath();
 			return true;
 		}
 
@@ -268,7 +268,7 @@ namespace astars {
 		}
 
 		//生成最终路径
-		private generateResultPath(): void {
+		private optimizeResultPath(): void {
 			//---普通
 			// this._path = [];
 			// var node: Node = this._endNode;
@@ -280,18 +280,19 @@ namespace astars {
 			//---路径压缩
 			let lastOffsetX: number;
 			let lastOffsetY: number;
-			this.resultPath = [];
 			var node: INode = this.endNode;
+			this.resultPath = [];
 			this.resultPath.push(node);
 			while (node != this.startNode) {
 				if (this.checkWalkable(node, false) == false) {
-					// if (node.walkable == false) {
 					node = node.previous;
 					this.resultPath = [node];
 				} else {
 					let offsetX: number = node.previous.col - node.col;
 					let offsetY: number = node.previous.row - node.row;
-					if (lastOffsetX == undefined || lastOffsetX != offsetX || lastOffsetY != offsetY) {
+					if (this.resultPath.length==1 || (lastOffsetX == undefined || lastOffsetX != offsetX || lastOffsetY != offsetY) {
+						//this.resultPath.length==1时,不要替换,因为这是最终目的点,这个点可能是endNode,也可能是walkable=false时重新找出来的点
+						//this.resultPath.length不可能=0
 						lastOffsetX = offsetX;
 						lastOffsetY = offsetY;
 						node = node.previous;

@@ -61,9 +61,6 @@ namespace astars {
 					this.aStar.grid.nodes[i][j].walkable = Math.random() > 0.3;
 				}
 			}
-			//
-			// this.aStar._grid.setWalkable(0, 0, false);
-			//
 			this.drawGrid();
 		}
 
@@ -76,7 +73,6 @@ namespace astars {
 			for (let i = 0; i < this.aStar.grid.colLen; i++) {
 				for (let j = 0; j < this.aStar.grid.rowLen; j++) {
 					var node: astars.INode = this.aStar.grid.nodes[i][j];
-					// console.log("[log] drawGrid node", i, j, node.walkable);
 					//---有bug,连续画图有问题
 					// this.graphics.beginFill(this.getColor(node));
 					// this.graphics.drawRect(i * this._cellSize, j * this._cellSize, this._cellSize, this._cellSize);
