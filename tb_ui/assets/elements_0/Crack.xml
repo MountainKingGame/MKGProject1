@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="64,64">
-  <controller name="lv" exported="true" pages="0,,1,,2,,3,,4,star1,5,star2,6,star3" selected="4"/>
+  <controller name="lv" exported="true" pages="0,,1,,2,,3," selected="0"/>
   <displayList>
-    <loader id="n3_nqjq" name="imgCrack" xy="0,0" size="64,64" url="ui://ybsps8tfxk2t1g" align="center" vAlign="middle" fill="scaleFree">
-      <gearIcon controller="lv" pages="0,1,2,3,4,5,6" values="|ui://ybsps8tfnqjqt|ui://ybsps8tfnqjqv|ui://ybsps8tfnqjqx|ui://ybsps8tfxk2t1g|ui://ybsps8tfxk2t1h|ui://ybsps8tfxk2t1i"/>
+    <loader id="n3_nqjq" name="imgCrack" xy="0,0" size="64,64" align="center" vAlign="middle" fill="scaleFree">
+      <gearIcon controller="lv" pages="0,1,2,3" values="|ui://ybsps8tfnqjqt|ui://ybsps8tfnqjqv|ui://ybsps8tfnqjqx"/>
       <relation target="" sidePair="width-width,height-height"/>
     </loader>
   </displayList>

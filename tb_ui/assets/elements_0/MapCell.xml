@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="64,64">
-  <controller name="kind" exported="true" pages="0,floor,1,wood,2,stone,3,iron,4,black,5,river,6,cover,7,ice,8,泥地,9,火焰,10,star1,11,star4" selected="10"/>
+  <controller name="kind" exported="true" pages="0,floor,1,wood,2,stone,3,iron,4,black,5,river,6,cover,7,ice,8,泥地,9,火焰" selected="9"/>
   <displayList>
-    <loader id="n2_u9bo" name="img" xy="0,0" size="64,64" url="ui://ybsps8tfxk2t1d" align="center" vAlign="middle" fill="scaleFree">
-      <gearSize controller="kind" pages="11" values="128,128,1,1" default="64,64,1,1"/>
-      <gearIcon controller="kind" pages="0,1,2,3,4,5,7,10,11" values="|ui://ybsps8tfu9bo8|ui://ybsps8tfxk2t1a|ui://ybsps8tfxk2t18|ui://ybsps8tfced5z|ui://ybsps8tfxk2t19|ui://ybsps8tf787gr|ui://ybsps8tfxk2t1d|ui://ybsps8tfxk2t1c" default="ui://ybsps8tfe656i"/>
+    <loader id="n2_u9bo" name="img" xy="0,0" size="64,64" url="ui://ybsps8tfe656i" align="center" vAlign="middle" fill="scaleFree">
+      <gearIcon controller="kind" pages="0,1,2,3,4,5,7" values="|ui://ybsps8tfu9bo8|ui://ybsps8tfxk2t1a|ui://ybsps8tfxk2t18|ui://ybsps8tfced5z|ui://ybsps8tfxk2t19|ui://ybsps8tf787gr" default="ui://ybsps8tfe656i"/>
     </loader>
-    <component id="n3_nqjq" name="crack" src="hz8ry" xy="0,0" size="64,64" controller="lv,5">
-      <gearSize controller="kind" pages="11" values="128,128,1,1" default="64,64,1,1"/>
-    </component>
+    <component id="n3_nqjq" name="crack" src="hz8ry" xy="0,0" size="64,64" locked="true" controller="lv,0"/>
   </displayList>
 </component>
