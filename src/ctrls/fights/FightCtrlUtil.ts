@@ -12,4 +12,7 @@ class FightCtrlUtil{
         let third:number = maxVal/3;
         ui.m_lv.selectedIndex = Math.ceil((maxVal-currVal)/third);
     }
+    static setUIXYByGrid(ui:fairygui.GComponent,col:number,row:number){
+        ui.setXY(models.fights.FightModelUtil.gridToPos(col), models.fights.FightModelUtil.gridToPos(row));
+    }
 }

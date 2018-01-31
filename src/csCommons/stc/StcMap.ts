@@ -6,11 +6,13 @@ enum StcCellSid{
     block = 4,
     river = 5,
     cover = 6,
-    star1 = 10,
-    star4 = 11,
 }
 enum StcMapVersion{
     v1 = 1,
+}
+enum StcCellSize{
+    S1x1 = 11,
+    S2x2 = 22,
 }
 enum StcMapKind{
     Kind1 = 1,
@@ -42,6 +44,9 @@ class StcMap extends StcCacheBase<IStcMapVo>{
                 vo.positionMap = {};
                 for (let i = 0; i < vo.positions.length; i++) {
                     let item = vo.positions[i];
+                    if(!item.size){
+                        item.size = StcCellSize.S2x2;
+                    }
                     vo.positionMap[item.sid] = item;
                 }
                 //-
@@ -69,6 +74,7 @@ interface IStcMapPosition {
     sid?: string;
     col?: number;
     row?: number;
+    size?: StcCellSize;
     dir?: number;
 }
 interface IStcMapFactory {
