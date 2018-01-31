@@ -40,20 +40,25 @@ class StcMap extends StcCacheBase<IStcMapVo>{
                 let vo: IStcMapVo = RES.getRes(resName);
                 if (!vo.sid) vo.sid = i;
                 this.voDict[i] = vo;
-                //-auto fill
-                vo.positionMap = {};
-                for (let i = 0; i < vo.positions.length; i++) {
-                    let item = vo.positions[i];
-                    if(!item.size){
-                        item.size = StcCellSize.S2x2;
-                    }
-                    vo.positionMap[item.sid] = item;
-                }
-                //-
+                StcMap.validateMapVo(vo);
                 i++;
             } else {
                 break;
             }
+        }
+    }
+    static validateMapVo(vo: IStcMapVo){
+        //-auto fill
+        vo.positionMap = {};
+        for (let i = 0; i < vo.positions.length; i++) {
+            let item = vo.positions[i];
+            if(!item.dir){
+                item.dir = Direction4.Up;
+            }
+            if(!item.size){
+                item.size = StcCellSize.S2x2;
+            }
+            vo.positionMap[item.sid] = item;
         }
     }
 }
@@ -75,11 +80,11 @@ interface IStcMapPosition {
     col?: number;
     row?: number;
     size?: StcCellSize;
-    dir?: number;
+    dir?: Direction4;
 }
 interface IStcMapFactory {
     kind?: StcMapFactoryKind;
-    group?:number;
+    group?:models.fights.FightGroup;
     max?:number;
     delayMs?: number;
     gapMs?: number;

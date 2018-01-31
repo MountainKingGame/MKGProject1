@@ -17,13 +17,17 @@ module fuis.tools_0 {
 		public m_list_cell:fairygui.GList;
 		public m_txtPositionSid:fairygui.GLabel;
 		public m_btnPostionSelected:fairygui.GButton;
+		public m_btnPostionSize:fairygui.GButton;
+		public m_btnPostionDir:fairygui.GButton;
 		public m_btnPostionPlayer:fairygui.GButton;
 		public m_btnPostionHome:fairygui.GButton;
 		public m_btnPostionEnemy:fairygui.GButton;
 		public m_btnPostionBoss:fairygui.GButton;
-		public m_btnPostionSize:fairygui.GButton;
+		public m_btnPostionNumSub:fairygui.GButton;
+		public m_btnPostionNumAdd:fairygui.GButton;
 		public m_menuTopBar:fairygui.GGraph;
 		public m_groupMenu:fairygui.GGroup;
+		public m_scaleBar:fairygui.GComponent;
 
 		public static URL:string = "ui://i6vaqd5aysfl0";
 
@@ -51,13 +55,17 @@ module fuis.tools_0 {
 			this.m_list_cell = <fairygui.GList><any>(this.getChildAt(10));
 			this.m_txtPositionSid = <fairygui.GLabel><any>(this.getChildAt(11));
 			this.m_btnPostionSelected = <fairygui.GButton><any>(this.getChildAt(12));
-			this.m_btnPostionPlayer = <fairygui.GButton><any>(this.getChildAt(13));
-			this.m_btnPostionHome = <fairygui.GButton><any>(this.getChildAt(14));
-			this.m_btnPostionEnemy = <fairygui.GButton><any>(this.getChildAt(15));
-			this.m_btnPostionBoss = <fairygui.GButton><any>(this.getChildAt(16));
-			this.m_btnPostionSize = <fairygui.GButton><any>(this.getChildAt(17));
-			this.m_menuTopBar = <fairygui.GGraph><any>(this.getChildAt(18));
-			this.m_groupMenu = <fairygui.GGroup><any>(this.getChildAt(19));
+			this.m_btnPostionSize = <fairygui.GButton><any>(this.getChildAt(13));
+			this.m_btnPostionDir = <fairygui.GButton><any>(this.getChildAt(14));
+			this.m_btnPostionPlayer = <fairygui.GButton><any>(this.getChildAt(15));
+			this.m_btnPostionHome = <fairygui.GButton><any>(this.getChildAt(16));
+			this.m_btnPostionEnemy = <fairygui.GButton><any>(this.getChildAt(17));
+			this.m_btnPostionBoss = <fairygui.GButton><any>(this.getChildAt(18));
+			this.m_btnPostionNumSub = <fairygui.GButton><any>(this.getChildAt(19));
+			this.m_btnPostionNumAdd = <fairygui.GButton><any>(this.getChildAt(20));
+			this.m_menuTopBar = <fairygui.GGraph><any>(this.getChildAt(21));
+			this.m_groupMenu = <fairygui.GGroup><any>(this.getChildAt(22));
+			this.m_scaleBar = <fairygui.GComponent><any>(this.getChildAt(23));
 		}
 	}
 }

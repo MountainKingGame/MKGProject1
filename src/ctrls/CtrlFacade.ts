@@ -19,16 +19,19 @@ class CtrlFacade{
         CtrlConfig.si.viewFrameRate = this.stage.frameRate;
         CtrlConfig.si.init();
         //===
-        fairygui.UIPackage.addPackage("test_1");
+        fairygui.UIPackage.addPackage("basic");
+        fairygui.UIPackage.addPackage("builder");
+        fairygui.UIPackage.addPackage("movieClips_1");
         fairygui.UIPackage.addPackage("elements_0");
         fairygui.UIPackage.addPackage("elements_1");
         fairygui.UIPackage.addPackage("joysticks_1");
-        fairygui.UIPackage.addPackage("movieClips_1");
         fairygui.UIPackage.addPackage("tools_0");
+        fairygui.UIPackage.addPackage("test_1");
         fuis.elements_0.elements_0Binder.bindAll();
         fuis.elements_1.elements_1Binder.bindAll();
         fuis.joysticks_1.joysticks_1Binder.bindAll();
         fuis.tools_0.tools_0Binder.bindAll();
+        fuis.test_1.test_1Binder.bindAll();
         //===
         this.ctrlMgr = new CtrlMgr();
         CtrlMgr.si = this.ctrlMgr;

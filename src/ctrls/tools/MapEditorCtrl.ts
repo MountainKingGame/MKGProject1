@@ -9,8 +9,8 @@ namespace tools {
         private currCellSid: StcCellSid = StcCellSid.wood;
         private currPositionSelected: boolean = false;
         private mapPostionDic: { [key: string]: MapPositionCtrl } = {};
-        private currMapTouchOverCell: UI_MapCell;
-        private curMapPositionSize: StcCellSize;
+        private curMapPositionDir;
+        private curMapPositionSize;
         public dispose() {
             this.disposePositionDic();
             this.dragHelper = null;
@@ -25,27 +25,41 @@ namespace tools {
         }
         init() {
             super.init();
+            let scaleBarCtrl:ScaleBarCtrl = new ScaleBarCtrl(this.ui.m_scaleBar as fuis.elements_0.UI_ScaleBar);
+            scaleBarCtrl.target = this.ui;
+            scaleBarCtrl.init();
+            this.autoDisposeList.push(scaleBarCtrl);
+            //
             this.menuCellRim = fuis.tools_0.UI_CellRimGreen.createInstance();
             this.menuCellRim.touchable = false;
-            this.mapAreaCellRim = fuis.tools_0.UI_CellRimGreen.createInstance();
-            this.mapAreaCellRim.touchable = false;
+            this.ui.m_txtMapId.text = "1";
             this.ui.m_txtCol.text = "20";
             this.ui.m_txtRow.text = "20";
             this.ui.m_btnOpen.addClickListener(this.onBtnOpen, this);
             this.ui.m_btnSave.addClickListener(this.onBtnSave, this);
             this.ui.m_btnSetSize.addClickListener(this.onBtnSetSize, this);
+            //---
+            this.initList();
+            //---position
+            this.ui.m_txtPositionSid.addEventListener(egret.Event.CHANGE, this.txtPositionSid_onChange, this);
             this.ui.m_btnPostionSelected.addClickListener(this.onBtnPositionSelected, this);
-            this.ui.m_btnPostionSize.addClickListener(this.onBtnPositionSize, this);
-            this.ui.m_txtPositionSid.text = "p0";
+            this.onBtnPositionSidKind(StcMapPositionSidKind.Player)
             this.ui.m_btnPostionPlayer.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Player) }, this);
             this.ui.m_btnPostionHome.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Home) }, this);
             this.ui.m_btnPostionEnemy.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Enemy) }, this);
             this.ui.m_btnPostionBoss.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Boss) }, this);
-
-            this.ui.m_txtMapId.text = "1";
-            this.initList();
-            this.curMapPositionSize = StcCellSize.S2x2;
-            this.ui.m_btnPostionSize.title = "2x2";
+            this.ui.m_btnPostionNumSub.addClickListener(() => this.onBtnPostionNumChange(-1), this);
+            this.ui.m_btnPostionNumAdd.addClickListener(() => this.onBtnPostionNumChange(+1), this);
+            this.ui.m_btnPostionDir.addClickListener(this.onBtnPositionDir, this);
+            this.ui.m_btnPostionSize.addClickListener(this.onBtnPositionSize, this);
+            //-
+            this.curMapPositionDir = Direction4.Up;
+            this.validateBtnPositionDir();
+            this.curMapPositionSize = StcCellSize.S1x1;
+            this.validateBtnPositionSize();
+            //---
+            this.mapAreaCellRim = fuis.tools_0.UI_CellRimGreen.createInstance();
+            this.mapAreaCellRim.touchable = false;
             this.initMapArea();
             //---
             MsgMgr.si.add(MouseWheelCtrl.Msg_OnChange, this, this.onMouseWheelChange);
@@ -142,6 +156,7 @@ namespace tools {
         openMapJsonStr(jsonStr: string) {
             this.disposePositionDic();
             let mapVo: IStcMapVo = JSON.parse(jsonStr);
+            StcMap.validateMapVo(mapVo);
             this.ui.m_txtCol.text = mapVo.cells.length.toString();
             this.ui.m_txtRow.text = mapVo.cells[0].length.toString();
             this.onBtnSetSize();
@@ -153,8 +168,7 @@ namespace tools {
             }
             for (let i = 0; i < mapVo.positions.length; i++) {
                 let positionVo: IStcMapPosition = mapVo.positions[i];
-                this.addPostionCtrl(positionVo.sid, positionVo.col, positionVo.row);
-                this.validatePositionCtrlSize(positionVo.sid,positionVo.size);
+                this.addPostionCtrl(positionVo.sid, positionVo.col, positionVo.row, positionVo.dir, positionVo.size);
             }
         }
         onBtnSave() {
@@ -176,6 +190,7 @@ namespace tools {
                 vo.sid = key;
                 vo.col = positionCtrl.col;
                 vo.row = positionCtrl.row;
+                vo.dir = positionCtrl.dir;
                 vo.size = positionCtrl.size;
                 mapVo.positions.push(vo);
             }
@@ -233,23 +248,26 @@ namespace tools {
                 (this.ui.height - this.ui.m_mapArea.y - 10) / this.ui.m_mapArea.height);
             this.ui.m_mapArea.scaleX = this.ui.m_mapArea.scaleY = scale;
         }
+        private txtPositionSid_onChange() {
+            this.onBtnPositionSelected();
+        }
         private onBtnPositionSelected() {
             this.ui.m_txtPositionSid.parent.addChild(this.menuCellRim);
             FuiUtil.copyProp4(this.menuCellRim, this.ui.m_txtPositionSid);
             this.currPositionSelected = true;
-        }
-        private onBtnPositionSize() {
-            if (this.curMapPositionSize == StcCellSize.S2x2) {
-                this.curMapPositionSize = StcCellSize.S1x1;
-                this.ui.m_btnPostionSize.title = "1x1";
-            } else {
-                this.curMapPositionSize = StcCellSize.S2x2;
-                this.ui.m_btnPostionSize.title = "2x2";
+            //
+            let positionSid: string = this.ui.m_txtPositionSid.text;
+            let positionCtrl: MapPositionCtrl = this.mapPostionDic[positionSid];
+            if(positionCtrl){
+                this.curMapPositionDir = positionCtrl.dir;
+                this.validateBtnPositionDir();
+                this.curMapPositionSize = positionCtrl.size;
+                this.validateBtnPositionSize();
             }
-            this.validatePositionCtrlSizeAuto();
         }
         private onBtnPositionSidKind(sidKind: string) {
             this.ui.m_txtPositionSid.text = this.findMapPositionNextSid(sidKind);
+            this.onBtnPositionSelected();
         }
         private findMapPositionNextSid(sidKind: string) {
             let i = 0;
@@ -260,6 +278,41 @@ namespace tools {
                 i++;
             }
             return sidKind + i.toString();
+        }
+        private onBtnPostionNumChange(change: number) {
+            let match = this.ui.m_txtPositionSid.text.match(/[0-9]+/);
+            if (match && match.length > 0) {
+                let num = parseInt(match[0]);
+                let index = this.ui.m_txtPositionSid.text.indexOf(match[0]);
+                num += change;
+                if (num < 0) {
+                    num = 0;
+                }
+                this.ui.m_txtPositionSid.text = this.ui.m_txtPositionSid.text.replace(match[0], num.toString());
+            }
+        }
+        private onBtnPositionDir() {
+            this.curMapPositionDir++;
+            if (this.curMapPositionDir > Direction4.Up) {
+                this.curMapPositionDir = Direction4.Left;
+            }
+            this.validateBtnPositionDir();
+            this.validatePositionDir(this.ui.m_txtPositionSid.text, this.curMapPositionDir);
+        }
+        private validateBtnPositionDir() {
+            this.ui.m_btnPostionDir.text = "dir" + this.curMapPositionDir.toString();
+        }
+        private onBtnPositionSize() {
+            if (this.curMapPositionSize == StcCellSize.S2x2) {
+                this.curMapPositionSize = StcCellSize.S1x1;
+            } else {
+                this.curMapPositionSize = StcCellSize.S2x2;
+            }
+            this.validateBtnPositionSize();
+            this.validatePositionCtrlSize(this.ui.m_txtPositionSid.text, this.curMapPositionSize);
+        }
+        private validateBtnPositionSize() {
+            this.ui.m_btnPostionSize.title = `size${this.curMapPositionSize}`;
         }
         private addCell(col: number, row: number) {
             let cell: UI_MapCell = UI_MapCell.createInstance();
@@ -272,7 +325,6 @@ namespace tools {
         private getMapSid(): number {
             return parseInt(this.ui.m_txtMapId.text);
         }
-
         private onMapArea_TouchBegin(e: egret.TouchEvent) {
             this.onMapArea_TouchMove(e);
         }
@@ -282,7 +334,7 @@ namespace tools {
             var col = models.fights.FightModelUtil.posToGrid(tempXY.x);
             var row = models.fights.FightModelUtil.posToGrid(tempXY.y);
             if (this.cells[col] && this.cells[col][row]) {
-                this.setCurrOverCell(this.cells[col][row], KeyBoardCtrl.si.shiftKey);
+                this.setCurrMapAreaOver(this.cells[col][row], KeyBoardCtrl.si.shiftKey);
             }
             // console.log(e.stageX, e.stageY);
             if (KeyBoardCtrl.si.ctrlKey) {
@@ -290,13 +342,12 @@ namespace tools {
                     let positionSid: string = this.ui.m_txtPositionSid.text;
                     let positionCtrl: MapPositionCtrl = this.mapPostionDic[positionSid];
                     if (positionCtrl == undefined) {
-                        this.addPostionCtrl(positionSid, col, row)
+                        this.addPostionCtrl(positionSid, col, row, this.curMapPositionDir, this.curMapPositionSize);
                     } else {
                         positionCtrl.col = col;
                         positionCtrl.row = row;
                         FightCtrlUtil.setUIXYByGrid(positionCtrl.ui, positionCtrl.col, positionCtrl.row);
                     }
-                    this.validatePositionCtrlSizeAuto();
                 } else {
                     this.setCellSidSafe(col, row, this.currCellSid);
                     if (KeyBoardCtrl.si.shiftKey) {
@@ -319,28 +370,41 @@ namespace tools {
             //
             this.dragHelper.onTouchMove(e);
         }
-        private addPostionCtrl(sid: string, col: number, row: number) {
-            let positionCtrl: MapPositionCtrl = new MapPositionCtrl(UI_Star4.createInstance());
+        private addPostionCtrl(sid: string, col: number, row: number, dir: Direction4, size: StcCellSize) {
+            let positionCtrl: MapPositionCtrl = new MapPositionCtrl(new fairygui.GComponent());
             positionCtrl.positionSid = sid;
             positionCtrl.col = col;
             positionCtrl.row = row;
+            positionCtrl.dir = dir;
+            positionCtrl.size = size;
             positionCtrl.init();
             this.positionLayer.addChild(positionCtrl.ui);
             this.mapPostionDic[sid] = positionCtrl;
             FightCtrlUtil.setUIXYByGrid(positionCtrl.ui, positionCtrl.col, positionCtrl.row);
+            this.validatePositionDir(sid, dir);
+            this.validatePositionCtrlSize(sid, size);
         }
-        private validatePositionCtrlSizeAuto() {
+        private getCurrPositionCtrl(): MapPositionCtrl {
             let positionSid: string = this.ui.m_txtPositionSid.text;
-            this.validatePositionCtrlSize(positionSid,this.curMapPositionSize);
+            return this.mapPostionDic[positionSid];
         }
-        private validatePositionCtrlSize(positionSid:string,size:StcCellSize) {
+        private validatePositionDir(positionSid: string, dir: Direction4) {
+            let positionCtrl: MapPositionCtrl = this.mapPostionDic[positionSid];
+            if (positionCtrl) {
+                positionCtrl.dir = dir;
+                positionCtrl.ui1.rotation = CommonHelper.dir4ToDegree(dir);
+            }
+        }
+        private validatePositionCtrlSize(positionSid: string, size: StcCellSize) {
             let positionCtrl: MapPositionCtrl = this.mapPostionDic[positionSid];
             if (positionCtrl) {
                 positionCtrl.size = size;
                 if (size == StcCellSize.S1x1) {
-                    positionCtrl.ui.setSize(models.fights.FightModelConfig.si.cellSize,models.fights.FightModelConfig.si.cellSize);
+                    positionCtrl.ui1.setSize(models.fights.FightModelConfig.si.cellSize, models.fights.FightModelConfig.si.cellSize);
+                    positionCtrl.ui1.setXY(models.fights.FightModelConfig.si.cellSize/2,models.fights.FightModelConfig.si.cellSize/2);
                 } else {
-                    positionCtrl.ui.setSize(models.fights.FightModelConfig.si.cellSize*2,models.fights.FightModelConfig.si.cellSize*2);
+                    positionCtrl.ui1.setSize(models.fights.FightModelConfig.si.cellSize * 2, models.fights.FightModelConfig.si.cellSize * 2);
+                    positionCtrl.ui1.setXY(models.fights.FightModelConfig.si.cellSize,models.fights.FightModelConfig.si.cellSize);
                 }
             }
         }
@@ -362,22 +426,15 @@ namespace tools {
             }
         }
         private onMapArea_TouchEnd(e: egret.TouchEvent) {
-            this.setCurrOverCell(null);
+            this.setCurrMapAreaOver(null);
         }
-        private setCurrOverCell(cell: UI_MapCell, isSize4: boolean = false) {
-            if (this.currMapTouchOverCell != null) {
-                // this.currOverCell.m_crack.m_lv.selectedIndex = 0;
-                // this.currOverCell.filters = null;
-                this.currMapTouchOverCell = null;
-                this.mapAreaCellRim.visible = false;
-            }
+        private setCurrMapAreaOver(cell: UI_MapCell, isSize4: boolean = false) {
             if (cell) {
-                this.currMapTouchOverCell = cell;
-                this.mapAreaCellRim.setXY(this.currMapTouchOverCell.x, this.currMapTouchOverCell.y);
+                this.mapAreaCellRim.setXY(cell.x, cell.y);
                 this.mapAreaCellRim.visible = true;
                 this.mapAreaCellRim.setScale(isSize4 ? 2 : 1, isSize4 ? 2 : 1);
-                // this.currOverCell.m_crack.m_lv.selectedIndex = 2;
-                // this.currOverCell.filters = [new egret.GlowFilter(0xFFFF00, 0.8, 12, 12, 2)];
+            } else {
+                this.mapAreaCellRim.visible = false;
             }
         }
         private onMouseWheelChange(delta: number) {
