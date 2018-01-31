@@ -46,6 +46,7 @@
     <image id="xk2t1h" name="crack2_star.128.png" path="/images/cracks/" exported="true"/>
     <image id="xk2t1i" name="crack3_star.128.png" path="/images/cracks/" exported="true"/>
     <component id="xk2t1j" name="CrackStar.xml" path="/" exported="true"/>
+    <component id="nk1s1k" name="ScaleBar.xml" path="/comps/" exported="true"/>
   </resources>
   <publish name="elements_0" genCode="true"/>
 </packageDescription>

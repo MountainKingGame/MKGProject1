@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="239,109" extention="ScrollBar">
+  <displayList>
+    <image id="n0" name="n0" src="xuale" xy="0,0" size="239,109">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <graph id="n5" name="bar" xy="15,0" size="209,109">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <component id="n4" name="grip" src="xualh" xy="36,0" size="20,109">
+      <relation target="" sidePair="height-height"/>
+    </component>
+    <component id="n3" name="arrow2" src="kwng74" xy="224,0" size="15,109">
+      <relation target="" sidePair="right-right,height-height"/>
+    </component>
+    <component id="n2" name="arrow1" src="kwng73" xy="0,0" size="15,109">
+      <relation target="" sidePair="left-left,height-height"/>
+    </component>
+  </displayList>
+  <ScrollBar/>
+</component>

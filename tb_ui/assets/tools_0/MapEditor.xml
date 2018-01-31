@@ -38,29 +38,40 @@
       <item/>
       <item/>
     </list>
-    <component id="n19_xk2t" name="txtPositionSid" src="ysfl15" pkg="ybsps8tf" xy="8,400" size="172,35" group="n25_xk2t" tooltips="mapId">
+    <component id="n19_xk2t" name="txtPositionSid" src="ysfl15" pkg="ybsps8tf" xy="8,394" size="172,35" group="n25_xk2t" tooltips="mapId">
       <Label title="p0/h0/e0/b0&#xD;&#xD;"/>
     </component>
-    <component id="n20_xk2t" name="btnPostionSelected" src="ysfl14" pkg="ybsps8tf" xy="187,398" size="82,40" group="n25_xk2t">
-      <Button title="Position"/>
+    <component id="n20_xk2t" name="btnPostionSelected" src="ysfl14" pkg="ybsps8tf" xy="187,391" size="82,40" group="n25_xk2t">
+      <Button title="Select"/>
     </component>
-    <component id="n21_xk2t" name="btnPostionPlayer" src="ysfl14" pkg="ybsps8tf" xy="10,447" size="30,32" group="n25_xk2t">
+    <component id="n27_xk2t" name="btnPostionSize" src="ysfl14" pkg="ybsps8tf" xy="187,468" size="82,30" group="n25_xk2t">
+      <Button title="size"/>
+    </component>
+    <component id="n30_nk1s" name="btnPostionDir" src="ysfl14" pkg="ybsps8tf" xy="187,434" size="82,30" group="n25_xk2t">
+      <Button title="dir"/>
+    </component>
+    <component id="n21_xk2t" name="btnPostionPlayer" src="ysfl14" pkg="ybsps8tf" xy="3,448" size="30,32" group="n31_nk1s">
       <Button title="p"/>
     </component>
-    <component id="n22_xk2t" name="btnPostionHome" src="ysfl14" pkg="ybsps8tf" xy="50,447" size="30,32" group="n25_xk2t">
+    <component id="n22_xk2t" name="btnPostionHome" src="ysfl14" pkg="ybsps8tf" xy="33,448" size="30,32" group="n31_nk1s">
       <Button title="h"/>
     </component>
-    <component id="n23_xk2t" name="btnPostionEnemy" src="ysfl14" pkg="ybsps8tf" xy="90,447" size="30,32" group="n25_xk2t">
+    <component id="n23_xk2t" name="btnPostionEnemy" src="ysfl14" pkg="ybsps8tf" xy="63,448" size="30,32" group="n31_nk1s">
       <Button title="e"/>
     </component>
-    <component id="n24_xk2t" name="btnPostionBoss" src="ysfl14" pkg="ybsps8tf" xy="130,447" size="30,32" group="n25_xk2t">
+    <component id="n24_xk2t" name="btnPostionBoss" src="ysfl14" pkg="ybsps8tf" xy="93,448" size="30,32" group="n31_nk1s">
       <Button title="b"/>
     </component>
-    <component id="n27_xk2t" name="btnPostionSize" src="ysfl14" pkg="ybsps8tf" xy="187,449" size="82,30" group="n25_xk2t">
-      <Button title="small/big"/>
+    <component id="n28_nk1s" name="btnPostionNumSub" src="ysfl14" pkg="ybsps8tf" xy="123,448" size="30,32" group="n31_nk1s">
+      <Button title="-"/>
     </component>
-    <group id="n25_xk2t" name="group_position" xy="8,398" size="261,81" group="n16_ysfl"/>
+    <component id="n29_nk1s" name="btnPostionNumAdd" src="ysfl14" pkg="ybsps8tf" xy="153,448" size="30,32" group="n31_nk1s">
+      <Button title="+"/>
+    </component>
+    <group id="n31_nk1s" name="group_positionSidChange" xy="3,448" size="180,32" group="n25_xk2t"/>
+    <group id="n25_xk2t" name="group_position" xy="3,391" size="266,107" group="n16_ysfl"/>
     <graph id="n26_xk2t" name="menuTopBar" xy="0,0" size="276,37" group="n16_ysfl" type="rect" lineSize="2" fillColor="#ff999999" corner="16,16,0,0"/>
-    <group id="n16_ysfl" name="groupMenu" xy="0,0" size="276,500" advanced="true"/>
+    <group id="n16_ysfl" name="groupMenu" xy="0,0" size="276,500" advanced="true" collapsed="true"/>
+    <component id="n33_nk1s" name="scaleBar" src="nk1s1k" pkg="ybsps8tf" xy="2,6"/>
   </displayList>
 </component>

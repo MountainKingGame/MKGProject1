@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="112,24">
+  <displayList>
+    <component id="n2_nk1s" name="btnAdd" src="au3n2i" pkg="2pshu6oi" xy="84,0">
+      <Button icon="ui://2pshu6oikrunu6h"/>
+    </component>
+    <component id="n3_nk1s" name="btnSub" src="au3n2i" pkg="2pshu6oi" xy="0,0">
+      <Button icon="ui://2pshu6oibfc35y"/>
+    </component>
+    <component id="n4_nk1s" name="btnVal" src="hs7xiu9b" pkg="2pshu6oi" xy="36,2" size="40,21">
+      <relation target="" sidePair="center-center"/>
+      <Button title="100%"/>
+    </component>
+  </displayList>
+</component>
