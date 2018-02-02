@@ -6,15 +6,17 @@ class ScaleBarCtrl extends CtrlBase<fuis.elements_0.UI_ScaleBar>{
         super.dispose();
     }
     init(){
-        this.ui.m_btnVal.mode = fairygui.ButtonMode.Common;
+        // this.ui.m_btnVal.mode = fairygui.ButtonMode.Common;//开了这个收不到click回调
         this.ui.m_btnVal.addClickListener(this.onBtnVal,this);
         this.ui.m_btnSub.addClickListener(()=>{this.scaleChange(-this.step)},this);
         this.ui.m_btnAdd.addClickListener(()=>{this.scaleChange(+this.step)},this);
-
+        
         this.target.setScale(2.5,2.5);
         this.refreshValue();
     }
     private onBtnVal(){
+        // console.log("[debug]","onBtnVal",this.ui.m_btnVal.selected);
+        // this.ui.m_btnVal.selected=false
         this.target.setScale(1,1);
         this.refreshValue();
     }
