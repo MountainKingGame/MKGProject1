@@ -29,33 +29,61 @@ class StcMapPositionSidKind{
 }
 class StcMap extends StcCacheBase<IStcMapVo>{
     public static readonly si: StcMap = new StcMap();
-    static mapPath(sid:number):string{
-        return `resource/assets/stc/maps/map_cell_${sid}.json`;
+
+    static cellJsonPath(sid:number):string{
+        return `resource/assets/stc/maps/${StcMap.cellJsonName(sid)}`;
     }
+    static cellJsonName(sid:number):string{
+        return `cell_grid_${sid}.json`;
+    }
+    static positionJsonPath(sid:number):string{
+        return `resource/assets/stc/maps/${StcMap.positionJsonName(sid)}`;
+    }
+    static positionJsonName(sid:number):string{
+        return `position_${sid}.json`;
+    }
+    static profileJsonPath(sid:number):string{
+        return `resource/assets/stc/maps/${StcMap.profileJsonName(sid)}`;
+    }
+    static profileJsonName(sid:number):string{
+        return `profile_${sid}.json`;
+    }
+
     init() {
-        var i = 1;
-        while (i > 0) {
-            let resName: string = `map${i}_json`;
-            if (RES.hasRes(resName)) {
-                let vo: IStcMapVo = RES.getRes(resName);
-                if (!vo.sid) vo.sid = i;
-                this.voDict[i] = vo;
-                StcMap.validateMapVo(vo);
-                i++;
+        var sid = 1;
+        while (sid > 0) {
+            if (RES.hasRes(StcMap.cellJsonName(sid).replace(/\./g,"_"))) {
+                let cellJson: IStcMapCellJson = RES.getRes(StcMap.cellJsonName(sid).replace(/\./g,"_"));
+                let positionJson: IStcMapPositionJson = RES.getRes(StcMap.positionJsonName(sid).replace(/\./g,"_"));
+                let profileJson: IStcMapProfileJson = RES.getRes(StcMap.profileJsonName(sid).replace(/\./g,"_"));
+                if (!cellJson.sid) cellJson.sid = sid;
+                this.voDict[sid] = StcMap.parseMapVo(sid,cellJson,positionJson,profileJson);
+                sid++;
             } else {
                 break;
             }
         }
     }
-    static validateMapVo(vo: IStcMapVo){
+    static parseMapVo(sid:number,cellJson:IStcMapCellJson,positionJson:IStcMapPositionJson,profileJson?:IStcMapProfileJson):IStcMapVo{
+        let vo:IStcMapVo = {};
+        vo.sid = sid;
+        vo.cells = cellJson.cells;
+        StcMap.setPositionMap(vo,positionJson);
+        if(profileJson){
+            vo.kind = profileJson.kind;
+            vo.factories = profileJson.factories;
+        }
+        return vo;
+    }
+    static setPositionMap(vo: IStcMapVo,profileVo:IStcMapPositionJson){
         //---auto fill
-        if(!vo.positions){
-            vo.positions = [];
+        if(!profileVo.positions){
+            profileVo.positions = [];
         }
         //---quick 
         vo.positionMap = {};
-        for (let i = 0; i < vo.positions.length; i++) {
-            let item = vo.positions[i];
+        for (let i = 0; i < profileVo.positions.length; i++) {
+            let item = profileVo.positions[i];
             if(!item.dir){
                 item.dir = Direction4.Up;
             }
@@ -71,15 +99,29 @@ class StcMap extends StcCacheBase<IStcMapVo>{
  */
 interface IStcMapVo {
     sid?: number;
-    version?: StcMapVersion;
     kind?: StcMapKind;
-    cells: number[][];
-    positions?: IStcMapPosition[];
+    positionMap?:{[key:string]:IStcMapPositionVo};
+
+    cells?: number[][];
     factories?: IStcMapFactory[];
-    //
-    positionMap?:{[key:string]:IStcMapPosition};
 }
-interface IStcMapPosition {
+interface IStcMapCellJson {
+    version: number;
+    sid: number;
+    cells: number[][];
+}
+interface IStcMapPositionJson {
+    version: number;
+    sid: number;
+    positions: IStcMapPositionVo[];
+}
+interface IStcMapProfileJson {
+    version: number;
+    sid: number;
+    kind?: StcMapKind;
+    factories?: IStcMapFactory[];
+}
+interface IStcMapPositionVo {
     sid?: string;
     col?: number;
     row?: number;

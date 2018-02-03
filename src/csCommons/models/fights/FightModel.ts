@@ -3,7 +3,7 @@ namespace models.fights {
         public facade: ModelFacade;
         public changer: FightModel_Changer = new FightModel_Changer(this);
         public ticker: FightModel_Ticker = new FightModel_Ticker(this);
-        public buffer:FightModel_Buffer = new FightModel_Buffer(this);
+        public buffer: FightModel_Buffer = new FightModel_Buffer(this);
         //===
         public cellUId: number = 1;
         public tankUId: number = 1;
@@ -17,7 +17,7 @@ namespace models.fights {
         public tankDic: { [key: number]: TankVo } = {};
         public bulletDic: { [key: number]: BulletVo } = {};
         /**各group tank数量统计 */
-        groupTankCount:{[key:number]:number} = [];//key:BattleGroup
+        groupTankCount: { [key: number]: number } = [];//key:BattleGroup
         //
         public dumpCellDic: { [key: number]: CellVo } = {};
         public dumpTankDic: { [key: number]: TankVo } = {};
@@ -29,13 +29,13 @@ namespace models.fights {
         //---
         aiTankDic: { [key: number]: TankAI } = {};
         //---
-        public gridSize:IGrid;
+        public gridSize: IGrid;
         public size: Vector2;
         //--
         frameInputs: FightFrameIOItem[] = [];
         frameOutputs: FightFrameIOItem[] = [];
         //
-        factories:FightModelFactory[] = [];
+        factories: FightModelFactory[] = [];
         public init(stcMapId: number) {
             FightModelConfig.si.init();
             //-
@@ -44,9 +44,9 @@ namespace models.fights {
             this.buffer.init();
             //-
             this.gridSize = {};
-            this.gridSize.col = this.stcMapVo.cells[0].length;
-            this.gridSize.row = this.stcMapVo.cells.length;
-            this.size = new Vector2(FightModelUtil.gridToPos(this.gridSize.col),FightModelUtil.gridToPos(this.gridSize.row));
+            this.gridSize.col = this.stcMapVo.cells.length;
+            this.gridSize.row = this.stcMapVo.cells[0].length;
+            this.size = new Vector2(FightModelUtil.gridToPos(this.gridSize.col), FightModelUtil.gridToPos(this.gridSize.row));
             // * FightModelConfig.si.cellSize, this.gridSize.row * FightModelConfig.si.cellSize);
             //-
             this.qtCell = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
@@ -58,21 +58,21 @@ namespace models.fights {
             this.initFactories();
         }
         initCells() {
-            for (let row = 0; row < this.stcMapVo.cells.length; row++) {
-                for (let col = 0; col < this.stcMapVo.cells[row].length; col++) {
+            for (let col = 0; col < this.stcMapVo.cells.length; col++) {
+                for (let row = 0; row < this.stcMapVo.cells[col].length; row++) {
                     var vo: CellVo = new CellVo();
                     vo.uid = this.cellUId++;
-                    vo.sid = this.stcMapVo.cells[row][col];
+                    vo.sid = this.stcMapVo.cells[col][row];
                     vo.x = models.fights.FightModelUtil.gridToPos(col);
                     vo.y = models.fights.FightModelUtil.gridToPos(row);
                     this.changer.addCell(vo);
                 }
             }
         }
-        initFactories(){
+        initFactories() {
             for (let i = 0; i < this.stcMapVo.factories.length; i++) {
                 let stcVo = this.stcMapVo.factories[i];
-                let factory:FightModelFactory = new FightModelFactory();
+                let factory: FightModelFactory = new FightModelFactory();
                 factory.model = this;
                 factory.stcVo = stcVo;
                 factory.init();
@@ -80,9 +80,11 @@ namespace models.fights {
             }
         }
         initTanks() {
-            for (let i = 0; i < this.stcMapVo.positions.length; i++) {
-                let tankVo = this.changer.addTankByIStcMapVoPlayer(this.stcMapVo.positions[i]);
-                tankVo.initIndex = i;
+            let i: number = 0;
+            for (const sid in this.stcMapVo.positionMap) {
+                const positionVo: IStcMapPositionVo = this.stcMapVo.positionMap[sid];
+                let tankVo = this.changer.addTankByIStcMapVoPlayer(positionVo);
+                tankVo.initPositionSid = sid;
                 if (i == 0) {
                     tankVo.group = FightGroup.Player;
                 } else {
@@ -92,6 +94,7 @@ namespace models.fights {
                     ai.owner = tankVo;
                     this.aiTankDic[tankVo.uid] = ai;
                 }
+                i++;
                 break;//TODO:
             }
         }

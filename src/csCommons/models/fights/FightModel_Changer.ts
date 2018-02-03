@@ -7,7 +7,7 @@ namespace models.fights {
         constructor(model: FightModel) {
             this.model = model;
         }
-        addTankByIStcMapVoPlayer(position: IStcMapPosition):TankVo {
+        addTankByIStcMapVoPlayer(position: IStcMapPositionVo):TankVo {
             let vo: TankVo = new TankVo();
             vo.sid = 1;
             vo.uid = this.model.tankUId++;
@@ -49,9 +49,9 @@ namespace models.fights {
             vo.hp = vo.hpMax;
             vo.stateFrame = 0;
             vo.moveDir = Direction4.None;
-            vo.x = FightModelUtil.gridToPos(this.model.stcMapVo.positions[vo.initIndex].col);
-            vo.y = FightModelUtil.gridToPos(this.model.stcMapVo.positions[vo.initIndex].row);
-            vo.dir = this.model.stcMapVo.positions[vo.initIndex].dir;
+            vo.x = FightModelUtil.gridToPos(this.model.stcMapVo.positionMap[vo.initPositionSid].col);
+            vo.y = FightModelUtil.gridToPos(this.model.stcMapVo.positionMap[vo.initPositionSid].row);
+            vo.dir = this.model.stcMapVo.positionMap[vo.initPositionSid].dir;
             vo.xOld = vo.x;
             vo.yOld = vo.y;
             vo.hitRect.recountPivotCenter(vo.x, vo.y,vo.sizeHalf.x,vo.sizeHalf.y);

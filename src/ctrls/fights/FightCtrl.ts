@@ -11,9 +11,9 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	/** */
 	cellLayer: fairygui.GComponent = new fairygui.GComponent;
 	tankLayer: fairygui.GComponent = new fairygui.GComponent;
-	bulletLayer: fairygui.GComponent = new fairygui.GComponent;
 	/**在坦克和子弹上面cell层 */
-	coverCellLayer: fairygui.GComponent = new fairygui.GComponent;
+	cellCoverLayer: fairygui.GComponent = new fairygui.GComponent;
+	bulletLayer: fairygui.GComponent = new fairygui.GComponent;
 	topEffLayer:fairygui.GComponent = new fairygui.GComponent();
 	//---
 	uiWidthHalf: number;
@@ -57,8 +57,8 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		this.ui.addChildAt(this.eleLayer, this.ui.getChildIndex(this.ui.m_bg) + 1);
 		this.eleLayer.addChild(this.cellLayer);
 		this.eleLayer.addChild(this.tankLayer);
+		this.eleLayer.addChild(this.cellCoverLayer);
 		this.eleLayer.addChild(this.bulletLayer);
-		this.eleLayer.addChild(this.coverCellLayer);
 		this.eleLayer.addChild(this.topEffLayer);
 		this.ui.m_touchLayer.alpha = 0;
 	}
@@ -171,7 +171,7 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 			cell.setXY(vo.x, vo.y);
 			cell.m_kind.selectedIndex = vo.sid;
 			if (vo.sid == StcCellSid.cover) {
-				this.coverCellLayer.addChild(cell);
+				this.cellCoverLayer.addChild(cell);
 			} else {
 				this.cellLayer.addChild(cell);
 			}
@@ -187,7 +187,9 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 			MathUtil.clamp(this.eleLayer.scaleX, this.ui.width / this.mapSize.x, 2),
 			MathUtil.clamp(this.eleLayer.scaleY, this.ui.height / this.mapSize.y, 2)
 		);
+		// scale = 1.2;
 		this.eleLayer.setScale(scale,scale);
+		// console.log("[info]",scale,"<-`scale`");
 		// this.clampMapXY(this.eleLayer.x,this.eleLayer.y);//Don't need do this, because every tick will do it
 	}
 	/** 将myTank作为中点 */

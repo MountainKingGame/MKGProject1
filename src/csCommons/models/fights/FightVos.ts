@@ -75,7 +75,7 @@ namespace models.fights {
     }
     //
     export class TankVo extends MovableEleVo {
-        public initIndex:number = 0;
+        public initPositionSid:string;
         stateA: FightVoStateA = FightVoStateA.None;
         /**这个状态持续的时间 */
         stateFrame:number=0;

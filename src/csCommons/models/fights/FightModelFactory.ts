@@ -22,7 +22,7 @@ namespace models.fights {
                 let vo = new TankVo();
                 vo.sid = this.stcVo.values[this.currIndex][0];
                 vo.uid = this.model.tankUId++;
-                let position: IStcMapPosition = this.model.stcMapVo.positionMap[this.stcVo.values[this.currIndex][1]];
+                let position: IStcMapPositionVo = this.model.stcMapVo.positionMap[this.stcVo.values[this.currIndex][1]];
                 vo.x = FightModelUtil.gridToPos(position.col);
                 vo.y = FightModelUtil.gridToPos(position.row);
                 vo.dir = position.dir;

@@ -26,7 +26,7 @@ namespace tools {
         }
         init() {
             super.init();
-            let scaleBarCtrl:ScaleBarCtrl = new ScaleBarCtrl(this.ui.m_scaleBar as fuis.elements_0.UI_ScaleBar);
+            let scaleBarCtrl: ScaleBarCtrl = new ScaleBarCtrl(this.ui.m_scaleBar as fuis.elements_0.UI_ScaleBar);
             scaleBarCtrl.target = this.ui.m_mapArea;
             scaleBarCtrl.init();
             this.autoDisposeList.push(scaleBarCtrl);
@@ -126,25 +126,36 @@ namespace tools {
         //     this.currCellNum = 4;
         // }
         onBtnOpen() {
-            let sid: number = this.getMapSid();
-            var progressHandler = function (evt: egret.ProgressEvent): void {
-                console.log("progress:", evt.bytesLoaded, evt.bytesTotal);
+            this.cellJsonStr = this.positionJsonStr = null;
+            // var progressHandler = function (evt: egret.ProgressEvent): void {
+            //     console.log("progress:", evt.bytesLoaded, evt.bytesTotal);
+            // }
+            {
+                var request: egret.HttpRequest = new egret.HttpRequest();
+                request.responseType = egret.HttpResponseType.TEXT;
+                request.once(egret.Event.COMPLETE, this.onLoadCellJson.bind(this), null);
+                request.once(egret.IOErrorEvent.IO_ERROR, this.onLoadCellJson.bind(this), null);
+                // request.once(egret.ProgressEvent.PROGRESS, progressHandler.bind(this), null);
+                request.open(StcMap.cellJsonPath(this.getMapSid()) + `?r=${Math.random()}`, egret.HttpMethod.GET);
+                request.send();
             }
-            var request: egret.HttpRequest = new egret.HttpRequest();
-            request.responseType = egret.HttpResponseType.TEXT;
-            request.once(egret.Event.COMPLETE, this.openMapRespHandler.bind(this), null);
-            request.once(egret.IOErrorEvent.IO_ERROR, this.openMapRespHandler.bind(this), null);
-            request.once(egret.ProgressEvent.PROGRESS, progressHandler.bind(this), null);
-            var url = StcMap.mapPath(sid) + `?r=${Math.random()}`;
-            request.open(url, egret.HttpMethod.GET);
-            request.send();
+            {
+                var request: egret.HttpRequest = new egret.HttpRequest();
+                request.responseType = egret.HttpResponseType.TEXT;
+                request.once(egret.Event.COMPLETE, this.onLoadPositionJson.bind(this), null);
+                request.once(egret.IOErrorEvent.IO_ERROR, this.onLoadPositionJson.bind(this), null);
+                // request.once(egret.ProgressEvent.PROGRESS, progressHandler.bind(this), null);
+                request.open(StcMap.positionJsonPath(this.getMapSid()) + `?r=${Math.random()}`, egret.HttpMethod.GET);
+                request.send();
+            }
         }
-        openMapRespHandler(evt: egret.Event): void {
+        onLoadCellJson(evt: egret.Event): void {
             switch (evt.type) {
                 case egret.Event.COMPLETE:
                     var request: egret.HttpRequest = evt.currentTarget;
                     // console.log("respHandler:n", request.response);
-                    this.openMapJsonStr(request.response);
+                    this.cellJsonStr = request.response;
+                    this.validateLoadMapCpl();
                     break;
                 case egret.IOErrorEvent.IO_ERROR:
                     console.log("respHandler io error");
@@ -154,10 +165,35 @@ namespace tools {
                     break;
             }
         }
-        openMapJsonStr(jsonStr: string) {
+        onLoadPositionJson(evt: egret.Event): void {
+            switch (evt.type) {
+                case egret.Event.COMPLETE:
+                    var request: egret.HttpRequest = evt.currentTarget;
+                    // console.log("respHandler:n", request.response);
+                    this.positionJsonStr = request.response;
+                    this.validateLoadMapCpl();
+                    break;
+                case egret.IOErrorEvent.IO_ERROR:
+                    console.log("respHandler io error");
+                    break;
+                default:
+                    console.log("respHandler unknown error");
+                    break;
+            }
+        }
+        private cellJsonStr: string;;
+        private positionJsonStr: string;
+        validateLoadMapCpl() {
+            if (this.cellJsonStr && this.positionJsonStr) {
+                this.openMapJsonStr();
+            }
+        }
+        openMapJsonStr() {
             this.disposePositionDic();
-            let mapVo: IStcMapVo = JSON.parse(jsonStr);
-            StcMap.validateMapVo(mapVo);
+            let cellJson: IStcMapCellJson = JSON.parse(this.cellJsonStr);
+            let positionJson: IStcMapPositionJson = JSON.parse(this.positionJsonStr);
+            let mapVo: IStcMapVo = StcMap.parseMapVo(this.getMapSid(), cellJson, positionJson);
+            StcMap.setPositionMap(mapVo, positionJson);
             this.ui.m_txtCol.text = mapVo.cells.length.toString();
             this.ui.m_txtRow.text = mapVo.cells[0].length.toString();
             this.onBtnSetSize();
@@ -167,38 +203,43 @@ namespace tools {
                     cell.m_kind.selectedIndex = mapVo.cells[i][j];
                 }
             }
-            for (let i = 0; i < mapVo.positions.length; i++) {
-                let positionVo: IStcMapPosition = mapVo.positions[i];
+            for (let i = 0; i < positionJson.positions.length; i++) {
+                let positionVo: IStcMapPositionVo = positionJson.positions[i];
                 this.addPostionCtrl(positionVo.sid, positionVo.col, positionVo.row, positionVo.dir, positionVo.size);
             }
         }
         onBtnSave() {
             let sid: number = parseInt(this.ui.m_txtMapId.text);
-            let mapVo: IStcMapVo = { cells: [] };
-            mapVo.version = StcMapVersion.V1;
-            mapVo.sid = sid;
-            mapVo.positions = [];
+            //--
+            let cellJson: IStcMapCellJson = { version: StcMapVersion.V1, sid: sid, cells: [] };
             for (let i = 0; i < this.cells.length; i++) {
-                mapVo.cells[i] = []
+                cellJson.cells[i] = []
                 for (let j = 0; j < this.cells[0].length; j++) {
                     let cell: UI_MapCell = this.cells[i][j];
-                    mapVo.cells[i][j] = cell.m_kind.selectedIndex;
+                    cellJson.cells[i][j] = cell.m_kind.selectedIndex;
                 }
             }
+            //--
+            let positionJson: IStcMapPositionJson = { version: StcMapVersion.V1, sid: sid, positions: [] };
             for (const key in this.mapPostionDic) {
                 const positionCtrl: MapPositionCtrl = this.mapPostionDic[key];
-                let vo: IStcMapPosition = {};
+                let vo: IStcMapPositionVo = {};
                 vo.sid = key;
                 vo.col = positionCtrl.col;
                 vo.row = positionCtrl.row;
                 vo.dir = positionCtrl.dir;
                 vo.size = positionCtrl.size;
-                mapVo.positions.push(vo);
+                positionJson.positions.push(vo);
             }
-            let jsonStr = JSON.stringify(mapVo);
-            console.log("[debug]", jsonStr, "`jsonStr`");
             //---
-            var params = `?file=${StcMap.mapPath(sid)}&content=${jsonStr}`;
+            this.saveJson(StcMap.cellJsonPath(sid),cellJson);
+            this.saveJson(StcMap.positionJsonPath(sid),positionJson);
+        }
+        saveJson(fileName:string,contentJson:object){
+            let jsonStr = JSON.stringify(contentJson);
+            // console.log("[debug]", jsonStr, "`jsonStr`");
+            //---
+            var params = `?file=${fileName}&content=${jsonStr}`;
             var request = new egret.HttpRequest();
             request.responseType = egret.HttpResponseType.TEXT;
             request.open("savefile" + params, egret.HttpMethod.GET);
@@ -259,7 +300,7 @@ namespace tools {
             //
             let positionSid: string = this.ui.m_txtPositionSid.text;
             let positionCtrl: MapPositionCtrl = this.mapPostionDic[positionSid];
-            if(positionCtrl){
+            if (positionCtrl) {
                 this.curMapPositionDir = positionCtrl.dir;
                 this.validateBtnPositionDir();
                 this.curMapPositionSize = positionCtrl.size;
@@ -367,7 +408,7 @@ namespace tools {
                 } else {
                     this.clearCell(col, row, KeyBoardCtrl.si.shiftKey);
                 }
-            }else{
+            } else {
                 this.dragHelper.onTouchMove(e);
             }
         }
@@ -402,10 +443,10 @@ namespace tools {
                 positionCtrl.size = size;
                 if (size == StcCellSize.S1x1) {
                     positionCtrl.ui1.setSize(models.fights.FightModelConfig.si.cellSize, models.fights.FightModelConfig.si.cellSize);
-                    positionCtrl.ui1.setXY(models.fights.FightModelConfig.si.cellSize/2,models.fights.FightModelConfig.si.cellSize/2);
+                    positionCtrl.ui1.setXY(models.fights.FightModelConfig.si.cellSize / 2, models.fights.FightModelConfig.si.cellSize / 2);
                 } else {
                     positionCtrl.ui1.setSize(models.fights.FightModelConfig.si.cellSize * 2, models.fights.FightModelConfig.si.cellSize * 2);
-                    positionCtrl.ui1.setXY(models.fights.FightModelConfig.si.cellSize,models.fights.FightModelConfig.si.cellSize);
+                    positionCtrl.ui1.setXY(models.fights.FightModelConfig.si.cellSize, models.fights.FightModelConfig.si.cellSize);
                 }
             }
         }
