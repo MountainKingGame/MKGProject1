@@ -11,7 +11,6 @@ class ScaleBarCtrl extends CtrlBase<fuis.elements_0.UI_ScaleBar>{
         this.ui.m_btnSub.addClickListener(()=>{this.scaleChange(-this.step)},this);
         this.ui.m_btnAdd.addClickListener(()=>{this.scaleChange(+this.step)},this);
         
-        this.target.setScale(2.5,2.5);
         this.refreshValue();
     }
     private onBtnVal(){

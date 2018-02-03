@@ -11,6 +11,7 @@ namespace tools {
         private mapPostionDic: { [key: string]: MapPositionCtrl } = {};
         private curMapPositionDir;
         private curMapPositionSize;
+
         public dispose() {
             this.disposePositionDic();
             this.dragHelper = null;
@@ -26,7 +27,7 @@ namespace tools {
         init() {
             super.init();
             let scaleBarCtrl:ScaleBarCtrl = new ScaleBarCtrl(this.ui.m_scaleBar as fuis.elements_0.UI_ScaleBar);
-            scaleBarCtrl.target = this.ui;
+            scaleBarCtrl.target = this.ui.m_mapArea;
             scaleBarCtrl.init();
             this.autoDisposeList.push(scaleBarCtrl);
             //
@@ -90,7 +91,7 @@ namespace tools {
             this.ui.m_mapArea.addEventListener(egret.TouchEvent.TOUCH_END, this.onMapArea_TouchEnd, this);
             this.dragHelper = new FuiDragHelper(this.ui.m_mapArea);
             this.autoDisposeList.push(this.dragHelper);
-            this.dragHelper.autoTouchMove = false;
+            // this.dragHelper.autoTouchMove = false;
         }
         private list_cell_itemRenderer(i: number, item: fuis.tools_0.UI_MapCellListItem) {
             let sid: StcCellSid = this.ui.m_list_cell.data[i] as StcCellSid;
@@ -173,8 +174,8 @@ namespace tools {
         }
         onBtnSave() {
             let sid: number = parseInt(this.ui.m_txtMapId.text);
-            let mapVo: IStcMapVo = { kind: StcMapKind.Kind1, cells: [] };
-            mapVo.version = StcMapVersion.v1;
+            let mapVo: IStcMapVo = { cells: [] };
+            mapVo.version = StcMapVersion.V1;
             mapVo.sid = sid;
             mapVo.positions = [];
             for (let i = 0; i < this.cells.length; i++) {
@@ -366,9 +367,9 @@ namespace tools {
                 } else {
                     this.clearCell(col, row, KeyBoardCtrl.si.shiftKey);
                 }
+            }else{
+                this.dragHelper.onTouchMove(e);
             }
-            //
-            this.dragHelper.onTouchMove(e);
         }
         private addPostionCtrl(sid: string, col: number, row: number, dir: Direction4, size: StcCellSize) {
             let positionCtrl: MapPositionCtrl = new MapPositionCtrl(new fairygui.GComponent());

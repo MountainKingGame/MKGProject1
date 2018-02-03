@@ -8,7 +8,7 @@ enum StcCellSid{
     cover = 6,
 }
 enum StcMapVersion{
-    v1 = 1,
+    V1 = 1,
 }
 enum StcCellSize{
     S1x1 = 11,
@@ -30,7 +30,7 @@ class StcMapPositionSidKind{
 class StcMap extends StcCacheBase<IStcMapVo>{
     public static readonly si: StcMap = new StcMap();
     static mapPath(sid:number):string{
-        return `resource/assets/stc/maps/map_${sid}.json`;
+        return `resource/assets/stc/maps/map_cell_${sid}.json`;
     }
     init() {
         var i = 1;
@@ -48,7 +48,11 @@ class StcMap extends StcCacheBase<IStcMapVo>{
         }
     }
     static validateMapVo(vo: IStcMapVo){
-        //-auto fill
+        //---auto fill
+        if(!vo.positions){
+            vo.positions = [];
+        }
+        //---quick 
         vo.positionMap = {};
         for (let i = 0; i < vo.positions.length; i++) {
             let item = vo.positions[i];
