@@ -3,9 +3,11 @@ interface IDispose {
 	// removeDisposeHandler(callback):void;
 	dispose():void;
 }
-interface IVector2{
+interface IXY{
     x?:number;
     y?:number;
+}
+interface IVector2 extends IXY{
 }
 interface IGrid{
     col?:number;

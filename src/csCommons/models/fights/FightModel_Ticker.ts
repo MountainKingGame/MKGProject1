@@ -86,6 +86,7 @@ namespace models.fights {
                         bullet.x = tank.x;
                         bullet.y = tank.y;
                         bullet.moveDir = tank.dir;
+                        FightModelUtil.nextXYByDir(bullet,bullet.moveDir,40);
                         this.model.changer.addBullet(bullet);
                     }
                     skillVo.isTriggerOnce = false;
@@ -262,7 +263,7 @@ namespace models.fights {
                     switch (vo.moveDir) {
                         case Direction4.Left:
                             this.model.tankAlignGridY(vo);
-                            vo.xOld = vo.x;
+                            vo.xOld = vo.x;//必须在tankAlignGridY后,做这个赋值,否则碰撞检测导致xy还原
                             vo.yOld = vo.y;
                             vo.x += vo.moveSpeedPerFrame;
                             this.model.validateTankX(vo);
@@ -312,20 +313,7 @@ namespace models.fights {
                     const vo = this.model.bulletDic[uid];
                     if (vo.moveDir != Direction4.None) {
                         vo.dir = vo.moveDir;
-                        switch (vo.moveDir) {
-                            case Direction4.Left:
-                                vo.x += vo.moveSpeedPerFrame;
-                                break;
-                            case Direction4.Right:
-                                vo.x -= vo.moveSpeedPerFrame;
-                                break;
-                            case Direction4.Up:
-                                vo.y -= vo.moveSpeedPerFrame;
-                                break;
-                            case Direction4.Down:
-                                vo.y += vo.moveSpeedPerFrame;
-                                break;
-                        }
+                        FightModelUtil.nextXYByDir(vo,vo.moveDir,vo.moveSpeedPerFrame);
                         vo.hitRect.recountPivotCenter(vo.x, vo.y, vo.sizeHalf.x, vo.sizeHalf.y);
                     }
                 }

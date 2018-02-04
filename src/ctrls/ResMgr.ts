@@ -24,6 +24,9 @@ class ResMgr {
     mcBoomQingTong() {
         return this.createMovieClip(PkgName.movieClips_1, "picV382_boom_qingTong")
     }
+    change_cannon_effect() {
+        return this.createMovieClip(PkgName.movieClips_1, "change_cannon_effect")
+    }
 
     debugRect(x:number,y:number,w:number,h:number,pivotCenter:boolean=false){
         let ui = fuis.elements_1.UI_DebugRect.createInstance();

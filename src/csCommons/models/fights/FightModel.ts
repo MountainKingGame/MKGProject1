@@ -80,23 +80,11 @@ namespace models.fights {
             }
         }
         initTanks() {
-            let i: number = 0;
-            for (const sid in this.stcMapVo.positionMap) {
-                const positionVo: IStcMapPositionVo = this.stcMapVo.positionMap[sid];
-                let tankVo = this.changer.addTankByIStcMapVoPlayer(positionVo);
-                tankVo.initPositionSid = sid;
-                if (i == 0) {
-                    tankVo.group = FightGroup.Player;
-                } else {
-                    tankVo.group = FightGroup.CPU;
-                    tankVo.moveDir = tankVo.dir;
-                    let ai: TankAI = new TankAI();
-                    ai.owner = tankVo;
-                    this.aiTankDic[tankVo.uid] = ai;
-                }
-                i++;
-                break;//TODO:
-            }
+            let sid:string = "10";
+            const positionVo: IStcMapPositionVo = this.stcMapVo.positionMap[sid];
+            let tankVo = this.changer.addTankByIStcMapVoPlayer(positionVo);
+            tankVo.initPositionSid = sid;
+            tankVo.group = FightGroup.Player;
         }
         tankAlignGridX(tank: TankVo) {
             tank.x = FightModelUtil.gridToPos(FightModelUtil.alignGrid(tank.x, 1, this.gridSize.col - 1));

@@ -71,9 +71,7 @@ class FightCtrl_Ticker {
         this.lastMs = this.currMs;
         //---
         if (this.ctrl.proxy.isFrame) {
-            //--
             this.ctrl.proxy.tick();
-            //--
             this.ctrl.ui.m_txt0.text = this.ctrl.proxy.currFrame.toString() + "-" + this.ctrl.proxy.currKeyFrame.toString();
             // console.log("[info]","this is frame",this.owner.model.currFrame,this.owner.proxy.isKeyFrame);
             //-- deal frame output
@@ -94,6 +92,11 @@ class FightCtrl_Ticker {
     }
     frameOut_AddBullet(item: FightFrameIOItem) {
         this.ctrl.addBulletById(item.data0 as number);
+        let bullet: BulletCtrl = this.ctrl.bulletDic[item.data0];
+        let mc = ResMgr.si.change_cannon_effect();
+        this.ctrl.topEffLayer.addChild(mc);
+        mc.setScale(0.3, 0.3);
+        mc.setXY(bullet.vo.x, bullet.vo.y);
     }
     frameOut_BulletHitBorder(item: FightFrameIOItem) {
         this.pausing = DebugConfig.pauseWhenHit;
@@ -170,7 +173,8 @@ class FightCtrl_Ticker {
         mc.setXY(tank.ui.x, tank.ui.y);
     }
     showBulletHitEff(bulletVo: models.fights.BulletVo) {
-        let mc = ResMgr.si.mcBoomBaiYin();
+        // let mc = ResMgr.si.mcBoomBaiYin();
+        let mc = ResMgr.si.mcBoomHuangJin();
         this.ctrl.topEffLayer.addChild(mc);
         mc.setScale(0.3, 0.3);
         mc.setXY(bulletVo.x, bulletVo.y);

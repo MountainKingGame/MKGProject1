@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "builder_fui,builder@atlas0_png,basic_fui,basic@atlas0_png,tools_0_fui,tools_0@atlas0_png,test_1_fui,elements_0_fui,elements_0@atlas0_png,elements_1_fui,joysticks_1_fui,joysticks_1@atlas0_png,movieClips_1_fui,movieClips_1@atlas_hz8r1_png,movieClips_1@atlas_hz8r2_png,movieClips_1@atlas_hz8r3_png,movieClips_1@atlas_hz8r4_png,movieClips_1@atlas_hz8r5_png,cell_1_json,position_1_json,profile_1_json",
+			"keys": "builder_fui,builder@atlas0_png,basic_fui,basic@atlas0_png,tools_0_fui,tools_0@atlas0_png,test_1_fui,elements_0_fui,elements_0@atlas0_png,elements_1_fui,elements_1@atlas0_png,joysticks_1_fui,joysticks_1@atlas0_png,movieClips_1_fui,movieClips_1@atlas_a3zg6_png,movieClips_1@atlas_hz8r1_png,movieClips_1@atlas_hz8r2_png,movieClips_1@atlas_hz8r3_png,movieClips_1@atlas_hz8r4_png,movieClips_1@atlas_hz8r5_png,cell_1_json,position_1_json,profile_1_json",
 			"name": "preload"
 		}
 	],
@@ -57,6 +57,11 @@
 			"name": "elements_1_fui"
 		},
 		{
+			"url": "assets/fuis/elements_1@atlas0.png",
+			"type": "image",
+			"name": "elements_1@atlas0_png"
+		},
+		{
 			"url": "assets/fuis/joysticks_1.fui",
 			"type": "bin",
 			"name": "joysticks_1_fui"
@@ -70,6 +75,11 @@
 			"url": "assets/fuis/movieClips_1.fui",
 			"type": "bin",
 			"name": "movieClips_1_fui"
+		},
+		{
+			"url": "assets/fuis/movieClips_1@atlas_a3zg6.png",
+			"type": "image",
+			"name": "movieClips_1@atlas_a3zg6_png"
 		},
 		{
 			"url": "assets/fuis/movieClips_1@atlas_hz8r1.png",

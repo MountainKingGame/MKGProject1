@@ -82,6 +82,23 @@ namespace models.fights {
         static getApCellReal(apCell:number,targetCellLv:number){
             return apCell-(targetCellLv-1)*FightModelConfig.si.cellHpMax;
         }
+
+        static nextXYByDir(xy:IXY,dir:Direction4,distance:number){
+            switch (dir) {
+                case Direction4.Left:
+                    xy.x += distance;
+                    break;
+                case Direction4.Right:
+                    xy.x -= distance;
+                    break;
+                case Direction4.Up:
+                    xy.y -= distance;
+                    break;
+                case Direction4.Down:
+                    xy.y += distance;
+                    break;
+            }
+        }
         
     }
 }
