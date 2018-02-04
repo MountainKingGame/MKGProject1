@@ -96,7 +96,7 @@ class FightCtrl_Ticker {
         let mc = ResMgr.si.change_cannon_effect();
         this.ctrl.topEffLayer.addChild(mc);
         mc.setScale(0.3, 0.3);
-        mc.setXY(bullet.vo.x, bullet.vo.y);
+        mc.setXY(bullet.vo.xOld, bullet.vo.yOld);//old才是此帧发出点,x,y已经是move一帧后的位置了
     }
     frameOut_BulletHitBorder(item: FightFrameIOItem) {
         this.pausing = DebugConfig.pauseWhenHit;
@@ -132,7 +132,7 @@ class FightCtrl_Ticker {
             //-
             let mc = ResMgr.si.mcBoomQingTong();
             this.ctrl.topEffLayer.addChild(mc);
-            mc.setScale(0.6, 0.6);
+            FuiUtil.setScale(mc,0.5);
             mc.setXY(hitCellVo.x + models.fights.FightModelConfig.si.cellSizeHalf, hitCellVo.y + models.fights.FightModelConfig.si.cellSizeHalf);
         }
     }

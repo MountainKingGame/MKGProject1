@@ -4,6 +4,7 @@ class MovableEleCtrl extends CtrlBase<fairygui.GComponent>{
     changeDir: boolean;
     init(): void {
         super.init();
+        this.ui.rotation = CommonHelper.dir4ToDegree(this.vo.dir);
         this.ui.x = this.vo.xOld;
         this.ui.y = this.vo.yOld;
     }

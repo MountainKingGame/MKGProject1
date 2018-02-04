@@ -10,7 +10,7 @@ class FuiUtil {
         if (deltaScaleY == undefined) {
             deltaScaleY = deltaScaleX;
         }
-        obj.setScale(obj.scaleX+deltaScaleX,obj.scaleY+deltaScaleY);
+        obj.setScale(obj.scaleX + deltaScaleX, obj.scaleY + deltaScaleY);
         obj.setXY(obj.x - anchorX * deltaScaleX, obj.y - anchorY * deltaScaleY);
         /* derivation process
         //-old values
@@ -24,8 +24,17 @@ class FuiUtil {
         obj.setXY(obj.x + (xa0-xa1),obj.y + (xa0-xa1)); 
         */
     }
-    static copyProp4(target:fairygui.GComponent,from:fairygui.GComponent){
-        target.setXY(from.x,from.y);
-        target.setSize(from.width,from.height);
+    static copyProp4(target: fairygui.GObject, from: fairygui.GObject) {
+        target.setXY(from.x, from.y);
+        target.setSize(from.width, from.height);
+    }
+    static setPivotCenter(ui: fairygui.GObject) {
+        ui.setPivot(0.5, 0.5, true);
+    }
+    static setScale(ui: fairygui.GObject,scaleXY:number) {
+        ui.setScale(scaleXY,scaleXY);
+    }
+    static setSize(ui: fairygui.GObject,wh:number) {
+        ui.setSize(wh,wh);
     }
 }

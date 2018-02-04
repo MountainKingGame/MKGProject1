@@ -86,7 +86,7 @@ namespace models.fights {
                         bullet.x = tank.x;
                         bullet.y = tank.y;
                         bullet.moveDir = tank.dir;
-                        FightModelUtil.nextXYByDir(bullet,bullet.moveDir,40);
+                        FightModelUtil.nextXYByDir(bullet,bullet.moveDir,60);
                         this.model.changer.addBullet(bullet);
                     }
                     skillVo.isTriggerOnce = false;

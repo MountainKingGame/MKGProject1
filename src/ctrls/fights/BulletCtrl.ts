@@ -8,7 +8,7 @@ class BulletCtrl extends CtrlBase<fuis.elements_1.UI_Bullet>{
     public init() {
         super.init();
         this.ui.m_color.selectedIndex = this.vo.group==models.fights.FightGroup.CPU?1:0;
-        this.ui.setPivot(0.5, 0.5, true);
+        FuiUtil.setPivotCenter(this.ui);
         FightCtrlUtil.initCrack(this.ui.m_crack as fuis.elements_0.UI_Crack);
         // this.ui.addChild(ResMgr.si.debugRect(this.ui.width / 2, this.ui.height / 2, this.vo.sizeHalf.x * 2, this.vo.sizeHalf.y * 2,true));
         this.movableEleCtrl = new MovableEleCtrl(this.ui);
