@@ -5,7 +5,9 @@
     <component id="ysfl1" name="MapCellListItem.xml" path="/" exported="true"/>
     <component id="ysfl2" name="MapCell4.xml" path="/" exported="true"/>
     <image id="xk2t3" name="rim_green.png" path="/images/" exported="true"/>
-    <component id="xk2t4" name="CellRimGreen.xml" path="/" exported="true"/>
+    <component id="xk2t4" name="MapRimGreen.xml" path="/" exported="true"/>
+    <image id="a3zg5" name="arrow_green_yellow.png" path="/images/" exported="true"/>
+    <component id="a3zg6" name="MapPosition.xml" path="/" exported="true"/>
   </resources>
   <publish name="tools_0" genCode="true"/>
 </packageDescription>
