@@ -6,6 +6,7 @@
     <movieclip id="hz8r3" name="picV382_boom_heiHuoYao.jta" path="/" exported="true" atlas="alone"/>
     <movieclip id="hz8r4" name="picV382_boom_huangJin.jta" path="/" exported="true" atlas="alone"/>
     <movieclip id="hz8r5" name="picV382_boom_qingTong.jta" path="/" exported="true" atlas="alone"/>
+    <movieclip id="a3zg6" name="change_cannon_effect.jta" path="/" exported="true" atlas="alone"/>
   </resources>
   <publish name="movieClips_1"/>
 </packageDescription>

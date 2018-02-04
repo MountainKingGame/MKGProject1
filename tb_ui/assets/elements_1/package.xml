@@ -7,6 +7,8 @@
     <component id="cqc44" name="TankAvatar.xml" path="/" exported="true"/>
     <component id="787g5" name="InvincibleEffect.xml" path="/effects/" exported="true"/>
     <component id="hz8r6" name="DebugRect.xml" path="/" exported="true"/>
+    <image id="a3zg7" name="bg_gr_light.png" path="/effects/" exported="true"/>
+    <image id="a3zg8" name="asf_img_4.png" path="/effects/" exported="true"/>
   </resources>
   <publish name="elements_1" genCode="true"/>
 </packageDescription>
