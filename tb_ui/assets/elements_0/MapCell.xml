@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="64,64">
-  <controller name="kind" exported="true" pages="0,floor,1,wood,2,stone,3,iron,4,black,5,river,6,cover,7,ice,8,泥地,9,火焰" selected="9"/>
+  <controller name="kind" exported="true" pages="0,floor,1,wood,2,stone,3,iron,4,black,5,river,6,cover,7,ice,8,泥地,9,火焰" selected="0"/>
   <displayList>
-    <loader id="n2_u9bo" name="img" xy="0,0" size="64,64" url="ui://ybsps8tfe656i" align="center" vAlign="middle" fill="scaleFree">
+    <loader id="n2_u9bo" name="img" xy="0,0" size="65,65" align="center" vAlign="middle" fill="scaleFree">
       <gearIcon controller="kind" pages="0,1,2,3,4,5,7" values="|ui://ybsps8tfu9bo8|ui://ybsps8tfxk2t1a|ui://ybsps8tfxk2t18|ui://ybsps8tfced5z|ui://ybsps8tfxk2t19|ui://ybsps8tf787gr" default="ui://ybsps8tfe656i"/>
     </loader>
     <component id="n3_nqjq" name="crack" src="hz8ry" xy="0,0" size="64,64" locked="true" controller="lv,0"/>

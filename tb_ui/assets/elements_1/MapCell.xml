@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="64,64">
-  <controller name="kind" pages="0,floor0,1,wood0,2,brick0,3,metal,4,water0,5,ice0,6,grass0,7,forest0" selected="0"/>
+  <controller name="kind" pages="0,floor0,1,wood0,2,brick0,3,metal,4,water0,5,ice0,6,grass0,7,forest0" selected="1"/>
   <displayList>
-    <graph id="n0_h02b" name="n0" xy="0,0" size="64,64" type="rect" lineSize="0" fillColor="#ffdddddd">
+    <graph id="n0_h02b" name="n0" xy="0,0" size="65,65" type="rect" lineSize="0" fillColor="#ff66cc66">
       <gearColor controller="kind" pages="0,1,2,3,4,5,6,7" values="#dddddd|#66cc66|#993300|#ffcc00|#0099ff|#ffff99|#009999|#669900"/>
     </graph>
   </displayList>
