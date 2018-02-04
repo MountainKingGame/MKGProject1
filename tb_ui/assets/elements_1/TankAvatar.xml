@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="128,128">
-  <controller name="color" pages="0,white,1,red,2,green,3,blue,4,yellow,5,rose,6,bisque,7,brown,8,pink,9,purple" selected="9"/>
+  <controller name="color" pages="0,white,1,red,2,green,3,blue,4,yellow,5,rose,6,bisque,7,brown,8,pink,9,purple" selected="0"/>
   <displayList>
-    <graph id="n3_cqc4" name="body" xy="4,4" size="120,120" locked="true" type="rect" lineSize="6" corner="30"/>
+    <graph id="n3_cqc4" name="body" xy="4,4" size="120,120" type="rect" lineSize="6" corner="30"/>
     <component id="n4_hz8r" name="crack" src="hz8ry" pkg="ybsps8tf" xy="4,4" size="120,120" controller="lv,3"/>
-    <graph id="n0_h02b" name="cap" xy="36,36" size="56,56" type="rect" lineSize="6" fillColor="#ff6633ff" corner="30">
-      <gearColor controller="color" pages="1,2,3,4,5,6,7,8,9" values="#ff0000|#00ff00|#0000ff|#ffff00|#ff00ff|#00ffff|#996600|#ff99ff|#6633ff" default="#ffffff"/>
-    </graph>
-    <graph id="n1_h02b" name="gun" xy="92,54" size="49,20" locked="true" type="rect" lineSize="6">
+    <graph id="n1_h02b" name="gun" xy="76,54" size="49,20" type="rect" lineSize="6">
       <gearColor controller="color" pages="1" values="#ff0000" default="#ffffff"/>
+    </graph>
+    <graph id="n0_h02b" name="cap" xy="36,36" size="56,56" type="rect" lineSize="6" corner="30">
+      <gearColor controller="color" pages="1,2,3,4,5,6,7,8,9" values="#ff0000|#00ff00|#0000ff|#ffff00|#ff00ff|#00ffff|#996600|#ff99ff|#6633ff" default="#ffffff"/>
     </graph>
   </displayList>
 </component>
