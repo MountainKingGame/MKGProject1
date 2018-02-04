@@ -53,12 +53,6 @@ namespace models.fights {
             }
             return true;
         }
-        static hitQuadTreeRect2(rect1: IQuadTreeRect, rect2: IQuadTreeRect) {
-            if (rect1.right <= rect2.x || rect1.x >= rect2.right || rect1.bottom <= rect2.y || rect1.y >= rect2.bottom) {
-                return false;
-            }
-            return true;
-        }
         static msToFrame(ms: number, frameRate?: number): number {
             if (frameRate == undefined) {
                 return Math.round(ms * FightModelConfig.si.modelFrameRate / 1000);

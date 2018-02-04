@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "builder_fui,builder@atlas0_png,basic_fui,basic@atlas0_png,tools_0_fui,tools_0@atlas0_png,test_1_fui,elements_0_fui,elements_0@atlas0_png,elements_1_fui,joysticks_1_fui,joysticks_1@atlas0_png,movieClips_1_fui,movieClips_1@atlas_hz8r1_png,movieClips_1@atlas_hz8r2_png,movieClips_1@atlas_hz8r3_png,movieClips_1@atlas_hz8r4_png,movieClips_1@atlas_hz8r5_png,cell_grid_1_json,position_1_json,profile_1_json",
+			"keys": "builder_fui,builder@atlas0_png,basic_fui,basic@atlas0_png,tools_0_fui,tools_0@atlas0_png,test_1_fui,elements_0_fui,elements_0@atlas0_png,elements_1_fui,joysticks_1_fui,joysticks_1@atlas0_png,movieClips_1_fui,movieClips_1@atlas_hz8r1_png,movieClips_1@atlas_hz8r2_png,movieClips_1@atlas_hz8r3_png,movieClips_1@atlas_hz8r4_png,movieClips_1@atlas_hz8r5_png,cell_1_json,position_1_json,profile_1_json",
 			"name": "preload"
 		}
 	],
@@ -97,9 +97,9 @@
 			"name": "movieClips_1@atlas_hz8r5_png"
 		},
 		{
-			"url": "assets/stc/maps/cell_grid_1.json",
+			"url": "assets/stc/maps/cell_1.json",
 			"type": "json",
-			"name": "cell_grid_1_json"
+			"name": "cell_1_json"
 		},
 		{
 			"url": "assets/stc/maps/position_1.json",

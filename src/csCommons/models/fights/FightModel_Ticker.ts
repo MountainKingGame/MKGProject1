@@ -97,12 +97,14 @@ namespace models.fights {
             this.model.qtBullet.refresh();
             this.model.qtTank.refresh();
             for (const uid in this.model.bulletDic) {
-                let vo: BulletVo = this.model.bulletDic[uid];
-                if (vo.stateA == FightVoStateA.Living) {//可能被其它bullet击中了
-                    if (QuadTree.isInner(vo.hitRect, this.model.qtBullet.rect) == false) {
-                        this.model.changer.removeBullet(vo);
+                let bullet: BulletVo = this.model.bulletDic[uid];
+                if (bullet.stateA == FightVoStateA.Living) {//可能被其它bullet击中了
+                    if (QuadTree.isInner(bullet.hitRect, this.model.qtBullet.rect) == false) {
+                        //出地图范围了
+                        this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.BulletHitBorder, this.model.currFrame, bullet.ownerUid, bullet.uid));
+                        this.model.changer.removeBullet(bullet);
                     } else {
-                        this.checkBulletHitBullet(vo);
+                        this.checkBulletHitBullet(bullet);
                     }
                 }
             }
@@ -115,7 +117,7 @@ namespace models.fights {
                 let item = hitArr[i];
                 let hitBullet: BulletVo = (<QuadTreeHitRect>item).owner as BulletVo;
                 if (bullet.group != hitBullet.group) {
-                    if (FightModelUtil.hitQuadTreeRect2(bullet.hitRect, item)) {
+                    if (QuadTree.isHit(bullet.hitRect, item)) {
                         this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.BulletHitBullet, this.model.currFrame, bullet.ownerUid, bullet.uid, hitBullet.uid));
                         let oldApTank = bullet.apTank;
                         bullet.apTank -= hitBullet.apTank;
@@ -147,7 +149,7 @@ namespace models.fights {
                 let hitItem = hitArr[i];
                 let hitCellVo = ((<QuadTreeHitRect>hitItem).owner as CellVo);
                 if (hitCellVo.sid != StcCellSid.floor && hitCellVo.sid != StcCellSid.river) {
-                    if (FightModelUtil.hitQuadTreeRect2(bullet.hitRect, hitItem)) {
+                    if (QuadTree.isHit(bullet.hitRect, hitItem)) {
                         if (hitCellVo.sid != StcCellSid.block) {
                             let apCellLv: number = FightModelUtil.getApCellLv(bullet.apCell);
                             if (apCellLv > hitCellVo.sid) {
@@ -191,7 +193,7 @@ namespace models.fights {
                     }
                 }
                 if (canHit) {
-                    if (FightModelUtil.hitQuadTreeRect2(bullet.hitRect, item)) {
+                    if (QuadTree.isHit(bullet.hitRect, item)) {
                         this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.BulletHitTank, this.model.currFrame, bullet.ownerUid, bullet.uid, hitTank.uid));
                         if (hitTank.effectMap[StcEffectSid.Invincible]) {
                             //do nothing, only remove bullet
@@ -233,7 +235,7 @@ namespace models.fights {
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 if ((<QuadTreeHitRect>item).owner.sid > 0) {
-                    if (FightModelUtil.hitQuadTreeRect2(vo.forecastMoveHitRect, item) && FightModelUtil.hitQuadTreeRect2(vo.hitRect, item) == false) {
+                    if (QuadTree.isHit(vo.forecastMoveHitRect, item) && QuadTree.isHit(vo.hitRect, item) == false) {
                         return item;
                     }
                 }
@@ -242,7 +244,7 @@ namespace models.fights {
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 if (vo.uid != (<QuadTreeHitRect>item).owner.uid) {
-                    if (FightModelUtil.hitQuadTreeRect2(vo.forecastMoveHitRect, item) && FightModelUtil.hitQuadTreeRect2(vo.hitRect, item) == false) {
+                    if (QuadTree.isHit(vo.forecastMoveHitRect, item) && QuadTree.isHit(vo.hitRect, item) == false) {
                         return item;
                     }
                 }

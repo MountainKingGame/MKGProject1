@@ -28,6 +28,7 @@ namespace tools {
         }
         init() {
             super.init();
+            //-
             let scaleMapCtrl: ScaleBarCtrl = new ScaleBarCtrl(this.ui.m_menu.m_scaleMap as fuis.elements_0.UI_ScaleBar);
             scaleMapCtrl.target = this.ui.m_mapArea;
             scaleMapCtrl.init();

@@ -13,6 +13,7 @@ class FightCtrl_Ticker {
         // this.frameOutCallbackDic[FightFrameOutputKind.TankXyChange] = ;//TODO:
         this.frameOutCallbackDic[FightFrameOutputKind.AddTank] = this.frameOut_AddTank;
         this.frameOutCallbackDic[FightFrameOutputKind.AddBullet] = this.frameOut_AddBullet;
+        this.frameOutCallbackDic[FightFrameOutputKind.BulletHitBorder] = this.frameOut_BulletHitBorder;
         this.frameOutCallbackDic[FightFrameOutputKind.BulletHitBullet] = this.frameOut_BulletHitBullet;
         this.frameOutCallbackDic[FightFrameOutputKind.BulletHitCell] = this.frameOut_BulletHitCell;
         this.frameOutCallbackDic[FightFrameOutputKind.BulletHitTank] = this.frameOut_BulletHitTank;
@@ -93,6 +94,11 @@ class FightCtrl_Ticker {
     }
     frameOut_AddBullet(item: FightFrameIOItem) {
         this.ctrl.addBulletById(item.data0 as number);
+    }
+    frameOut_BulletHitBorder(item: FightFrameIOItem) {
+        this.pausing = DebugConfig.pauseWhenHit;
+        let bullet: BulletCtrl = this.ctrl.bulletDic[item.data0];
+        this.showBulletHitEff(bullet.vo);
     }
     frameOut_BulletHitBullet(item: FightFrameIOItem) {
         this.pausing = DebugConfig.pauseWhenHit;

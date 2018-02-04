@@ -124,13 +124,20 @@ class QuadTree implements IDispose {
         node.ownerQuadTree = this;
         QuadTree.debug_nodePush_count++;
     }
-    static isInner(rect: IQuadTreeRect, outRect: IQuadTreeRect) {
+    static isInner(innerRect: IQuadTreeRect, outRect: IQuadTreeRect) {
         QuadTree.debug_isInner_count++;
-        return rect.x >= outRect.x &&
-            rect.right <= outRect.right &&
-            rect.y >= outRect.y &&
-            rect.bottom <= outRect.bottom;
+        return innerRect.x >= outRect.x &&
+            innerRect.right <= outRect.right &&
+            innerRect.y >= outRect.y &&
+            innerRect.bottom <= outRect.bottom;
     }
+    static isHit(rect1: IQuadTreeRect, rect2: IQuadTreeRect) {
+        if (rect1.right <= rect2.x || rect1.x >= rect2.right || rect1.bottom <= rect2.y || rect1.y >= rect2.bottom) {
+            return false;
+        }
+        return true;
+    }
+
     refresh(root: QuadTree = null) {
         if (root == null) {
             QuadTree.debug_nodePush_count = 0;
@@ -151,7 +158,7 @@ class QuadTree implements IDispose {
                 }
                 node.isDirty = false;
                 // 如果矩形不属于该象限， 且该矩形不是root,则将该矩形重新插入root
-                if (!QuadTree.isInner(node, this.rect)) {
+                if (!QuadTree.isHit(node, this.rect)) {
                     if (this !== root) {
                         this.__removeItem(node);
                         root.insert(node);
