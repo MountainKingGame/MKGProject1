@@ -2,14 +2,14 @@
 
 module fuis.tools_0 {
 
-	export class UI_CellRimGreen extends fairygui.GComponent {
+	export class UI_MapPosition extends fairygui.GComponent {
 
 		public m_n0:fairygui.GImage;
 
-		public static URL:string = "ui://i6vaqd5axk2t4";
+		public static URL:string = "ui://i6vaqd5aa3zg6";
 
-		public static createInstance():UI_CellRimGreen {
-			return <UI_CellRimGreen><any>(fairygui.UIPackage.createObject("tools_0","CellRimGreen"));
+		public static createInstance():UI_MapPosition {
+			return <UI_MapPosition><any>(fairygui.UIPackage.createObject("tools_0","MapPosition"));
 		}
 
 		public constructor() {

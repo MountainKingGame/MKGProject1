@@ -6,7 +6,7 @@ class FuiDragHelper implements IDispose {
      * */
     noScale: boolean = true;
     /**自动触发, true:自动触发拖动 false: 不会自动触发move,必须由外部控制,并且传递 参数 e: egret.TouchEvent */
-    autoTouchMove:boolean = true;
+    autoTouchMove: boolean = true;
     constructor(target: fairygui.GComponent) {
         this.target = target;
         this.target.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
@@ -23,31 +23,34 @@ class FuiDragHelper implements IDispose {
         this.target.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onTouchEnd, this);
         this.target = null;
     }
-    isBegin:boolean=false;
+    isBegin: boolean = false;
     lastTouchX: number = 0;
     lastTouchY: number = 0;
-    private onTouchBegin(e: egret.TouchEvent) {
-        this.isBegin=true;//防止没有 onTouchBegin,就直接 onTouchMove , 外部直接调用onTouchMove有可能出现这种情况
+    public onTouchBegin(e: egret.TouchEvent) {
+        this.isBegin = true;//防止没有 onTouchBegin,就直接 onTouchMove , 外部直接调用onTouchMove有可能出现这种情况
         this.lastTouchX = e.stageX;
         this.lastTouchY = e.stageY;
     }
-    public onTouchMove(e: egret.TouchEvent) {
-        if(this.isBegin==false){
+    private onTouchMove(e: egret.TouchEvent) {
+        if (this.isBegin == false) {
             return;
         }
-        if(e.touchDown){
-            if(this.autoTouchMove){
-                this.target.x += e.stageX - this.lastTouchX;
-                this.target.y += e.stageY - this.lastTouchY;
+        if (e.touchDown) {
+            if (this.autoTouchMove) {
+                this.doMove(e);
             }
-            this.lastTouchX = e.stageX;
-            this.lastTouchY = e.stageY;
-        }else{
+        } else {
             this.onTouchEnd(e);
         }
     }
+    public doMove(e: egret.TouchEvent) {
+        this.target.x += e.stageX - this.lastTouchX;
+        this.target.y += e.stageY - this.lastTouchY;
+        this.lastTouchX = e.stageX;
+        this.lastTouchY = e.stageY;
+    }
     private onTouchEnd(e: egret.TouchEvent) {
-        this.isBegin=false;
+        this.isBegin = false;
     }
 
 }

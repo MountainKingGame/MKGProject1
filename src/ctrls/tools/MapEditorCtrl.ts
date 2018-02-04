@@ -3,14 +3,14 @@ namespace tools {
         private cellLayer: fairygui.GComponent = new fairygui.GComponent();
         private positionLayer: fairygui.GComponent = new fairygui.GComponent();
         private dragHelper: FuiDragHelper;
-        private menuCellRim: fuis.tools_0.UI_CellRimGreen;
-        private mapAreaCellRim: fuis.tools_0.UI_CellRimGreen;
+        private menuCellRim: fuis.tools_0.UI_MapRimGreen;
+        private mapAreaCellRim: fuis.tools_0.UI_MapRimGreen;
         private cells: UI_MapCell[][] = [];
         private currCellSid: StcCellSid = StcCellSid.wood;
         private currPositionSelected: boolean = false;
         private mapPostionDic: { [key: string]: MapPositionCtrl } = {};
-        private curMapPositionDir;
-        private curMapPositionSize;
+        private curMapPositionDir: Direction4;
+        private curMapPositionSize: IGrid;
 
         public dispose() {
             this.disposePositionDic();
@@ -31,7 +31,7 @@ namespace tools {
             scaleBarCtrl.init();
             this.autoDisposeList.push(scaleBarCtrl);
             //
-            this.menuCellRim = fuis.tools_0.UI_CellRimGreen.createInstance();
+            this.menuCellRim = fuis.tools_0.UI_MapRimGreen.createInstance();
             this.menuCellRim.touchable = false;
             this.ui.m_txtMapId.text = "1";
             this.ui.m_txtCol.text = "20";
@@ -56,10 +56,10 @@ namespace tools {
             //-
             this.curMapPositionDir = Direction4.Up;
             this.validateBtnPositionDir();
-            this.curMapPositionSize = StcCellSize.S1x1;
+            this.curMapPositionSize = { col: 2, row: 2 }
             this.validateBtnPositionSize();
             //---
-            this.mapAreaCellRim = fuis.tools_0.UI_CellRimGreen.createInstance();
+            this.mapAreaCellRim = fuis.tools_0.UI_MapRimGreen.createInstance();
             this.mapAreaCellRim.touchable = false;
             this.initMapArea();
             //---
@@ -91,7 +91,7 @@ namespace tools {
             this.ui.m_mapArea.addEventListener(egret.TouchEvent.TOUCH_END, this.onMapArea_TouchEnd, this);
             this.dragHelper = new FuiDragHelper(this.ui.m_mapArea);
             this.autoDisposeList.push(this.dragHelper);
-            // this.dragHelper.autoTouchMove = false;
+            this.dragHelper.autoTouchMove = false;
         }
         private list_cell_itemRenderer(i: number, item: fuis.tools_0.UI_MapCellListItem) {
             let sid: StcCellSid = this.ui.m_list_cell.data[i] as StcCellSid;
@@ -209,6 +209,10 @@ namespace tools {
             }
         }
         onBtnSave() {
+            if (this.cells.length == 0) {
+                console.log("[info]", "no cells");
+                return;
+            }
             let sid: number = parseInt(this.ui.m_txtMapId.text);
             //--
             let cellJson: IStcMapCellJson = { version: StcMapVersion.V1, sid: sid, cells: [] };
@@ -232,10 +236,10 @@ namespace tools {
                 positionJson.positions.push(vo);
             }
             //---
-            this.saveJson(StcMap.cellJsonPath(sid),cellJson);
-            this.saveJson(StcMap.positionJsonPath(sid),positionJson);
+            this.saveJson(StcMap.cellJsonPath(sid), cellJson);
+            this.saveJson(StcMap.positionJsonPath(sid), positionJson);
         }
-        saveJson(fileName:string,contentJson:object){
+        saveJson(fileName: string, contentJson: object) {
             let jsonStr = JSON.stringify(contentJson);
             // console.log("[debug]", jsonStr, "`jsonStr`");
             //---
@@ -345,10 +349,10 @@ namespace tools {
             this.ui.m_btnPostionDir.text = "dir" + this.curMapPositionDir.toString();
         }
         private onBtnPositionSize() {
-            if (this.curMapPositionSize == StcCellSize.S2x2) {
-                this.curMapPositionSize = StcCellSize.S1x1;
+            if (this.curMapPositionSize.col == 2 && this.curMapPositionSize.row == 2) {
+                this.curMapPositionSize = { col: 1, row: 1 };
             } else {
-                this.curMapPositionSize = StcCellSize.S2x2;
+                this.curMapPositionSize = { col: 2, row: 2 };
             }
             this.validateBtnPositionSize();
             this.validatePositionCtrlSize(this.ui.m_txtPositionSid.text, this.curMapPositionSize);
@@ -368,13 +372,27 @@ namespace tools {
             return parseInt(this.ui.m_txtMapId.text);
         }
         private onMapArea_TouchBegin(e: egret.TouchEvent) {
+            if (!KeyBoardCtrl.si.ctrlKey && !KeyBoardCtrl.si.altKey && !KeyBoardCtrl.si.shiftKey) {
+                //判断是否选中 postion等element
+                for (const sid in this.mapPostionDic) {
+                    if (this.mapPostionDic.hasOwnProperty(sid)) {
+                        this.ui.m_mapArea.globalToLocal(e.stageX, e.stageY, this.tempXY);
+                        if (this.mapPostionDic[sid].hit(this.tempXY.x, this.tempXY.y)) {
+                            this.ui.m_txtPositionSid.text = sid;
+                            this.onBtnPositionSelected();
+                            break;
+                        }
+                    }
+                }
+            }
+            this.dragHelper.onTouchBegin(e);
             this.onMapArea_TouchMove(e);
         }
+        tempXY = new egret.Point();
         private onMapArea_TouchMove(e: egret.TouchEvent) {
-            let tempXY = new egret.Point();
-            this.ui.m_mapArea.globalToLocal(e.stageX, e.stageY, tempXY);
-            var col = models.fights.FightModelUtil.posToGrid(tempXY.x);
-            var row = models.fights.FightModelUtil.posToGrid(tempXY.y);
+            this.ui.m_mapArea.globalToLocal(e.stageX, e.stageY, this.tempXY);
+            var col = models.fights.FightModelUtil.posToGrid(this.tempXY.x);
+            var row = models.fights.FightModelUtil.posToGrid(this.tempXY.y);
             if (this.cells[col] && this.cells[col][row]) {
                 this.setCurrMapAreaOver(this.cells[col][row], KeyBoardCtrl.si.shiftKey);
             }
@@ -409,10 +427,10 @@ namespace tools {
                     this.clearCell(col, row, KeyBoardCtrl.si.shiftKey);
                 }
             } else {
-                this.dragHelper.onTouchMove(e);
+                this.dragHelper.doMove(e);
             }
         }
-        private addPostionCtrl(sid: string, col: number, row: number, dir: Direction4, size: StcCellSize) {
+        private addPostionCtrl(sid: string, col: number, row: number, dir: Direction4, size: IGrid) {
             let positionCtrl: MapPositionCtrl = new MapPositionCtrl(new fairygui.GComponent());
             positionCtrl.positionSid = sid;
             positionCtrl.col = col;
@@ -437,17 +455,12 @@ namespace tools {
                 positionCtrl.ui1.rotation = CommonHelper.dir4ToDegree(dir);
             }
         }
-        private validatePositionCtrlSize(positionSid: string, size: StcCellSize) {
+        private validatePositionCtrlSize(positionSid: string, size: IGrid) {
             let positionCtrl: MapPositionCtrl = this.mapPostionDic[positionSid];
             if (positionCtrl) {
                 positionCtrl.size = size;
-                if (size == StcCellSize.S1x1) {
-                    positionCtrl.ui1.setSize(models.fights.FightModelConfig.si.cellSize, models.fights.FightModelConfig.si.cellSize);
-                    positionCtrl.ui1.setXY(models.fights.FightModelConfig.si.cellSize / 2, models.fights.FightModelConfig.si.cellSize / 2);
-                } else {
-                    positionCtrl.ui1.setSize(models.fights.FightModelConfig.si.cellSize * 2, models.fights.FightModelConfig.si.cellSize * 2);
-                    positionCtrl.ui1.setXY(models.fights.FightModelConfig.si.cellSize, models.fights.FightModelConfig.si.cellSize);
-                }
+                positionCtrl.ui1.setSize(models.fights.FightModelConfig.si.cellSize * size.col, models.fights.FightModelConfig.si.cellSize * size.row);
+                positionCtrl.ui1.setXY(models.fights.FightModelConfig.si.cellSize * size.col / 2, models.fights.FightModelConfig.si.cellSize * size.row / 2);
             }
         }
         private clearCell(col: number, row: number, isSize4: boolean) {

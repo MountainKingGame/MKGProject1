@@ -10,10 +10,6 @@ enum StcCellSid{
 enum StcMapVersion{
     V1 = 1,
 }
-enum StcCellSize{
-    S1x1 = 11,
-    S2x2 = 22,
-}
 enum StcMapKind{
     Kind1 = 1,
 }
@@ -88,7 +84,7 @@ class StcMap extends StcCacheBase<IStcMapVo>{
                 item.dir = Direction4.Up;
             }
             if(!item.size){
-                item.size = StcCellSize.S2x2;
+                item.size = {col:2,row:2};
             }
             vo.positionMap[item.sid] = item;
         }
@@ -125,7 +121,7 @@ interface IStcMapPositionVo {
     sid?: string;
     col?: number;
     row?: number;
-    size?: StcCellSize;
+    size?: IGrid;
     dir?: Direction4;
 }
 interface IStcMapFactory {

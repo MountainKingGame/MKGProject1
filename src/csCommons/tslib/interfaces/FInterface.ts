@@ -11,3 +11,9 @@ interface IGrid{
     col?:number;
     row?:number;
 }
+interface IRect{
+    left?:number;
+    top?:number;
+    right?:number;
+    bottom?:number;
+}

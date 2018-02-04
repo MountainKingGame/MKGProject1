@@ -26,6 +26,14 @@ namespace models.fights {
         public static posToGrid(pos: number): number {
             return Math.floor(pos / FightModelConfig.si.cellSize);
         }
+        static gridSizeToRect(col:number,row:number,size:IGrid):IRect {
+            let rect:IRect = {};
+            rect.left = FightModelUtil.gridToPos(col);
+            rect.top = FightModelUtil.gridToPos(row);
+            rect.right = rect.left + FightModelUtil.gridToPos(size.col);
+            rect.bottom = rect.top + FightModelUtil.gridToPos(size.row);
+            return rect;
+        }
         static alignGrid(pos: number, min: number = 0, max: number = -1): number {
             var rs: number = Math.round(pos / FightModelConfig.si.cellSize);
             if (rs < min) {
@@ -39,7 +47,13 @@ namespace models.fights {
             }
             return rs;
         }
-        static checkHit(rect1: IQuadTreeRect, rect2: IQuadTreeRect) {
+        static hitXyRect(x:number,y:number, rect: IRect) {
+            if(x<rect.left || y<rect.top || x>rect.right || y>rect.bottom){
+                return false;
+            }
+            return true;
+        }
+        static hitQuadTreeRect2(rect1: IQuadTreeRect, rect2: IQuadTreeRect) {
             if (rect1.right <= rect2.x || rect1.x >= rect2.right || rect1.bottom <= rect2.y || rect1.y >= rect2.bottom) {
                 return false;
             }

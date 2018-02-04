@@ -115,7 +115,7 @@ namespace models.fights {
                 let item = hitArr[i];
                 let hitBullet: BulletVo = (<QuadTreeHitRect>item).owner as BulletVo;
                 if (bullet.group != hitBullet.group) {
-                    if (FightModelUtil.checkHit(bullet.hitRect, item)) {
+                    if (FightModelUtil.hitQuadTreeRect2(bullet.hitRect, item)) {
                         this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.BulletHitBullet, this.model.currFrame, bullet.ownerUid, bullet.uid, hitBullet.uid));
                         let oldApTank = bullet.apTank;
                         bullet.apTank -= hitBullet.apTank;
@@ -147,7 +147,7 @@ namespace models.fights {
                 let hitItem = hitArr[i];
                 let hitCellVo = ((<QuadTreeHitRect>hitItem).owner as CellVo);
                 if (hitCellVo.sid != StcCellSid.floor && hitCellVo.sid != StcCellSid.river) {
-                    if (FightModelUtil.checkHit(bullet.hitRect, hitItem)) {
+                    if (FightModelUtil.hitQuadTreeRect2(bullet.hitRect, hitItem)) {
                         if (hitCellVo.sid != StcCellSid.block) {
                             let apCellLv: number = FightModelUtil.getApCellLv(bullet.apCell);
                             if (apCellLv > hitCellVo.sid) {
@@ -191,7 +191,7 @@ namespace models.fights {
                     }
                 }
                 if (canHit) {
-                    if (FightModelUtil.checkHit(bullet.hitRect, item)) {
+                    if (FightModelUtil.hitQuadTreeRect2(bullet.hitRect, item)) {
                         this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.BulletHitTank, this.model.currFrame, bullet.ownerUid, bullet.uid, hitTank.uid));
                         if (hitTank.effectMap[StcEffectSid.Invincible]) {
                             //do nothing, only remove bullet
@@ -233,7 +233,7 @@ namespace models.fights {
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 if ((<QuadTreeHitRect>item).owner.sid > 0) {
-                    if (FightModelUtil.checkHit(vo.forecastMoveHitRect, item) && FightModelUtil.checkHit(vo.hitRect, item) == false) {
+                    if (FightModelUtil.hitQuadTreeRect2(vo.forecastMoveHitRect, item) && FightModelUtil.hitQuadTreeRect2(vo.hitRect, item) == false) {
                         return item;
                     }
                 }
@@ -242,7 +242,7 @@ namespace models.fights {
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
                 if (vo.uid != (<QuadTreeHitRect>item).owner.uid) {
-                    if (FightModelUtil.checkHit(vo.forecastMoveHitRect, item) && FightModelUtil.checkHit(vo.hitRect, item) == false) {
+                    if (FightModelUtil.hitQuadTreeRect2(vo.forecastMoveHitRect, item) && FightModelUtil.hitQuadTreeRect2(vo.hitRect, item) == false) {
                         return item;
                     }
                 }
