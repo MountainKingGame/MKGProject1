@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="276,500">
+  <displayList>
+    <graph id="n17_ysfl" name="menuBg" xy="0,0" size="276,500" group="n16_ysfl" type="rect" lineSize="2" fillColor="#ffcccccc" corner="32"/>
+    <component id="n10_ysfl" name="txtMapId" src="ysfl15" pkg="ybsps8tf" xy="62,43" size="89,30" group="n14_ysfl" tooltips="mapId">
+      <Label title="12"/>
+    </component>
+    <component id="n7_ysfl" name="txtCol" src="ysfl15" pkg="ybsps8tf" xy="4,133" size="80,30" group="n12_ysfl" tooltips="col">
+      <Label title="999"/>
+    </component>
+    <component id="n9_ysfl" name="x" src="ysfl16" pkg="ybsps8tf" xy="84,130" size="20,30" group="n12_ysfl">
+      <Label title="x"/>
+    </component>
+    <component id="n8_ysfl" name="txtRow" src="ysfl15" pkg="ybsps8tf" xy="104,133" size="80,30" group="n12_ysfl" tooltips="row">
+      <Label title="999"/>
+    </component>
+    <group id="n12_ysfl" name="n12" xy="4,130" size="180,33" group="n14_ysfl"/>
+    <component id="n5_ysfl" name="btnSave" src="ysfl14" pkg="ybsps8tf" xy="146,80" size="82,40" group="n13_ysfl">
+      <Button title="Save"/>
+    </component>
+    <component id="n11_ysfl" name="btnOpen" src="ysfl14" pkg="ybsps8tf" xy="47,80" size="82,40" group="n13_ysfl">
+      <Button title="Open"/>
+    </component>
+    <group id="n13_ysfl" name="n13" xy="47,80" size="181,40" group="n14_ysfl"/>
+    <component id="n15_ysfl" name="btnSetSize" src="ysfl14" pkg="ybsps8tf" xy="189,127" size="82,40" group="n14_ysfl">
+      <Button title="Size"/>
+    </component>
+    <component id="n18_xk2t" name="n18" src="ysfl16" pkg="ybsps8tf" xy="2,40" size="67,30" group="n14_ysfl">
+      <Label title="sid:"/>
+    </component>
+    <group id="n14_ysfl" name="group_first" xy="2,40" size="269,127" group="n16_ysfl" collapsed="true"/>
+    <list id="n0_ysfl" name="list_cell" xy="14,177" size="249,182" group="n16_ysfl" layout="flow_hz" selectionMode="none" overflow="scroll" lineGap="10" defaultItem="ui://i6vaqd5aysfl1">
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+    </list>
+    <component id="n19_xk2t" name="txtPositionSid" src="ysfl15" pkg="ybsps8tf" xy="8,394" size="172,35" group="n25_xk2t" tooltips="mapId">
+      <Label title="p0/h0/e0/b0&#xD;&#xD;"/>
+    </component>
+    <component id="n20_xk2t" name="btnPostionSelected" src="ysfl14" pkg="ybsps8tf" xy="187,391" size="82,40" group="n25_xk2t">
+      <Button title="Select"/>
+    </component>
+    <component id="n27_xk2t" name="btnPostionSize" src="ysfl14" pkg="ybsps8tf" xy="187,468" size="82,30" group="n25_xk2t">
+      <Button title="size"/>
+    </component>
+    <component id="n30_nk1s" name="btnPostionDir" src="ysfl14" pkg="ybsps8tf" xy="187,434" size="82,30" group="n25_xk2t">
+      <Button title="dir"/>
+    </component>
+    <component id="n21_xk2t" name="btnPostionPlayer" src="ysfl14" pkg="ybsps8tf" xy="3,448" size="30,32" group="n31_nk1s">
+      <Button title="p"/>
+    </component>
+    <component id="n22_xk2t" name="btnPostionHome" src="ysfl14" pkg="ybsps8tf" xy="33,448" size="30,32" group="n31_nk1s">
+      <Button title="h"/>
+    </component>
+    <component id="n23_xk2t" name="btnPostionEnemy" src="ysfl14" pkg="ybsps8tf" xy="63,448" size="30,32" group="n31_nk1s">
+      <Button title="e"/>
+    </component>
+    <component id="n24_xk2t" name="btnPostionBoss" src="ysfl14" pkg="ybsps8tf" xy="93,448" size="30,32" group="n31_nk1s">
+      <Button title="b"/>
+    </component>
+    <component id="n28_nk1s" name="btnPostionNumSub" src="ysfl14" pkg="ybsps8tf" xy="123,448" size="30,32" group="n31_nk1s">
+      <Button title="-"/>
+    </component>
+    <component id="n29_nk1s" name="btnPostionNumAdd" src="ysfl14" pkg="ybsps8tf" xy="153,448" size="30,32" group="n31_nk1s">
+      <Button title="+"/>
+    </component>
+    <group id="n31_nk1s" name="group_positionSidChange" xy="3,448" size="180,32" group="n25_xk2t"/>
+    <group id="n25_xk2t" name="group_position" xy="3,391" size="266,107" group="n16_ysfl"/>
+    <graph id="n26_xk2t" name="menuTopBar" xy="0,0" size="276,37" group="n16_ysfl" type="rect" lineSize="2" fillColor="#ff999999" corner="16,16,0,0"/>
+    <group id="n16_ysfl" name="groupMenu" xy="0,0" size="276,500" advanced="true" collapsed="true"/>
+    <component id="n32_a3zg" name="n32" src="ysfl2" xy="208,-33"/>
+    <component id="n33_a3zg" name="scaleMenu" src="nk1s1k" pkg="ybsps8tf" xy="8,6"/>
+    <component id="n34_a3zg" name="scaleMap" src="nk1s1k" pkg="ybsps8tf" xy="159,44"/>
+  </displayList>
+</component>

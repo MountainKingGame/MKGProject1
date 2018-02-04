@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="64,64">
   <displayList>
-    <component id="n1_ysfl" name="n0" src="u9boc" pkg="ybsps8tf" xy="0,0" size="64,64" scale="0.5,0.5" controller="kind,2"/>
-    <component id="n2_ysfl" name="n1" src="u9boc" pkg="ybsps8tf" xy="32,0" size="64,64" scale="0.5,0.5" controller="kind,2"/>
-    <component id="n3_ysfl" name="n2" src="u9boc" pkg="ybsps8tf" xy="0,32" size="64,64" scale="0.5,0.5" controller="kind,2"/>
-    <component id="n4_ysfl" name="n3" src="u9boc" pkg="ybsps8tf" xy="32,32" size="64,64" scale="0.5,0.5" controller="kind,2"/>
+    <component id="n1_ysfl" name="n0" src="u9boc" pkg="ybsps8tf" xy="0,0" size="64,64" scale="0.5,0.5" controller="kind,4"/>
+    <component id="n2_ysfl" name="n1" src="u9boc" pkg="ybsps8tf" xy="32,0" size="64,64" scale="0.5,0.5" controller="kind,4"/>
+    <component id="n3_ysfl" name="n2" src="u9boc" pkg="ybsps8tf" xy="0,32" size="64,64" scale="0.5,0.5" controller="kind,4"/>
+    <component id="n4_ysfl" name="n3" src="u9boc" pkg="ybsps8tf" xy="32,32" size="64,64" scale="0.5,0.5" controller="kind,4"/>
   </displayList>
 </component>
