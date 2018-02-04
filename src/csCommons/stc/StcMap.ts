@@ -30,7 +30,7 @@ class StcMap extends StcCacheBase<IStcMapVo>{
         return `resource/assets/stc/maps/${StcMap.cellJsonName(sid)}`;
     }
     static cellJsonName(sid:number):string{
-        return `cell_grid_${sid}.json`;
+        return `cell_${sid}.json`;
     }
     static positionJsonPath(sid:number):string{
         return `resource/assets/stc/maps/${StcMap.positionJsonName(sid)}`;

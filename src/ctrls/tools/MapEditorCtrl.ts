@@ -2,7 +2,8 @@ namespace tools {
     export class MapEditorCtrl extends CtrlBase<fuis.tools_0.UI_MapEditor>{
         private cellLayer: fairygui.GComponent = new fairygui.GComponent();
         private positionLayer: fairygui.GComponent = new fairygui.GComponent();
-        private dragHelper: FuiDragHelper;
+        private scaleMapCtrl: ScaleBarCtrl;
+        private dragMap: FuiDragHelper;
         private menuCellRim: fuis.tools_0.UI_MapRimGreen;
         private mapAreaCellRim: fuis.tools_0.UI_MapRimGreen;
         private cells: UI_MapCell[][] = [];
@@ -14,7 +15,8 @@ namespace tools {
 
         public dispose() {
             this.disposePositionDic();
-            this.dragHelper = null;
+            this.scaleMapCtrl = null;
+            this.dragMap = null;
             super.dispose();
         }
         private disposePositionDic() {
@@ -26,33 +28,39 @@ namespace tools {
         }
         init() {
             super.init();
-            let scaleBarCtrl: ScaleBarCtrl = new ScaleBarCtrl(this.ui.m_scaleBar as fuis.elements_0.UI_ScaleBar);
-            scaleBarCtrl.target = this.ui.m_mapArea;
-            scaleBarCtrl.init();
-            this.autoDisposeList.push(scaleBarCtrl);
-            //
+            let scaleMapCtrl: ScaleBarCtrl = new ScaleBarCtrl(this.ui.m_menu.m_scaleMap as fuis.elements_0.UI_ScaleBar);
+            scaleMapCtrl.target = this.ui.m_mapArea;
+            scaleMapCtrl.init();
+            this.autoDisposeList.push(scaleMapCtrl);
+            this.scaleMapCtrl = scaleMapCtrl;
+            //-
+            let scaleMenuCtrl: ScaleBarCtrl = new ScaleBarCtrl(this.ui.m_menu.m_scaleMenu as fuis.elements_0.UI_ScaleBar);
+            scaleMenuCtrl.target = this.ui.m_menu;
+            scaleMenuCtrl.init();
+            this.autoDisposeList.push(scaleMenuCtrl);
+            //-
             this.menuCellRim = fuis.tools_0.UI_MapRimGreen.createInstance();
             this.menuCellRim.touchable = false;
-            this.ui.m_txtMapId.text = "1";
-            this.ui.m_txtCol.text = "20";
-            this.ui.m_txtRow.text = "20";
-            this.ui.m_btnOpen.addClickListener(this.onBtnOpen, this);
-            this.ui.m_btnSave.addClickListener(this.onBtnSave, this);
-            this.ui.m_btnSetSize.addClickListener(this.onBtnSetSize, this);
+            this.ui.m_menu.m_txtMapId.text = "1";
+            this.ui.m_menu.m_txtCol.text = "20";
+            this.ui.m_menu.m_txtRow.text = "20";
+            this.ui.m_menu.m_btnOpen.addClickListener(this.onBtnOpen, this);
+            this.ui.m_menu.m_btnSave.addClickListener(this.onBtnSave, this);
+            this.ui.m_menu.m_btnSetSize.addClickListener(this.onBtnSetSize, this);
             //---
             this.initList();
             //---position
-            this.ui.m_txtPositionSid.addEventListener(egret.Event.CHANGE, this.txtPositionSid_onChange, this);
-            this.ui.m_btnPostionSelected.addClickListener(this.onBtnPositionSelected, this);
+            this.ui.m_menu.m_txtPositionSid.addEventListener(egret.Event.CHANGE, this.txtPositionSid_onChange, this);
+            this.ui.m_menu.m_btnPostionSelected.addClickListener(this.onBtnPositionSelected, this);
             this.onBtnPositionSidKind(StcMapPositionSidKind.Player)
-            this.ui.m_btnPostionPlayer.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Player) }, this);
-            this.ui.m_btnPostionHome.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Home) }, this);
-            this.ui.m_btnPostionEnemy.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Enemy) }, this);
-            this.ui.m_btnPostionBoss.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Boss) }, this);
-            this.ui.m_btnPostionNumSub.addClickListener(() => this.onBtnPostionNumChange(-1), this);
-            this.ui.m_btnPostionNumAdd.addClickListener(() => this.onBtnPostionNumChange(+1), this);
-            this.ui.m_btnPostionDir.addClickListener(this.onBtnPositionDir, this);
-            this.ui.m_btnPostionSize.addClickListener(this.onBtnPositionSize, this);
+            this.ui.m_menu.m_btnPostionPlayer.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Player) }, this);
+            this.ui.m_menu.m_btnPostionHome.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Home) }, this);
+            this.ui.m_menu.m_btnPostionEnemy.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Enemy) }, this);
+            this.ui.m_menu.m_btnPostionBoss.addClickListener(() => { this.onBtnPositionSidKind(StcMapPositionSidKind.Boss) }, this);
+            this.ui.m_menu.m_btnPostionNumSub.addClickListener(() => this.onBtnPostionNumChange(-1), this);
+            this.ui.m_menu.m_btnPostionNumAdd.addClickListener(() => this.onBtnPostionNumChange(+1), this);
+            this.ui.m_menu.m_btnPostionDir.addClickListener(this.onBtnPositionDir, this);
+            this.ui.m_menu.m_btnPostionSize.addClickListener(this.onBtnPositionSize, this);
             //-
             this.curMapPositionDir = Direction4.Up;
             this.validateBtnPositionDir();
@@ -70,11 +78,11 @@ namespace tools {
 
         }
         initList() {
-            this.ui.m_list_cell.setVirtual();
-            this.ui.m_list_cell.itemRenderer = this.list_cell_itemRenderer.bind(this);
-            this.ui.m_list_cell.data = [StcCellSid.wood, StcCellSid.stone, StcCellSid.iron, StcCellSid.block, StcCellSid.river, StcCellSid.cover];
-            this.ui.m_list_cell.numItems = this.ui.m_list_cell.data.length;
-            this.ui.m_list_cell.refreshVirtualList();
+            this.ui.m_menu.m_list_cell.setVirtual();
+            this.ui.m_menu.m_list_cell.itemRenderer = this.list_cell_itemRenderer.bind(this);
+            this.ui.m_menu.m_list_cell.data = [StcCellSid.wood, StcCellSid.stone, StcCellSid.iron, StcCellSid.block, StcCellSid.river, StcCellSid.cover];
+            this.ui.m_menu.m_list_cell.numItems = this.ui.m_menu.m_list_cell.data.length;
+            this.ui.m_menu.m_list_cell.refreshVirtualList();
         }
         initMapArea() {
             this.ui.m_mapArea.addChild(this.cellLayer);
@@ -89,12 +97,14 @@ namespace tools {
             this.ui.m_mapArea.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onMapArea_TouchBegin, this);
             this.ui.m_mapArea.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMapArea_TouchMove, this);
             this.ui.m_mapArea.addEventListener(egret.TouchEvent.TOUCH_END, this.onMapArea_TouchEnd, this);
-            this.dragHelper = new FuiDragHelper(this.ui.m_mapArea);
-            this.autoDisposeList.push(this.dragHelper);
-            this.dragHelper.autoTouchMove = false;
+            this.dragMap = new FuiDragHelper(this.ui.m_mapArea);
+            this.autoDisposeList.push(this.dragMap);
+            this.dragMap.autoTouchMove = false;
+            let dragMenu:FuiDragHelper = new FuiDragHelper(this.ui.m_menu.m_menuTopBar,this.ui.m_menu);
+            this.autoDisposeList.push(dragMenu);
         }
         private list_cell_itemRenderer(i: number, item: fuis.tools_0.UI_MapCellListItem) {
-            let sid: StcCellSid = this.ui.m_list_cell.data[i] as StcCellSid;
+            let sid: StcCellSid = this.ui.m_menu.m_list_cell.data[i] as StcCellSid;
             item.m_cell1.data = sid;
             (item.m_cell1 as fuis.elements_0.UI_MapCell).m_kind.selectedIndex = sid;
             item.m_cell1.addClickListener(this.onListCellItemClick1.bind(this), this);
@@ -194,8 +204,8 @@ namespace tools {
             let positionJson: IStcMapPositionJson = JSON.parse(this.positionJsonStr);
             let mapVo: IStcMapVo = StcMap.parseMapVo(this.getMapSid(), cellJson, positionJson);
             StcMap.setPositionMap(mapVo, positionJson);
-            this.ui.m_txtCol.text = mapVo.cells.length.toString();
-            this.ui.m_txtRow.text = mapVo.cells[0].length.toString();
+            this.ui.m_menu.m_txtCol.text = mapVo.cells.length.toString();
+            this.ui.m_menu.m_txtRow.text = mapVo.cells[0].length.toString();
             this.onBtnSetSize();
             for (let i = 0; i < this.cells.length; i++) {
                 for (let j = 0; j < this.cells[0].length; j++) {
@@ -213,7 +223,7 @@ namespace tools {
                 console.log("[info]", "no cells");
                 return;
             }
-            let sid: number = parseInt(this.ui.m_txtMapId.text);
+            let sid: number = parseInt(this.ui.m_menu.m_txtMapId.text);
             //--
             let cellJson: IStcMapCellJson = { version: StcMapVersion.V1, sid: sid, cells: [] };
             for (let i = 0; i < this.cells.length; i++) {
@@ -250,9 +260,9 @@ namespace tools {
             request.send();
         }
         onBtnSetSize() {
-            let col = parseInt(this.ui.m_txtCol.text);
+            let col = parseInt(this.ui.m_menu.m_txtCol.text);
             col = MathUtil.clamp(isNaN(col) ? 1 : col, 1, 200);
-            let row = parseInt(this.ui.m_txtRow.text);
+            let row = parseInt(this.ui.m_menu.m_txtRow.text);
             row = MathUtil.clamp(isNaN(row) ? 1 : row, 1, 200);
             //-
             this.ui.m_mapArea.width = models.fights.FightModelUtil.gridToPos(col);
@@ -293,16 +303,17 @@ namespace tools {
                 (this.ui.width - this.ui.m_mapArea.x - 10) / this.ui.m_mapArea.width,
                 (this.ui.height - this.ui.m_mapArea.y - 10) / this.ui.m_mapArea.height);
             this.ui.m_mapArea.scaleX = this.ui.m_mapArea.scaleY = scale;
+            this.scaleMapCtrl.refreshValue();
         }
         private txtPositionSid_onChange() {
             this.onBtnPositionSelected();
         }
         private onBtnPositionSelected() {
-            this.ui.m_txtPositionSid.parent.addChild(this.menuCellRim);
-            FuiUtil.copyProp4(this.menuCellRim, this.ui.m_txtPositionSid);
+            this.ui.m_menu.m_txtPositionSid.parent.addChild(this.menuCellRim);
+            FuiUtil.copyProp4(this.menuCellRim, this.ui.m_menu.m_txtPositionSid);
             this.currPositionSelected = true;
             //
-            let positionSid: string = this.ui.m_txtPositionSid.text;
+            let positionSid: string = this.ui.m_menu.m_txtPositionSid.text;
             let positionCtrl: MapPositionCtrl = this.mapPostionDic[positionSid];
             if (positionCtrl) {
                 this.curMapPositionDir = positionCtrl.dir;
@@ -312,7 +323,7 @@ namespace tools {
             }
         }
         private onBtnPositionSidKind(sidKind: string) {
-            this.ui.m_txtPositionSid.text = this.findMapPositionNextSid(sidKind);
+            this.ui.m_menu.m_txtPositionSid.text = this.findMapPositionNextSid(sidKind);
             this.onBtnPositionSelected();
         }
         private findMapPositionNextSid(sidKind: string) {
@@ -326,15 +337,15 @@ namespace tools {
             return sidKind + i.toString();
         }
         private onBtnPostionNumChange(change: number) {
-            let match = this.ui.m_txtPositionSid.text.match(/[0-9]+/);
+            let match = this.ui.m_menu.m_txtPositionSid.text.match(/[0-9]+/);
             if (match && match.length > 0) {
                 let num = parseInt(match[0]);
-                let index = this.ui.m_txtPositionSid.text.indexOf(match[0]);
+                let index = this.ui.m_menu.m_txtPositionSid.text.indexOf(match[0]);
                 num += change;
                 if (num < 0) {
                     num = 0;
                 }
-                this.ui.m_txtPositionSid.text = this.ui.m_txtPositionSid.text.replace(match[0], num.toString());
+                this.ui.m_menu.m_txtPositionSid.text = this.ui.m_menu.m_txtPositionSid.text.replace(match[0], num.toString());
             }
         }
         private onBtnPositionDir() {
@@ -343,10 +354,10 @@ namespace tools {
                 this.curMapPositionDir = Direction4.Left;
             }
             this.validateBtnPositionDir();
-            this.validatePositionDir(this.ui.m_txtPositionSid.text, this.curMapPositionDir);
+            this.validatePositionDir(this.ui.m_menu.m_txtPositionSid.text, this.curMapPositionDir);
         }
         private validateBtnPositionDir() {
-            this.ui.m_btnPostionDir.text = "dir" + this.curMapPositionDir.toString();
+            this.ui.m_menu.m_btnPostionDir.text = "dir" + this.curMapPositionDir.toString();
         }
         private onBtnPositionSize() {
             if (this.curMapPositionSize.col == 2 && this.curMapPositionSize.row == 2) {
@@ -355,10 +366,10 @@ namespace tools {
                 this.curMapPositionSize = { col: 2, row: 2 };
             }
             this.validateBtnPositionSize();
-            this.validatePositionCtrlSize(this.ui.m_txtPositionSid.text, this.curMapPositionSize);
+            this.validatePositionCtrlSize(this.ui.m_menu.m_txtPositionSid.text, this.curMapPositionSize);
         }
         private validateBtnPositionSize() {
-            this.ui.m_btnPostionSize.title = `size${this.curMapPositionSize}`;
+            this.ui.m_menu.m_btnPostionSize.title = `size${this.curMapPositionSize}`;
         }
         private addCell(col: number, row: number) {
             let cell: UI_MapCell = UI_MapCell.createInstance();
@@ -369,7 +380,7 @@ namespace tools {
             cell.m_kind.selectedIndex = StcCellSid.floor;
         }
         private getMapSid(): number {
-            return parseInt(this.ui.m_txtMapId.text);
+            return parseInt(this.ui.m_menu.m_txtMapId.text);
         }
         private onMapArea_TouchBegin(e: egret.TouchEvent) {
             if (!KeyBoardCtrl.si.ctrlKey && !KeyBoardCtrl.si.altKey && !KeyBoardCtrl.si.shiftKey) {
@@ -378,14 +389,14 @@ namespace tools {
                     if (this.mapPostionDic.hasOwnProperty(sid)) {
                         this.ui.m_mapArea.globalToLocal(e.stageX, e.stageY, this.tempXY);
                         if (this.mapPostionDic[sid].hit(this.tempXY.x, this.tempXY.y)) {
-                            this.ui.m_txtPositionSid.text = sid;
+                            this.ui.m_menu.m_txtPositionSid.text = sid;
                             this.onBtnPositionSelected();
                             break;
                         }
                     }
                 }
             }
-            this.dragHelper.onTouchBegin(e);
+            this.dragMap.onTouchBegin(e);
             this.onMapArea_TouchMove(e);
         }
         tempXY = new egret.Point();
@@ -399,7 +410,7 @@ namespace tools {
             // console.log(e.stageX, e.stageY);
             if (KeyBoardCtrl.si.ctrlKey) {
                 if (this.currPositionSelected) {
-                    let positionSid: string = this.ui.m_txtPositionSid.text;
+                    let positionSid: string = this.ui.m_menu.m_txtPositionSid.text;
                     let positionCtrl: MapPositionCtrl = this.mapPostionDic[positionSid];
                     if (positionCtrl == undefined) {
                         this.addPostionCtrl(positionSid, col, row, this.curMapPositionDir, this.curMapPositionSize);
@@ -418,7 +429,7 @@ namespace tools {
                 }
             } else if (KeyBoardCtrl.si.altKey) {
                 if (this.currPositionSelected) {
-                    let positionSid: string = this.ui.m_txtPositionSid.text;
+                    let positionSid: string = this.ui.m_menu.m_txtPositionSid.text;
                     if (this.mapPostionDic[positionSid]) {
                         this.mapPostionDic[positionSid].dispose();
                         delete this.mapPostionDic[positionSid];
@@ -427,7 +438,7 @@ namespace tools {
                     this.clearCell(col, row, KeyBoardCtrl.si.shiftKey);
                 }
             } else {
-                this.dragHelper.doMove(e);
+                this.dragMap.doMove(e);
             }
         }
         private addPostionCtrl(sid: string, col: number, row: number, dir: Direction4, size: IGrid) {
@@ -445,7 +456,7 @@ namespace tools {
             this.validatePositionCtrlSize(sid, size);
         }
         private getCurrPositionCtrl(): MapPositionCtrl {
-            let positionSid: string = this.ui.m_txtPositionSid.text;
+            let positionSid: string = this.ui.m_menu.m_txtPositionSid.text;
             return this.mapPostionDic[positionSid];
         }
         private validatePositionDir(positionSid: string, dir: Direction4) {
@@ -494,6 +505,7 @@ namespace tools {
         }
         private onMouseWheelChange(delta: number) {
             this.ui.m_mapArea.scaleX = this.ui.m_mapArea.scaleY = this.ui.m_mapArea.scaleX + delta / 1000;
+            this.scaleMapCtrl.refreshValue();
         }
     }
 }
