@@ -54,7 +54,6 @@ namespace models.fights {
             this.qtBullet = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
             //-
             this.initCells();
-            this.initTanks();
             this.initFactories();
         }
         initCells() {
@@ -72,19 +71,29 @@ namespace models.fights {
         initFactories() {
             for (let i = 0; i < this.stcMapVo.factories.length; i++) {
                 let stcVo = this.stcMapVo.factories[i];
-                let factory: FightModelFactory = new FightModelFactory();
-                factory.model = this;
-                factory.stcVo = stcVo;
-                factory.init();
-                this.factories.push(factory);
+                switch (stcVo.kind) {
+                    case StcMapFactoryKind.Player:
+                        const positionVo: IStcMapPositionVo = this.stcMapVo.positionMap[stcVo.positionSid];
+                        let tankVo: TankVo = new TankVo();
+                        tankVo.sid = 1;
+                        tankVo.uid = this.tankUId++;
+                        tankVo.x = FightModelUtil.gridToPos(positionVo.col+1);//+1是加坦克的尺寸
+                        tankVo.y = FightModelUtil.gridToPos(positionVo.row+1);
+                        tankVo.dir = positionVo.dir;
+                        tankVo.initPositionSid = stcVo.positionSid;
+                        tankVo.group = FightGroup.Player;
+                        this.changer.addTank(tankVo);
+                        break;
+                    case StcMapFactoryKind.Enemy_Once:
+                    case StcMapFactoryKind.Enemy_Loop:
+                        let factory: FightModelFactory = new FightModelFactory();
+                        factory.model = this;
+                        factory.stcVo = stcVo;
+                        factory.init();
+                        this.factories.push(factory);
+                        break;
+                }
             }
-        }
-        initTanks() {
-            let sid:string = "10";
-            const positionVo: IStcMapPositionVo = this.stcMapVo.positionMap[sid];
-            let tankVo = this.changer.addTankByIStcMapVoPlayer(positionVo);
-            tankVo.initPositionSid = sid;
-            tankVo.group = FightGroup.Player;
         }
         tankAlignGridX(tank: TankVo) {
             tank.x = FightModelUtil.gridToPos(FightModelUtil.alignGrid(tank.x, 1, this.gridSize.col - 1));

@@ -7,16 +7,6 @@ namespace models.fights {
         constructor(model: FightModel) {
             this.model = model;
         }
-        addTankByIStcMapVoPlayer(position: IStcMapPositionVo):TankVo {
-            let vo: TankVo = new TankVo();
-            vo.sid = 1;
-            vo.uid = this.model.tankUId++;
-            vo.x = FightModelUtil.gridToPos(position.col);
-            vo.y = FightModelUtil.gridToPos(position.row);
-            vo.dir = position.dir;
-            this.addTank(vo);
-            return vo;
-        }
         addTank(vo: TankVo) {
             vo.apTank = 50;
             vo.apCell = 220;

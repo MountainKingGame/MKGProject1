@@ -14,8 +14,10 @@ enum StcMapKind{
     Kind1 = 1,
 }
 enum StcMapFactoryKind{
-    Normal = 1,
-    Loop = 2,
+    /*玩家出生点*/
+    Player = 1,
+    Enemy_Once = 2,
+    Enemy_Loop = 3,
 }
 class StcMapPositionSidKind{
     static Player = "p";
@@ -131,4 +133,5 @@ interface IStcMapFactory {
     delayMs?: number;
     gapMs?: number;
     values?: [number, string][];
+    positionSid?:string;
 }
