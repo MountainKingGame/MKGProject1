@@ -48,21 +48,21 @@ class QuadTree implements IDispose {
     }
 
     split() {
-        let xHalf = Math.round((this.rect.x + this.rect.right) / 2);
-        let yHalf = Math.round((this.rect.y + this.rect.bottom) / 2);
+        let xHalf = Math.round((this.rect.left + this.rect.right) / 2);
+        let yHalf = Math.round((this.rect.top + this.rect.bottom) / 2);
         this.children.push(
-            new QuadTree(new QuadTreeRect(this.rect.x, xHalf, this.rect.y, yHalf), this),
-            new QuadTree(new QuadTreeRect(xHalf, this.rect.right, this.rect.y, yHalf), this),
-            new QuadTree(new QuadTreeRect(this.rect.x, xHalf, yHalf, this.rect.bottom), this),
+            new QuadTree(new QuadTreeRect(this.rect.left, xHalf, this.rect.top, yHalf), this),
+            new QuadTree(new QuadTreeRect(xHalf, this.rect.right, this.rect.top, yHalf), this),
+            new QuadTree(new QuadTreeRect(this.rect.left, xHalf, yHalf, this.rect.bottom), this),
             new QuadTree(new QuadTreeRect(xHalf, this.rect.right, yHalf, this.rect.bottom), this)
         );
     }
     getIndex(rect: IQuadTreeRect) {
         QuadTree.debug_getIndex_count++;
         var onLeft = rect.right <= this.children[0].rect.right;
-        var onRight = rect.x >= this.children[0].rect.right;
+        var onRight = rect.left >= this.children[0].rect.right;
         var onTop = rect.bottom <= this.children[0].rect.bottom;
-        var onBottom = rect.y >= this.children[0].rect.bottom;
+        var onBottom = rect.top >= this.children[0].rect.bottom;
 
         if (onTop) {
             if (onLeft) {
@@ -126,13 +126,13 @@ class QuadTree implements IDispose {
     }
     static isInner(innerRect: IQuadTreeRect, outRect: IQuadTreeRect) {
         QuadTree.debug_isInner_count++;
-        return innerRect.x >= outRect.x &&
+        return innerRect.left >= outRect.left &&
             innerRect.right <= outRect.right &&
-            innerRect.y >= outRect.y &&
+            innerRect.top >= outRect.top &&
             innerRect.bottom <= outRect.bottom;
     }
     static isHit(rect1: IQuadTreeRect, rect2: IQuadTreeRect) {
-        if (rect1.right <= rect2.x || rect1.x >= rect2.right || rect1.bottom <= rect2.y || rect1.y >= rect2.bottom) {
+        if (rect1.right <= rect2.left || rect1.left >= rect2.right || rect1.bottom <= rect2.top || rect1.top >= rect2.bottom) {
             return false;
         }
         return true;
@@ -215,28 +215,28 @@ class QuadTree implements IDispose {
     static carve(rect: IQuadTreeRect, cX: number, cY: number) {
         var result: IQuadTreeRect[] = [],
             temp: IQuadTreeRect[] = [];
-        var isCarveX = cX > rect.x && cX < rect.right;
-        var isCarveY = cY > rect.y && cY < rect.bottom;
+        var isCarveX = cX > rect.left && cX < rect.right;
+        var isCarveY = cY > rect.top && cY < rect.bottom;
 
         // 切割XY方向
         if (isCarveX && isCarveY) {
-            temp = QuadTree.carve(rect, cX, rect.y);
+            temp = QuadTree.carve(rect, cX, rect.top);
             while (temp.length) {
-                result = result.concat(QuadTree.carve(temp.shift(), rect.x, cY));
+                result = result.concat(QuadTree.carve(temp.shift(), rect.left, cY));
             }
 
             // 只切割X方向
         } else if (isCarveX) {
             result.push(
-                new QuadTreeRect(rect.x, cX, rect.y, rect.bottom),
-                new QuadTreeRect(cX, rect.right, rect.y, rect.bottom)
+                new QuadTreeRect(rect.left, cX, rect.top, rect.bottom),
+                new QuadTreeRect(cX, rect.right, rect.top, rect.bottom)
             );
 
             // 只切割Y方向
         } else if (isCarveY) {
             result.push(
-                new QuadTreeRect(rect.x, rect.right, rect.y, cY),
-                new QuadTreeRect(rect.x, rect.right, cY, rect.bottom)
+                new QuadTreeRect(rect.left, rect.right, rect.top, cY),
+                new QuadTreeRect(rect.left, rect.right, cY, rect.bottom)
             );
         }
 
@@ -245,19 +245,19 @@ class QuadTree implements IDispose {
 }
 /** Pivot and anchor is top-left */
 interface IQuadTreeRect {
-    x: number;
-    y: number;
+    left: number;
+    top: number;
     right: number;
     bottom: number;
 }
 class QuadTreeRect implements IQuadTreeRect {
-    x: number;
-    y: number;
+    left: number;
+    top: number;
     right: number;
     bottom: number;
-    constructor(x, right, y, bottom) {
-        this.x = x;
-        this.y = y;
+    constructor(left, right, top, bottom) {
+        this.left = left;
+        this.top = top;
         this.right = right;
         this.bottom = bottom;
     }
@@ -267,8 +267,8 @@ interface IQuadTreeNode extends IQuadTreeRect,IDoubleLinkedListNode {
     nextNode: IQuadTreeNode;
     ownerQuadTree: QuadTree;
     isDirty: boolean;
-    x: number;
-    y: number;
+    left: number;
+    top: number;
     right: number;
     bottom: number;
 }

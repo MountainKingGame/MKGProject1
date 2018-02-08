@@ -1,5 +1,32 @@
 class MathUtil{
-
+   /*  public static countDegree(x:number,y:number):number{
+public static float RotationRadian(float x, float y)
+        {
+            if (x == 0)
+            {
+                if (y > 0)
+                {
+                    return Mathf.PI/2;
+                }
+                else if (y < 0)
+                {
+                    return -Mathf.PI/2;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return Mathf.Atan2(y, x);
+            }
+        }
+        public static float RotationDegree(float x, float y)
+        {
+            return radianToDegree(RotationRadian(x, y));
+        }
+    } */
     /**
      * 循环数值t,min到max之间。t值永远不会大于等于max的值,也永远不会小于0
      * e.g. repeat(370,0,360)=>10; repeat(-90,0,360)=>270;  repeat(752,0,360)=>32;

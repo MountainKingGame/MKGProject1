@@ -13,26 +13,26 @@ namespace models.fights {
         owner: EntityVo;
         //
         isDirty: boolean;
-        x: number;
-        y: number;
+        left: number;
+        top: number;
         right: number;
         bottom: number;
         constructor(owner: EntityVo) {
             this.owner = owner;
         }
         recountLeftTop(xCenter: number, yCenter: number, w: number, h: number) {
-            this.x = xCenter;
-            this.y = yCenter;
-            this.right = this.x + w;
-            this.bottom = this.y + h;
+            this.left = xCenter;
+            this.top = yCenter;
+            this.right = this.left + w;
+            this.bottom = this.top + h;
         }
         recountPivotCenter(xCenter: number, yCenter: number, wHalf: number, hHalf: number) {
-            this.x = xCenter - wHalf;
-            this.y = yCenter - hHalf;
+            this.left = xCenter - wHalf;
+            this.top = yCenter - hHalf;
             this.right = xCenter + wHalf;
             this.bottom = yCenter + hHalf;
-            this.x = Math.round(this.x);
-            this.y = Math.round(this.y);
+            this.left = Math.round(this.left);
+            this.top = Math.round(this.top);
             this.right = Math.round(this.right);
             this.bottom = Math.round(this.bottom);
             this.isDirty = true;

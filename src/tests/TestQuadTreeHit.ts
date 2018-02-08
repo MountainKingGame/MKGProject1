@@ -6,13 +6,13 @@ class Rect implements IQuadTreeNode {
     isDirty: boolean;
     speedArr: number[];
     nextSpeedArr: number[];
-    x: number;
-    y: number;
+    left: number;
+    top: number;
     get right(): number {
-        return this.x + this.w;
+        return this.left + this.w;
     }
     get bottom(): number {
-        return this.y + this.h;
+        return this.top + this.h;
     }
     h: number;
     w: number;
@@ -31,9 +31,9 @@ class Rect implements IQuadTreeNode {
     }
 
     moveTo(x: number, y: number) {
-        if (this.x === x && this.y === y) return;
-        this.x = x;
-        this.y = y;
+        if (this.left === x && this.top === y) return;
+        this.left = x;
+        this.top = y;
         this.xHalf = x + this.wHalf;
         this.yHalf = y + this.hHalf;
         this.isDirty = true;
@@ -45,15 +45,15 @@ class Rect implements IQuadTreeNode {
         this.h = h;
         this.wHalf = w / 2;
         this.hHalf = h / 2;
-        this.xHalf = this.x + this.wHalf;
-        this.yHalf = this.y + this.hHalf;
+        this.xHalf = this.left + this.wHalf;
+        this.yHalf = this.top + this.hHalf;
         this.isDirty = true;
     }
 
     draw(cxt) {
         cxt.save();
         cxt.beginPath();
-        cxt.rect(this.x, this.y, this.w, this.h);
+        cxt.rect(this.left, this.top, this.w, this.h);
         cxt.closePath();
         cxt.restore();
     }
@@ -64,14 +64,14 @@ class Rect implements IQuadTreeNode {
         this.speedArr[1] = this.nextSpeedArr[1];
 
         this.moveTo(
-            this.x + this.speedArr[0] * time / 1000,
-            this.y + this.speedArr[1] * time / 1000
+            this.left + this.speedArr[0] * time / 1000,
+            this.top + this.speedArr[1] * time / 1000
         );
     }
 
     copy(rect: Rect) {
         this.resize(rect.w, rect.h);
-        this.moveTo(rect.x, rect.y);
+        this.moveTo(rect.left, rect.top);
         this.nextSpeedArr[0] = rect.speedArr[0];
         this.nextSpeedArr[1] = rect.speedArr[1];
     }
@@ -128,12 +128,12 @@ class Rect implements IQuadTreeNode {
             if (Math.abs(this.xHalf - rect.xHalf) + this.wHalf > rect.wHalf) {
                 this.nextSpeedArr[0] = -(this.nextSpeedArr[0] || this.speedArr[0]);
                 this.moveTo(this.xHalf > rect.xHalf ?
-                    rect.x + rect.w - this.w : rect.x, this.y);
+                    rect.left + rect.w - this.w : rect.left, this.top);
             }
             if (Math.abs(this.yHalf - rect.yHalf) + this.hHalf > rect.hHalf) {
                 this.nextSpeedArr[1] = -(this.nextSpeedArr[1] || this.speedArr[1]);
-                this.moveTo(this.x, this.yHalf > rect.yHalf ?
-                    rect.y + rect.h - this.h : rect.y);
+                this.moveTo(this.left, this.yHalf > rect.yHalf ?
+                    rect.top + rect.h - this.h : rect.top);
             }
         }
     }
