@@ -58,10 +58,11 @@ enum FightFrameOutputKind {
     BulletHitBullet,
     BulletHitCell,//20007
     BulletHitTank,
-    /*到达边缘*/
+    AddGather,
     BulletHitBorder,
-    RemoveBullet,//20010
+    RemoveBullet,
     RemoveTank,
+    RemoveGather,
     // BulletDump,
     AddBuff,
     RemoveBuff,

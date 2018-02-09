@@ -277,7 +277,7 @@ class TestQuadTreeShow {
         this.collideCount = 0;
         // 碰撞检测
         for (i = 0, len = this.rectArr.length; i < len; i++) {
-            tempRect = this.tree.retrieve(this.rectArr[i]);
+            tempRect = this.tree.findArr(this.rectArr[i]);
             // console.log(tempRect.length);
             for (j = 0; j < tempRect.length; j++) {
                 if (this.rectArr[i] != tempRect[j]) {

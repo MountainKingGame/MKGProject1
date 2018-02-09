@@ -22,6 +22,8 @@ class FightCtrl_Ticker {
         this.frameOutCallbackDic[FightFrameOutputKind.RebirthTank] = this.frameOut_RebirthTank;
         this.frameOutCallbackDic[FightFrameOutputKind.AddEffect] = this.frameOut_AddEffect;
         this.frameOutCallbackDic[FightFrameOutputKind.RemoveEffect] = this.frameOut_RemoveEffect;
+        this.frameOutCallbackDic[FightFrameOutputKind.AddGather] = this.frameOut_AddGather;
+        this.frameOutCallbackDic[FightFrameOutputKind.RemoveGather] = this.frameOut_RemoveGather;
         //===
     }
     lastMs: number = 0;
@@ -79,8 +81,8 @@ class FightCtrl_Ticker {
             for (let i = 0; i < this.ctrl.proxy.model.frameOutputs.length; i++) {
                 let item = this.ctrl.proxy.model.frameOutputs[i]
                 let callback = this.frameOutCallbackDic[item.kind];
-                if(callback){
-                    callback.call(this,item);
+                if (callback) {
+                    callback.call(this, item);
                 }
             }
         }
@@ -92,11 +94,6 @@ class FightCtrl_Ticker {
     }
     frameOut_AddBullet(item: FightFrameIOItem) {
         this.ctrl.addBulletById(item.data0 as number);
-        let bullet: BulletCtrl = this.ctrl.bulletDic[item.data0];
-        let mc = ResMgr.si.change_cannon_effect();
-        this.ctrl.topEffLayer.addChild(mc);
-        mc.setScale(0.3, 0.3);
-        mc.setXY(bullet.vo.xOld, bullet.vo.yOld);//old才是此帧发出点,x,y已经是move一帧后的位置了
     }
     frameOut_BulletHitBorder(item: FightFrameIOItem) {
         this.pausing = DebugConfig.pauseWhenHit;
@@ -132,7 +129,7 @@ class FightCtrl_Ticker {
             //-
             let mc = ResMgr.si.mcBoomQingTong();
             this.ctrl.topEffLayer.addChild(mc);
-            FuiUtil.setScale(mc,0.5);
+            FuiUtil.setScale(mc, 0.5);
             mc.setXY(hitCellVo.x + models.fights.FightModelConfig.si.cellSizeHalf, hitCellVo.y + models.fights.FightModelConfig.si.cellSizeHalf);
         }
     }
@@ -154,17 +151,21 @@ class FightCtrl_Ticker {
         this.ctrl.removeTank(tank);
     }
     frameOut_RebirthTank(item: FightFrameIOItem) {
-        {
-            let tank = this.ctrl.tankDic[item.uid];
-            this.showTankDeadEff(tank);
-            tank.movableEleCtrl.moveDirImmediately();
-        }
+        let tank = this.ctrl.tankDic[item.uid];
+        this.showTankDeadEff(tank);
+        tank.movableEleCtrl.moveDirImmediately();
     }
     frameOut_AddEffect(item: FightFrameIOItem) {
         this.ctrl.tankDic[item.uid].addBuffEffect(item.data0);
     }
     frameOut_RemoveEffect(item: FightFrameIOItem) {
         this.ctrl.tankDic[item.uid].removeBuffEffect(item.data0);
+    }
+    frameOut_AddGather(item: FightFrameIOItem) {
+        this.ctrl.addGather(item.uid);
+    }
+    frameOut_RemoveGather(item: FightFrameIOItem) {
+        this.ctrl.removeGather(item.uid);
     }
     //===
     showTankDeadEff(tank: TankCtrl) {

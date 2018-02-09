@@ -16,16 +16,19 @@ namespace models.fights {
         public cellDic: { [key: number]: CellVo } = {};//key:Vo.uid
         public tankDic: { [key: number]: TankVo } = {};
         public bulletDic: { [key: number]: BulletVo } = {};
+        public gatherDic: { [key: number]: GatherVo } = {};
         /**各group tank数量统计 */
         groupTankCount: { [key: number]: number } = [];//key:BattleGroup
-        //
+        //--准备废弃的
         public dumpCellDic: { [key: number]: CellVo } = {};
         public dumpTankDic: { [key: number]: TankVo } = {};
         public dumpBulletDic: { [key: number]: BulletVo } = {};
+        public dumpGatherDic: { [key: number]: GatherVo } = {};
         //---
-        qtCell: QuadTree;
-        qtTank: QuadTree;
-        qtBullet: QuadTree;
+        hitMgrCell: QuadTree;
+        hitMgrTank: QuadTree;
+        hitMgrBullet: QuadTree;
+        hitMgrGather: QuadTree;
         //---
         aiTankDic: { [key: number]: TankAI } = {};
         //---
@@ -49,9 +52,10 @@ namespace models.fights {
             this.size = new Vector2(FightModelUtil.gridToPos(this.gridSize.col), FightModelUtil.gridToPos(this.gridSize.row));
             // * FightModelConfig.si.cellSize, this.gridSize.row * FightModelConfig.si.cellSize);
             //-
-            this.qtCell = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
-            this.qtTank = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
-            this.qtBullet = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
+            this.hitMgrCell = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
+            this.hitMgrTank = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
+            this.hitMgrBullet = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
+            this.hitMgrGather = new QuadTree(new QuadTreeRect(0, this.size.x, 0, this.size.y));
             //-
             this.initCells();
             this.initFactories();
@@ -102,13 +106,18 @@ namespace models.fights {
             tank.y = FightModelUtil.gridToPos(FightModelUtil.alignGrid(tank.y, 1, this.gridSize.row - 1));
         }
         validateTankX(tank: TankVo) {
-            tank.x = MathUtil.clamp(tank.x, tank.sizeHalf.x, this.size.x - tank.sizeHalf.y);
+            tank.x = MathUtil.clamp(tank.x, tank.sizeHalf.x, this.size.x - tank.sizeHalf.x);
             tank.x = Math.round(tank.x);
         }
         validateTankY(tank: TankVo) {
-            tank.y = MathUtil.clamp(tank.y, tank.sizeHalf.x, this.size.y - tank.sizeHalf.y);
+            tank.y = MathUtil.clamp(tank.y, tank.sizeHalf.y, this.size.y - tank.sizeHalf.y);
             tank.y = Math.round(tank.y);
         }
-
+        validateX(x:number,sizeHalfX:number) {
+            return MathUtil.clamp(x, sizeHalfX, this.size.x - sizeHalfX);
+        }
+        validateY(y:number,sizeHalfY:number) {
+            return MathUtil.clamp(y, sizeHalfY, this.size.y - sizeHalfY);
+        }
     }
 }

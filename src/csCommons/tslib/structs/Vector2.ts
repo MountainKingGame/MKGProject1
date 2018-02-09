@@ -1,9 +1,9 @@
 class Vector2 {
 	public x:number;
 	public y:number;
-	public constructor(x:number=0,y:number=0) {
+	public constructor(x:number=0,y?:number) {
 		this.x = x;
-		this.y = y;
+		this.y = y==undefined?x:y;
 	}
 	/**
 	 * Returns the length of this vector (Read Only).

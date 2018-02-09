@@ -186,20 +186,20 @@ class QuadTree implements IDispose {
         }
     }
     /** 检索可以用鱼碰撞的结果队列 */
-    retrieve(node: IQuadTreeNode): IQuadTreeNode[] {
+    findArr(node: IQuadTreeNode): IQuadTreeNode[] {
         var result: IQuadTreeNode[] = [];
         if (this.children.length > 0) {
             var index: number;
             index = this.getIndex(node);
             if (index !== -1) {
-                result = result.concat(this.children[index].retrieve(node));
+                result = result.concat(this.children[index].findArr(node));
             } else {
                 // 切割矩形
                 var arr: IQuadTreeRect[], i: number;
                 arr = QuadTree.carve(node, this.children[0].rect.right, this.children[0].rect.bottom);
                 for (i = arr.length - 1; i >= 0; i--) {
                     index = this.getIndex(arr[i]);
-                    result = result.concat(this.children[index].retrieve(node));
+                    result = result.concat(this.children[index].findArr(node));
                 }
             }
         }

@@ -94,13 +94,13 @@ namespace models.fights {
             }
         }
         public tick_bulletHit() {
-            this.model.qtCell.refresh();
-            this.model.qtBullet.refresh();
-            this.model.qtTank.refresh();
+            this.model.hitMgrCell.refresh();
+            this.model.hitMgrBullet.refresh();
+            this.model.hitMgrTank.refresh();
             for (const uid in this.model.bulletDic) {
                 let bullet: BulletVo = this.model.bulletDic[uid];
                 if (bullet.stateA == FightVoStateA.Living) {//可能被其它bullet击中了
-                    if (QuadTree.isInner(bullet.hitRect, this.model.qtBullet.rect) == false) {
+                    if (QuadTree.isInner(bullet.hitRect, this.model.hitMgrBullet.rect) == false) {
                         //出地图范围了
                         this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.BulletHitBorder, this.model.currFrame, bullet.ownerUid, bullet.uid));
                         this.model.changer.removeBullet(bullet);
@@ -113,10 +113,10 @@ namespace models.fights {
         checkBulletHitBullet(bullet: BulletVo) {
             let bulletDump: boolean = false;
             // console.log("[info]", vo.uid, "`vo.uid` checkBulletHitTest");
-            let hitArr: IQuadTreeNode[] = this.model.qtBullet.retrieve(bullet.hitRect);
+            let hitArr: IQuadTreeNode[] = this.model.hitMgrBullet.findArr(bullet.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
-                let hitBullet: BulletVo = (<QuadTreeHitRect>item).owner as BulletVo;
+                let hitBullet: BulletVo = (<FightHitRect>item).owner as BulletVo;
                 if (bullet.group != hitBullet.group) {
                     if (QuadTree.isHit(bullet.hitRect, item)) {
                         this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.BulletHitBullet, this.model.currFrame, bullet.ownerUid, bullet.uid, hitBullet.uid));
@@ -145,10 +145,10 @@ namespace models.fights {
         checkBulletHitCell(bullet: BulletVo) {
             let a =1;
             let bulletDump: boolean = false;
-            let hitArr = this.model.qtCell.retrieve(bullet.hitRect);
+            let hitArr = this.model.hitMgrCell.findArr(bullet.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let hitItem = hitArr[i];
-                let hitCellVo = ((<QuadTreeHitRect>hitItem).owner as CellVo);
+                let hitCellVo = ((<FightHitRect>hitItem).owner as CellVo);
                 if (hitCellVo.sid != StcCellSid.floor && hitCellVo.sid != StcCellSid.river) {
                     if (QuadTree.isHit(bullet.hitRect, hitItem)) {
                         if (hitCellVo.sid != StcCellSid.block) {
@@ -176,10 +176,10 @@ namespace models.fights {
         }
         checkBulletHitTank(bullet: BulletVo) {
             let bulletDump: boolean = false;
-            let hitArr = this.model.qtTank.retrieve(bullet.hitRect);
+            let hitArr = this.model.hitMgrTank.findArr(bullet.hitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
-                let hitTank: TankVo = (<QuadTreeHitRect>item).owner as TankVo;
+                let hitTank: TankVo = (<FightHitRect>item).owner as TankVo;
                 let canHit: boolean = false;
                 if (hitTank.stateA == FightVoStateA.Living) {
                     if (bullet.ownerUid != hitTank.uid) {
@@ -204,6 +204,8 @@ namespace models.fights {
                                 if (hitTank.hp <= 0) {
                                     hitTank.hp = 0;
                                     this.model.changer.removeTank(hitTank);
+                                    //TODO: 判断是否 addGather
+                                    this.model.changer.addGather(StcGatherKind.V1,hitTank.x,hitTank.y)
                                 }
                             } else if (hitTank.group == FightGroup.Player) {
                                 if (bullet.group == FightGroup.CPU) {
@@ -232,20 +234,22 @@ namespace models.fights {
             }
         }
         checkTankHitTest(vo: TankVo): IQuadTreeNode {
-            let hitArr: IQuadTreeNode[] = this.model.qtCell.retrieve(vo.forecastMoveHitRect);
+            let hitArr: IQuadTreeNode[]
+            hitArr = this.model.hitMgrCell.findArr(vo.forecastMoveHitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
-                if ((<QuadTreeHitRect>item).owner.sid > 0) {
-                    if (QuadTree.isHit(vo.forecastMoveHitRect, item) && QuadTree.isHit(vo.hitRect, item) == false) {
+                if ((<FightHitRect>item).owner.sid > 0) {
+                    if (QuadTree.isHit(vo.hitRect, item) == false && QuadTree.isHit(vo.forecastMoveHitRect, item)) {
+                        //旧位置没碰上, 仅碰上了新位置
                         return item;
                     }
                 }
             }
-            hitArr = this.model.qtTank.retrieve(vo.forecastMoveHitRect);
+            hitArr = this.model.hitMgrTank.findArr(vo.forecastMoveHitRect);
             for (let i = 0; i < hitArr.length; i++) {
                 let item = hitArr[i];
-                if (vo.uid != (<QuadTreeHitRect>item).owner.uid) {
-                    if (QuadTree.isHit(vo.forecastMoveHitRect, item) && QuadTree.isHit(vo.hitRect, item) == false) {
+                if (vo.uid != (<FightHitRect>item).owner.uid) {
+                    if (QuadTree.isHit(vo.hitRect, item) == false && QuadTree.isHit(vo.forecastMoveHitRect, item)) {
                         return item;
                     }
                 }

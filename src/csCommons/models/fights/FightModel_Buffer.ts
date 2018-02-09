@@ -46,16 +46,17 @@ namespace models.fights {
             }
         }
         countInvincible(tank: TankVo) {
-            let is: boolean = false;
+            let has: boolean = false;
             for (const uid in tank.buffMap) {
-                if (tank.buffMap[uid].stc.sid == StcEffectSid.Invincible) {
-                    is = true;
+                // if (tank.buffMap[uid].stc.sid == StcBuffSid.Invincible) {
+                if (tank.buffMap[uid].stc.effectMap[StcEffectSid.Invincible]) {
+                    has = true;
                     break;
                 }
             }
-            if(FUtil.getValueInMap(tank.effectMap,StcEffectSid.Invincible,false)!=is){
-                tank.effectMap[StcEffectSid.Invincible] = is;
-                if (is) {
+            if(FUtil.getValueInMap(tank.effectMap,StcEffectSid.Invincible,false)!=has){//判断状态是否有变化
+                tank.effectMap[StcEffectSid.Invincible] = has;
+                if (has) {
                     this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.AddEffect, this.model.currFrame, tank.uid, StcEffectSid.Invincible));
                 } else {
                     this.model.frameOutputs.push(new FightFrameIOItem(FightFrameOutputKind.RemoveEffect, this.model.currFrame, tank.uid, StcEffectSid.Invincible));

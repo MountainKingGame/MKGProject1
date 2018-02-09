@@ -5,7 +5,7 @@ namespace models.fights {
         public dispose(): void {
         }
     }
-    export class QuadTreeHitRect implements IQuadTreeNode, IDispose {
+    export class FightHitRect implements IQuadTreeNode, IDispose,IRect {
         ownerQuadTree: QuadTree;
         prevNode: IQuadTreeNode;
         nextNode: IQuadTreeNode;
@@ -13,10 +13,12 @@ namespace models.fights {
         owner: EntityVo;
         //
         isDirty: boolean;
+        //
         left: number;
         top: number;
         right: number;
         bottom: number;
+        //
         constructor(owner: EntityVo) {
             this.owner = owner;
         }
@@ -46,15 +48,18 @@ namespace models.fights {
         public x: number;
         public y: number;
         public sizeHalf: Vector2;
-        public hpMax:number;
-        public hp:number;
         // public col: number;
         // public row: number;
-        public hitRect: QuadTreeHitRect;
+        
+        public hpMax:number;
+        public hp:number;
+        
         public dispose(): void {
             this.disposeHitRect();
             super.dispose();
         }
+        
+        public hitRect: FightHitRect;
         public disposeHitRect(): void {
             if (this.hitRect) {
                 this.hitRect.dispose();
@@ -78,10 +83,10 @@ namespace models.fights {
         public initPositionSid:string;
         stateA: FightVoStateA = FightVoStateA.None;
         /**这个状态持续的时间 */
-        stateFrame:number=0;
+        stateLivingFrame:number=0;
         public bulletUid = 1;
         public skillDic: { [key: number]: SkillVo } = {};//key:skillSid
-        public forecastMoveHitRect: QuadTreeHitRect;
+        public forecastMoveHitRect: FightHitRect;
         public dispose() {
             if (this.forecastMoveHitRect) {
                 this.forecastMoveHitRect.dispose();
@@ -122,6 +127,15 @@ namespace models.fights {
         stc:StcBuffVo;
         frameMax:number;
         frame:number = 0;
+    }
+    /**地图上的收集品  掉落零件/技能 */
+    export class GatherVo extends EntityVo {
+        kind:StcGatherKind;
+        xOld:number;
+        yOld:number;
+        livingFrame:number = 0;
+        /**总frame 0则没有限制 */
+        totalFrame:number;
     }
     export class EffectStateVo{
         /**无敌 */

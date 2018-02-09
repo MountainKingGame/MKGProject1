@@ -1,6 +1,6 @@
 class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	public ticker: FightCtrl_Ticker = new FightCtrl_Ticker(this);
-   //---
+	//---
 	public proxy: FightProxy;
 	public model: models.fights.FightModel;
 	//---
@@ -14,15 +14,17 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 	/**在坦克和子弹上面cell层 */
 	cellCoverLayer: fairygui.GComponent = new fairygui.GComponent;
 	bulletLayer: fairygui.GComponent = new fairygui.GComponent;
-	topEffLayer:fairygui.GComponent = new fairygui.GComponent();
+	gatherLayer: fairygui.GComponent = new fairygui.GComponent();
+	topEffLayer: fairygui.GComponent = new fairygui.GComponent();
 	//---
 	uiWidthHalf: number;
 	uiHeightHalf: number;
 	public mapSize: Vector2;
 	//---
-	floor:fairygui.GComponent;
+	floor: fairygui.GComponent;
 	cellDic: { [key: number]: fuis.elements_0.UI_MapCell } = {};
 	tankDic: { [key: number]: TankCtrl } = {};
+	gatherDic: { [key: number]: GatherCtrl } = {};
 	myTank: TankCtrl;
 	bulletDic: { [key: number]: BulletCtrl } = {};
 	//---
@@ -59,20 +61,21 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		this.eleLayer.addChild(this.tankLayer);
 		this.eleLayer.addChild(this.cellCoverLayer);
 		this.eleLayer.addChild(this.bulletLayer);
+		this.eleLayer.addChild(this.gatherLayer);
 		this.eleLayer.addChild(this.topEffLayer);
 		this.ui.m_touchLayer.alpha = 0;
 	}
 	initEvent() {
-		MsgMgr.si.add(FConst.Msg_GamePause,this,this.OnMsg_GamePause);
-		MsgMgr.si.add(FConst.MSG_GameResume,this,this.OnMsg_GameResume);
+		MsgMgr.si.add(FConst.Msg_GamePause, this, this.OnMsg_GamePause);
+		MsgMgr.si.add(FConst.MSG_GameResume, this, this.OnMsg_GameResume);
 		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchDown, this);
 		this.ui.m_touchLayer.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
 		this.initInputEvent();
 	}
-	OnMsg_GamePause(){
+	OnMsg_GamePause() {
 		this.ticker.pausing = true;
 	}
-	OnMsg_GameResume(){
+	OnMsg_GameResume() {
 		this.ticker.pausing = false;
 	}
 	//===input Joystick keyboard mouse
@@ -161,7 +164,7 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		this.floor = fuis.elements_0.UI_MapFloor.createInstance();
 		this.cellLayer.addChild(this.floor);
 		this.mapSize = this.model.size;
-		this.floor.setSize(this.mapSize.x,this.mapSize.y);
+		this.floor.setSize(this.mapSize.x, this.mapSize.y);
 		for (const key in this.model.cellDic) {
 			const vo = this.model.cellDic[parseInt(key)];
 			// if(vo.sid>0){
@@ -188,7 +191,7 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 			MathUtil.clamp(this.eleLayer.scaleY, this.ui.height / this.mapSize.y, 2)
 		);
 		// scale = 1.2;
-		this.eleLayer.setScale(scale,scale);
+		this.eleLayer.setScale(scale, scale);
 		// console.log("[info]",scale,"<-`scale`");
 		// this.clampMapXY(this.eleLayer.x,this.eleLayer.y);//Don't need do this, because every tick will do it
 	}
@@ -202,7 +205,7 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		}
 	}
 	/** 不需要规范出界 */
-	clampMapXY(x:number,y:number){
+	clampMapXY(x: number, y: number) {
 		this.eleLayer.x = Math.round(x);
 		this.eleLayer.y = Math.round(y);
 	}
@@ -246,24 +249,48 @@ class FightCtrl extends CtrlBase<fuis.elements_0.UI_Fight> {
 		bullet.init();
 		this.bulletLayer.addChild(bullet.ui);
 		this.bulletDic[vo.uid] = bullet;
+		//--出子弹的地方(炮口)增加特效
+		let mc = ResMgr.si.change_cannon_effect();
+		this.topEffLayer.addChild(mc);
+		mc.setScale(0.3, 0.3);
+		mc.setXY(bullet.vo.xOld, bullet.vo.yOld);//old才是此帧发出点,x,y已经是move一帧后的位置了
 	}
 	public removeBulletByUid(uid: number) {
 		let bullet: BulletCtrl = this.bulletDic[uid];
 		if (bullet != undefined) {
 			delete this.bulletDic[uid];
-			if(this.ticker.pausing && DebugConfig.unremoveWhenPausing){
+			if (this.ticker.pausing && DebugConfig.unremoveWhenPausing) {
 				bullet.ui.alpha = 0.3;
-			}else{
+			} else {
 				bullet.dispose();
+			}
+		}
+	}
+	public addGather(uid:number) {
+		let gather:GatherCtrl = new GatherCtrl();
+		gather.vo = this.model.gatherDic[uid];
+		gather.fight = this;
+		gather.init()
+		this.gatherLayer.addChild(gather.ui);
+		this.gatherDic[gather.vo.uid] = gather;
+	}
+	public removeGather(uid:number) {
+		let gather: GatherCtrl = this.gatherDic[uid];
+		if (gather != undefined) {
+			delete this.gatherDic[uid];
+			if (this.ticker.pausing && DebugConfig.unremoveWhenPausing) {
+				gather.ui.alpha = 0.3;
+			} else {
+				gather.dispose();
 			}
 		}
 	}
 	public removeTank(tank: TankCtrl) {
 		if (tank != undefined) {
 			delete this.tankDic[tank.vo.uid];
-			if(this.ticker.pausing && DebugConfig.unremoveWhenPausing){
+			if (this.ticker.pausing && DebugConfig.unremoveWhenPausing) {
 				tank.ui.alpha = 0.3;
-			}else{
+			} else {
 				tank.dispose();
 			}
 		}

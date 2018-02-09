@@ -13,23 +13,23 @@ enum StcEffectSid{
     AttackSpeed,
 }
 class StcBuffVo{
-    sid:number;
-    effectMap:{[key:number]:boolean} = {};
+    sid:StcBuffSid;
+    effectMap:{[key:number]:boolean} = {};//key: StcEffectSid
 }
 
 class StcBuff extends StcCacheBase<StcBuffVo>{
     public static si: StcBuff = new StcBuff();
     init(){
-        let buff:StcBuffVo;
+        let vo:StcBuffVo;
         //--
-        buff = new StcBuffVo();
-        buff.sid = StcBuffSid.Invincible;
-        buff.effectMap[StcEffectSid.Invincible] = true;
-        this.voDict[buff.sid] = buff;
+        vo = new StcBuffVo();
+        vo.sid = StcBuffSid.Invincible;
+        vo.effectMap[StcEffectSid.Invincible] = true;
+        this.voDict[vo.sid] = vo;
         //
-        buff = new StcBuffVo();
-        buff.sid = StcBuffSid.Transparent;
-        buff.effectMap[StcEffectSid.Transparent] = true;
-        this.voDict[buff.sid] = buff;
+        vo = new StcBuffVo();
+        vo.sid = StcBuffSid.Transparent;
+        vo.effectMap[StcEffectSid.Transparent] = true;
+        this.voDict[vo.sid] = vo;
     }
 }
