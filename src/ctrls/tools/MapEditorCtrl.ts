@@ -209,7 +209,7 @@ namespace tools {
             this.ui.m_menu.m_txtRow.text = mapVo.cells[0].length.toString();
             this.onBtnSetSize();
             for (let i = 0; i < this.cells.length; i++) {
-                for (let j = 0; j < this.cells[0].length; j++) {
+                for (let j = 0; j < this.cells[i].length; j++) {
                     let cell: UI_MapCell = this.cells[i][j];
                     cell.m_kind.selectedIndex = mapVo.cells[i][j];
                 }
@@ -229,7 +229,7 @@ namespace tools {
             let cellJson: IStcMapCellJson = { version: StcMapVersion.V1, sid: sid, cells: [] };
             for (let i = 0; i < this.cells.length; i++) {
                 cellJson.cells[i] = []
-                for (let j = 0; j < this.cells[0].length; j++) {
+                for (let j = 0; j < this.cells[i].length; j++) {
                     let cell: UI_MapCell = this.cells[i][j];
                     cellJson.cells[i][j] = cell.m_kind.selectedIndex;
                 }
