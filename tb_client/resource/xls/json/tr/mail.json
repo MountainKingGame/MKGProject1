@@ -1,0 +1,298 @@
+[
+	{
+		"id": 608201,
+		"mail_title_const": "Dungeon AFK",
+		"type": 1,
+		"content": "Tebrikler, zindanda AFK ile [#prop_list#] aldın.",
+		"mail_title": "Zindan AFK",
+		"content_type": 1
+	},
+	{
+		"id": 608202,
+		"mail_title_const": "System Mail",
+		"type": 2,
+		"content": "Sistem Postası'dır, cevaplamayın.",
+		"mail_title": "Sistem Postası",
+		"content_type": 0
+	},
+	{
+		"id": 608203,
+		"mail_title_const": "Arsenal",
+		"type": 3,
+		"content": "Tebrikler, cephanelikte birleştirme yaptığın için [#prop_list#] kazandın.",
+		"mail_title": "Cephanelik",
+		"content_type": 1
+	},
+	{
+		"id": 608204,
+		"mail_title_const": "Trial Towe AFK",
+		"type": 4,
+		"content": "Tebrikler, İmtihan Kulesi'nde AFK ile [#prop_list#] kazandın.",
+		"mail_title": "İmtihan Kulesi AFK",
+		"content_type": 1
+	},
+	{
+		"id": 608205,
+		"mail_title_const": "Rewards for Guild Battle",
+		"type": 5,
+		"content": "Tebrikler, Klan Savaşından [#prop_list#] kazandın.",
+		"mail_title": "Klan Savaşı Ödülü",
+		"content_type": 1
+	},
+	{
+		"id": 608206,
+		"mail_title_const": "Ranking rewards in Battle of Gods",
+		"type": 6,
+		"content": "Tebrikler, Tanrıların Savaşından aşağıdaki ödülleri kazandın：#prop_list#",
+		"mail_title": "Tanrıların Savaşı Sıralama Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608207,
+		"mail_title_const": "Escort Rewards",
+		"type": 7,
+		"content": "Tebrikler, Refakati bitirdin #prop_list# kazandın.",
+		"mail_title": "Refakatçi Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608208,
+		"mail_title_const": "Newbie Login Rewards",
+		"type": 11,
+		"content": "Tebrikler, Yeni üye Ödüllerinden [#prop_list#] kazandın.",
+		"mail_title": "Yeni Üye Giriş Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608209,
+		"mail_title_const": "Dungeon's loot",
+		"type": 8,
+		"content": "Tebrikler, zindandan [#prop_list#] kazandın.",
+		"mail_title": "Zindan ganimeti",
+		"content_type": 1
+	},
+	{
+		"id": 608210,
+		"mail_title_const": "Rewards from Dungeon",
+		"type": 9,
+		"content": "Tebrikler, zindandan [#prop_list#] kazandın.",
+		"mail_title": "Zindan Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608211,
+		"mail_title_const": "Rewards from Unity Gate",
+		"type": 10,
+		"content": "Tebrikler, zindandan [#prop_list#] kazandın.",
+		"mail_title": "Birlik Geçidi Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608212,
+		"mail_title_const": "Crystal Altar's loot",
+		"type": 12,
+		"content": "Tebrikler, Kristal Sunak'tan [#prop_list#] kazandın.",
+		"mail_title": "Kristal Sunak ganimeti",
+		"content_type": 1
+	},
+	{
+		"id": 608213,
+		"mail_title_const": "Trial Towe's loot",
+		"type": 13,
+		"content": "Tebrikler, İntihan Kulesi'nden[#prop_list#] kazandın.",
+		"mail_title": "İmtihan Kulesi ganimeti",
+		"content_type": 1
+	},
+	{
+		"id": 608215,
+		"mail_title_const": "Guild master transfer",
+		"type": 15,
+		"content": "Klan lideri [#Player_Name#] 7 gün boyunca çevrimdışıydı. Klan Lideri 10 gün boyunca çevrimdışı olursa liderlik sistem tarafından transfer edilir. \n1.Son 3 gün içinde çevrimiçi olmuş olan Başkan Yardımcısı yeni başkan olarak atanır.Eğer bu şartları karşılayan bir başkan yardımcısı yoksa. başkan yardımcısından sonraki ilk sırada olan oyuncu yeni başkan olur.\n2.1000 ve daha fazla klan katkısına sahip olan oyuncular oylamaya kabul edilir.Oylama işlemi 3 gün sürer.Oylama sonucunda yeni başkan belirlenir.\n3.Eğer önceki klan başkanı oylama sırasında yeniden giriş yaparsa Transfer süreci durdurulur.",
+		"mail_title": "Klan Lideri aktarımı",
+		"content_type": 2
+	},
+	{
+		"id": 608216,
+		"mail_title_const": "New Guild master",
+		"type": 16,
+		"content": "Klan Lideri [#Player_Name#] son 15 gün içinde hiç çevrim içi olmadı. Klan liderliği [#Player_Name#] adlı oyuncuya devredildi, Tebrikler.",
+		"mail_title": "Yeni Klan lideri",
+		"content_type": 2
+	},
+	{
+		"id": 608217,
+		"mail_title_const": "Guild master election",
+		"type": 17,
+		"content": "Klan Lideri [#Player_Name#] 10 gün boyunca çevrimdışıydı.Yeni lider belinlenmesi için oy kullanmanız gerek. Lütfen klan içinden oy kullanarak yeni lideri belirleyin.\n1.1000 ve daha fazla klan katkısına sahip olan oyuncular oylamaya kabul edilir.Oylama işlemi 3 gün sürer.Oylama sonucunda yeni başkan belirlenir.\n2.Eğer önceki klan başkanı oylama sırasında yeniden giriş yaparsa Transfer süreci durdurulur.",
+		"mail_title": "Klan Lideri seçimi",
+		"content_type": 2
+	},
+	{
+		"id": 608218,
+		"mail_title_const": "Guild Master returns ",
+		"type": 18,
+		"content": "Klan Lideri [#Player_Name#] oylama sırasında döndü, devir işlemleri geçersiz hale gelecektir.",
+		"mail_title": "Klan Lideri Dönüşü",
+		"content_type": 2
+	},
+	{
+		"id": 608219,
+		"mail_title_const": "Guild dismissed",
+		"type": 19,
+		"content": "[#guild_name#] klanındaki hiçbir oyuncu son 90 gün içinde çevrimiçi olmadı. Klan sistem tarafından dağıtıldı.",
+		"mail_title": "Klan dağıtıldı",
+		"content_type": 3
+	},
+	{
+		"id": 608220,
+		"mail_title_const": "Login rewards",
+		"type": 20,
+		"content": "Tebrikler, giriş ödülü olarak [#prop_list#] kazandın",
+		"mail_title": "Giriş ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608221,
+		"mail_title_const": "Rewards for Beast Shooting",
+		"type": 21,
+		"content": "Tebrikler, İblis Avı'ndan [#prop_list#] kazandın.",
+		"mail_title": "İblis Avı Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608222,
+		"mail_title_const": "Online rewards at 20:00 everyday.",
+		"type": 22,
+		"content": "Sevgili Lord：\\nTebrikler, çevrimiçi ödülü kazandın.\\n6 Eylül ve 8 Eylül arası senin için bol bir çevrimiçi ödül paketi hazırladık. Her gün 20.00'da çevrimiçi olduğun sürece bu ödülü alabilirsin. Sana zevkli oyunlar dileriz.",
+		"mail_title": "Her gün saat 20.00 Çevrimiçi Ödülü",
+		"content_type": 0
+	},
+	{
+		"id": 608223,
+		"mail_title_const": "Online rewards at 21:00 everyday.",
+		"type": 23,
+		"content": "Sevgili Lord：\\nTebrikler, çevrimiçi ödülü kazandın.\\n6 Eylül ve 8 Eylül arası senin için bol bir çevrimiçi ödül paketi hazırladık. Her gün 21.00'da çevrimiçi olduğun sürece bu ödülü alabilirsin. Sana zevkli oyunlar dileriz.",
+		"mail_title": "Her gün saat 21.00 Çevrimiçi Ödülü",
+		"content_type": 0
+	},
+	{
+		"id": 608224,
+		"mail_title_const": "Rewards from Ideas of March",
+		"type": 24,
+		"content": "Zirve Yolunda çok iyi katılım gösterdin, 1. oldun, [#prop_list#] kazandın",
+		"mail_title": "15 Mart Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608228,
+		"mail_title_const": "Clearance Rewards for the Trial Tower",
+		"type": 28,
+		"content": "Tebrikler. İmtihan Kulesi [#n_floor#]. Kata ulaştın.",
+		"mail_title": "İmtihan Kulesi temizliği Ödülleri",
+		"content_type": 4
+	},
+	{
+		"id": 608229,
+		"mail_title_const": "Claim Rewards ",
+		"type": 29,
+		"content": "Envanterin dolu olduğu için tüm ödüllerin posta yoluyla gönderildi, en kısa sürede envanterini düzenle.",
+		"mail_title": "Ödüllere sahip çık",
+		"content_type": 0
+	},
+	{
+		"id": 608233,
+		"mail_title_const": "Rewards of last hit",
+		"type": 33,
+		"content": "Saygı Ve Şöhret Muhafızına son vuruşu yaptın, [#prop_list#] kazandın.",
+		"mail_title": "Son vuruş Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608234,
+		"mail_title_const": "Rewards for Honor&amp;Glory",
+		"type": 34,
+		"content": "Tebrikler, Saygı ve Şöhret'ten [#prop_list#] kazandın.",
+		"mail_title": "Saygı Ve Şöhret Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608235,
+		"mail_title_const": "Rewards from Honor&amp;Glory",
+		"type": 35,
+		"content": "Tebrikler, Saygı ve Şöhret'ten koruma ödülleri kazandın. Ödülün [#prop_list#]",
+		"mail_title": "Saygı Ve Şöhret Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608236,
+		"mail_title_const": "Treasure Rewards",
+		"type": 36,
+		"content": "Tebrikler, Asırlık Hazineden [#prop_list#] kazandın.",
+		"mail_title": "Hazine Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608238,
+		"mail_title_const": "Rewards of last hit in World Boss",
+		"type": 38,
+		"content": "Dünya Bossu mücadelesinde Bosa son darbeyi vurdun, [#prop_list#] kazandın.",
+		"mail_title": "Dünya Patronu son darbe Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608239,
+		"mail_title_const": "Rewards from World Boss",
+		"type": 39,
+		"content": "Tebrikler, Dünya Bossu mücadelesinden [#prop_list#] kazandın.",
+		"mail_title": "Dünya Patronu Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608240,
+		"mail_title_const": "Your inventory is full",
+		"type": 40,
+		"content": "Envanterin dolu olduğu için ödüllerin posta yoluyla gönderildi, en kısa sürede envanterini düzenle.",
+		"mail_title": "Envanterin dolu",
+		"content_type": 0
+	},
+	{
+		"id": 608241,
+		"mail_title_const": "Bye Rewards",
+		"type": 41,
+		"content": "Saygıdeğer Savaşçı, \\nEjderha Egemenliği grup aşamasında klanınız bay geçti, ve aşağıdaki ödülleri kazandınız.",
+		"mail_title": "Pas Ödülleri",
+		"content_type": 0
+	},
+	{
+		"id": 608242,
+		"mail_title_const": "Dragon Hegemony Notice",
+		"type": 42,
+		"content": "Sevgili Oyuncu, \\nBu akşam saat 20.00'da [#guild_name#] klanı ile karşılaşacaksınız, kendinizi kanıtlama vakti geldi!",
+		"mail_title": "Ejderha Egemenliği Duyurusu",
+		"content_type": 3
+	},
+	{
+		"id": 608243,
+		"mail_title_const": "Dragon Hegemony Rewards",
+		"type": 43,
+		"content": "Saygıdeğer Savaşçı, \\nEjderha Egemenliğinden aşağıdaki ödülleri kazandınız: [#prop_list#]",
+		"mail_title": "Ejderha Egemenliği Ödülleri",
+		"content_type": 1
+	},
+	{
+		"id": 608244,
+		"mail_title_const": "Gods'Glory Rewards",
+		"type": 44,
+		"content": "Seçkin Kahraman,\\nTebrikler. #Rank#. Sıraya geçti!",
+		"mail_title": "İlahi Zafer Ödülleri",
+		"content_type": 5
+	},
+	{
+		"id": 608245,
+		"mail_title_const": "Group Completion Rewards",
+		"type": 45,
+		"content": "Seçkin Kahraman, \\nSunucu Savaşlarında grup ödüllerini kazandınız.",
+		"mail_title": "Grup Ödülleri",
+		"content_type": 0
+	}
+]

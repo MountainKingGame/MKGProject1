@@ -1,0 +1,1082 @@
+[
+	{
+		"id": 435001,
+		"level_monsters": 1,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 2,
+		"honor": 2,
+		"silver": 10
+	},
+	{
+		"id": 435002,
+		"level_monsters": 2,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 10,
+		"honor": 2,
+		"silver": 20
+	},
+	{
+		"id": 435003,
+		"level_monsters": 3,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 22,
+		"honor": 2,
+		"silver": 30
+	},
+	{
+		"id": 435004,
+		"level_monsters": 4,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 36,
+		"honor": 2,
+		"silver": 40
+	},
+	{
+		"id": 435005,
+		"level_monsters": 5,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 52,
+		"honor": 2,
+		"silver": 50
+	},
+	{
+		"id": 435006,
+		"level_monsters": 6,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 69,
+		"honor": 2,
+		"silver": 60
+	},
+	{
+		"id": 435007,
+		"level_monsters": 7,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 89,
+		"honor": 2,
+		"silver": 70
+	},
+	{
+		"id": 435008,
+		"level_monsters": 8,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 109,
+		"honor": 2,
+		"silver": 80
+	},
+	{
+		"id": 435009,
+		"level_monsters": 9,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 131,
+		"honor": 2,
+		"silver": 90
+	},
+	{
+		"id": 435010,
+		"level_monsters": 10,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 154,
+		"honor": 2,
+		"silver": 100
+	},
+	{
+		"id": 435011,
+		"level_monsters": 11,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 178,
+		"honor": 2,
+		"silver": 110
+	},
+	{
+		"id": 435012,
+		"level_monsters": 12,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 204,
+		"honor": 2,
+		"silver": 120
+	},
+	{
+		"id": 435013,
+		"level_monsters": 13,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 230,
+		"honor": 2,
+		"silver": 130
+	},
+	{
+		"id": 435014,
+		"level_monsters": 14,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 258,
+		"honor": 2,
+		"silver": 140
+	},
+	{
+		"id": 435015,
+		"level_monsters": 15,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 286,
+		"honor": 2,
+		"silver": 150
+	},
+	{
+		"id": 435016,
+		"level_monsters": 16,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 316,
+		"honor": 2,
+		"silver": 160
+	},
+	{
+		"id": 435017,
+		"level_monsters": 17,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 346,
+		"honor": 2,
+		"silver": 170
+	},
+	{
+		"id": 435018,
+		"level_monsters": 18,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 378,
+		"honor": 2,
+		"silver": 180
+	},
+	{
+		"id": 435019,
+		"level_monsters": 19,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 410,
+		"honor": 2,
+		"silver": 190
+	},
+	{
+		"id": 435020,
+		"level_monsters": 20,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 443,
+		"honor": 2,
+		"silver": 200
+	},
+	{
+		"id": 435021,
+		"level_monsters": 21,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 477,
+		"honor": 2,
+		"silver": 210
+	},
+	{
+		"id": 435022,
+		"level_monsters": 22,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 512,
+		"honor": 2,
+		"silver": 220
+	},
+	{
+		"id": 435023,
+		"level_monsters": 23,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 548,
+		"honor": 2,
+		"silver": 230
+	},
+	{
+		"id": 435024,
+		"level_monsters": 24,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 584,
+		"honor": 2,
+		"silver": 240
+	},
+	{
+		"id": 435025,
+		"level_monsters": 25,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 620,
+		"honor": 2,
+		"silver": 250
+	},
+	{
+		"id": 435026,
+		"level_monsters": 26,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 660,
+		"honor": 2,
+		"silver": 260
+	},
+	{
+		"id": 435027,
+		"level_monsters": 27,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 700,
+		"honor": 2,
+		"silver": 270
+	},
+	{
+		"id": 435028,
+		"level_monsters": 28,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 740,
+		"honor": 2,
+		"silver": 280
+	},
+	{
+		"id": 435029,
+		"level_monsters": 29,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 780,
+		"honor": 2,
+		"silver": 290
+	},
+	{
+		"id": 435030,
+		"level_monsters": 30,
+		"arena_medal": 2,
+		"guild": 2,
+		"exp_monsters": 820,
+		"honor": 2,
+		"silver": 300
+	},
+	{
+		"id": 435031,
+		"level_monsters": 31,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 860,
+		"honor": 2,
+		"silver": 310
+	},
+	{
+		"id": 435032,
+		"level_monsters": 32,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 900,
+		"honor": 2,
+		"silver": 320
+	},
+	{
+		"id": 435033,
+		"level_monsters": 33,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 940,
+		"honor": 2,
+		"silver": 330
+	},
+	{
+		"id": 435034,
+		"level_monsters": 34,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 990,
+		"honor": 2,
+		"silver": 340
+	},
+	{
+		"id": 435035,
+		"level_monsters": 35,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1030,
+		"honor": 2,
+		"silver": 350
+	},
+	{
+		"id": 435036,
+		"level_monsters": 36,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1080,
+		"honor": 2,
+		"silver": 360
+	},
+	{
+		"id": 435037,
+		"level_monsters": 37,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1120,
+		"honor": 2,
+		"silver": 370
+	},
+	{
+		"id": 435038,
+		"level_monsters": 38,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1170,
+		"honor": 2,
+		"silver": 380
+	},
+	{
+		"id": 435039,
+		"level_monsters": 39,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1210,
+		"honor": 2,
+		"silver": 390
+	},
+	{
+		"id": 435040,
+		"level_monsters": 40,
+		"arena_medal": 2,
+		"guild": 3,
+		"exp_monsters": 1260,
+		"honor": 2,
+		"silver": 400
+	},
+	{
+		"id": 435041,
+		"level_monsters": 41,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1310,
+		"honor": 2,
+		"silver": 410
+	},
+	{
+		"id": 435042,
+		"level_monsters": 42,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1360,
+		"honor": 2,
+		"silver": 420
+	},
+	{
+		"id": 435043,
+		"level_monsters": 43,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1410,
+		"honor": 2,
+		"silver": 430
+	},
+	{
+		"id": 435044,
+		"level_monsters": 44,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1460,
+		"honor": 2,
+		"silver": 440
+	},
+	{
+		"id": 435045,
+		"level_monsters": 45,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1510,
+		"honor": 2,
+		"silver": 450
+	},
+	{
+		"id": 435046,
+		"level_monsters": 46,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1560,
+		"honor": 2,
+		"silver": 460
+	},
+	{
+		"id": 435047,
+		"level_monsters": 47,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1610,
+		"honor": 2,
+		"silver": 470
+	},
+	{
+		"id": 435048,
+		"level_monsters": 48,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1660,
+		"honor": 2,
+		"silver": 480
+	},
+	{
+		"id": 435049,
+		"level_monsters": 49,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1710,
+		"honor": 2,
+		"silver": 490
+	},
+	{
+		"id": 435050,
+		"level_monsters": 50,
+		"arena_medal": 2,
+		"guild": 4,
+		"exp_monsters": 1760,
+		"honor": 2,
+		"silver": 500
+	},
+	{
+		"id": 435051,
+		"level_monsters": 51,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1820,
+		"honor": 2,
+		"silver": 510
+	},
+	{
+		"id": 435052,
+		"level_monsters": 52,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1870,
+		"honor": 2,
+		"silver": 520
+	},
+	{
+		"id": 435053,
+		"level_monsters": 53,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1930,
+		"honor": 2,
+		"silver": 530
+	},
+	{
+		"id": 435054,
+		"level_monsters": 54,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 1980,
+		"honor": 2,
+		"silver": 540
+	},
+	{
+		"id": 435055,
+		"level_monsters": 55,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2040,
+		"honor": 2,
+		"silver": 550
+	},
+	{
+		"id": 435056,
+		"level_monsters": 56,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2090,
+		"honor": 2,
+		"silver": 560
+	},
+	{
+		"id": 435057,
+		"level_monsters": 57,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2150,
+		"honor": 2,
+		"silver": 570
+	},
+	{
+		"id": 435058,
+		"level_monsters": 58,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2200,
+		"honor": 2,
+		"silver": 580
+	},
+	{
+		"id": 435059,
+		"level_monsters": 59,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2260,
+		"honor": 2,
+		"silver": 590
+	},
+	{
+		"id": 435060,
+		"level_monsters": 60,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2320,
+		"honor": 2,
+		"silver": 600
+	},
+	{
+		"id": 435061,
+		"level_monsters": 61,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2380,
+		"honor": 2,
+		"silver": 610
+	},
+	{
+		"id": 435062,
+		"level_monsters": 62,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2440,
+		"honor": 2,
+		"silver": 620
+	},
+	{
+		"id": 435063,
+		"level_monsters": 63,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2500,
+		"honor": 2,
+		"silver": 630
+	},
+	{
+		"id": 435064,
+		"level_monsters": 64,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2560,
+		"honor": 2,
+		"silver": 640
+	},
+	{
+		"id": 435065,
+		"level_monsters": 65,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2620,
+		"honor": 2,
+		"silver": 650
+	},
+	{
+		"id": 435066,
+		"level_monsters": 66,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2680,
+		"honor": 2,
+		"silver": 660
+	},
+	{
+		"id": 435067,
+		"level_monsters": 67,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2740,
+		"honor": 2,
+		"silver": 670
+	},
+	{
+		"id": 435068,
+		"level_monsters": 68,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2800,
+		"honor": 2,
+		"silver": 680
+	},
+	{
+		"id": 435069,
+		"level_monsters": 69,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2860,
+		"honor": 2,
+		"silver": 690
+	},
+	{
+		"id": 435070,
+		"level_monsters": 70,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2920,
+		"honor": 2,
+		"silver": 700
+	},
+	{
+		"id": 435071,
+		"level_monsters": 71,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 2990,
+		"honor": 2,
+		"silver": 710
+	},
+	{
+		"id": 435072,
+		"level_monsters": 72,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 3050,
+		"honor": 2,
+		"silver": 720
+	},
+	{
+		"id": 435073,
+		"level_monsters": 73,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 3110,
+		"honor": 2,
+		"silver": 730
+	},
+	{
+		"id": 435074,
+		"level_monsters": 74,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 3180,
+		"honor": 2,
+		"silver": 740
+	},
+	{
+		"id": 435075,
+		"level_monsters": 75,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 3240,
+		"honor": 2,
+		"silver": 750
+	},
+	{
+		"id": 435076,
+		"level_monsters": 76,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 3310,
+		"honor": 2,
+		"silver": 760
+	},
+	{
+		"id": 435077,
+		"level_monsters": 77,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 3370,
+		"honor": 2,
+		"silver": 770
+	},
+	{
+		"id": 435078,
+		"level_monsters": 78,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 3440,
+		"honor": 2,
+		"silver": 780
+	},
+	{
+		"id": 435079,
+		"level_monsters": 79,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 3510,
+		"honor": 2,
+		"silver": 790
+	},
+	{
+		"id": 435080,
+		"level_monsters": 80,
+		"arena_medal": 2,
+		"guild": 0,
+		"exp_monsters": 3570,
+		"honor": 2,
+		"silver": 800
+	},
+	{
+		"id": 435081,
+		"level_monsters": 81,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 3640,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435082,
+		"level_monsters": 82,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 3710,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435083,
+		"level_monsters": 83,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 3780,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435084,
+		"level_monsters": 84,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 3850,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435085,
+		"level_monsters": 85,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 3910,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435086,
+		"level_monsters": 86,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 3980,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435087,
+		"level_monsters": 87,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4050,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435088,
+		"level_monsters": 88,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4120,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435089,
+		"level_monsters": 89,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4190,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435090,
+		"level_monsters": 90,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4270,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435091,
+		"level_monsters": 91,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4340,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435092,
+		"level_monsters": 92,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4410,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435093,
+		"level_monsters": 93,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4480,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435094,
+		"level_monsters": 94,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4550,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435095,
+		"level_monsters": 95,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4630,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435096,
+		"level_monsters": 96,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4700,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435097,
+		"level_monsters": 97,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4770,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435098,
+		"level_monsters": 98,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4850,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435099,
+		"level_monsters": 99,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 4920,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435100,
+		"level_monsters": 100,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5000,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435101,
+		"level_monsters": 101,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5070,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435102,
+		"level_monsters": 102,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5150,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435103,
+		"level_monsters": 103,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5220,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435104,
+		"level_monsters": 104,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5300,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435105,
+		"level_monsters": 105,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5380,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435106,
+		"level_monsters": 106,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5450,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435107,
+		"level_monsters": 107,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5530,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435108,
+		"level_monsters": 108,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5610,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435109,
+		"level_monsters": 109,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5690,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435110,
+		"level_monsters": 110,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5760,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435111,
+		"level_monsters": 111,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5840,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435112,
+		"level_monsters": 112,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 5920,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435113,
+		"level_monsters": 113,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 6000,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435114,
+		"level_monsters": 114,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 6080,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435115,
+		"level_monsters": 115,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 6160,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435116,
+		"level_monsters": 116,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 6240,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435117,
+		"level_monsters": 117,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 6320,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435118,
+		"level_monsters": 118,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 6410,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435119,
+		"level_monsters": 119,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 6490,
+		"honor": 0,
+		"silver": 0
+	},
+	{
+		"id": 435120,
+		"level_monsters": 120,
+		"arena_medal": 0,
+		"guild": 0,
+		"exp_monsters": 6570,
+		"honor": 0,
+		"silver": 0
+	}
+]

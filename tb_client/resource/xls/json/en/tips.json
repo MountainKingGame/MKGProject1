@@ -1,0 +1,402 @@
+[
+	{
+		"id": 101,
+		"prompt": "Reach &lt;font color=&quot;0xff0000&quot;&gt;#vip_lv#&lt;/font&gt; to unlock this row"
+	},
+	{
+		"id": 102,
+		"prompt": "Free CD for VIP2 and above"
+	},
+	{
+		"id": 103,
+		"prompt": "An internal error has occurred."
+	},
+	{
+		"id": 104,
+		"prompt": ""
+	},
+	{
+		"id": 105,
+		"prompt": "Levied Silver #Silver#"
+	},
+	{
+		"id": 106,
+		"prompt": "Insufficent bound vouchers"
+	},
+	{
+		"id": 107,
+		"prompt": "Insufficient Silver to upgrade"
+	},
+	{
+		"id": 108,
+		"prompt": "Already full, please click to reduce CD time."
+	},
+	{
+		"id": 109,
+		"prompt": "Requirement for vote: Contribution should be higher than 100"
+	},
+	{
+		"id": 110,
+		"prompt": "Spend {$_ff0000$1} Gold or {$_ff0000$1} Instant Charm to finish.\n{$_ff0000$Instant Charm in priority.}"
+	},
+	{
+		"id": 111,
+		"prompt": "You've got orange bounty quests in your task list."
+	},
+	{
+		"id": 112,
+		"prompt": "You've got an orange guild quest in your task list."
+	},
+	{
+		"id": 113,
+		"prompt": "You've got buff:#buff name#"
+	},
+	{
+		"id": 114,
+		"prompt": "Congrats you get Red Hero: Bragi"
+	},
+	{
+		"id": 115,
+		"prompt": "Click Refine"
+	},
+	{
+		"id": 116,
+		"prompt": "Congrats you opened the Ancient Treasure."
+	},
+	{
+		"id": 117,
+		"prompt": "You have no Race, find Freyja and join a Race in Asgard."
+	},
+	{
+		"id": 118,
+		"prompt": "Congrats you got Training Blessing, the hero has leveled up."
+	},
+	{
+		"id": 119,
+		"prompt": "The constellation has been combined, are you sure to sell?"
+	},
+	{
+		"id": 120,
+		"prompt": "You have impressed everyone on Arena Rank, and got the title [#title#]."
+	},
+	{
+		"id": 121,
+		"prompt": "You have lost your title [#title#] because your Arena Rank has dropped."
+	},
+	{
+		"id": 122,
+		"prompt": "Insuffcient silver to continue AFK."
+	},
+	{
+		"id": 123,
+		"prompt": "Stop Auto-Spin will be effective in next turn, are you sure to stop?"
+	},
+	{
+		"id": 124,
+		"prompt": "Claim your reward before opening a new one."
+	},
+	{
+		"id": 125,
+		"prompt": "Countless precious items are buried in Ancient Treasure"
+	},
+	{
+		"id": 126,
+		"prompt": "You can refresh the prize pool any time you want!"
+	},
+	{
+		"id": 127,
+		"prompt": "You will get double rewards on the 2th,5th and 10th chance to draw the prize respectively."
+	},
+	{
+		"id": 128,
+		"prompt": "Energy Gauge will increase each time you draw the prize. When the gauge is full, you can enter Ancient Treasure to get super rewards with 100% success rate!"
+	},
+	{
+		"id": 129,
+		"prompt": "Claim Fairywood for free by collecting other heroes."
+	},
+	{
+		"id": 130,
+		"prompt": "Tips:Lord will get bonous stats by setting Fairywood and Fairywater both on Formation."
+	},
+	{
+		"id": 131,
+		"prompt": "Insufficent Frag"
+	},
+	{
+		"id": 132,
+		"prompt": "Requirement"
+	},
+	{
+		"id": 133,
+		"prompt": "Rewards"
+	},
+	{
+		"id": 134,
+		"prompt": "Claim rewards"
+	},
+	{
+		"id": 135,
+		"prompt": "Bonous stats are shared by all members on Formation."
+	},
+	{
+		"id": 136,
+		"prompt": "Enjoy permanent stats bonus and materials for super equips by defeating the boss!"
+	},
+	{
+		"id": 137,
+		"prompt": "1.Super hero in Ancient Treasure now, whose powerful group attacks will blow enemies away!"
+	},
+	{
+		"id": 138,
+		"prompt": "2.Optimized guide to beef yourserl up! Complete quests to get awesome rewards!"
+	},
+	{
+		"id": 139,
+		"prompt": "3.Fantastic events with tons of rewards! Your power will get a huge boost with these godly rewards!"
+	},
+	{
+		"id": 140,
+		"prompt": "Better equipments to equip."
+	},
+	{
+		"id": 141,
+		"prompt": "Open Inventory"
+	},
+	{
+		"id": 142,
+		"prompt": "You need another #n# slots in Inventory to do this operation."
+	},
+	{
+		"id": 143,
+		"prompt": "Signing"
+	},
+	{
+		"id": 144,
+		"prompt": "Please close Sell List at first."
+	},
+	{
+		"id": 145,
+		"prompt": "Sell #n# kinds of items to obtain #m# Silver.Sell now?"
+	},
+	{
+		"id": 146,
+		"prompt": "You will enjoy 15% benefit bonus\\nfrom 10:00-11:00 each day."
+	},
+	{
+		"id": 147,
+		"prompt": "Coming soon……"
+	},
+	{
+		"id": 148,
+		"prompt": ""
+	},
+	{
+		"id": 149,
+		"prompt": ""
+	},
+	{
+		"id": 150,
+		"prompt": ""
+	},
+	{
+		"id": 151,
+		"prompt": ""
+	},
+	{
+		"id": 152,
+		"prompt": ""
+	},
+	{
+		"id": 153,
+		"prompt": ""
+	},
+	{
+		"id": 154,
+		"prompt": ""
+	},
+	{
+		"id": 155,
+		"prompt": ""
+	},
+	{
+		"id": 156,
+		"prompt": ""
+	},
+	{
+		"id": 157,
+		"prompt": "Reach to max Stamina"
+	},
+	{
+		"id": 158,
+		"prompt": "No corresponding item, can't use this function."
+	},
+	{
+		"id": 159,
+		"prompt": "Lord can't use EXP card."
+	},
+	{
+		"id": 160,
+		"prompt": "Hero level can't be higher than Lord level."
+	},
+	{
+		"id": 161,
+		"prompt": "Your name is too short,please input again."
+	},
+	{
+		"id": 162,
+		"prompt": "Name has already exist,please input again."
+	},
+	{
+		"id": 163,
+		"prompt": "Rename successfully"
+	},
+	{
+		"id": 164,
+		"prompt": "Class is not match."
+	},
+	{
+		"id": 165,
+		"prompt": "Your level is not high enough."
+	},
+	{
+		"id": 166,
+		"prompt": "No equipments to unload."
+	},
+	{
+		"id": 167,
+		"prompt": "Error,please input again."
+	},
+	{
+		"id": 168,
+		"prompt": "Are you sure to sell [#goods_name#]"
+	},
+	{
+		"id": 169,
+		"prompt": "Do you want to add EXP:#amount# for this hero?"
+	},
+	{
+		"id": 170,
+		"prompt": "Hero gained EXP:#amount#"
+	},
+	{
+		"id": 171,
+		"prompt": "Your stamina add:#amount#"
+	},
+	{
+		"id": 172,
+		"prompt": "You can send messages in Bullhorn Channel now!"
+	},
+	{
+		"id": 173,
+		"prompt": "You can send messages in World Channel now!"
+	},
+	{
+		"id": 174,
+		"prompt": "Enhance Failed"
+	},
+	{
+		"id": 175,
+		"prompt": "Enhance Successful"
+	},
+	{
+		"id": 176,
+		"prompt": "Choose an Equip before Inlay"
+	},
+	{
+		"id": 177,
+		"prompt": "The original equip hasn't been enhanced"
+	},
+	{
+		"id": 178,
+		"prompt": "price #Silver# Silver"
+	},
+	{
+		"id": 179,
+		"prompt": "Gained Silver:#Silver#"
+	},
+	{
+		"id": 180,
+		"prompt": "Required LV.#lv#"
+	},
+	{
+		"id": 181,
+		"prompt": "Are you sure to unload all equipments into inventory?"
+	},
+	{
+		"id": 182,
+		"prompt": "Cost 1000 Silver to remove the Gem, are you sure to remove?"
+	},
+	{
+		"id": 183,
+		"prompt": "Spend #Gold# Gold or #Gold# Voucher to unlock #amount# row?"
+	},
+	{
+		"id": 184,
+		"prompt": "Voucher is the priority."
+	},
+	{
+		"id": 185,
+		"prompt": "Refined stats only can be transferred to the same quality equipment."
+	},
+	{
+		"id": 186,
+		"prompt": "The bonus stats of the new equip will be replaced by the old equip.\\nAre you sure to transfer?"
+	},
+	{
+		"id": 187,
+		"prompt": "Required Enhanced LV:#lv#"
+	},
+	{
+		"id": 188,
+		"prompt": "Only available to the equip of purple quality or above."
+	},
+	{
+		"id": 189,
+		"prompt": "Choose an Equip to transfer."
+	},
+	{
+		"id": 190,
+		"prompt": "Get 2 same stats with at least 8 stats to active refine soul and enjoy bonus stats."
+	},
+	{
+		"id": 191,
+		"prompt": "Top 100 players in Solo Arena can participate."
+	},
+	{
+		"id": 192,
+		"prompt": "Reward you 20000 Silver for adding Chaos Rage to your favorite."
+	},
+	{
+		"id": 193,
+		"prompt": "Different gender, you can't do this operation."
+	},
+	{
+		"id": 194,
+		"prompt": "Refine successfully"
+	},
+	{
+		"id": 195,
+		"prompt": "Use 2000 Silver to perform normal refine once, the bonus stats on the equip will be refreshed."
+	},
+	{
+		"id": 196,
+		"prompt": "Use 2 Gold or 1 Refine Stone to perform advanced refine once, with some chance to get a 8—10 star bonus stat.\\nRefine Stone will be used first."
+	},
+	{
+		"id": 197,
+		"prompt": ""
+	},
+	{
+		"id": 198,
+		"prompt": ""
+	},
+	{
+		"id": 199,
+		"prompt": "Please level up before entering."
+	},
+	{
+		"id": 200,
+		"prompt": "The Room is full."
+	}
+]

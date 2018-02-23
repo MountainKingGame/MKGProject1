@@ -1,0 +1,402 @@
+[
+	{
+		"id": 101,
+		"prompt": "Bu sırayı açmak için #vip_lv#'e ulaş."
+	},
+	{
+		"id": 102,
+		"prompt": "VIP2 ve üstüne bedava bekleme süresi"
+	},
+	{
+		"id": 103,
+		"prompt": "Dahili bir hata oluştu."
+	},
+	{
+		"id": 104,
+		"prompt": ""
+	},
+	{
+		"id": 105,
+		"prompt": "#Silver# Gümüş alındı"
+	},
+	{
+		"id": 106,
+		"prompt": "Yetersiz kupon"
+	},
+	{
+		"id": 107,
+		"prompt": "Geliştirme için yetersiz Gümüş"
+	},
+	{
+		"id": 108,
+		"prompt": "Zaten dolu. Bekleme süresini azaltmak için lütfen tıklayınız"
+	},
+	{
+		"id": 109,
+		"prompt": "Oy kullanmak için gerekenler: Katkı Puanı 100'den fazla olmalı"
+	},
+	{
+		"id": 110,
+		"prompt": "Bitirmek için  {$_ff0000$1} Altın ya da {$_ff0000$1} Anlık Cazibe kullan. {$_ff0000$ Anlık Cazibe öncelikli.}"
+	},
+	{
+		"id": 111,
+		"prompt": "Görev listene turuncu prim görevleri eklendi."
+	},
+	{
+		"id": 112,
+		"prompt": "Görev listene turuncu klan görevleri eklendi."
+	},
+	{
+		"id": 113,
+		"prompt": "#buff name# Destek Büyüsü aldın"
+	},
+	{
+		"id": 114,
+		"prompt": "Tebrikler, Kırmızı Kahraman Bragi'yi aldın"
+	},
+	{
+		"id": 115,
+		"prompt": "İşlemek için tıkla"
+	},
+	{
+		"id": 116,
+		"prompt": "Tebrikler, Asırlık Hazine'yi açtın."
+	},
+	{
+		"id": 117,
+		"prompt": "Bir ırkın yok, Freyja'yı bul ve Asgard'da bir ırka katıl."
+	},
+	{
+		"id": 118,
+		"prompt": "Tebrikler, Eğitim Kutsaması aldın, kahramanın seviye atladı."
+	},
+	{
+		"id": 119,
+		"prompt": "Takım yıldızlar bir araya geldi, satmak istediğinden emin misin?"
+	},
+	{
+		"id": 120,
+		"prompt": "Arena sıralamasında herkesi etkiledin ve [[#title#]] unvanını kazandın."
+	},
+	{
+		"id": 121,
+		"prompt": "Arena sıralaman düştüğü için [[#title#]] unvanını kaybettin."
+	},
+	{
+		"id": 122,
+		"prompt": "AFK'ye devam etmek için yeterli Gümüş yok."
+	},
+	{
+		"id": 123,
+		"prompt": "Otomatik Dönme'yi durdurmak bir sonraki hamlede geçerli olacak, durdurmak istediğinden emin misin?"
+	},
+	{
+		"id": 124,
+		"prompt": "Yeni bir görev açmadan önce ödülünü seç."
+	},
+	{
+		"id": 125,
+		"prompt": "Kadim Hazine içinde binlerce değerli eşya gömülü."
+	},
+	{
+		"id": 126,
+		"prompt": "Ödül havuzunu istediğin zaman yenileyebilirsin!"
+	},
+	{
+		"id": 127,
+		"prompt": "Ard arda 2., 5., ve 10. çevirmelerinde şansın 2 kat artar."
+	},
+	{
+		"id": 128,
+		"prompt": "Her çevirişinde Enerji artar. Enerji dolduğunda, Kadim Hazine'ye girebilirsin ve %100 başarı oranı ile hediyeler kazanabilirsin."
+	},
+	{
+		"id": 129,
+		"prompt": "Diğer kahramanları toplayarak Orman Perisi kazanabilirsin."
+	},
+	{
+		"id": 130,
+		"prompt": "İpucu:Orman Perisini ve Peri Suyunu dizilime aynı anda koyduğunda Lord bonus özellikler kazanır."
+	},
+	{
+		"id": 131,
+		"prompt": "Yetersiz Parça"
+	},
+	{
+		"id": 132,
+		"prompt": "Gerekenler"
+	},
+	{
+		"id": 133,
+		"prompt": "Ödüller"
+	},
+	{
+		"id": 134,
+		"prompt": "Ödülleri Al"
+	},
+	{
+		"id": 135,
+		"prompt": "Bonus özellikler dizilimdeki her üyeye işlenir."
+	},
+	{
+		"id": 136,
+		"prompt": "Boss keserek süresiz bonus özellikler ve süper eşların tadını çıkartın!"
+	},
+	{
+		"id": 137,
+		"prompt": "1.Kadim Hazineye giren süper kahraman düşmaların korkulu rüyası olacak!"
+	},
+	{
+		"id": 138,
+		"prompt": "2.Kendini geliştirmek için bir rehber! Muhteşem ödüller için görevleri tamamla."
+	},
+	{
+		"id": 139,
+		"prompt": "3. Binlerce ödüllü fantastik etkinlikler! Bu ödüllerle daha da güçleneceksin!"
+	},
+	{
+		"id": 140,
+		"prompt": "Daha iyi ekipmanlar."
+	},
+	{
+		"id": 141,
+		"prompt": "Envanteri aç"
+	},
+	{
+		"id": 142,
+		"prompt": "Bu işlem için envanterinde #n# slot daha lazım."
+	},
+	{
+		"id": 143,
+		"prompt": "Onayla"
+	},
+	{
+		"id": 144,
+		"prompt": "Önce Satış Listesini kapat."
+	},
+	{
+		"id": 145,
+		"prompt": "#m# Gümüş kazanmak için #n# türde eşyaları sat. Şimdi satmak ister misin?"
+	},
+	{
+		"id": 146,
+		"prompt": "Her gün 10:00-11:00 arası \\n%15 bonus özelliklerden faydalanbilirsin."
+	},
+	{
+		"id": 147,
+		"prompt": "Çok yakında…"
+	},
+	{
+		"id": 148,
+		"prompt": ""
+	},
+	{
+		"id": 149,
+		"prompt": ""
+	},
+	{
+		"id": 150,
+		"prompt": ""
+	},
+	{
+		"id": 151,
+		"prompt": ""
+	},
+	{
+		"id": 152,
+		"prompt": ""
+	},
+	{
+		"id": 153,
+		"prompt": ""
+	},
+	{
+		"id": 154,
+		"prompt": ""
+	},
+	{
+		"id": 155,
+		"prompt": ""
+	},
+	{
+		"id": 156,
+		"prompt": ""
+	},
+	{
+		"id": 157,
+		"prompt": "Maksimum Dayanıklılığa ulaş."
+	},
+	{
+		"id": 158,
+		"prompt": "Uygun eşya yok, bu fonksiyon kullanılamaz."
+	},
+	{
+		"id": 159,
+		"prompt": "Lord TP kartı kullanamaz."
+	},
+	{
+		"id": 160,
+		"prompt": "Kahraman seviyesi Lord seviyesinden yüksek olamaz."
+	},
+	{
+		"id": 161,
+		"prompt": "İsminiz çok kısa, lütfen tekrar giriniz."
+	},
+	{
+		"id": 162,
+		"prompt": "İsminiz zaten kullanılıyor, lütfen tekrar giriniz."
+	},
+	{
+		"id": 163,
+		"prompt": "Başarıyla isimlendirildi."
+	},
+	{
+		"id": 164,
+		"prompt": "Sınıf uyuşmuyor."
+	},
+	{
+		"id": 165,
+		"prompt": "Seviyen yeterli değil"
+	},
+	{
+		"id": 166,
+		"prompt": "Boşaltılacak ekipman yok."
+	},
+	{
+		"id": 167,
+		"prompt": "Hata! Lütfen tekrar giriniz."
+	},
+	{
+		"id": 168,
+		"prompt": "[#goods_name#] satmak istediğinden emin misin?"
+	},
+	{
+		"id": 169,
+		"prompt": "Bu kahraman için #amount# TP eklemek istiyor musun?"
+	},
+	{
+		"id": 170,
+		"prompt": "Kahraman #amount# TP kazandı."
+	},
+	{
+		"id": 171,
+		"prompt": "Dayanıklılık artışı: #amount#"
+	},
+	{
+		"id": 172,
+		"prompt": "Artık Megafon Kanalı'na mesaj gönderebilirsin!"
+	},
+	{
+		"id": 173,
+		"prompt": "Artık Dünya Kanalı'na mesaj gönderebilirsin!"
+	},
+	{
+		"id": 174,
+		"prompt": "Geliştirme Başarısız Oldu"
+	},
+	{
+		"id": 175,
+		"prompt": "Geliştirme Başarılı"
+	},
+	{
+		"id": 176,
+		"prompt": "Yerleştirme yapmadan önce bir Ekipman seç"
+	},
+	{
+		"id": 177,
+		"prompt": "Orijinal Ekipman geliştirilmemiş"
+	},
+	{
+		"id": 178,
+		"prompt": "Değer: #Silver# Gümüş"
+	},
+	{
+		"id": 179,
+		"prompt": "Kazanılan Gümüş: #Silver#"
+	},
+	{
+		"id": 180,
+		"prompt": "Gereken Seviye: #lv#"
+	},
+	{
+		"id": 181,
+		"prompt": "Tüm ekipmanları envantere boşaltmak istediğinden emin misin?"
+	},
+	{
+		"id": 182,
+		"prompt": "Cevheri kaldırmak 1000 Gümüş tutuyor, kaldırmak istediğinden emin misin?"
+	},
+	{
+		"id": 183,
+		"prompt": "#amount# sırayı hemen açmak için #Gold# Altın ya da #Gold# Kupon kullanılsın mı?"
+	},
+	{
+		"id": 184,
+		"prompt": "Kupon önceliklidir."
+	},
+	{
+		"id": 185,
+		"prompt": "İşlenmiş Beceriler ancak aynı kalite ekipmana aktarılabilir."
+	},
+	{
+		"id": 186,
+		"prompt": "Yeni ekipmanın ek güçleri eski ekipmanınkiyle değişecek. Transfer etmek istediğinden emin misin?"
+	},
+	{
+		"id": 187,
+		"prompt": "Gerekli Geliştirme Seviyesi: #lv#"
+	},
+	{
+		"id": 188,
+		"prompt": "Sadece mor kalite veya üstü ekipmanlar için mevcuttur."
+	},
+	{
+		"id": 189,
+		"prompt": "Transfer edilecek ekipmanı seç."
+	},
+	{
+		"id": 190,
+		"prompt": "İşlenmiş Ruh ve ek güçleri kullanmak için en az 8 gücü olan 2 eş güç seç."
+	},
+	{
+		"id": 191,
+		"prompt": "Solo Arena'daki en iyi 100 oyuncu katılabilir."
+	},
+	{
+		"id": 192,
+		"prompt": "Kaos Hiddeti'ni favorilerine eklediğin için 20000 Gümüş ödül aldın."
+	},
+	{
+		"id": 193,
+		"prompt": "Cinsiyet farklı, bu işlemi yapamazsın."
+	},
+	{
+		"id": 194,
+		"prompt": "Başarıyla saflaştır"
+	},
+	{
+		"id": 195,
+		"prompt": "2000 gümüş kullanarak bir kere normal saflaştır, ekipmandaki bonus özellikler yenilenecek"
+	},
+	{
+		"id": 196,
+		"prompt": "2 Altın yada 1 Saflaştırma Taşı kullanarak gelişmiş saflaştırma gerçekleştir, 8-10 yıldız bonus özellik elde etme şansın var.\\nilk olarak saflaştırma taşı kullanılacak."
+	},
+	{
+		"id": 197,
+		"prompt": ""
+	},
+	{
+		"id": 198,
+		"prompt": ""
+	},
+	{
+		"id": 199,
+		"prompt": "Girmeden önce lütfen seviye atla."
+	},
+	{
+		"id": 200,
+		"prompt": "Oda dolu."
+	}
+]

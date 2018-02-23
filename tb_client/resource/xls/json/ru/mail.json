@@ -1,0 +1,298 @@
+[
+	{
+		"id": 608201,
+		"mail_title_const": "Dungeon AFK",
+		"type": 1,
+		"content": "Поздравляем! Находясь АФК в подземелье, вы получили [#prop_list#].",
+		"mail_title": "АФК в подземелье",
+		"content_type": 1
+	},
+	{
+		"id": 608202,
+		"mail_title_const": "System Mail",
+		"type": 2,
+		"content": "Это системное сообщение. Не отвечайте на него.",
+		"mail_title": "Системное сообщение",
+		"content_type": 0
+	},
+	{
+		"id": 608203,
+		"mail_title_const": "Arsenal",
+		"type": 3,
+		"content": "Поздравляем! За свои труды в Арсенале вы получаете [#prop_list#] . ",
+		"mail_title": "Арсенал",
+		"content_type": 1
+	},
+	{
+		"id": 608204,
+		"mail_title_const": "Trial Towe AFK",
+		"type": 4,
+		"content": "Поздравляем! Находясь АФК в Башне испытаний, вы получили [#prop_list#].",
+		"mail_title": "АФК в Башне испытаний",
+		"content_type": 1
+	},
+	{
+		"id": 608205,
+		"mail_title_const": "Rewards for Guild Battle",
+		"type": 5,
+		"content": "Поздравляем! Вы получаете [#prop_list#] за участие в войне гильдий.",
+		"mail_title": "Награда в войне гильдий",
+		"content_type": 1
+	},
+	{
+		"id": 608206,
+		"mail_title_const": "Ranking rewards in Battle of Gods",
+		"type": 6,
+		"content": "Поздравляем! За свои достижения в Битве богов вы получаете награду :  #prop_list#",
+		"mail_title": "Награда за рейтинг в Битве богов",
+		"content_type": 1
+	},
+	{
+		"id": 608207,
+		"mail_title_const": "Escort Rewards",
+		"type": 7,
+		"content": "Поздравляем! Вы успешно выполнили задание и получаете награду:  #prop_list#",
+		"mail_title": "Награда за эскорт",
+		"content_type": 1
+	},
+	{
+		"id": 608208,
+		"mail_title_const": "Newbie Login Rewards",
+		"type": 11,
+		"content": "Поздравляем, вы получаете награду новичка за вход в игру: [#prop_list#].",
+		"mail_title": "Награда новичка",
+		"content_type": 1
+	},
+	{
+		"id": 608209,
+		"mail_title_const": "Dungeon's loot",
+		"type": 8,
+		"content": "Поздравляем! За свои подвиги в подземелье вы получаете награду: [#prop_list#].",
+		"mail_title": "Добыча из подземелья",
+		"content_type": 1
+	},
+	{
+		"id": 608210,
+		"mail_title_const": "Rewards from Dungeon",
+		"type": 9,
+		"content": "Поздравляем! За свои подвиги в подземелье вы получаете награду: [#prop_list#].",
+		"mail_title": "Награда за подземелье",
+		"content_type": 1
+	},
+	{
+		"id": 608211,
+		"mail_title_const": "Rewards from Unity Gate",
+		"type": 10,
+		"content": "Поздравляем! За свои подвиги в подземелье вы получаете награду: [#prop_list#].",
+		"mail_title": "Награда за Врата Единства",
+		"content_type": 1
+	},
+	{
+		"id": 608212,
+		"mail_title_const": "Crystal Altar's loot",
+		"type": 12,
+		"content": "Поздравляем! В Хрустальном алтаре вы получили награду: [#prop_list#].",
+		"mail_title": "Добыча Хрустального алтаря",
+		"content_type": 1
+	},
+	{
+		"id": 608213,
+		"mail_title_const": "Trial Towe's loot",
+		"type": 13,
+		"content": "Поздравляем! В Башне испытаний вы получили награду: [#prop_list#].",
+		"mail_title": "Добыча Башни испытаний",
+		"content_type": 1
+	},
+	{
+		"id": 608215,
+		"mail_title_const": "Guild master transfer",
+		"type": 15,
+		"content": "Глава гильдии [#Player_Name#] отсутствует в течение 10 дней. Титул главы гильдии автоматически передается, если игрок отсутствует в течение 10 дней или дольше.\n1. Зам главы гильдии становится новым главой, если он заходил в игру в течение последних трех дней. В отсутствие подходящего заместителя на должность главы гильдии могут претендовать другие игроки.\n2. В голосовании участвуют игроки с взносом в гильдию 100 или больше. Голосование идет 3 дня, и новым главой гильдии становится игрок, набравший больше всех голосов.\n3. Если во время голосования в игру возвращается прежний мастер гильдии, он сохраняет свой пост.",
+		"mail_title": "Выборы главы гильдии",
+		"content_type": 2
+	},
+	{
+		"id": 608216,
+		"mail_title_const": "New Guild master",
+		"type": 16,
+		"content": "Глава гильдии [#Player_Name#] отсутствует в течение 10 дней. Титул главы гильдии переходит к игроку [#Player_Name#], поздравляем!",
+		"mail_title": "Новый глава гильдии",
+		"content_type": 2
+	},
+	{
+		"id": 608217,
+		"mail_title_const": "Guild master election",
+		"type": 17,
+		"content": "Глава гильдии [#Player_Name#] отсутствует в течение 10 дней. Нажмите “Выборы” в меню гильдии, чтобы проголосовать за нового главу.\n2. В голосовании участвуют игроки с взносом в гильдию 100 или больше. Голосование идет 3 дня, и новым главой гильдии становится игрок, набравший больше всех голосов.\n3. Если во время голосования в игру возвращается прежний мастер гильдии, он сохраняет свой пост.",
+		"mail_title": "Выборы главы гильдии",
+		"content_type": 2
+	},
+	{
+		"id": 608218,
+		"mail_title_const": "Guild Master returns ",
+		"type": 18,
+		"content": "В связи с возвращением главы гильдии, игрока [#Player_Name#], выборы отменяются.",
+		"mail_title": "Глава гильдии вернулся",
+		"content_type": 2
+	},
+	{
+		"id": 608219,
+		"mail_title_const": "Guild dismissed",
+		"type": 19,
+		"content": "Ни один из игроков гильдии [#guild_name#] не заходил в игру в течение 7 дней. Ваша гильдия была распущена.",
+		"mail_title": "Роспуск гильдии",
+		"content_type": 3
+	},
+	{
+		"id": 608220,
+		"mail_title_const": "Login rewards",
+		"type": 20,
+		"content": "Поздравляем! Вы получаете [#prop_list#] в награду за вход в игру.",
+		"mail_title": "Награда за вход в игру",
+		"content_type": 1
+	},
+	{
+		"id": 608221,
+		"mail_title_const": "Rewards for Beast Shooting",
+		"type": 21,
+		"content": "Поздравляем! Вы получаете [#prop_list#] в награду за &quot;Отстрел чудовищ&quot;.",
+		"mail_title": "Награда за &quot;отстрел чудовищ&quot;",
+		"content_type": 1
+	},
+	{
+		"id": 608222,
+		"mail_title_const": "Online rewards at 20:00 everyday.",
+		"type": 22,
+		"content": "Уважаемый игрок：\\nПоздравляем, вы получили награду за онлайн! \\nМы приготовили для вас множество подарков; вы можете получать их каждый день с 6 по 8 сентября за присутствие в игре в 20:00. Желаем вам приятно провести время в игре.",
+		"mail_title": "Награда за онлайн каждый день в 20:00",
+		"content_type": 0
+	},
+	{
+		"id": 608223,
+		"mail_title_const": "Online rewards at 21:00 everyday.",
+		"type": 23,
+		"content": "Уважаемый игрок：\\nПоздравляем, вы получили награду за онлайн! \\nМы приготовили для вас множество подарков; вы можете получать их каждый день с 6 по 8 сентября за присутствие в игре в 21:00. Желаем вам приятно провести время в игре.",
+		"mail_title": "Награда за онлайн каждый день в 21:00",
+		"content_type": 0
+	},
+	{
+		"id": 608224,
+		"mail_title_const": "Rewards from Ideas of March",
+		"type": 24,
+		"content": "Вы заняли первое место в &quot;Мартовских идах&quot; и получаете награду: [#prop_list#]!",
+		"mail_title": "Награда за &quot;Мартовские иды&quot;",
+		"content_type": 1
+	},
+	{
+		"id": 608228,
+		"mail_title_const": "Clearance Rewards for the Trial Tower",
+		"type": 28,
+		"content": "Поздравляем, вы дошли до XXXXXX этажа Башни испытаний и получаете щедрую награду!",
+		"mail_title": "Награда за зачистку Башни испытаний",
+		"content_type": 4
+	},
+	{
+		"id": 608229,
+		"mail_title_const": "Claim Rewards ",
+		"type": 29,
+		"content": "Поскольку в ваших сумках не было свободного места, награда была отправлена вам по почте.",
+		"mail_title": "Получите награду",
+		"content_type": 0
+	},
+	{
+		"id": 608233,
+		"mail_title_const": "Rewards of last hit",
+		"type": 33,
+		"content": "Вы нанесли последний удар по боссу в событии &quot;Честь и слава&quot; и получаете награду: [#prop_list#]",
+		"mail_title": "Награда за последний удар",
+		"content_type": 1
+	},
+	{
+		"id": 608234,
+		"mail_title_const": "Rewards for Honor&amp;Glory",
+		"type": 34,
+		"content": "Поздравляем, за участие в событии &quot;Честь и слава&quot; вы получаете награду: [#prop_list#].",
+		"mail_title": "Награда за &quot;Честь и славу&quot;",
+		"content_type": 1
+	},
+	{
+		"id": 608235,
+		"mail_title_const": "Rewards from Honor&amp;Glory",
+		"type": 35,
+		"content": "Поздравляем, вы получаете награду стража за событие &quot;Честь и слава&quot;: [#prop_list#].",
+		"mail_title": "Награда за &quot;Честь и славу&quot;",
+		"content_type": 1
+	},
+	{
+		"id": 608236,
+		"mail_title_const": "Treasure Rewards",
+		"type": 36,
+		"content": "Поздравляем, за участие в событии &quot;Древнее сокровище&quot; вы получаете награду: [#prop_list#].",
+		"mail_title": "Награда за &quot;Древние сокровища&quot;",
+		"content_type": 1
+	},
+	{
+		"id": 608238,
+		"mail_title_const": "Rewards of last hit in World Boss",
+		"type": 38,
+		"content": "Вы нанесли последний удар по боссу в событии &quot;мировой босс&quot; и получаете награду: [#prop_list#]",
+		"mail_title": "Награда за последний удар",
+		"content_type": 1
+	},
+	{
+		"id": 608239,
+		"mail_title_const": "Rewards from World Boss",
+		"type": 39,
+		"content": "Поздравляем, вы получаете награду за сражение против &quot;мирового босса&quot;: [#prop_list#].",
+		"mail_title": "Награда за &quot;Мирового босса&quot;",
+		"content_type": 1
+	},
+	{
+		"id": 608240,
+		"mail_title_const": "Your inventory is full",
+		"type": 40,
+		"content": "Поскольку в ваших сумках не было свободного места, награда была отправлена вам по почте.",
+		"mail_title": "Ваше снаряжение переполнено",
+		"content_type": 0
+	},
+	{
+		"id": 608241,
+		"mail_title_const": "Bye Rewards",
+		"type": 41,
+		"content": "Уважаемый воин,\\nваша гильдия выбыла из групповой стадии Драконьей гегемонии, прежде заработав для вас следующую награду.",
+		"mail_title": "Награды за прощания",
+		"content_type": 0
+	},
+	{
+		"id": 608242,
+		"mail_title_const": "Dragon Hegemony Notice",
+		"type": 42,
+		"content": "Уважаемый игрок,\\nвашу гильдию ждет бой с гильдией [#guild_name#] - сегодня, ровно в 20:00. Не упустите шанс проявить себя!",
+		"mail_title": "Информация о Драконьей гегемонии",
+		"content_type": 3
+	},
+	{
+		"id": 608243,
+		"mail_title_const": "Dragon Hegemony Rewards",
+		"type": 43,
+		"content": "Уважаемый воин,\\nпоздравляем с получением наград за Драконью гегемонию:[#prop_list#].",
+		"mail_title": "Награды за Драконью гегемонию",
+		"content_type": 1
+	},
+	{
+		"id": 608244,
+		"mail_title_const": "Gods'Glory Rewards",
+		"type": 44,
+		"content": "Прославленный герой,\\nпоздравляем - вы получили #Rank# место в Славе богов. И нарады не заставят себя долго ждать!",
+		"mail_title": "Награды за Славу богов",
+		"content_type": 5
+	},
+	{
+		"id": 608245,
+		"mail_title_const": "Group Completion Rewards",
+		"type": 45,
+		"content": "Прославленный герой,\\nпоздравляем с получением наград за групповое участие на межсерверной Арене.",
+		"mail_title": "Награды за групповое завершение",
+		"content_type": 0
+	}
+]

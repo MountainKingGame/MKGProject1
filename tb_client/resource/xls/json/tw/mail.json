@@ -1,0 +1,298 @@
+[
+	{
+		"id": 608201,
+		"mail_title": "副本掃蕩",
+		"type": 1,
+		"mail_title_const": "Dungeon AFK",
+		"content": "恭喜你在副本掃蕩中獲得了：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608202,
+		"mail_title": "系統郵件",
+		"type": 2,
+		"mail_title_const": "System Mail",
+		"content": "該郵件來自系統，請勿回復。",
+		"content_type": 0
+	},
+	{
+		"id": 608203,
+		"mail_title": "鐵匠鋪合成",
+		"type": 3,
+		"mail_title_const": "Arsenal",
+		"content": "恭喜你在鐵匠鋪合成中獲得了：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608204,
+		"mail_title": "試煉塔掃蕩",
+		"type": 4,
+		"mail_title_const": "Trial Towe AFK",
+		"content": "恭喜你在試煉塔掃蕩中獲得了：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608205,
+		"mail_title": "公會戰獎勵結算",
+		"type": 5,
+		"mail_title_const": "Rewards for Guild Battle",
+		"content": "恭喜你在公會戰活動中獲得了：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608206,
+		"mail_title": "戰神爭霸排行獎勵",
+		"type": 6,
+		"mail_title_const": "Ranking rewards in Battle of Gods",
+		"content": "恭喜你獲得戰神爭霸排行獎勵：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608207,
+		"mail_title": "護送軍資獎勵",
+		"type": 7,
+		"mail_title_const": "Escort Rewards",
+		"content": "你已經順利完成護送軍資任務，獲得獎勵：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608208,
+		"mail_title": "新手登陸獎勵",
+		"type": 11,
+		"mail_title_const": "Newbie Login Rewards",
+		"content": "恭喜你獲得新手登陸獎勵：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608209,
+		"mail_title": "副本掉落",
+		"type": 8,
+		"mail_title_const": "Dungeon's loot",
+		"content": "恭喜你在副本挑戰中獲得了：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608210,
+		"mail_title": "單人副本翻牌",
+		"type": 9,
+		"mail_title_const": "Rewards from Dungeon",
+		"content": "恭喜你在副本挑戰中獲得了：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608211,
+		"mail_title": "多人副本翻牌",
+		"type": 10,
+		"mail_title_const": "Rewards from Unity Gate",
+		"content": "恭喜你在副本挑戰中獲得了：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608212,
+		"mail_title": "水晶祭壇掉落",
+		"type": 12,
+		"mail_title_const": "Crystal Altar's loot",
+		"content": "恭喜你在水晶祭壇中獲得了：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608213,
+		"mail_title": "試練塔掉落",
+		"type": 13,
+		"mail_title_const": "Trial Towe's loot",
+		"content": "恭喜你在挑戰試練塔中獲得了：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608215,
+		"mail_title": "會長轉移預估",
+		"type": 15,
+		"mail_title_const": "Guild master transfer",
+		"content": "公會會長{$_00ff00$#Player_Name#}已離線7天，當離線時間達到10天，將會觸發會長轉移功能：\n1. 會長候選人默認為離線時間不超過3天的副會長，如果沒有符合條件的候選人，則降低職位繼續查找。\n2. 公會累積貢獻度不低於100的玩家可以參加投票，投票維持3天，最後得票最高的候選人成為新會長。\n3. 如果投票期間，會長回歸，投票轉移將失效。",
+		"content_type": 2
+	},
+	{
+		"id": 608216,
+		"mail_title": "會長轉移成功",
+		"type": 16,
+		"mail_title_const": "New Guild master",
+		"content": "由於原公會會長 [#Player_Name#] 離線時間超過15天，會長轉移給 [#Player_Name#]，讓我們一起祝賀他吧！",
+		"content_type": 2
+	},
+	{
+		"id": 608217,
+		"mail_title": "會長選舉通知",
+		"type": 17,
+		"mail_title_const": "Guild master election",
+		"content": "由於公會會長{#Player_Name#}離線超過10天，產生了多位會長候選人。請大家進入公會介面，點擊“選舉”按鈕進行投票。投票規則：\n1. 公會累積貢獻度不低於100的玩家可以參加投票，投票維持3天，最後得票最高的候選人成為新會長。\n2. 如果投票期間，會長回歸，投票轉移將失效。\n",
+		"content_type": 2
+	},
+	{
+		"id": 608218,
+		"mail_title": "會長回歸公告",
+		"type": 18,
+		"mail_title_const": "Guild Master returns ",
+		"content": "由於公會會長{#Player_Name#}在離線時間超過10天后回歸，新會長選舉取消。",
+		"content_type": 2
+	},
+	{
+		"id": 608219,
+		"mail_title": "公會解散公告",
+		"type": 19,
+		"mail_title_const": "Guild dismissed",
+		"content": "由於 [#guild_name#] 所有成員連續90天未上線，公會自動解散。",
+		"content_type": 3
+	},
+	{
+		"id": 608220,
+		"mail_title": "登陸送好禮",
+		"type": 20,
+		"mail_title_const": "Login rewards",
+		"content": "今日登陸遊戲，獲得獎勵：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608221,
+		"mail_title": "狩獵魔物獎勵結算",
+		"type": 21,
+		"mail_title_const": "Rewards for Beast Shooting",
+		"content": "恭喜你在狩獵魔物活動中獲得了：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608222,
+		"mail_title": "內測20:00登陸獎勵",
+		"type": 22,
+		"mail_title_const": "Online rewards at 20:00 everyday.",
+		"content": "尊敬的勇士:\\n恭喜您獲得了20:00的線上獎勵！\\n在9/8——9/16首次內測期間，我們為您準備了獎勵豐厚的內測線上大禮包。只要您在活動時間線上，多種實用道具海量派發，等你來領！一定要線上哦！",
+		"content_type": 0
+	},
+	{
+		"id": 608223,
+		"mail_title": "內測21:00登陸獎勵",
+		"type": 23,
+		"mail_title_const": "Online rewards at 21:00 everyday.",
+		"content": "尊敬的勇士:\\n恭喜您獲得了21:00的線上獎勵！\\n在9/8——9/16首次內測期間，我們為您準備了獎勵豐厚的內測線上大禮包。只要您在活動時間線上，多種實用道具海量派發，等你來領！一定要線上哦！",
+		"content_type": 0
+	},
+	{
+		"id": 608224,
+		"mail_title": "魔族入侵第一名獎勵",
+		"type": 24,
+		"mail_title_const": "Rewards from Ideas of March",
+		"content": "恭喜你在魔族入侵活動中抵禦魔族有功，在本次活動中排名第一，獲得了[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608228,
+		"mail_title": "試練塔通關獎勵",
+		"type": 28,
+		"mail_title_const": "Clearance Rewards for the Trial Tower",
+		"content": "恭喜你通關試練塔第[#n_floor#]層，獲得了豐厚獎勵！",
+		"content_type": 4
+	},
+	{
+		"id": 608229,
+		"mail_title": "請領取獎勵",
+		"type": 29,
+		"mail_title_const": "Claim Rewards ",
+		"content": "由於您背包已滿，未能領取的物品我們已通過郵件發放，請及時收取附件。",
+		"content_type": 0
+	},
+	{
+		"id": 608233,
+		"mail_title": "過關斬將最後一擊獎勵",
+		"type": 33,
+		"mail_title_const": "Rewards of last hit",
+		"content": "恭喜你在過關斬將活動中給予守將最後一擊，獲得銀幣獎勵[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608234,
+		"mail_title": "過關斬將獎勵結算",
+		"type": 34,
+		"mail_title_const": "Rewards for Honor&amp;Glory",
+		"content": "恭喜你在過關斬將活動中獲得了：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608235,
+		"mail_title": "過關斬將守將獎勵",
+		"type": 35,
+		"mail_title_const": "Rewards from Honor&amp;Glory",
+		"content": "恭喜你在過關斬將活動中獲得了守將獎勵：[#prop_list#]",
+		"content_type": 1
+	},
+	{
+		"id": 608236,
+		"mail_title": "遠古寶藏獎勵",
+		"type": 36,
+		"mail_title_const": "Treasure Rewards",
+		"content": "恭喜你在遠古寶藏中獲得了：[[#prop_list#]]",
+		"content_type": 1
+	},
+	{
+		"id": 608238,
+		"mail_title": "世界boss最後一擊活動獎勵",
+		"type": 38,
+		"mail_title_const": "Rewards of last hit in World Boss",
+		"content": "恭喜你在世界boss活動中對boss造成最後一擊，獲得獎勵[[#prop_list#]]",
+		"content_type": 1
+	},
+	{
+		"id": 608239,
+		"mail_title": "世界boss活動獎勵",
+		"type": 39,
+		"mail_title_const": "Rewards from World Boss",
+		"content": "恭喜你在世界boss活動中獲得以下獎勵[[#prop_list#]]",
+		"content_type": 1
+	},
+	{
+		"id": 608240,
+		"mail_title": "背包已滿",
+		"type": 40,
+		"mail_title_const": "Your inventory is full",
+		"content": "由於您使用物品時背包空間不足，物品已發送至您的郵件，請儘快整理您的背包。",
+		"content_type": 0
+	},
+	{
+		"id": 608241,
+		"mail_title": "公會戰-輪空公會獎勵",
+		"type": 41,
+		"mail_title_const": "Bye Rewards",
+		"content": "親愛的神族勇士，\\n由於您的公會在本輪龍神爭霸戰匹配中輪空，恭喜您直接獲得如下輪空獎勵。",
+		"content_type": 0
+	},
+	{
+		"id": 608242,
+		"mail_title": "龍神爭霸戰通知",
+		"type": 42,
+		"mail_title_const": "Dragon Hegemony Notice",
+		"content": "親愛的神族勇士，\\n您的公會將於今晚20:00和 [#guild_name#] 公會進行對戰，請您積極備戰，期待您在戰場上綻放光芒！",
+		"content_type": 3
+	},
+	{
+		"id": 608243,
+		"mail_title": "龍神爭霸戰獎勵",
+		"type": 43,
+		"mail_title_const": "Dragon Hegemony Rewards",
+		"content": "尊敬的勇士，\\n恭喜你在龍神爭霸戰中獲得了如下獎勵：[[#prop_list#]]",
+		"content_type": 1
+	},
+	{
+		"id": 608244,
+		"mail_title": "諸神爭霸賽獎勵",
+		"type": 44,
+		"mail_title_const": "Gods'Glory Rewards",
+		"content": "尊敬的勇士，\\n恭喜您在本屆諸神爭霸賽中獲得第#Rank#名，贏得豐厚獎勵！",
+		"content_type": 5
+	},
+	{
+		"id": 608245,
+		"mail_title": "跨服競技場通關獎勵",
+		"type": 45,
+		"mail_title_const": "Group Completion Rewards",
+		"content": "尊敬的勇士，\\n恭喜您在跨服競技場中獲得了本組通關獎勵！",
+		"content_type": 0
+	}
+]
