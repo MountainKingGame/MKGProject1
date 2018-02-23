@@ -1,0 +1,291 @@
+[
+	{
+		"id": 608201,
+		"content": "Congrats you obtained [#prop_list#] through AFK in Dungeon.",
+		"type": 1,
+		"mail_title_const": "Dungeon AFK",
+		"content_type": 1,
+		"mail_title": "Dungeon AFK"
+	},
+	{
+		"id": 608202,
+		"mail_title_const": "System Mail",
+		"content": "System Mail, don't reply.",
+		"type": 2,
+		"mail_title": "System Mail"
+	},
+	{
+		"id": 608203,
+		"content": "Congrats you get [#prop_list#] through combining in Arsenal. ",
+		"type": 3,
+		"mail_title_const": "Arsenal",
+		"content_type": 1,
+		"mail_title": "Arsenal"
+	},
+	{
+		"id": 608204,
+		"content": "Congrats you obtained [#prop_list#] through AFK in Trial Tower.",
+		"type": 4,
+		"mail_title_const": "Trial Towe AFK",
+		"content_type": 1,
+		"mail_title": "Trial Towe AFK"
+	},
+	{
+		"id": 608205,
+		"content": "Congrats you obtained [#prop_list#] in Guild Battle.",
+		"type": 5,
+		"mail_title_const": "Rewards for Guild Battle",
+		"content_type": 1,
+		"mail_title": "Rewards for Guild Battle"
+	},
+	{
+		"id": 608206,
+		"content": "Congrats you obtained following rewards in Battle of Gods：#prop_list#",
+		"type": 6,
+		"mail_title_const": "Ranking rewards in Battle of Gods",
+		"content_type": 1,
+		"mail_title": "Ranking rewards in Battle of Gods"
+	},
+	{
+		"id": 608207,
+		"content": "Congrats you finished Escort,obtained #prop_list#",
+		"type": 7,
+		"mail_title_const": "Escort Rewards",
+		"content_type": 1,
+		"mail_title": "Escort Rewards"
+	},
+	{
+		"id": 608208,
+		"content": "Congrats you get [#prop_list#] for newbie rewards.",
+		"type": 11,
+		"mail_title_const": "Newbie Login Rewards",
+		"content_type": 1,
+		"mail_title": "Newbie Login Rewards"
+	},
+	{
+		"id": 608209,
+		"content": "Congrats you obtained [#prop_list#] in Dungeon.",
+		"type": 8,
+		"mail_title_const": "Dungeon's loot",
+		"content_type": 1,
+		"mail_title": "Dungeon's loot"
+	},
+	{
+		"id": 608210,
+		"content": "Congrats you obtained [#prop_list#] in Dungeon.",
+		"type": 9,
+		"mail_title_const": "Rewards from Dungeon",
+		"content_type": 1,
+		"mail_title": "Rewards from Dungeon"
+	},
+	{
+		"id": 608211,
+		"content": "Congrats you obtained [#prop_list#] in Dungeon.",
+		"type": 10,
+		"mail_title_const": "Rewards from Unity Gate",
+		"content_type": 1,
+		"mail_title": "Rewards from Unity Gate"
+	},
+	{
+		"id": 608212,
+		"content": "Congrats you obtained [#prop_list#] in Crystal Altar.",
+		"type": 12,
+		"mail_title_const": "Crystal Altar's loot",
+		"content_type": 1,
+		"mail_title": "Crystal Altar's loot"
+	},
+	{
+		"id": 608213,
+		"content": "Congrats you obtained [#prop_list#] in Trial Tower.",
+		"type": 13,
+		"mail_title_const": "Trial Towe's loot",
+		"content_type": 1,
+		"mail_title": "Trial Towe's loot"
+	},
+	{
+		"id": 608215,
+		"content": "Guild Master [#Player_Name#] is offline 7 days. The Guild Master will be automatically transferred when offline for more than 10 days.\n1.The Vice Guild Master who has logged on in the past 3 days will be the default candidate for new Guild Master.If no one qualifies, players holding the next highest position will be considered.\n2.Players with at least 100 Guild Contribution are allowed to vote. Voting lasts for 3 days, and the candidate with the most votes will be the new guild master.\n3.If the Guild Master returns during voting, transfer procedures will be rendered invalid.",
+		"type": 15,
+		"mail_title_const": "Guild master transfer",
+		"content_type": 2,
+		"mail_title": "Guild master transfer"
+	},
+	{
+		"id": 608216,
+		"content": "Guild Master [#Player_Name#] is offline 15 days. Guild Master transfer to [#Player_Name#], congrats to him/her.",
+		"type": 16,
+		"mail_title_const": "New Guild master",
+		"content_type": 2,
+		"mail_title": "New Guild master"
+	},
+	{
+		"id": 608217,
+		"content": "Guild Master [#Player_Name#] is offline 10 days, candidates is expecting for your vote. You can click “Election” in Guild to vote.\n1.Players with at least 100 Guild Contribution are allowed to vote. Voting lasts for 3 days, candidate with the most votes will be the new guild master.\n2.If the guild master returns during voting, transfer procedures will be rendered invalid.",
+		"type": 17,
+		"mail_title_const": "Guild master election",
+		"content_type": 2,
+		"mail_title": "Guild master election"
+	},
+	{
+		"id": 608218,
+		"content": "The Guild Master [#Player_Name#] returns during voting, transfer procedures will be rendered invalid.",
+		"type": 18,
+		"mail_title_const": "Guild Master returns ",
+		"content_type": 2,
+		"mail_title": "Guild Master returns "
+	},
+	{
+		"id": 608219,
+		"content": "All members in [#guild_name#] didn't login in 90 days, your guild dismissed.",
+		"type": 19,
+		"mail_title_const": "Guild dismissed",
+		"content_type": 3,
+		"mail_title": "Guild dismissed"
+	},
+	{
+		"id": 608220,
+		"content": "Congrats you gaind [#prop_list#] as login rewards.",
+		"type": 20,
+		"mail_title_const": "Login rewards",
+		"content_type": 1,
+		"mail_title": "Login rewards"
+	},
+	{
+		"id": 608221,
+		"content": "Congrats you obtained [#prop_list#] in Beast Shooting.",
+		"type": 21,
+		"mail_title_const": "Rewards for Beast Shooting",
+		"content_type": 1,
+		"mail_title": "Rewards for Beast Shooting"
+	},
+	{
+		"id": 608222,
+		"mail_title_const": "Online rewards at 20:00 everyday.",
+		"content": "Dear Lord：\\nCongrats you obtained the online rewards.\\nBetween September 6th and September 8th, we prepare abundant online giftpack for you. You can get it as long as you are online at 20:00 everyday. Wish you have fun in game.",
+		"type": 22,
+		"mail_title": "Online rewards at 20:00 everyday."
+	},
+	{
+		"id": 608223,
+		"mail_title_const": "Online rewards at 21:00 everyday.",
+		"content": "Dear Lord：\\nCongrats you obtained the online rewards.\\nBetween September 6th and September 8th, we prepare abundant online giftpack for you. You can get it as long as you are online at 21:00 everyday. Wish you have fun in game.",
+		"type": 23,
+		"mail_title": "Online rewards at 21:00 everyday."
+	},
+	{
+		"id": 608224,
+		"content": "You've made outstanding contribution in Ideas March, you're the 1st, rewarded [#prop_list#]",
+		"type": 24,
+		"mail_title_const": "Rewards from Ideas of March",
+		"content_type": 1,
+		"mail_title": "Rewards from Ideas of March"
+	},
+	{
+		"id": 608228,
+		"content": "Congrat you reach to Floor[#n_floor#] in the Trial Tower, obtained the gorgeous rewards.",
+		"type": 28,
+		"mail_title_const": "Clearance Rewards for the Trial Tower",
+		"content_type": 4,
+		"mail_title": "Clearance Rewards for the Trial Tower"
+	},
+	{
+		"id": 608229,
+		"mail_title_const": "Claim Rewards ",
+		"content": "All rewards have been sent to you via the mail as your inventory is full, please sort your inventory as soon as possible.",
+		"type": 29,
+		"mail_title": "Claim Rewards "
+	},
+	{
+		"id": 608233,
+		"content": "You gave the last hit of the Guard in Honor&amp;Glory, rewarded [#prop_list#]",
+		"type": 33,
+		"mail_title_const": "Rewards of last hit",
+		"content_type": 1,
+		"mail_title": "Rewards of last hit"
+	},
+	{
+		"id": 608234,
+		"content": "Congrats you obtained [#prop_list#] in Honor&amp;Glory.",
+		"type": 34,
+		"mail_title_const": "Rewards for Honor&amp;Glory",
+		"content_type": 1,
+		"mail_title": "Rewards for Honor&amp;Glory"
+	},
+	{
+		"id": 608235,
+		"content": "Congrats you got guard rewards in Honor&amp;Glory,rewarded [#prop_list#]",
+		"type": 35,
+		"mail_title_const": "Rewards from Honor&amp;Glory",
+		"content_type": 1,
+		"mail_title": "Rewards from Honor&amp;Glory"
+	},
+	{
+		"id": 608236,
+		"content": "Congrats you got [#prop_list#] in Ancient Treasure.",
+		"type": 36,
+		"mail_title_const": "Treasure Rewards",
+		"content_type": 1,
+		"mail_title": "Treasure Rewards"
+	},
+	{
+		"id": 608238,
+		"content": "You gave the final blow to the Boss in World Boss, rewarded [#prop_list#]",
+		"type": 38,
+		"mail_title_const": "Rewards of last hit in World Boss",
+		"content_type": 1,
+		"mail_title": "Rewards of last hit in World Boss"
+	},
+	{
+		"id": 608239,
+		"content": "Congrats you obtained [#prop_list#] in World Boss.",
+		"type": 39,
+		"mail_title_const": "Rewards from World Boss",
+		"content_type": 1,
+		"mail_title": "Rewards from World Boss"
+	},
+	{
+		"id": 608240,
+		"mail_title_const": "Your inventory is full",
+		"content": "Your rewards were sent via the mail as your inventory is full, please sort as soon as possible.",
+		"type": 40,
+		"mail_title": "Your inventory is full"
+	},
+	{
+		"id": 608241,
+		"mail_title_const": "Bye Rewards",
+		"content": "Dear Warrior，\\nYour guild receives a bye in the group stage of Dragon Hegemony, and you will receive the following rewards.",
+		"type": 41,
+		"mail_title": "Bye Rewards"
+	},
+	{
+		"id": 608242,
+		"content": "Dear Player，\\nYour guild will fight against [#guild_name#] at 20:00 tonight, it&apos;s your time to shine!",
+		"type": 42,
+		"mail_title_const": "Dragon Hegemony Notice",
+		"content_type": 3,
+		"mail_title": "Dragon Hegemony Notice"
+	},
+	{
+		"id": 608243,
+		"content": "Dear Warrior,\\nCongrats on getting the rewards in Dragon Hegemony：[#prop_list#].",
+		"type": 43,
+		"mail_title_const": "Dragon Hegemony Rewards",
+		"content_type": 1,
+		"mail_title": "Dragon Hegemony Rewards"
+	},
+	{
+		"id": 608244,
+		"content": "Distinguished Hero,\\nCongrats on getting #Rank#th place in Gods'Glory.You have won awesome rewards!",
+		"type": 44,
+		"mail_title_const": "Gods'Glory Rewards",
+		"content_type": 5,
+		"mail_title": "Gods'Glory Rewards"
+	},
+	{
+		"id": 608245,
+		"mail_title_const": "Group Completion Rewards",
+		"content": "Distinguished Hero,\\nCongrats you obtained Group Completion Rewards in Cross-Server Arena.",
+		"type": 45,
+		"mail_title": "Group Completion Rewards"
+	}
+]

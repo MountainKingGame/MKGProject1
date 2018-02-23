@@ -45,6 +45,10 @@
     {
       "name": "toml",
       "path": "./libs/toml"
+    },
+    {
+      "name": "XlsModule",
+      "path": "./libs/XlsModule"
     }
   ]
 }

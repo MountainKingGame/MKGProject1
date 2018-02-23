@@ -1,0 +1,1712 @@
+[
+	{
+		"monster_avatars_id": "200001",
+		"reward_mode": 0,
+		"monsters": "200001",
+		"monster_boss_id": 0,
+		"name": "Flying Beast",
+		"id": 394001,
+		"dialogue_time": 10,
+		"monster_lv": 1,
+		"monster_pos": [
+			5
+		],
+		"battleRating_monsterGroup": 90,
+		"monster_boss_blood_count": 0,
+		"dialogue1": "The flesh of God is yummy!"
+	},
+	{
+		"monster_avatars_id": "200002",
+		"reward_mode": 0,
+		"monsters": "200002",
+		"monster_boss_id": 0,
+		"name": "Flying Beast",
+		"id": 394002,
+		"dialogue_time": 10,
+		"monster_lv": 1,
+		"monster_pos": [
+			5
+		],
+		"battleRating_monsterGroup": 100,
+		"monster_boss_blood_count": 0,
+		"dialogue1": "The flesh of God is yummy!"
+	},
+	{
+		"monster_avatars_id": "200001",
+		"reward_mode": 0,
+		"monsters": "200001",
+		"monster_boss_id": 0,
+		"name": "Flying Beast",
+		"id": 394003,
+		"dialogue_time": 10,
+		"monster_lv": 1,
+		"monster_pos": [
+			5
+		],
+		"battleRating_monsterGroup": 90,
+		"monster_boss_blood_count": 0,
+		"dialogue1": "The flesh of God is yummy!"
+	},
+	{
+		"monster_avatars_id": "200003",
+		"reward_mode": 1,
+		"monsters": "200003",
+		"monster_boss_id": 200003,
+		"name": "Arrowtail Beast",
+		"id": 394004,
+		"dialogue_time": 10,
+		"monster_lv": 1,
+		"monster_pos": [
+			5
+		],
+		"battleRating_monsterGroup": 330,
+		"monster_boss_blood_count": 2,
+		"dialogue1": "The flesh of God is yummy!"
+	},
+	{
+		"id": 394005,
+		"monster_lv": 5,
+		"monster_avatars_id": "200005",
+		"reward_mode": 0,
+		"monsters": "200005;200005",
+		"battleRating_monsterGroup": 480,
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Toad",
+		"monster_pos": [
+			4,
+			6
+		]
+	},
+	{
+		"id": 394006,
+		"monster_lv": 5,
+		"monster_avatars_id": "200004",
+		"reward_mode": 0,
+		"monsters": "200004;200004",
+		"battleRating_monsterGroup": 410,
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Toad",
+		"monster_pos": [
+			4,
+			6
+		]
+	},
+	{
+		"id": 394007,
+		"monster_lv": 5,
+		"monster_avatars_id": "200005",
+		"reward_mode": 0,
+		"monsters": "200005;200005;200005",
+		"battleRating_monsterGroup": 710,
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Toad",
+		"monster_pos": [
+			5,
+			3,
+			1
+		]
+	},
+	{
+		"id": 394008,
+		"monster_lv": 5,
+		"monster_avatars_id": "200006",
+		"reward_mode": 1,
+		"monsters": "200006",
+		"battleRating_monsterGroup": 540,
+		"monster_boss_id": 200006,
+		"monster_boss_blood_count": 2,
+		"name": "Vampire Toad",
+		"monster_pos": [
+			5
+		]
+	},
+	{
+		"id": 394009,
+		"monster_lv": 7,
+		"monster_avatars_id": "200008",
+		"reward_mode": 0,
+		"monsters": "200008;200008",
+		"monster_reward": "588001,1,100;588011,1,600;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Snow fox",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 660
+	},
+	{
+		"id": 394010,
+		"monster_lv": 7,
+		"monster_avatars_id": "200007",
+		"reward_mode": 0,
+		"monsters": "200007;200007",
+		"monster_reward": "588001,1,100;588011,1,600;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Snow fox",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 560
+	},
+	{
+		"id": 394011,
+		"monster_lv": 7,
+		"monster_avatars_id": "200008",
+		"reward_mode": 0,
+		"monsters": "200008;200008;200008",
+		"monster_reward": "588001,1,100;588011,1,600;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Snow fox",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 990
+	},
+	{
+		"id": 394012,
+		"monster_lv": 7,
+		"monster_avatars_id": "200009",
+		"reward_mode": 1,
+		"monsters": "200009",
+		"monster_reward": "588001,1,100;588011,1,600;588104,1,20;588102,1,20",
+		"monster_boss_id": 200009,
+		"monster_boss_blood_count": 2,
+		"name": "Forest fox",
+		"monster_pos": [
+			5
+		],
+		"battleRating_monsterGroup": 750
+	},
+	{
+		"id": 394013,
+		"monster_lv": 9,
+		"monster_avatars_id": "200011",
+		"reward_mode": 0,
+		"monsters": "200011;200011",
+		"monster_reward": "588001,1,100;588011,1,600;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Gremlin Saboteur",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 840
+	},
+	{
+		"id": 394014,
+		"monster_lv": 9,
+		"monster_avatars_id": "200010",
+		"reward_mode": 0,
+		"monsters": "200010;200010",
+		"monster_reward": "588001,1,100;588011,1,600;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Gremlin Saboteur",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 710
+	},
+	{
+		"id": 394015,
+		"monster_lv": 9,
+		"monster_avatars_id": "200011",
+		"reward_mode": 0,
+		"monsters": "200011;200011;200011",
+		"monster_reward": "588001,1,100;588011,1,600;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Gremlin Saboteur",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 1260
+	},
+	{
+		"monster_avatars_id": "200012",
+		"reward_mode": 1,
+		"monsters": "200012",
+		"monster_boss_id": 200012,
+		"name": "Serpent Namibia",
+		"id": 394016,
+		"dialogue_time": 10,
+		"monster_lv": 9,
+		"monster_pos": [
+			5
+		],
+		"monster_reward": "588001,1,100;588011,1,600;588104,1,20;588102,1,20",
+		"monster_boss_blood_count": 2,
+		"battleRating_monsterGroup": 960,
+		"dialogue1": "Do you want the Nebula Frag?"
+	},
+	{
+		"monster_avatars_id": "200014",
+		"reward_mode": 0,
+		"monsters": "200014;200014",
+		"monster_boss_id": 0,
+		"name": "Blood Demoness",
+		"id": 394017,
+		"dialogue_time": 10,
+		"monster_lv": 10,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588001,1,100;588011,1,600;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 930,
+		"dialogue1": "Sweet heart, come over here!"
+	},
+	{
+		"monster_avatars_id": "200013",
+		"reward_mode": 0,
+		"monsters": "200013;200013",
+		"monster_boss_id": 0,
+		"name": "Blood Demoness",
+		"id": 394018,
+		"dialogue_time": 10,
+		"monster_lv": 10,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588001,1,100;588011,1,600;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 790,
+		"dialogue1": "Sweet heart, come over here!"
+	},
+	{
+		"monster_avatars_id": "200016",
+		"reward_mode": 0,
+		"monsters": "200016;200016",
+		"monster_boss_id": 0,
+		"name": "Blood Demoness",
+		"id": 394019,
+		"dialogue_time": 10,
+		"monster_lv": 10,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588001,1,100;588011,1,600;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 930,
+		"dialogue1": "The blood of god is delicious!"
+	},
+	{
+		"monster_avatars_id": "200017",
+		"reward_mode": 1,
+		"monsters": "200017",
+		"monster_boss_id": 200017,
+		"name": "Jormungand",
+		"id": 394020,
+		"dialogue_time": 10,
+		"monster_lv": 10,
+		"monster_pos": [
+			5
+		],
+		"monster_reward": "588001,1,100;588011,1,600;588104,1,20;588102,1,20",
+		"monster_boss_blood_count": 3,
+		"battleRating_monsterGroup": 1710,
+		"dialogue1": "I'm the son of Loki!"
+	},
+	{
+		"monster_avatars_id": "200018",
+		"reward_mode": 0,
+		"monsters": "200018;200018",
+		"monster_boss_id": 0,
+		"name": "Merfolk",
+		"id": 394021,
+		"dialogue_time": 10,
+		"monster_lv": 11,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1150,
+		"dialogue1": "Have you changed your equip?"
+	},
+	{
+		"monster_avatars_id": "200019",
+		"reward_mode": 0,
+		"monsters": "200019;200019",
+		"monster_boss_id": 0,
+		"name": "Merfolk",
+		"id": 394022,
+		"dialogue_time": 10,
+		"monster_lv": 11,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1280,
+		"dialogue1": "Have you changed your equip?"
+	},
+	{
+		"monster_avatars_id": "200018",
+		"reward_mode": 0,
+		"monsters": "200018;200018;200018",
+		"monster_boss_id": 0,
+		"name": "Merfolk",
+		"id": 394023,
+		"dialogue_time": 10,
+		"monster_lv": 11,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1720,
+		"dialogue1": "Have you changed your equip?"
+	},
+	{
+		"monster_avatars_id": "200020",
+		"reward_mode": 1,
+		"monsters": "200020;200019;200019",
+		"monster_boss_id": 200020,
+		"name": "Mutated Merfolk",
+		"id": 394024,
+		"dialogue_time": 10,
+		"monster_lv": 11,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_blood_count": 2,
+		"battleRating_monsterGroup": 2690,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200022",
+		"reward_mode": 0,
+		"monsters": "200022;200022",
+		"monster_boss_id": 0,
+		"name": "Mutated Merfolk",
+		"id": 394025,
+		"dialogue_time": 10,
+		"monster_lv": 11,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1280,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200021",
+		"reward_mode": 0,
+		"monsters": "200021;200021",
+		"monster_boss_id": 0,
+		"name": "Mutated Merfolk",
+		"id": 394026,
+		"dialogue_time": 10,
+		"monster_lv": 11,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1150,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200022",
+		"reward_mode": 0,
+		"monsters": "200022;200022;200022",
+		"monster_boss_id": 0,
+		"name": "Mutated Merfolk",
+		"id": 394027,
+		"dialogue_time": 10,
+		"monster_lv": 11,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1920,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200023",
+		"reward_mode": 1,
+		"monsters": "200023;200021;200021",
+		"monster_boss_id": 200023,
+		"name": "Merfolk General",
+		"id": 394028,
+		"dialogue_time": 10,
+		"monster_lv": 11,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_blood_count": 2,
+		"battleRating_monsterGroup": 2550,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200024",
+		"reward_mode": 0,
+		"monsters": "200024;200024",
+		"monster_boss_id": 0,
+		"name": "Lich",
+		"id": 394029,
+		"dialogue_time": 10,
+		"monster_lv": 12,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1460,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200025",
+		"reward_mode": 0,
+		"monsters": "200025;200025",
+		"monster_boss_id": 0,
+		"name": "Lich",
+		"id": 394030,
+		"dialogue_time": 10,
+		"monster_lv": 12,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1590,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200024",
+		"reward_mode": 0,
+		"monsters": "200024;200024;200024",
+		"monster_boss_id": 0,
+		"name": "Lich",
+		"id": 394031,
+		"dialogue_time": 10,
+		"monster_lv": 12,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 2190,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200026",
+		"reward_mode": 1,
+		"monsters": "200026;200025;200025",
+		"monster_boss_id": 200026,
+		"name": "Mutated Lich",
+		"id": 394032,
+		"dialogue_time": 10,
+		"monster_lv": 12,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_blood_count": 2,
+		"battleRating_monsterGroup": 3310,
+		"dialogue1": "You can't defeat me without enhancing your equip!"
+	},
+	{
+		"id": 394033,
+		"monster_lv": 12,
+		"monster_avatars_id": "200028",
+		"reward_mode": 0,
+		"monsters": "200028;200028",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Mutated Frogger",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 1580
+	},
+	{
+		"id": 394034,
+		"monster_lv": 12,
+		"monster_avatars_id": "200027",
+		"reward_mode": 0,
+		"monsters": "200027;200027",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Mutated Frogger",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 1450
+	},
+	{
+		"id": 394035,
+		"monster_lv": 12,
+		"monster_avatars_id": "200028",
+		"reward_mode": 0,
+		"monsters": "200028;200028;200028",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Mutated Frogger",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 2380
+	},
+	{
+		"id": 394036,
+		"monster_lv": 12,
+		"monster_avatars_id": "200029",
+		"reward_mode": 1,
+		"monsters": "200029;200027;200027",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200029,
+		"monster_boss_blood_count": 2,
+		"name": "Frogger Warrior",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3160
+	},
+	{
+		"monster_avatars_id": "200030",
+		"reward_mode": 0,
+		"monsters": "200030;200030",
+		"monster_boss_id": 0,
+		"name": "Lich",
+		"id": 394037,
+		"dialogue_time": 10,
+		"monster_lv": 13,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1630,
+		"dialogue1": "You can't defeat me without enhancing your equip!"
+	},
+	{
+		"monster_avatars_id": "200031",
+		"reward_mode": 0,
+		"monsters": "200031;200031",
+		"monster_boss_id": 0,
+		"name": "Lich",
+		"id": 394038,
+		"dialogue_time": 10,
+		"monster_lv": 13,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1770,
+		"dialogue1": "You can't defeat me without enhancing your equip!"
+	},
+	{
+		"monster_avatars_id": "200030",
+		"reward_mode": 0,
+		"monsters": "200030;200030;200030",
+		"monster_boss_id": 0,
+		"name": "Lich",
+		"id": 394039,
+		"dialogue_time": 10,
+		"monster_lv": 13,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 2450,
+		"dialogue1": "You can't defeat me without enhancing your equip!"
+	},
+	{
+		"monster_avatars_id": "200032",
+		"reward_mode": 1,
+		"monsters": "200032;200031;200031",
+		"monster_boss_id": 200032,
+		"name": "Mutated Lich",
+		"id": 394040,
+		"dialogue_time": 10,
+		"monster_lv": 13,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_blood_count": 2,
+		"battleRating_monsterGroup": 3690,
+		"dialogue1": "You can't defeat me without enhancing your equip!"
+	},
+	{
+		"id": 394041,
+		"monster_lv": 13,
+		"monster_avatars_id": "200034",
+		"reward_mode": 0,
+		"monsters": "200034;200034",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Dark Demoness",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 1770
+	},
+	{
+		"id": 394042,
+		"monster_lv": 13,
+		"monster_avatars_id": "200033",
+		"reward_mode": 0,
+		"monsters": "200033;200033",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Dark Demoness",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 1630
+	},
+	{
+		"id": 394043,
+		"monster_lv": 13,
+		"monster_avatars_id": "200034",
+		"reward_mode": 0,
+		"monsters": "200034;200034;200034",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Dark Demoness",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 2660
+	},
+	{
+		"id": 394044,
+		"monster_lv": 13,
+		"monster_avatars_id": "200035",
+		"reward_mode": 1,
+		"monsters": "200035;200033;200033",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200035,
+		"monster_boss_blood_count": 2,
+		"name": "Felblood Escort",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3550
+	},
+	{
+		"id": 394045,
+		"monster_lv": 14,
+		"monster_avatars_id": "200036",
+		"reward_mode": 0,
+		"monsters": "200036;200036",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Floating Ghost",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 1800
+	},
+	{
+		"id": 394046,
+		"monster_lv": 14,
+		"monster_avatars_id": "200037",
+		"reward_mode": 0,
+		"monsters": "200037;200037",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Floating Ghost",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 1950
+	},
+	{
+		"id": 394047,
+		"monster_lv": 14,
+		"monster_avatars_id": "200036",
+		"reward_mode": 0,
+		"monsters": "200036;200036;200036",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Floating Ghost",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 2700
+	},
+	{
+		"id": 394048,
+		"monster_lv": 14,
+		"monster_avatars_id": "200038",
+		"reward_mode": 1,
+		"monsters": "200038;200037;200037",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200038,
+		"monster_boss_blood_count": 2,
+		"name": "Mutated Ghost",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 4060
+	},
+	{
+		"monster_avatars_id": "200040",
+		"reward_mode": 0,
+		"monsters": "200040;200040",
+		"monster_boss_id": 0,
+		"name": "Wind Dancer",
+		"id": 394049,
+		"dialogue_time": 10,
+		"monster_lv": 14,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1950,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200039",
+		"reward_mode": 0,
+		"monsters": "200039;200039",
+		"monster_boss_id": 0,
+		"name": "Wind Dancer",
+		"id": 394050,
+		"dialogue_time": 10,
+		"monster_lv": 14,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1800,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200040",
+		"reward_mode": 0,
+		"monsters": "200040;200040;200040",
+		"monster_boss_id": 0,
+		"name": "Wind Dancer",
+		"id": 394051,
+		"dialogue_time": 10,
+		"monster_lv": 14,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 2920,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200041",
+		"reward_mode": 1,
+		"monsters": "200041;200039;200039",
+		"monster_boss_id": 200041,
+		"name": "Sigmund",
+		"id": 394052,
+		"dialogue_time": 10,
+		"monster_lv": 14,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_blood_count": 2,
+		"battleRating_monsterGroup": 3910,
+		"dialogue1": "I can't control myself!"
+	},
+	{
+		"monster_avatars_id": "200042",
+		"reward_mode": 0,
+		"monsters": "200042;200042",
+		"monster_boss_id": 0,
+		"name": "Poltergeist",
+		"id": 394053,
+		"dialogue_time": 10,
+		"monster_lv": 15,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 1990,
+		"dialogue1": "Have you changed your equip?"
+	},
+	{
+		"monster_avatars_id": "200043",
+		"reward_mode": 0,
+		"monsters": "200043;200043",
+		"monster_boss_id": 0,
+		"name": "Poltergeist",
+		"id": 394054,
+		"dialogue_time": 10,
+		"monster_lv": 15,
+		"monster_pos": [
+			4,
+			6
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 2140,
+		"dialogue1": "Have you changed your equip?"
+	},
+	{
+		"monster_avatars_id": "200044",
+		"reward_mode": 0,
+		"monsters": "200044;200044;200044",
+		"monster_boss_id": 0,
+		"name": "Poltergeist",
+		"id": 394055,
+		"dialogue_time": 10,
+		"monster_lv": 15,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 2980,
+		"dialogue1": "Have you changed your equip?"
+	},
+	{
+		"id": 394056,
+		"monster_lv": 15,
+		"monster_avatars_id": "200046",
+		"reward_mode": 1,
+		"monsters": "200046;200045;200045",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200046,
+		"monster_boss_blood_count": 2,
+		"name": "Death Skeleton",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 4500
+	},
+	{
+		"id": 394057,
+		"monster_lv": 15,
+		"monster_avatars_id": "200047",
+		"reward_mode": 0,
+		"monsters": "200047;200047",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Blood Maiden",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 2000
+	},
+	{
+		"id": 394058,
+		"monster_lv": 15,
+		"monster_avatars_id": "200048",
+		"reward_mode": 0,
+		"monsters": "200048;200048",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Blood Maiden",
+		"monster_pos": [
+			4,
+			6
+		],
+		"battleRating_monsterGroup": 2150
+	},
+	{
+		"id": 394059,
+		"monster_lv": 15,
+		"monster_avatars_id": "200049",
+		"reward_mode": 0,
+		"monsters": "200049;200049;200049",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Black Ghost",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 2980
+	},
+	{
+		"id": 394060,
+		"monster_lv": 15,
+		"monster_avatars_id": "200051",
+		"reward_mode": 1,
+		"monsters": "200051;200050;200050",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200051,
+		"monster_boss_blood_count": 2,
+		"name": "Nightmare ",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 4500
+	},
+	{
+		"monster_avatars_id": "200052",
+		"reward_mode": 0,
+		"monsters": "200052;200052;200052",
+		"monster_boss_id": 0,
+		"name": "Venomess",
+		"id": 394061,
+		"dialogue_time": 10,
+		"monster_lv": 16,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 3300,
+		"dialogue1": "Tons of goodies in Ancient Treasure!"
+	},
+	{
+		"monster_avatars_id": "200053",
+		"reward_mode": 0,
+		"monsters": "200053;200053;200053",
+		"monster_boss_id": 0,
+		"name": "Venomess",
+		"id": 394062,
+		"dialogue_time": 10,
+		"monster_lv": 16,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 3530,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200052",
+		"reward_mode": 0,
+		"monsters": "200052;200052;200052",
+		"monster_boss_id": 0,
+		"name": "Venomess",
+		"id": 394063,
+		"dialogue_time": 10,
+		"monster_lv": 16,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 3300,
+		"dialogue1": "You can never leave here alive!"
+	},
+	{
+		"monster_avatars_id": "200053",
+		"reward_mode": 0,
+		"monsters": "200053;200053;200053",
+		"monster_boss_id": 0,
+		"name": "Venomess",
+		"id": 394064,
+		"dialogue_time": 10,
+		"monster_lv": 16,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 3530,
+		"dialogue1": "Tons of goodies in Ancient Treasure!"
+	},
+	{
+		"id": 394065,
+		"monster_lv": 16,
+		"monster_avatars_id": "200054",
+		"reward_mode": 1,
+		"monsters": "200054;200052;200052",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200054,
+		"monster_boss_blood_count": 2,
+		"name": "Demoness Escort",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 4840
+	},
+	{
+		"id": 394689,
+		"monster_lv": 16,
+		"monster_avatars_id": "200530",
+		"reward_mode": 0,
+		"monsters": "200530;200530;200530",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Death Warrior",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3530
+	},
+	{
+		"id": 394690,
+		"monster_lv": 16,
+		"monster_avatars_id": "200055",
+		"reward_mode": 0,
+		"monsters": "200055;200055;200055",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Death Warrior",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3300
+	},
+	{
+		"id": 394691,
+		"monster_lv": 16,
+		"monster_avatars_id": "200530",
+		"reward_mode": 0,
+		"monsters": "200530;200530;200530",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Death Warrior",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3530
+	},
+	{
+		"id": 394692,
+		"monster_lv": 16,
+		"monster_avatars_id": "200055",
+		"reward_mode": 0,
+		"monsters": "200055;200055;200055",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Death Warrior",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3300
+	},
+	{
+		"id": 394693,
+		"monster_lv": 16,
+		"monster_avatars_id": "200531",
+		"reward_mode": 1,
+		"monsters": "200531;200530;200530",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200531,
+		"monster_boss_blood_count": 2,
+		"name": "Death Skeleton",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 4990
+	},
+	{
+		"id": 394694,
+		"monster_lv": 16,
+		"monster_avatars_id": "200532",
+		"reward_mode": 0,
+		"monsters": "200532;200532;200532",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Poltergeist",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3270
+	},
+	{
+		"id": 394695,
+		"monster_lv": 16,
+		"monster_avatars_id": "200533",
+		"reward_mode": 0,
+		"monsters": "200533;200533;200533",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Poltergeist",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3510
+	},
+	{
+		"id": 394696,
+		"monster_lv": 16,
+		"monster_avatars_id": "200532",
+		"reward_mode": 0,
+		"monsters": "200532;200532;200532",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Poltergeist",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3270
+	},
+	{
+		"id": 394697,
+		"monster_lv": 16,
+		"monster_avatars_id": "200533",
+		"reward_mode": 0,
+		"monsters": "200533;200533;200533",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Poltergeist",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3510
+	},
+	{
+		"id": 394698,
+		"monster_lv": 16,
+		"monster_avatars_id": "200534",
+		"reward_mode": 1,
+		"monsters": "200534;200532;200532",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200534,
+		"monster_boss_blood_count": 2,
+		"name": "Death Skeleton",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 4790
+	},
+	{
+		"id": 394699,
+		"monster_lv": 17,
+		"monster_avatars_id": "200536",
+		"reward_mode": 0,
+		"monsters": "200536;200536;200536",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Hellion",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3790
+	},
+	{
+		"id": 394700,
+		"monster_lv": 17,
+		"monster_avatars_id": "200535",
+		"reward_mode": 0,
+		"monsters": "200535;200535;200535",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Hellion",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3540
+	},
+	{
+		"id": 394701,
+		"monster_lv": 17,
+		"monster_avatars_id": "200536",
+		"reward_mode": 0,
+		"monsters": "200536;200536;200536",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Hellion",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3790
+	},
+	{
+		"id": 394702,
+		"monster_lv": 17,
+		"monster_avatars_id": "200535",
+		"reward_mode": 0,
+		"monsters": "200535;200535;200535",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Hellion",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3540
+	},
+	{
+		"id": 394703,
+		"monster_lv": 17,
+		"monster_avatars_id": "200537",
+		"reward_mode": 1,
+		"monsters": "200537;200536;200536",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200537,
+		"monster_boss_blood_count": 2,
+		"name": "Bloodshade Demoness",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 5390
+	},
+	{
+		"id": 394704,
+		"monster_lv": 17,
+		"monster_avatars_id": "200538",
+		"reward_mode": 0,
+		"monsters": "200538;200538;200538",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Hellion",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3510
+	},
+	{
+		"id": 394705,
+		"monster_lv": 17,
+		"monster_avatars_id": "200539",
+		"reward_mode": 0,
+		"monsters": "200539;200539;200539",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Hellion",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3760
+	},
+	{
+		"id": 394706,
+		"monster_lv": 17,
+		"monster_avatars_id": "200538",
+		"reward_mode": 0,
+		"monsters": "200538;200538;200538",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Hellion",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3510
+	},
+	{
+		"id": 394707,
+		"monster_lv": 17,
+		"monster_avatars_id": "200539",
+		"reward_mode": 0,
+		"monsters": "200539;200539;200539",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Hellion",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3760
+	},
+	{
+		"id": 394708,
+		"monster_lv": 17,
+		"monster_avatars_id": "200540",
+		"reward_mode": 1,
+		"monsters": "200540;200538;200538",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200540,
+		"monster_boss_blood_count": 2,
+		"name": "Bloodshade Demoness",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 5170
+	},
+	{
+		"id": 394709,
+		"monster_lv": 17,
+		"monster_avatars_id": "200542",
+		"reward_mode": 0,
+		"monsters": "200542;200542;200542",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Venomess",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3790
+	},
+	{
+		"id": 394710,
+		"monster_lv": 17,
+		"monster_avatars_id": "200541",
+		"reward_mode": 0,
+		"monsters": "200541;200541;200541",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Venomess",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3540
+	},
+	{
+		"id": 394711,
+		"monster_lv": 17,
+		"monster_avatars_id": "200542",
+		"reward_mode": 0,
+		"monsters": "200542;200542;200542",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Venomess",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3790
+	},
+	{
+		"id": 394712,
+		"monster_lv": 17,
+		"monster_avatars_id": "200541",
+		"reward_mode": 0,
+		"monsters": "200541;200541;200541",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Venomess",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3540
+	},
+	{
+		"id": 394713,
+		"monster_lv": 17,
+		"monster_avatars_id": "200543",
+		"reward_mode": 1,
+		"monsters": "200543;200542;200542",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200543,
+		"monster_boss_blood_count": 2,
+		"name": "Demoness Escort",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 5390
+	},
+	{
+		"id": 394714,
+		"monster_lv": 18,
+		"monster_avatars_id": "200544",
+		"reward_mode": 0,
+		"monsters": "200544;200544;200544",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Grizzly Bear",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3710
+	},
+	{
+		"id": 394715,
+		"monster_lv": 18,
+		"monster_avatars_id": "200545",
+		"reward_mode": 0,
+		"monsters": "200545;200545;200545",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Grizzly Bear",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3980
+	},
+	{
+		"id": 394716,
+		"monster_lv": 18,
+		"monster_avatars_id": "200544",
+		"reward_mode": 0,
+		"monsters": "200544;200544;200544",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Grizzly Bear",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3710
+	},
+	{
+		"id": 394717,
+		"monster_lv": 18,
+		"monster_avatars_id": "200545",
+		"reward_mode": 0,
+		"monsters": "200545;200545;200545",
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_id": 0,
+		"monster_boss_blood_count": 0,
+		"name": "Grizzly Bear",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 3980
+	},
+	{
+		"id": 394718,
+		"monster_lv": 18,
+		"monster_avatars_id": "200546",
+		"reward_mode": 1,
+		"monsters": "200546;200544;200544",
+		"monster_reward": "588002,1,100;588012,1,400;588104,1,20;588102,1,20",
+		"monster_boss_id": 200546,
+		"monster_boss_blood_count": 2,
+		"name": "Iceland Bear",
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"battleRating_monsterGroup": 5480
+	},
+	{
+		"monster_avatars_id": "200548",
+		"reward_mode": 0,
+		"monsters": "200548;200548;200548",
+		"monster_boss_id": 0,
+		"name": "Mutated Frogger",
+		"id": 394719,
+		"dialogue_time": 10,
+		"monster_lv": 18,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 3980,
+		"dialogue1": "Tons of goodies in Ancient Treasure!"
+	},
+	{
+		"monster_avatars_id": "200547",
+		"reward_mode": 0,
+		"monsters": "200547;200547;200547",
+		"monster_boss_id": 0,
+		"name": "Mutated Frogger",
+		"id": 394720,
+		"dialogue_time": 10,
+		"monster_lv": 18,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 3710,
+		"dialogue1": "You can't defeat me without enhancing your equip!"
+	},
+	{
+		"monster_avatars_id": "200548",
+		"reward_mode": 0,
+		"monsters": "200548;200548;200548",
+		"monster_boss_id": 0,
+		"name": "Mutated Frogger",
+		"id": 394721,
+		"dialogue_time": 10,
+		"monster_lv": 18,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 3980,
+		"dialogue1": "Tons of goodies in Ancient Treasure!"
+	},
+	{
+		"monster_avatars_id": "200547",
+		"reward_mode": 0,
+		"monsters": "200547;200547;200547",
+		"monster_boss_id": 0,
+		"name": "Mutated Frogger",
+		"id": 394722,
+		"dialogue_time": 10,
+		"monster_lv": 18,
+		"monster_pos": [
+			5,
+			3,
+			1
+		],
+		"monster_reward": "588002,1,100;588012,1,400;588011,1,200;588101,1,2",
+		"monster_boss_blood_count": 0,
+		"battleRating_monsterGroup": 3710,
+		"dialogue1": "You can't defeat me without enhancing your equip!"
+	}
+]

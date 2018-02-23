@@ -1,3 +1,6 @@
+/// <reference path="../interfaces/FInterface.ts" />
+/// <reference path="../structs/DisposeBase.ts" />
+
 class Dictionary<K, V> extends DisposeBase {
     private cache = {};
     length: number = 0;

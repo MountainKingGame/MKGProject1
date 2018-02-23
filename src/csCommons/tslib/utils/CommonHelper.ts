@@ -1,3 +1,5 @@
+/// <reference path="../consts/Direction4.ts" />
+
 class CommonHelper{
     public static degreeToDir4(degree:number):Direction4{
         degree = MathUtil.repeatDegree(degree);
