@@ -1,0 +1,44 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "StaticServer",
+            "type": "shell",
+            "command": "node",
+            "args": [
+                "..\\..\\tools\\NodeJsTools\\bin\\js\\StaticServer.js",
+                "-p","4399"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Yaml2Json",
+            "type": "shell",
+            "command": "node",
+            "args": [
+                "..\\..\\tools\\NodeJsTools\\bin\\js\\Yaml2Json.js",
+                "-d","resource/assets/stc/maps"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "option": "watch",
+            "problemMatcher": [
+                "$tsc-watch"
+            ]
+        },
+        {
+            "label": "egret clean",
+            "type": "shell",
+            "command": "egret",
+            "args": [
+                "clean"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}

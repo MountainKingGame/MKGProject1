@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="zsfj90l3" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="rhcz0" name="MediaPlayer.xml" path="/views/" exported="true"/>
+    <component id="rhcz1" name="BtnArrow.xml" path="/comps/" exported="true"/>
+    <component id="rhcz2" name="ArrowButton.xml" path="/comps/" exported="true"/>
+    <image id="rhcz3" name="j4.png" path="/comps/" exported="true" qualityOption="source"/>
+    <image id="rhcz4" name="j3.png" path="/comps/" exported="true" qualityOption="source"/>
+    <component id="rhcz5" name="SentenseItem.xml" path="/comps/" exported="true"/>
+    <image id="rhcz6" name="货币框2-九宫 - 副本.png" path="/assets/images/" exported="true" scale="9grid" scale9grid="9,9,18,18"/>
+    <image id="rhcz7" name="货币框2-九宫.png" path="/assets/images/" exported="true" scale="9grid" scale9grid="9,9,18,18"/>
+  </resources>
+  <publish name="Package1" genCode="true"/>
+</packageDescription>

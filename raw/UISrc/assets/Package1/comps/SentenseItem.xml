@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="900,194">
+  <displayList>
+    <image id="n3_rhcz" name="bg" src="rhcz6" xy="0,0" size="900,194"/>
+    <text id="n1_rhcz" name="txtTime" xy="171,1" size="694,39" fontSize="30" autoSize="none" singleLine="true" text="22:33:33,133 ~ 23:44:13,528"/>
+    <text id="n2_rhcz" name="txtContent" xy="1,51" size="900,141" fontSize="30" autoSize="none" text="ajfiodafn&#xA;sdfadsfasdf&#xA;asdf&#xA;44444"/>
+    <text id="n4_h79j" name="txtLineNumber" xy="1,1" size="165,39" fontSize="30" autoSize="none" bold="true" singleLine="true" text="9999"/>
+  </displayList>
+</component>

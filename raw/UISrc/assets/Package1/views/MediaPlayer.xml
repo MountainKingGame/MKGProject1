@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="900,1600">
+  <displayList>
+    <component id="n0_rhcz" name="btnNext" src="rhcz2" xy="498,112"/>
+    <component id="n1_rhcz" name="btnPrev" src="rhcz2" xy="185,214" rotation="180"/>
+    <text id="n3_rhcz" name="txtCurr" xy="207,110" size="276,106" fontSize="30" align="center" vAlign="middle" autoSize="none" text="99999"/>
+    <list id="n4_rhcz" name="listSentense" xy="0,254" size="900,1349" overflow="scroll" defaultItem="ui://zsfj90l3rhcz5">
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+    </list>
+  </displayList>
+</component>
