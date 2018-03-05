@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="900,1600">
   <displayList>
-    <component id="n0_rhcz" name="btnNext" src="rhcz2" xy="498,112"/>
-    <component id="n1_rhcz" name="btnPrev" src="rhcz2" xy="185,214" rotation="180"/>
-    <text id="n3_rhcz" name="txtCurr" xy="207,110" size="276,106" fontSize="30" align="center" vAlign="middle" autoSize="none" text="99999"/>
     <list id="n4_rhcz" name="listSentense" xy="0,254" size="900,1349" overflow="scroll" defaultItem="ui://zsfj90l3rhcz5">
       <item/>
       <item/>
@@ -22,5 +19,20 @@
       <item/>
       <item/>
     </list>
+    <component id="n0_rhcz" name="btnNext" src="rhcz2" xy="464,80" pivot="0.5,0.5" anchor="true" group="n10_h79j"/>
+    <component id="n1_rhcz" name="btnPrev" src="rhcz2" xy="62,77" pivot="0.5,0.5" anchor="true" group="n10_h79j" rotation="180"/>
+    <text id="n3_rhcz" name="txtCurrI" xy="127,25" size="276,51" group="n10_h79j" fontSize="30" align="center" vAlign="middle" autoSize="none" text="0"/>
+    <text id="n5_h79j" name="txtCurrTime" xy="126,81" size="276,51" group="n10_h79j" fontSize="30" align="center" vAlign="middle" autoSize="none" text="--"/>
+    <group id="n10_h79j" name="n10" xy="62,25" size="502,163"/>
+    <text id="n6_h79j" name="txtLoop" xy="652,48" size="82,51" group="n11_h79j" fontSize="30" align="center" vAlign="middle" autoSize="none" text="3"/>
+    <component id="n7_h79j" name="btnLoopAdd" src="rhcz2" xy="787,79" pivot="0.5,0.5" anchor="true" group="n11_h79j"/>
+    <component id="n8_h79j" name="btnLoopSub" src="rhcz2" xy="604,77" pivot="0.5,0.5" anchor="true" group="n11_h79j" rotation="180"/>
+    <group id="n11_h79j" name="n11" xy="604,48" size="283,139"/>
+    <component id="n13_h79j" name="btnShowCN" src="h79j9" xy="493,178">
+      <Button title="CN"/>
+    </component>
+    <component id="n14_h79j" name="btnShowEN" src="h79j9" xy="698,178">
+      <Button title="EN"/>
+    </component>
   </displayList>
 </component>

@@ -7,12 +7,15 @@ class Main extends egret.DisplayObjectContainer {
     private onAddToStage(event: egret.Event) {
         console.log('hello,world',"onAddToStage");
         egret.lifecycle.addLifecycleListener((context) => {
-            // var lastTime:number = new Date().getTime();
+            var lastMs:number = new Date().getTime();
             context.onUpdate = () => {
-                // var nowTime:number = new Date().getTime();
-                // console.log("[info]","onUpdate",nowTime-lastTime);
-                // lastTime = nowTime;
+                var nowMs:number = new Date().getTime();
+                // console.log("[info]","onUpdate",nowMs-lastMs);
                 // MsgMgr.si.send(CtrlConst.Msg_OnGameTick);
+                if(this.mp){
+                    this.mp.tick(nowMs-lastMs);
+                }
+                lastMs = nowMs;
             }
         })
         egret.lifecycle.onPause = () => {
@@ -47,6 +50,7 @@ class Main extends egret.DisplayObjectContainer {
     private onItemLoadError(event: RES.ResourceEvent) {
         console.warn("Url:" + event.resItem.url + " has failed to load");
     }
+    mp:MediaPlayer
     private onResourceLoadError(event: RES.ResourceEvent) {
         //TODO:
         console.warn("Group:" + event.groupName + " has failed to load");
@@ -55,7 +59,7 @@ class Main extends egret.DisplayObjectContainer {
         this.onResourceLoadComplete(event);
     }
     private createGameScene(): void {
-        new MediaPlayer(this.stage)
+        this.mp = new MediaPlayer(this.stage)
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);

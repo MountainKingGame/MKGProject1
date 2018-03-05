@@ -9,6 +9,7 @@
     <component id="rhcz5" name="SentenseItem.xml" path="/comps/" exported="true"/>
     <image id="rhcz6" name="货币框2-九宫 - 副本.png" path="/assets/images/" exported="true" scale="9grid" scale9grid="9,9,18,18"/>
     <image id="rhcz7" name="货币框2-九宫.png" path="/assets/images/" exported="true" scale="9grid" scale9grid="9,9,18,18"/>
+    <component id="h79j9" name="Button1.xml" path="/comps/" exported="true"/>
   </resources>
   <publish name="Package1" genCode="true"/>
 </packageDescription>

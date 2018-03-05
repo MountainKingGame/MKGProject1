@@ -5,5 +5,6 @@
     <text id="n1_rhcz" name="txtTime" xy="171,1" size="694,39" fontSize="30" autoSize="none" singleLine="true" text="22:33:33,133 ~ 23:44:13,528"/>
     <text id="n2_rhcz" name="txtContent" xy="1,51" size="900,141" fontSize="30" autoSize="none" text="ajfiodafn&#xA;sdfadsfasdf&#xA;asdf&#xA;44444"/>
     <text id="n4_h79j" name="txtLineNumber" xy="1,1" size="165,39" fontSize="30" autoSize="none" bold="true" singleLine="true" text="9999"/>
+    <component id="n5_h79j" name="btnPlay" src="rhcz2" xy="835,38" pivot="0.5,0.5" anchor="true" size="67,75"/>
   </displayList>
 </component>
