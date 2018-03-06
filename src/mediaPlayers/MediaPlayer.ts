@@ -13,21 +13,29 @@ class MediaPlayer {
         root.addChild(this.ui = fuis.Package1.UI_MediaPlayer.createInstance())
         this.ui.visible = false;
         //---
+        this.appeandLog('constructor')
         var loader: egret.URLLoader = new egret.URLLoader();
         loader.addEventListener(egret.Event.COMPLETE, (event: egret.Event) => {
+            this.appeandLog('load mp3 success')
             console.log("[debug]", "load success");
             this.sound = loader.data;
             this.loadSrt()
         }, this);
         loader.addEventListener(egret.IOErrorEvent.IO_ERROR, (event: egret.Event) => {
+            this.appeandLog('io mp3 error')
             console.log("[debug]", "io error");
         }, this);
         loader.dataFormat = egret.URLLoaderDataFormat.SOUND;
+        this.appeandLog('load mp3 start')
         loader.load(new egret.URLRequest("resource/mediaPlayer/Zootopia_1.mp3"));
+    }
+    appeandLog(str:string){
+        this.ui.m_txtLog.text +=str+'\n';
     }
     loadSrt() {
         var loader: egret.URLLoader = new egret.URLLoader();
         loader.addEventListener(egret.Event.COMPLETE, (event: egret.Event) => {
+            this.appeandLog('load srt success')
             let rs:ISrtItem[] = JSON.parse(loader.data);
             this.datas = [];
             for (let i = 0; i < rs.length; i++) {
@@ -39,9 +47,11 @@ class MediaPlayer {
             this.initUI()
         }, this);
         loader.addEventListener(egret.IOErrorEvent.IO_ERROR, (event: egret.Event) => {
+            this.appeandLog('load srt io error')
             console.log("[debug]", "io error");
         }, this);
         loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
+        this.appeandLog('load srt start')
         loader.load(new egret.URLRequest("resource/mediaPlayer/Zootopia.srt.json"));
     }
     currI: number = 0;

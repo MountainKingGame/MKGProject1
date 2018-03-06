@@ -34,5 +34,6 @@
     <component id="n14_h79j" name="btnShowEN" src="h79j9" xy="698,178">
       <Button title="EN"/>
     </component>
+    <text id="n15_iv26" name="txtLog" xy="3,4" size="642,600" fontSize="30" autoSize="none" text="Log in here"/>
   </displayList>
 </component>

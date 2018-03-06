@@ -14,6 +14,7 @@ module fuis.Package1 {
 		public m_btnLoopSub:UI_ArrowButton;
 		public m_btnShowCN:UI_Button1;
 		public m_btnShowEN:UI_Button1;
+		public m_txtLog:fairygui.GTextField;
 
 		public static URL:string = "ui://zsfj90l3rhcz0";
 
@@ -38,6 +39,7 @@ module fuis.Package1 {
 			this.m_btnLoopSub = <UI_ArrowButton><any>(this.getChildAt(7));
 			this.m_btnShowCN = <UI_Button1><any>(this.getChildAt(8));
 			this.m_btnShowEN = <UI_Button1><any>(this.getChildAt(9));
+			this.m_txtLog = <fairygui.GTextField><any>(this.getChildAt(10));
 		}
 	}
 }
