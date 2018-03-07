@@ -8,11 +8,7 @@
             "dom",
             "es2015.promise"
         ],
-        "newLine": "LF",
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "types":[],
-        "sourceMap": true
+        "types":[]
     },
     "exclude": [
         "node_modules"

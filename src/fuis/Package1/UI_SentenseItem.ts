@@ -6,7 +6,7 @@ module fuis.Package1 {
 
 		public m_bg:fairygui.GImage;
 		public m_txtTime:fairygui.GTextField;
-		public m_txtContent:fairygui.GTextField;
+		public m_txtContent:fairygui.GTextInput;
 		public m_txtLineNumber:fairygui.GTextField;
 		public m_btnPlay:UI_ArrowButton;
 
@@ -25,7 +25,7 @@ module fuis.Package1 {
 
 			this.m_bg = <fairygui.GImage><any>(this.getChildAt(0));
 			this.m_txtTime = <fairygui.GTextField><any>(this.getChildAt(1));
-			this.m_txtContent = <fairygui.GTextField><any>(this.getChildAt(2));
+			this.m_txtContent = <fairygui.GTextInput><any>(this.getChildAt(2));
 			this.m_txtLineNumber = <fairygui.GTextField><any>(this.getChildAt(3));
 			this.m_btnPlay = <UI_ArrowButton><any>(this.getChildAt(4));
 		}

@@ -3,6 +3,7 @@
 		"zsfj90l3",
 		"rhcz0"
 	],
+	"hidden_packages": [],
 	"docs": [
 		"zsfj90l3",
 		"rhcz2",
@@ -16,6 +17,5 @@
 	"expanded_nodes": [
 		"zsfj90l3",
 		"/"
-	],
-	"hidden_packages": []
+	]
 }

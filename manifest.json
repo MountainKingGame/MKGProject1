@@ -10,13 +10,14 @@
 		"libs/fairygui/fairygui.js"
 	],
 	"game": [
+		"bin-debug/LoadingUI.js",
 		"bin-debug/Main.js",
+		"bin-debug/MediaPlayer.js",
 		"bin-debug/fuis/Package1/Package1Binder.js",
 		"bin-debug/fuis/Package1/UI_ArrowButton.js",
 		"bin-debug/fuis/Package1/UI_BtnArrow.js",
 		"bin-debug/fuis/Package1/UI_Button1.js",
 		"bin-debug/fuis/Package1/UI_MediaPlayer.js",
-		"bin-debug/fuis/Package1/UI_SentenseItem.js",
-		"bin-debug/mediaPlayers/MediaPlayer.js"
+		"bin-debug/fuis/Package1/UI_SentenseItem.js"
 	]
 }

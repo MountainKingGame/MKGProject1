@@ -1,30 +1,30 @@
 {
 	"groups": [
 		{
-			"keys": "Package1@atlas0_png,Package1_fui,Zootopia.srt_json,Zootopia_1_mp3",
+			"keys": "Package1_fui,Package1@atlas0_png,Zootopia_1_mp3,Zootopia.srt_json",
 			"name": "preload"
 		}
 	],
 	"resources": [
-		{
-			"url": "assets/fuis/Package1@atlas0.png",
-			"type": "image",
-			"name": "Package1@atlas0_png"
-		},
 		{
 			"url": "assets/fuis/Package1.fui",
 			"type": "bin",
 			"name": "Package1_fui"
 		},
 		{
-			"name": "Zootopia.srt_json",
-			"type": "json",
-			"url": "mediaPlayer/Zootopia.srt.json"
+			"url": "assets/fuis/Package1@atlas0.png",
+			"type": "image",
+			"name": "Package1@atlas0_png"
 		},
 		{
-			"name": "Zootopia_1_mp3",
+			"url": "assets/mediaPlayer/Zootopia.srt.json",
+			"type": "json",
+			"name": "Zootopia.srt_json"
+		},
+		{
+			"url": "assets/mediaPlayer/Zootopia_1.mp3",
 			"type": "sound",
-			"url": "mediaPlayer/Zootopia_1.mp3"
+			"name": "Zootopia_1_mp3"
 		}
 	]
 }
