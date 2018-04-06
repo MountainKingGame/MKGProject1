@@ -75,6 +75,7 @@ class Main extends egret.DisplayObjectContainer {
         // new TestHttp().get1();
         // new TestBinaryHeap().test0();
         // new tests.TestExcel().func1();
+        new tests.TestEntitas()
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);
