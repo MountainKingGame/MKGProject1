@@ -56,6 +56,11 @@
     };
 
     var loadSingleScript = function (src, callback) {
+        if(src == "bin-debug/auto/generatedComponents.js"){
+            //不要重复加载这个文件
+            callback();
+            return;
+        }
         var s = document.createElement('script');
         s.async = false;
         s.src = src;
