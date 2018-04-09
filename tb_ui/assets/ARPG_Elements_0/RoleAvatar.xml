@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="100,100">
+  <controller name="color" exported="true" pages="0,,1,,2,,3," selected="1"/>
+  <displayList>
+    <graph id="n0_q06t" name="n0" xy="0,0" size="100,100" type="eclipse" lineSize="2" lineColor="#ff333333" fillColor="#4dff0000">
+      <gearColor controller="color" pages="0,1,2,3" values="#ffffff|#ff0000|#00ff00|#0000ff"/>
+    </graph>
+    <graph id="n1_q06t" name="n1" xy="38,10" size="24,24" type="eclipse" lineSize="2" lineColor="#ff333333"/>
+  </displayList>
+</component>

@@ -1,8 +1,4 @@
 {
-	"active_doc": [
-		"ybsps8tf",
-		"u9boc"
-	],
 	"docs": [
 		"i6vaqd5a",
 		"ysfl1",
@@ -29,9 +25,10 @@
 		"ybsps8tf",
 		"xk2t1f"
 	],
-	"expanded_nodes": [
-		"nk9ejx23",
-		"/"
+	"expanded_nodes": [],
+	"active_doc": [
+		"ybsps8tf",
+		"u9boc"
 	],
 	"hidden_packages": []
 }

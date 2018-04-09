@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="cl98qbvq" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="q06t0" name="RoleUI.xml" path="/" exported="true"/>
+    <component id="q06t1" name="RoleAvatar.xml" path="/" exported="true"/>
+    <component id="q06t2" name="InputUI.xml" path="/" exported="true"/>
+  </resources>
+  <publish name="ARPG_Elements_0" genCode="true"/>
+</packageDescription>
