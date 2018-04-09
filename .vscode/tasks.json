@@ -39,6 +39,16 @@
                 "clean"
             ],
             "problemMatcher": []
-        }
+        },
+        {
+            "label": "entitas generate",
+            "type": "shell",
+            "command": "entitas",
+            "args": [
+                "generate",
+                "entitas.json",
+            ],
+            "problemMatcher": []
+        },
     ]
 }

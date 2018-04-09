@@ -1,0 +1,56 @@
+{
+  "namespace": "arpg",
+  "debug": false,
+  "output": {
+    "javascript": "resource/entitas/generatedExtensions.js",
+    "typescript": "src/auto/generatedComponents.ts",
+    "declaration": "libs/autos/arpg.d.ts"
+  },
+  "alloc": {
+    "entities": 200,
+    "components": 128
+  },
+  "components": {
+    "Avatar":[
+      "ui:GComponent"
+    ],
+    "Position": [
+      "x:number",
+      "y:number"
+    ],
+    "Move": [
+      "kind:MoveKindEnum",
+      "speed:number",
+      "speedX:number",
+      "speedY:number",
+      "toX:number",
+      "toY:number",
+      "startFrame:number",
+      "lifeFrame:number",
+      "totalFrame:number"
+    ],
+    "Mouse": [
+      "isTrigger:boolean",
+      "x:number",
+      "y:number"
+    ],
+    "PretreatMove":false,
+    "NetMove":false,
+    "RealMove":false
+  },
+  "entities": {
+    "Mouse": true
+  },
+  "extensions": {
+    "Pool": {
+      "createPlayer:void": []
+    }
+  },
+  "systems": {
+    "MovementSystem": [
+      "ISetPool",
+      "IInitializeSystem",
+      "IExecuteSystem"
+    ]
+  }
+}

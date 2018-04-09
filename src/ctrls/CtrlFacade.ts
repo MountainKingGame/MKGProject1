@@ -11,8 +11,6 @@ class CtrlFacade{
         NetMgr.si = new NetMgr();
         NetMgr.si.init();
         //
-        this.stage.addChild(fairygui.GRoot.inst.displayObject);
-        //
         KeyBoardCtrl.si.init();
         MouseWheelCtrl.si.init();
         CtrlConfig.si = new CtrlConfig();

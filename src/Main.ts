@@ -35,9 +35,10 @@ class Main extends egret.DisplayObjectContainer {
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
         RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
         RES.loadGroup("preload");
+        RES.loadGroup("ARPG");
     }
     private onResourceLoadComplete(event: RES.ResourceEvent) {
-        if (event.groupName == "preload") {
+        if (RES.isGroupLoaded("preload") && RES.isGroupLoaded("ARPG")) {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
             RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
@@ -55,11 +56,16 @@ class Main extends egret.DisplayObjectContainer {
         this.onResourceLoadComplete(event);
     }
     private createGameScene(): void {
-        //===
         new Imports();
+        this.stage.addChild(fairygui.GRoot.inst.displayObject);
+        //===tb
         CtrlFacade.si = new CtrlFacade();
-        CtrlFacade.si.stage = this.stage;
-        CtrlFacade.si.init(true);
+        // CtrlFacade.si.stage = this.stage;
+        // CtrlFacade.si.init(true);
+        //===ARPG
+        var arpgFacade = new ARPGFacade()
+        arpgFacade.stage = this.stage
+        arpgFacade.init()
         //===test
         // new tests.TestProtobuf();
         // new TestMoveSmooth().init();
@@ -75,7 +81,7 @@ class Main extends egret.DisplayObjectContainer {
         // new TestHttp().get1();
         // new TestBinaryHeap().test0();
         // new tests.TestExcel().func1();
-        new tests.TestEntitas()
+        // new tests.TestEntitas()
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);

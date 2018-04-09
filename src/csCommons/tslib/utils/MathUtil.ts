@@ -1,5 +1,5 @@
 class MathUtil {
-    /**计算坐标的的角度值 */
+    /**计算坐标的的弧度值 */
     static rotationRadian(x: number, y: number): number {
         if (x == 0) {
             if (y > 0) {
@@ -16,17 +16,17 @@ class MathUtil {
             return Math.atan2(y, x);
         }
     }
-    /**计算坐标的弧度值 */
+    /**计算坐标的角度值 */
     static rotationDegree(x: number, y: number): number {
         return MathUtil.radian2Degree(MathUtil.rotationRadian(x, y));
-    }
-    /**弧度值转角度值 */
-    static radian2Degree(radian: number): number {
-        return radian * 180 / Math.PI;
     }
     /**角度值转弧度值 */
     static degree2Radian(degree: number): number {
         return degree * Math.PI / 180;
+    }
+    /**弧度值转角度值 */
+    static radian2Degree(radian: number): number {
+        return radian * 180 / Math.PI;
     }
     /**
      * 循环数值t,min到max之间。t值永远不会大于等于max的值,也永远不会小于0
@@ -115,5 +115,17 @@ class MathUtil {
             }
         }
         return MathUtil.lerp(a, b, t)
+    }
+    /**
+     * 根据speed计算x,y上的分量
+     * @param fromX 
+     * @param fromY 
+     * @param toX 
+     * @param toY 
+     * @param speed 
+     */
+    static speedXY(fromX:number,fromY:number,toX:number,toY:number,speed:number):{x:number,y:number}{
+        var radian = MathUtil.rotationRadian(toX-fromX, toY-fromY)
+        return {x:speed*Math.cos(radian),y:speed*Math.sin(radian)};
     }
 }

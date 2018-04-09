@@ -1,6 +1,39 @@
 /**
- * Entitas-ECS definitions for example
+ * Entitas-ECS definitions for arpg
  */
+declare module entitas {
+
+    class AvatarComponent implements IComponent {
+      public ui:GComponent;
+    }
+    class PositionComponent implements IComponent {
+      public x:number;
+      public y:number;
+    }
+    class MoveComponent implements IComponent {
+      public kind:MoveKindEnum;
+      public speed:number;
+      public speedX:number;
+      public speedY:number;
+      public toX:number;
+      public toY:number;
+      public startFrame:number;
+      public lifeFrame:number;
+      public totalFrame:number;
+    }
+    class MouseComponent implements IComponent {
+      public isTrigger:boolean;
+      public x:number;
+      public y:number;
+    }
+    class PretreatMoveComponent implements IComponent {
+    }
+    class NetMoveComponent implements IComponent {
+    }
+    class RealMoveComponent implements IComponent {
+    }
+
+}
 declare module entitas.utils {
     /**
      * @class UUID
@@ -220,88 +253,6 @@ declare module entitas.utils {
 declare module entitas {
     interface IComponent {
     }
-
-    class BoundsComponent implements IComponent {
-      public radius:number;
-    }
-    class BulletComponent implements IComponent {
-    }
-    class ColorAnimationComponent implements IComponent {
-      public redMin:number;
-      public redMax:number;
-      public redSpeed:number;
-      public greenMin:number;
-      public greenMax:number;
-      public greenSpeed:number;
-      public blueMin:number;
-      public blueMax:number;
-      public blueSpeed:number;
-      public alphaMin:number;
-      public alphaMax:number;
-      public alphaSpeed:number;
-      public redAnimate:boolean;
-      public greenAnimate:boolean;
-      public blueAnimate:boolean;
-      public alphaAnimate:boolean;
-      public repeat:boolean;
-    }
-    class EnemyComponent implements IComponent {
-    }
-    class ExpiresComponent implements IComponent {
-      public delay:number;
-    }
-    class FiringComponent implements IComponent {
-    }
-    class HealthComponent implements IComponent {
-      public health:number;
-      public maximumHealth:number;
-    }
-    class ParallaxStarComponent implements IComponent {
-    }
-    class PlayerComponent implements IComponent {
-    }
-    class PositionComponent implements IComponent {
-      public x:number;
-      public y:number;
-    }
-    class ScaleAnimationComponent implements IComponent {
-      public min:number;
-      public max:number;
-      public speed:number;
-      public repeat:boolean;
-      public active:boolean;
-    }
-    class SoundEffectComponent implements IComponent {
-      public effect:number;
-    }
-    class SpriteComponent implements IComponent {
-      public layer:number;
-      public object:Object;
-    }
-    class VelocityComponent implements IComponent {
-      public x:number;
-      public y:number;
-    }
-    class ScoreComponent implements IComponent {
-      public value:number;
-    }
-    class DestroyComponent implements IComponent {
-    }
-    class MouseComponent implements IComponent {
-      public x:number;
-      public y:number;
-    }
-    class ScaleComponent implements IComponent {
-      public x:number;
-      public y:number;
-    }
-    class ResourceComponent implements IComponent {
-      public name:string;
-    }
-    class LayerComponent implements IComponent {
-      public ordinal:number;
-    }
-
 }
 declare module entitas {
     interface IMatcher {
@@ -510,47 +461,21 @@ declare module entitas {
     module Matcher {
     }
     class Matcher implements IAllOfMatcher, IAnyOfMatcher, INoneOfMatcher {
-/** Matcher Extensions for example */
-        static _matcherBounds;
-        static Bounds: Matcher;
-        static _matcherBullet;
-        static Bullet: Matcher;
-        static _matcherColorAnimation;
-        static ColorAnimation: Matcher;
-        static _matcherEnemy;
-        static Enemy: Matcher;
-        static _matcherExpires;
-        static Expires: Matcher;
-        static _matcherFiring;
-        static Firing: Matcher;
-        static _matcherHealth;
-        static Health: Matcher;
-        static _matcherParallaxStar;
-        static ParallaxStar: Matcher;
-        static _matcherPlayer;
-        static Player: Matcher;
+/** Matcher Extensions for arpg */
+        static _matcherAvatar;
+        static Avatar: Matcher;
         static _matcherPosition;
         static Position: Matcher;
-        static _matcherScaleAnimation;
-        static ScaleAnimation: Matcher;
-        static _matcherSoundEffect;
-        static SoundEffect: Matcher;
-        static _matcherSprite;
-        static Sprite: Matcher;
-        static _matcherVelocity;
-        static Velocity: Matcher;
-        static _matcherScore;
-        static Score: Matcher;
-        static _matcherDestroy;
-        static Destroy: Matcher;
+        static _matcherMove;
+        static Move: Matcher;
         static _matcherMouse;
         static Mouse: Matcher;
-        static _matcherScale;
-        static Scale: Matcher;
-        static _matcherResource;
-        static Resource: Matcher;
-        static _matcherLayer;
-        static Layer: Matcher;
+        static _matcherPretreatMove;
+        static PretreatMove: Matcher;
+        static _matcherNetMove;
+        static NetMove: Matcher;
+        static _matcherRealMove;
+        static RealMove: Matcher;
         /**
          * Get the matcher id
          * @type {number}
@@ -682,50 +607,14 @@ declare module entitas {
         }
     }
     class Entity {
-/** Entity Extensions for example */
-        static _boundsComponentPool;
-        static clearBoundsComponentPool();
-        bounds: BoundsComponent;
-        hasBounds: boolean;
-        addBounds(radius:number);
-        replaceBounds(radius:number);
-        removeBounds();
-        static bulletComponent: BulletComponent;
-        isBullet: boolean;
-        setBullet(value: boolean);
-        static _colorAnimationComponentPool;
-        static clearColorAnimationComponentPool();
-        colorAnimation: ColorAnimationComponent;
-        hasColorAnimation: boolean;
-        addColorAnimation(redMin:number, redMax:number, redSpeed:number, greenMin:number, greenMax:number, greenSpeed:number, blueMin:number, blueMax:number, blueSpeed:number, alphaMin:number, alphaMax:number, alphaSpeed:number, redAnimate:boolean, greenAnimate:boolean, blueAnimate:boolean, alphaAnimate:boolean, repeat:boolean);
-        replaceColorAnimation(redMin:number, redMax:number, redSpeed:number, greenMin:number, greenMax:number, greenSpeed:number, blueMin:number, blueMax:number, blueSpeed:number, alphaMin:number, alphaMax:number, alphaSpeed:number, redAnimate:boolean, greenAnimate:boolean, blueAnimate:boolean, alphaAnimate:boolean, repeat:boolean);
-        removeColorAnimation();
-        static enemyComponent: EnemyComponent;
-        isEnemy: boolean;
-        setEnemy(value: boolean);
-        static _expiresComponentPool;
-        static clearExpiresComponentPool();
-        expires: ExpiresComponent;
-        hasExpires: boolean;
-        addExpires(delay:number);
-        replaceExpires(delay:number);
-        removeExpires();
-        static firingComponent: FiringComponent;
-        isFiring: boolean;
-        setFiring(value: boolean);
-        static _healthComponentPool;
-        static clearHealthComponentPool();
-        health: HealthComponent;
-        hasHealth: boolean;
-        addHealth(health:number, maximumHealth:number);
-        replaceHealth(health:number, maximumHealth:number);
-        removeHealth();
-        static parallaxStarComponent: ParallaxStarComponent;
-        isParallaxStar: boolean;
-        setParallaxStar(value: boolean);
-        static playerComponent: PlayerComponent;
-        isPlayer: boolean;
-        setPlayer(value: boolean);
+/** Entity Extensions for arpg */
+        static _avatarComponentPool;
+        static clearAvatarComponentPool();
+        avatar: AvatarComponent;
+        hasAvatar: boolean;
+        addAvatar(ui:GComponent);
+        replaceAvatar(ui:GComponent);
+        removeAvatar();
         static _positionComponentPool;
         static clearPositionComponentPool();
         position: PositionComponent;
@@ -733,72 +622,29 @@ declare module entitas {
         addPosition(x:number, y:number);
         replacePosition(x:number, y:number);
         removePosition();
-        static _scaleAnimationComponentPool;
-        static clearScaleAnimationComponentPool();
-        scaleAnimation: ScaleAnimationComponent;
-        hasScaleAnimation: boolean;
-        addScaleAnimation(min:number, max:number, speed:number, repeat:boolean, active:boolean);
-        replaceScaleAnimation(min:number, max:number, speed:number, repeat:boolean, active:boolean);
-        removeScaleAnimation();
-        static _soundEffectComponentPool;
-        static clearSoundEffectComponentPool();
-        soundEffect: SoundEffectComponent;
-        hasSoundEffect: boolean;
-        addSoundEffect(effect:number);
-        replaceSoundEffect(effect:number);
-        removeSoundEffect();
-        static _spriteComponentPool;
-        static clearSpriteComponentPool();
-        sprite: SpriteComponent;
-        hasSprite: boolean;
-        addSprite(layer:number, object:Object);
-        replaceSprite(layer:number, object:Object);
-        removeSprite();
-        static _velocityComponentPool;
-        static clearVelocityComponentPool();
-        velocity: VelocityComponent;
-        hasVelocity: boolean;
-        addVelocity(x:number, y:number);
-        replaceVelocity(x:number, y:number);
-        removeVelocity();
-        static _scoreComponentPool;
-        static clearScoreComponentPool();
-        score: ScoreComponent;
-        hasScore: boolean;
-        addScore(value:number);
-        replaceScore(value:number);
-        removeScore();
-        static destroyComponent: DestroyComponent;
-        isDestroy: boolean;
-        setDestroy(value: boolean);
+        static _moveComponentPool;
+        static clearMoveComponentPool();
+        move: MoveComponent;
+        hasMove: boolean;
+        addMove(kind:MoveKindEnum, speed:number, speedX:number, speedY:number, toX:number, toY:number, startFrame:number, lifeFrame:number, totalFrame:number);
+        replaceMove(kind:MoveKindEnum, speed:number, speedX:number, speedY:number, toX:number, toY:number, startFrame:number, lifeFrame:number, totalFrame:number);
+        removeMove();
         static _mouseComponentPool;
         static clearMouseComponentPool();
         mouse: MouseComponent;
         hasMouse: boolean;
-        addMouse(x:number, y:number);
-        replaceMouse(x:number, y:number);
+        addMouse(isTrigger:boolean, x:number, y:number);
+        replaceMouse(isTrigger:boolean, x:number, y:number);
         removeMouse();
-        static _scaleComponentPool;
-        static clearScaleComponentPool();
-        scale: ScaleComponent;
-        hasScale: boolean;
-        addScale(x:number, y:number);
-        replaceScale(x:number, y:number);
-        removeScale();
-        static _resourceComponentPool;
-        static clearResourceComponentPool();
-        resource: ResourceComponent;
-        hasResource: boolean;
-        addResource(name:string);
-        replaceResource(name:string);
-        removeResource();
-        static _layerComponentPool;
-        static clearLayerComponentPool();
-        layer: LayerComponent;
-        hasLayer: boolean;
-        addLayer(ordinal:number);
-        replaceLayer(ordinal:number);
-        removeLayer();
+        static pretreatMoveComponent: PretreatMoveComponent;
+        isPretreatMove: boolean;
+        setPretreatMove(value: boolean);
+        static netMoveComponent: NetMoveComponent;
+        isNetMove: boolean;
+        setNetMove(value: boolean);
+        static realMoveComponent: RealMoveComponent;
+        isRealMove: boolean;
+        setRealMove(value: boolean);
         /**
          * @static
          * @type {number} */
@@ -1192,30 +1038,15 @@ declare module entitas {
      * The games world.
      */
     class Pool {
-/*** Extensions for example.Pool */
+/*** Extensions for arpg.Pool */
         createPlayer():void;
-        createBullet(x:number, y:number):void;
-        createParticle(x:number, y:number):void;
-        createSmallExplosion(x:number, y:number):void;
-        createBigExplosion(x:number, y:number):void;
-        createEnemy1():void;
-        createEnemy2():void;
-        createEnemy3():void;
-/** Pool Extensions for example */
-        scoreEntity: Entity;
-        score: ScoreComponent;
-        hasScore: boolean;
-        setScore(value:number): Entity;
-        replaceScore(value:number): Entity;
-        removeScore(): void;
+/** Pool Extensions for arpg */
         mouseEntity: Entity;
         mouse: MouseComponent;
         hasMouse: boolean;
-        setMouse(x:number, y:number): Entity;
-        replaceMouse(x:number, y:number): Entity;
+        setMouse(isTrigger:boolean, x:number, y:number): Entity;
+        replaceMouse(isTrigger:boolean, x:number, y:number): Entity;
         removeMouse(): void;
-        firingEntity: Entity;
-        isFiring: boolean;
         /**
          * The total number of components in this pool
          * @type {number}

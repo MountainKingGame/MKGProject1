@@ -3,9 +3,18 @@
 		{
 			"keys": "builder_fui,builder@atlas0_png,basic_fui,basic@atlas0_png,tools_0_fui,tools_0@atlas0_png,test_1_fui,elements_0_fui,elements_0@atlas0_png,elements_1_fui,elements_1@atlas0_png,joysticks_1_fui,joysticks_1@atlas0_png,movieClips_1_fui,movieClips_1@atlas_a3zg6_png,movieClips_1@atlas_hz8r1_png,movieClips_1@atlas_hz8r2_png,movieClips_1@atlas_hz8r3_png,movieClips_1@atlas_hz8r4_png,movieClips_1@atlas_hz8r5_png,cell_1_json,position_1_json,profile_1_json",
 			"name": "preload"
+		},
+		{
+			"keys": "ARPG_Elements_0_fui",
+			"name": "ARPG"
 		}
 	],
 	"resources": [
+		{
+			"url": "assets/fuis/ARPG_Elements_0.fui",
+			"type": "bin",
+			"name": "ARPG_Elements_0_fui"
+		},
 		{
 			"url": "assets/fuis/builder.fui",
 			"type": "bin",
