@@ -2,8 +2,8 @@
   "namespace": "arpg",
   "debug": false,
   "output": {
-    "javascript": "resource/entitas/generatedExtensions.js",
-    "typescript": "src/auto/generatedComponents.ts",
+    "javascript": "resource/entitas/arpg.generatedExtensions.js",
+    "typescript": "src/auto/arpg.generatedComponents.ts",
     "declaration": "libs/autos/arpg.d.ts"
   },
   "alloc": {
@@ -22,20 +22,25 @@
     "Avatar":[
       "ui:GComponent"
     ],
+    "PropLv1":[
+      "moveSpeed:number",
+      "hpMax:number",
+      "hp:number"
+    ],
     "Position": [
       "x:number",
       "y:number"
     ],
     "Move": [
-      "kind:MoveKindEnum",
-      "speed:number",
-      "speedX:number",
-      "speedY:number",
+      "block:boolean",
+      "kind:number",
       "toX:number",
       "toY:number",
       "startFrame:number",
-      "lifeFrame:number",
-      "totalFrame:number"
+      "lifeFrame:number"
+    ],
+    "SkillArr":[
+      "skillArr:SkillStateComponent[]"
     ]
   },
   "extensions": {

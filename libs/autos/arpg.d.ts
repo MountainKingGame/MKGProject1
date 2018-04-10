@@ -8,28 +8,30 @@ declare module entitas {
       public x:number;
       public y:number;
     }
-    class FacadeComponent implements IComponent {
-      public myRoleReal:Entity;
-      public myRolePretreat:Entity;
-      public myRoleNet:Entity;
-    }
     class AvatarComponent implements IComponent {
       public ui:GComponent;
+    }
+    class PropLv1Component implements IComponent {
+      public moveSpeed:number;
+      public hpMax:number;
+      public hp:number;
     }
     class PositionComponent implements IComponent {
       public x:number;
       public y:number;
     }
     class MoveComponent implements IComponent {
-      public kind:MoveKindEnum;
-      public speed:number;
-      public speedX:number;
-      public speedY:number;
+      public block:boolean;
+      public kind:number;
       public toX:number;
       public toY:number;
       public startFrame:number;
       public lifeFrame:number;
-      public totalFrame:number;
+    }
+    class SkillNormalComponent implements IComponent {
+      public sid:number;
+      public state:number;
+      public statePhase:number;
     }
 
 }
@@ -463,14 +465,16 @@ declare module entitas {
 /** Matcher Extensions for arpg */
         static _matcherMouse;
         static Mouse: Matcher;
-        static _matcherFacade;
-        static Facade: Matcher;
         static _matcherAvatar;
         static Avatar: Matcher;
+        static _matcherPropLv1;
+        static PropLv1: Matcher;
         static _matcherPosition;
         static Position: Matcher;
         static _matcherMove;
         static Move: Matcher;
+        static _matcherSkillNormal;
+        static SkillNormal: Matcher;
         /**
          * Get the matcher id
          * @type {number}
@@ -610,13 +614,6 @@ declare module entitas {
         addMouse(isTrigger:boolean, x:number, y:number);
         replaceMouse(isTrigger:boolean, x:number, y:number);
         removeMouse();
-        static _facadeComponentPool;
-        static clearFacadeComponentPool();
-        facade: FacadeComponent;
-        hasFacade: boolean;
-        addFacade(myRoleReal:Entity, myRolePretreat:Entity, myRoleNet:Entity);
-        replaceFacade(myRoleReal:Entity, myRolePretreat:Entity, myRoleNet:Entity);
-        removeFacade();
         static _avatarComponentPool;
         static clearAvatarComponentPool();
         avatar: AvatarComponent;
@@ -624,6 +621,13 @@ declare module entitas {
         addAvatar(ui:GComponent);
         replaceAvatar(ui:GComponent);
         removeAvatar();
+        static _propLv1ComponentPool;
+        static clearPropLv1ComponentPool();
+        propLv1: PropLv1Component;
+        hasPropLv1: boolean;
+        addPropLv1(moveSpeed:number, hpMax:number, hp:number);
+        replacePropLv1(moveSpeed:number, hpMax:number, hp:number);
+        removePropLv1();
         static _positionComponentPool;
         static clearPositionComponentPool();
         position: PositionComponent;
@@ -635,9 +639,16 @@ declare module entitas {
         static clearMoveComponentPool();
         move: MoveComponent;
         hasMove: boolean;
-        addMove(kind:MoveKindEnum, speed:number, speedX:number, speedY:number, toX:number, toY:number, startFrame:number, lifeFrame:number, totalFrame:number);
-        replaceMove(kind:MoveKindEnum, speed:number, speedX:number, speedY:number, toX:number, toY:number, startFrame:number, lifeFrame:number, totalFrame:number);
+        addMove(block:boolean, kind:number, toX:number, toY:number, startFrame:number, lifeFrame:number);
+        replaceMove(block:boolean, kind:number, toX:number, toY:number, startFrame:number, lifeFrame:number);
         removeMove();
+        static _skillNormalComponentPool;
+        static clearSkillNormalComponentPool();
+        skillNormal: SkillNormalComponent;
+        hasSkillNormal: boolean;
+        addSkillNormal(sid:number, state:number, statePhase:number);
+        replaceSkillNormal(sid:number, state:number, statePhase:number);
+        removeSkillNormal();
         /**
          * @static
          * @type {number} */
@@ -1040,12 +1051,6 @@ declare module entitas {
         setMouse(isTrigger:boolean, x:number, y:number): Entity;
         replaceMouse(isTrigger:boolean, x:number, y:number): Entity;
         removeMouse(): void;
-        facadeEntity: Entity;
-        facade: FacadeComponent;
-        hasFacade: boolean;
-        setFacade(myRoleReal:Entity, myRolePretreat:Entity, myRoleNet:Entity): Entity;
-        replaceFacade(myRoleReal:Entity, myRolePretreat:Entity, myRoleNet:Entity): Entity;
-        removeFacade(): void;
         /**
          * The total number of components in this pool
          * @type {number}

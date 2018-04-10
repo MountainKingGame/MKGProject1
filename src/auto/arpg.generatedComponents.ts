@@ -15,10 +15,11 @@ module arpg {
 
   export enum CoreComponentIds {
     Mouse,
-    Facade,
     Avatar,
+    PropLv1,
     Position,
     Move,
+    SkillNormal,
     TotalComponents
   }
 
@@ -30,28 +31,30 @@ module arpg {
     public x:number;
     public y:number;
   }
-  export class FacadeComponent implements IComponent {
-    public myRoleReal:Entity;
-    public myRolePretreat:Entity;
-    public myRoleNet:Entity;
-  }
   export class AvatarComponent implements IComponent {
     public ui:GComponent;
+  }
+  export class PropLv1Component implements IComponent {
+    public moveSpeed:number;
+    public hpMax:number;
+    public hp:number;
   }
   export class PositionComponent implements IComponent {
     public x:number;
     public y:number;
   }
   export class MoveComponent implements IComponent {
-    public kind:MoveKindEnum;
-    public speed:number;
-    public speedX:number;
-    public speedY:number;
+    public block:boolean;
+    public kind:number;
     public toX:number;
     public toY:number;
     public startFrame:number;
     public lifeFrame:number;
-    public totalFrame:number;
+  }
+  export class SkillNormalComponent implements IComponent {
+    public sid:number;
+    public state:number;
+    public statePhase:number;
   }
 
 

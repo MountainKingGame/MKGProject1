@@ -11,10 +11,11 @@
   var Matcher = entitas.Matcher;
   var SingleEntityException = entitas.SingleEntityException;
   var MouseComponent = arpg.MouseComponent;
-  var FacadeComponent = arpg.FacadeComponent;
   var AvatarComponent = arpg.AvatarComponent;
+  var PropLv1Component = arpg.PropLv1Component;
   var PositionComponent = arpg.PositionComponent;
   var MoveComponent = arpg.MoveComponent;
+  var SkillNormalComponent = arpg.SkillNormalComponent;
   var CoreComponentIds = arpg.CoreComponentIds;
   /** @type {entitas.utils.Bag} */
   Entity._mouseComponentPool = new Bag();
@@ -80,69 +81,6 @@
     return this;
   };
   /** @type {entitas.utils.Bag} */
-  Entity._facadeComponentPool = new Bag();
-  (function() {
-    for (var i=0; i<128; i++) {
-      Entity._facadeComponentPool.add(new FacadeComponent());
-    }
-  })();
-  Entity.clearFacadeComponentPool = function() {
-    Entity._facadeComponentPool.clear();
-  };
-  /** @type {{arpg.FacadeComponent} */
-  Object.defineProperty(Entity.prototype, 'facade', {
-    get: function() {
-      return this.getComponent(CoreComponentIds.Facade);
-    }
-  });
-  /** @type {boolean} */
-  Object.defineProperty(Entity.prototype, 'hasFacade', {
-    get: function() {
-      return this.hasComponent(CoreComponentIds.Facade);
-    }
-  });
-  /**
-   * @param {Entity} myRoleReal
-   * @param {Entity} myRolePretreat
-   * @param {Entity} myRoleNet
-   * @returns {entitas.Entity}
-   */
-  Entity.prototype.addFacade = function(myRoleReal, myRolePretreat, myRoleNet) {
-    var component = Entity._facadeComponentPool.size() > 0 ? Entity._facadeComponentPool.removeLast() : new FacadeComponent();
-    component.myRoleReal = myRoleReal;
-    component.myRolePretreat = myRolePretreat;
-    component.myRoleNet = myRoleNet;
-    this.addComponent(CoreComponentIds.Facade, component);
-    return this;
-  };
-  /**
-   * @param {Entity} myRoleReal
-   * @param {Entity} myRolePretreat
-   * @param {Entity} myRoleNet
-   * @returns {entitas.Entity}
-   */
-  Entity.prototype.replaceFacade = function(myRoleReal, myRolePretreat, myRoleNet) {
-    var previousComponent = this.hasFacade ? this.facade : null;
-    var component = Entity._facadeComponentPool.size() > 0 ? Entity._facadeComponentPool.removeLast() : new FacadeComponent();
-    component.myRoleReal = myRoleReal;
-    component.myRolePretreat = myRolePretreat;
-    component.myRoleNet = myRoleNet;
-    this.replaceComponent(CoreComponentIds.Facade, component);
-    if (previousComponent != null) {
-      Entity._facadeComponentPool.add(previousComponent);
-    }
-    return this;
-  };
-  /**
-   * @returns {entitas.Entity}
-   */
-  Entity.prototype.removeFacade = function() {
-    var component = this.facade;
-    this.removeComponent(CoreComponentIds.Facade);
-    Entity._facadeComponentPool.add(component);
-    return this;
-  };
-  /** @type {entitas.utils.Bag} */
   Entity._avatarComponentPool = new Bag();
   (function() {
     for (var i=0; i<128; i++) {
@@ -195,6 +133,69 @@
     var component = this.avatar;
     this.removeComponent(CoreComponentIds.Avatar);
     Entity._avatarComponentPool.add(component);
+    return this;
+  };
+  /** @type {entitas.utils.Bag} */
+  Entity._propLv1ComponentPool = new Bag();
+  (function() {
+    for (var i=0; i<128; i++) {
+      Entity._propLv1ComponentPool.add(new PropLv1Component());
+    }
+  })();
+  Entity.clearPropLv1ComponentPool = function() {
+    Entity._propLv1ComponentPool.clear();
+  };
+  /** @type {{arpg.PropLv1Component} */
+  Object.defineProperty(Entity.prototype, 'propLv1', {
+    get: function() {
+      return this.getComponent(CoreComponentIds.PropLv1);
+    }
+  });
+  /** @type {boolean} */
+  Object.defineProperty(Entity.prototype, 'hasPropLv1', {
+    get: function() {
+      return this.hasComponent(CoreComponentIds.PropLv1);
+    }
+  });
+  /**
+   * @param {number} moveSpeed
+   * @param {number} hpMax
+   * @param {number} hp
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.addPropLv1 = function(moveSpeed, hpMax, hp) {
+    var component = Entity._propLv1ComponentPool.size() > 0 ? Entity._propLv1ComponentPool.removeLast() : new PropLv1Component();
+    component.moveSpeed = moveSpeed;
+    component.hpMax = hpMax;
+    component.hp = hp;
+    this.addComponent(CoreComponentIds.PropLv1, component);
+    return this;
+  };
+  /**
+   * @param {number} moveSpeed
+   * @param {number} hpMax
+   * @param {number} hp
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.replacePropLv1 = function(moveSpeed, hpMax, hp) {
+    var previousComponent = this.hasPropLv1 ? this.propLv1 : null;
+    var component = Entity._propLv1ComponentPool.size() > 0 ? Entity._propLv1ComponentPool.removeLast() : new PropLv1Component();
+    component.moveSpeed = moveSpeed;
+    component.hpMax = hpMax;
+    component.hp = hp;
+    this.replaceComponent(CoreComponentIds.PropLv1, component);
+    if (previousComponent != null) {
+      Entity._propLv1ComponentPool.add(previousComponent);
+    }
+    return this;
+  };
+  /**
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.removePropLv1 = function() {
+    var component = this.propLv1;
+    this.removeComponent(CoreComponentIds.PropLv1);
+    Entity._propLv1ComponentPool.add(component);
     return this;
   };
   /** @type {entitas.utils.Bag} */
@@ -279,55 +280,43 @@
     }
   });
   /**
-   * @param {MoveKindEnum} kind
-   * @param {number} speed
-   * @param {number} speedX
-   * @param {number} speedY
+   * @param {boolean} block
+   * @param {number} kind
    * @param {number} toX
    * @param {number} toY
    * @param {number} startFrame
    * @param {number} lifeFrame
-   * @param {number} totalFrame
    * @returns {entitas.Entity}
    */
-  Entity.prototype.addMove = function(kind, speed, speedX, speedY, toX, toY, startFrame, lifeFrame, totalFrame) {
+  Entity.prototype.addMove = function(block, kind, toX, toY, startFrame, lifeFrame) {
     var component = Entity._moveComponentPool.size() > 0 ? Entity._moveComponentPool.removeLast() : new MoveComponent();
+    component.block = block;
     component.kind = kind;
-    component.speed = speed;
-    component.speedX = speedX;
-    component.speedY = speedY;
     component.toX = toX;
     component.toY = toY;
     component.startFrame = startFrame;
     component.lifeFrame = lifeFrame;
-    component.totalFrame = totalFrame;
     this.addComponent(CoreComponentIds.Move, component);
     return this;
   };
   /**
-   * @param {MoveKindEnum} kind
-   * @param {number} speed
-   * @param {number} speedX
-   * @param {number} speedY
+   * @param {boolean} block
+   * @param {number} kind
    * @param {number} toX
    * @param {number} toY
    * @param {number} startFrame
    * @param {number} lifeFrame
-   * @param {number} totalFrame
    * @returns {entitas.Entity}
    */
-  Entity.prototype.replaceMove = function(kind, speed, speedX, speedY, toX, toY, startFrame, lifeFrame, totalFrame) {
+  Entity.prototype.replaceMove = function(block, kind, toX, toY, startFrame, lifeFrame) {
     var previousComponent = this.hasMove ? this.move : null;
     var component = Entity._moveComponentPool.size() > 0 ? Entity._moveComponentPool.removeLast() : new MoveComponent();
+    component.block = block;
     component.kind = kind;
-    component.speed = speed;
-    component.speedX = speedX;
-    component.speedY = speedY;
     component.toX = toX;
     component.toY = toY;
     component.startFrame = startFrame;
     component.lifeFrame = lifeFrame;
-    component.totalFrame = totalFrame;
     this.replaceComponent(CoreComponentIds.Move, component);
     if (previousComponent != null) {
       Entity._moveComponentPool.add(previousComponent);
@@ -341,6 +330,69 @@
     var component = this.move;
     this.removeComponent(CoreComponentIds.Move);
     Entity._moveComponentPool.add(component);
+    return this;
+  };
+  /** @type {entitas.utils.Bag} */
+  Entity._skillNormalComponentPool = new Bag();
+  (function() {
+    for (var i=0; i<128; i++) {
+      Entity._skillNormalComponentPool.add(new SkillNormalComponent());
+    }
+  })();
+  Entity.clearSkillNormalComponentPool = function() {
+    Entity._skillNormalComponentPool.clear();
+  };
+  /** @type {{arpg.SkillNormalComponent} */
+  Object.defineProperty(Entity.prototype, 'skillNormal', {
+    get: function() {
+      return this.getComponent(CoreComponentIds.SkillNormal);
+    }
+  });
+  /** @type {boolean} */
+  Object.defineProperty(Entity.prototype, 'hasSkillNormal', {
+    get: function() {
+      return this.hasComponent(CoreComponentIds.SkillNormal);
+    }
+  });
+  /**
+   * @param {number} sid
+   * @param {number} state
+   * @param {number} statePhase
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.addSkillNormal = function(sid, state, statePhase) {
+    var component = Entity._skillNormalComponentPool.size() > 0 ? Entity._skillNormalComponentPool.removeLast() : new SkillNormalComponent();
+    component.sid = sid;
+    component.state = state;
+    component.statePhase = statePhase;
+    this.addComponent(CoreComponentIds.SkillNormal, component);
+    return this;
+  };
+  /**
+   * @param {number} sid
+   * @param {number} state
+   * @param {number} statePhase
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.replaceSkillNormal = function(sid, state, statePhase) {
+    var previousComponent = this.hasSkillNormal ? this.skillNormal : null;
+    var component = Entity._skillNormalComponentPool.size() > 0 ? Entity._skillNormalComponentPool.removeLast() : new SkillNormalComponent();
+    component.sid = sid;
+    component.state = state;
+    component.statePhase = statePhase;
+    this.replaceComponent(CoreComponentIds.SkillNormal, component);
+    if (previousComponent != null) {
+      Entity._skillNormalComponentPool.add(previousComponent);
+    }
+    return this;
+  };
+  /**
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.removeSkillNormal = function() {
+    var component = this.skillNormal;
+    this.removeComponent(CoreComponentIds.SkillNormal);
+    Entity._skillNormalComponentPool.add(component);
     return this;
   };
   /** @type {entitas.Matcher} */
@@ -357,19 +409,6 @@
     }
   });
   /** @type {entitas.Matcher} */
-  Matcher._matcherFacade=null;
-  
-  /** @type {entitas.Matcher} */
-  Object.defineProperty(Matcher, 'Facade', {
-    get: function() {
-      if (Matcher._matcherFacade == null) {
-        Matcher._matcherFacade = Matcher.allOf(CoreComponentIds.Facade);
-      }
-      
-      return Matcher._matcherFacade;
-    }
-  });
-  /** @type {entitas.Matcher} */
   Matcher._matcherAvatar=null;
   
   /** @type {entitas.Matcher} */
@@ -380,6 +419,19 @@
       }
       
       return Matcher._matcherAvatar;
+    }
+  });
+  /** @type {entitas.Matcher} */
+  Matcher._matcherPropLv1=null;
+  
+  /** @type {entitas.Matcher} */
+  Object.defineProperty(Matcher, 'PropLv1', {
+    get: function() {
+      if (Matcher._matcherPropLv1 == null) {
+        Matcher._matcherPropLv1 = Matcher.allOf(CoreComponentIds.PropLv1);
+      }
+      
+      return Matcher._matcherPropLv1;
     }
   });
   /** @type {entitas.Matcher} */
@@ -406,6 +458,19 @@
       }
       
       return Matcher._matcherMove;
+    }
+  });
+  /** @type {entitas.Matcher} */
+  Matcher._matcherSkillNormal=null;
+  
+  /** @type {entitas.Matcher} */
+  Object.defineProperty(Matcher, 'SkillNormal', {
+    get: function() {
+      if (Matcher._matcherSkillNormal == null) {
+        Matcher._matcherSkillNormal = Matcher.allOf(CoreComponentIds.SkillNormal);
+      }
+      
+      return Matcher._matcherSkillNormal;
     }
   });
   /** @type {entitas.Entity} */
@@ -460,58 +525,5 @@
    */
   Pool.prototype.removeMouse = function() {
     this.destroyEntity(this.mouseEntity);
-  };
-  /** @type {entitas.Entity} */
-  Object.defineProperty(Pool.prototype, 'facadeEntity', {
-    get: function() {
-      return this.getGroup(Matcher.Facade).getSingleEntity();
-    }
-  });
-  /** @type {arpg.FacadeComponent} */
-  Object.defineProperty(Pool.prototype, 'facade', {
-    get: function() {
-      return this.facadeEntity.facade;
-    }
-  });
-  /** @type {boolean} */
-  Object.defineProperty(Pool.prototype, 'hasFacade', {
-    get: function() {
-      return this.facadeEntity != undefined;
-    }
-  });
-  /**
-   * @param {Entity} myRoleReal
-   * @param {Entity} myRolePretreat
-   * @param {Entity} myRoleNet
-   * @returns {entitas.Entity}
-   */
-  Pool.prototype.setFacade = function(myRoleReal, myRolePretreat, myRoleNet) {
-    if (this.hasFacade) {
-      throw new SingleEntityException(Matcher.Facade);
-    }
-    var entity = this.createEntity('Facade');
-    entity.addFacade(myRoleReal, myRolePretreat, myRoleNet);
-    return entity;
-  };
-  /**
-   * @param {Entity} myRoleReal
-   * @param {Entity} myRolePretreat
-   * @param {Entity} myRoleNet
-   * @returns {entitas.Entity}
-   */
-  Pool.prototype.replaceFacade = function(myRoleReal, myRolePretreat, myRoleNet) {
-    var entity = this.facadeEntity;
-    if (entity == null) {
-      entity = this.setFacade(myRoleReal, myRolePretreat, myRoleNet);
-    } else {
-      entity.replaceFacade(myRoleReal, myRolePretreat, myRoleNet);
-    }
-    return entity;
-  };
-  /**
-   * @returns {entitas.Entity}
-   */
-  Pool.prototype.removeFacade = function() {
-    this.destroyEntity(this.facadeEntity);
   };
 })();

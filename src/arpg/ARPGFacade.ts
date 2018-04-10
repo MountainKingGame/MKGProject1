@@ -1,15 +1,22 @@
 class ARPGFacade {
+    timer: TimerCtrl;
+    config: arpg.Config;
+
     static si: ARPGFacade;
     stage: egret.Stage;
     root: fairygui.GComponent
     inputView: fairygui.GComponent
-    timer:TimerCtrl;
     constructor() {
         new arpg.Imports();
         ARPGFacade.si = this;
         new FakeServer();
     }
     init() {
+        console.log("[info]",this.stage.frameRate,"<-`this.stage.frameRate`");
+        //
+        this.config = new arpg.Config();
+        this.config.FramePerSecond = 60;//this.stage.frameRate;
+        this.config.init();
         //
         fairygui.UIPackage.addPackage("ARPG_Elements_0");
         fuis.ARPG_Elements_0.ARPG_Elements_0Binder.bindAll();
@@ -25,57 +32,60 @@ class ARPGFacade {
         inputView.setSize(1000, 1000);
         inputView.addClickListener(this.onInputClick, this);
         //-
-        //===entitas
-        //---
-        var role = arpg.Pools.pool.createEntity(null);
-        this.myRoleReal = role
-        var ui = fuis.ARPG_Elements_0.UI_RoleUI.createInstance();
-        this.root.addChild(ui)
-        ui.m_avatar.m_color.setSelectedIndex(0)
-        ui.m_txtName.text = "real"
-        role.addAvatar(ui)
-        //---
-        var role = arpg.Pools.pool.createEntity(null);
-        this.myRoleNet = role
-        var ui = fuis.ARPG_Elements_0.UI_RoleUI.createInstance();
-        this.root.addChild(ui)
-        ui.m_avatar.m_color.setSelectedIndex(2)
-        ui.m_txtName.text = "net"
-        role.addAvatar(ui)
-        role.addPosition(0, 0)
-        role.addComponent(CoreComponentIds.Move, new arpg.MouseComponent())
-        role.move.kind = MoveKindEnum.None;
-        role.move.speed = 500 / this.stage.frameRate;
-        //---
-        var role = arpg.Pools.pool.createEntity(null);
-        this.myRolePretreat = role
-        var ui = fuis.ARPG_Elements_0.UI_RoleUI.createInstance();
-        this.root.addChild(ui)
-        ui.m_avatar.m_color.setSelectedIndex(3)
-        ui.m_txtName.text = "pretreat"
-        role.addAvatar(ui)
-        role.addPosition(0, 0)
-        role.addComponent(CoreComponentIds.Move, new arpg.MouseComponent())
-        role.move.kind = MoveKindEnum.None;
-        role.move.speed = this.myRoleNet.move.speed;
-        //---
+        this.initEntitas();
+        //===other
+        this.timer = new TimerCtrl();
+        this.timer.msPerFrame = this.config.MsPerFrame;
+        this.timer.gapKeyFrame = 5;
+        this.timer.init();
+        //--test
+        this.myRoleReal.avatar.ui.visible = false;
+        this.myRoleNet.avatar.ui.visible = false;
+        // this.myRolePretreat.avatar.ui.visible=false;
+    }
+    /**entitas */
+    initEntitas() {
+        //--init systems first, for call setPool()
         var systems: entitas.Systems = new entitas.Systems()
             .add(arpg.Pools.pool.createSystem(RoleAvatarSystem))
             .add(arpg.Pools.pool.createSystem(PlayerInputSystem))
             .add(arpg.Pools.pool.createSystem(MovementSystem))
         this.systems = systems;
-        systems.initialize()
-        //--test
-        this.myRoleReal.avatar.ui.visible=false;
-        this.myRoleNet.avatar.ui.visible=false;
-        // this.myRolePretreat.avatar.ui.visible=false;
+        //---init entities
+        var role = arpg.Pools.pool.createEntity(null);
+        this.myRoleReal = role
+        var ui = fuis.ARPG_Elements_0.UI_RoleUI.createInstance();
+        ui.m_avatar.m_color.setSelectedIndex(0)
+        ui.m_txt0.text = "real"
+        role.addAvatar(ui)
+        //-
+        var role = arpg.Pools.pool.createEntity(null);
+        this.myRoleNet = role
+        var ui = fuis.ARPG_Elements_0.UI_RoleUI.createInstance();
+        ui.m_avatar.m_color.setSelectedIndex(2)
+        ui.m_txt0.text = "net"
+        role.addAvatar(ui)
+        role.addPosition(0, 0)
+        role.addComponent(CoreComponentIds.Move, new arpg.MouseComponent())
+        role.move.kind = MoveKindTag.None;
+        role.addPropLv1(this.config.BaseMoveSpeedPerFrame, 100, 100)
+        //-
+        var role = arpg.Pools.pool.createEntity(null);
+        this.myRolePretreat = role
+        var ui = fuis.ARPG_Elements_0.UI_RoleUI.createInstance();
+        ui.m_avatar.m_color.setSelectedIndex(3)
+        ui.m_txt0.text = "pretreat"
+        role.addAvatar(ui)
+        role.addPosition(0, 0)
+        role.addComponent(CoreComponentIds.Move, new arpg.MouseComponent())
+        role.move.kind = MoveKindTag.None;
+        role.addPropLv1(this.config.BaseMoveSpeedPerFrame, 100, 100)
         //---
-        this.timer = new TimerCtrl();
-        this.timer.init();
+        systems.initialize()
     }
     tick() {
         this.timer.tick()
-        if(this.timer.isFrame){
+        if (this.timer.isFrame) {
             this.systems.execute();
         }
     }
