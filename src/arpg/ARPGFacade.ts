@@ -1,10 +1,10 @@
 class ARPGFacade {
-    static singleton: ARPGFacade;
+    static si: ARPGFacade;
     stage: egret.Stage;
     root: fairygui.GComponent
     inputView: fairygui.GComponent
     constructor() {
-        ARPGFacade.singleton = this;
+        ARPGFacade.si = this;
         new FakeServer();
     }
     init() {
@@ -91,7 +91,7 @@ class ARPGFacade {
             fromX: this.myRolePretreat.position.x, fromY: this.myRolePretreat.position.y,
             toX: e.stageX, toY: e.stageY
         })
-        FakeServer.singleton.onSend(NetConsts.RoleMoveTo, { toX: e.stageX, toY: e.stageY })
+        FakeServer.si.onSend(NetConsts.RoleMoveTo, { toX: e.stageX, toY: e.stageY })
         // this.inputView.globalToLocal(e.stageX, e.stageY, this.tempXY);
         // e.stageX, e.stageY
         // console.log("[info]",e.stageX,e.stageY);

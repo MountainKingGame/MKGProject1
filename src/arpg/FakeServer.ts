@@ -1,11 +1,11 @@
 class FakeServer{
-    static singleton:FakeServer
+    static si:FakeServer
     constructor(){
-        FakeServer.singleton = this;
+        FakeServer.si = this;
     }
     onSend(cmd,req:any):void{
-        var role = ARPGFacade.singleton.myRoleNet;
-        req.currFrame = ARPGFacade.singleton.currFrame+3;
+        var role = ARPGFacade.si.myRoleNet;
+        req.currFrame = ARPGFacade.si.currFrame+3;
         req.fromX = role.position.x;
         req.fromY = role.position.y;
         setTimeout(() => {
