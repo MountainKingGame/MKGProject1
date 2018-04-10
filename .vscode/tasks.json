@@ -9,7 +9,7 @@
             "command": "node",
             "args": [
                 "..\\..\\tools\\NodeJsTools\\bin\\js\\StaticServer.js",
-                "-p","4399"
+                "-p","43991"
             ],
             "problemMatcher": []
         },

@@ -3,7 +3,9 @@ class ARPGFacade {
     stage: egret.Stage;
     root: fairygui.GComponent
     inputView: fairygui.GComponent
+    timer:TimerCtrl;
     constructor() {
+        new arpg.Imports();
         ARPGFacade.si = this;
         new FakeServer();
     }
@@ -27,7 +29,6 @@ class ARPGFacade {
         //---
         var role = arpg.Pools.pool.createEntity(null);
         this.myRoleReal = role
-        role.setRealMove(true)
         var ui = fuis.ARPG_Elements_0.UI_RoleUI.createInstance();
         this.root.addChild(ui)
         ui.m_avatar.m_color.setSelectedIndex(0)
@@ -36,7 +37,6 @@ class ARPGFacade {
         //---
         var role = arpg.Pools.pool.createEntity(null);
         this.myRoleNet = role
-        role.setNetMove(true)
         var ui = fuis.ARPG_Elements_0.UI_RoleUI.createInstance();
         this.root.addChild(ui)
         ui.m_avatar.m_color.setSelectedIndex(2)
@@ -49,7 +49,6 @@ class ARPGFacade {
         //---
         var role = arpg.Pools.pool.createEntity(null);
         this.myRolePretreat = role
-        role.setPretreatMove(true)
         var ui = fuis.ARPG_Elements_0.UI_RoleUI.createInstance();
         this.root.addChild(ui)
         ui.m_avatar.m_color.setSelectedIndex(3)
@@ -61,33 +60,37 @@ class ARPGFacade {
         role.move.speed = this.myRoleNet.move.speed;
         //---
         var systems: entitas.Systems = new entitas.Systems()
-            .add(arpg.Pools.pool.createSystem(MovementSystem))
             .add(arpg.Pools.pool.createSystem(RoleAvatarSystem))
+            .add(arpg.Pools.pool.createSystem(PlayerInputSystem))
+            .add(arpg.Pools.pool.createSystem(MovementSystem))
         this.systems = systems;
         systems.initialize()
         //--test
-        // this.myRoleReal.avatar.ui.visible=false;
-        // this.myRoleNet.avatar.ui.visible=false;
+        this.myRoleReal.avatar.ui.visible=false;
+        this.myRoleNet.avatar.ui.visible=false;
         // this.myRolePretreat.avatar.ui.visible=false;
+        //---
+        this.timer = new TimerCtrl();
+        this.timer.init();
     }
     tick() {
-        this.currFrame++;
-        this.nextFrame = this.currFrame + 1;
-        this.systems.execute();
+        this.timer.tick()
+        if(this.timer.isFrame){
+            this.systems.execute();
+        }
     }
-
-    currFrame = 0
-    nextFrame = 1
 
     myRoleReal: Entity;
     myRoleNet: Entity;
     myRolePretreat: Entity;
+
     systems: entitas.Systems;
+
     cmdArr: ICMD[] = [];
 
     onInputClick(e: egret.TouchEvent): void {
         MsgMgr.si.send(MsgConsts.Pretreat_ + NetConsts.RoleMoveTo, {
-            currFrame: this.nextFrame,
+            currFrame: this.timer.nextFrame,
             fromX: this.myRolePretreat.position.x, fromY: this.myRolePretreat.position.y,
             toX: e.stageX, toY: e.stageY
         })

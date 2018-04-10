@@ -1,6 +1,6 @@
 class FUtil{
     /**
-    * 获取当前时间戳
+    * 获取当前时间戳(ms)
     * 
     * javascript 中使用 new Date().getTime() 方法
         IE8 以上版本可以使用 直接使用Date.now()方法

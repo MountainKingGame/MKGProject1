@@ -18,8 +18,6 @@ import IExecuteSystem = entitas.IExecuteSystem
 //--
 import GObject = fairygui.GObject
 import GComponent = fairygui.GComponent
-//--entitas custom
-import CoreComponentIds = arpg.CoreComponentIds
 //--game tb
 import UI_Label1 = fuis.elements_0.UI_Label1;
 import UI_Button1 = fuis.elements_0.UI_Button1;

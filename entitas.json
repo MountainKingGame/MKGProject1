@@ -10,7 +10,15 @@
     "entities": 200,
     "components": 128
   },
+  "entities": {
+    "Mouse": true
+  },
   "components": {
+    "Mouse": [
+      "isTrigger:boolean",
+      "x:number",
+      "y:number"
+    ],
     "Avatar":[
       "ui:GComponent"
     ],
@@ -28,18 +36,7 @@
       "startFrame:number",
       "lifeFrame:number",
       "totalFrame:number"
-    ],
-    "Mouse": [
-      "isTrigger:boolean",
-      "x:number",
-      "y:number"
-    ],
-    "PretreatMove":false,
-    "NetMove":false,
-    "RealMove":false
-  },
-  "entities": {
-    "Mouse": true
+    ]
   },
   "extensions": {
     "Pool": {

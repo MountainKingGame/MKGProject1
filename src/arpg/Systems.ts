@@ -43,7 +43,7 @@ class MovementSystem implements ISetPool, IInitializeSystem, IExecuteSystem {
                 var move = e.move;
                 var isArrive = false
                 var speed:number;
-                var gapFrame = ARPGFacade.si.currFrame-move.startFrame - move.lifeFrame + 1;
+                var gapFrame = ARPGFacade.si.timer.currFrame-move.startFrame - move.lifeFrame + 1;
                 // console.log("[debug]",gapFrame,"<-`gapFrame`");
                 if(gapFrame>0){//过去的时间,如果=1则正常,超过1则说明时间过了,但这段时间都没有计算,需要补帧
                     move.lifeFrame+=gapFrame;
@@ -114,5 +114,6 @@ class PlayerInputSystem implements ISetPool, IInitializeSystem, IExecuteSystem {
         move.speedY = speedXY.y
     }
     public execute() {
+        console.log("[debug]",ARPGFacade.si.timer.currFrame,ARPGFacade.si.timer.isKeyFrame);
     }
 }

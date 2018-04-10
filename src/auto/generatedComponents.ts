@@ -14,19 +14,27 @@ module arpg {
   import IComponent = entitas.IComponent;
 
   export enum CoreComponentIds {
+    Mouse,
+    Facade,
     Avatar,
     Position,
     Move,
-    Mouse,
-    PretreatMove,
-    NetMove,
-    RealMove,
     TotalComponents
   }
 
   entitas.Entity.initialize(CoreComponentIds.TotalComponents, {"entities":200,"components":128});
 
 
+  export class MouseComponent implements IComponent {
+    public isTrigger:boolean;
+    public x:number;
+    public y:number;
+  }
+  export class FacadeComponent implements IComponent {
+    public myRoleReal:Entity;
+    public myRolePretreat:Entity;
+    public myRoleNet:Entity;
+  }
   export class AvatarComponent implements IComponent {
     public ui:GComponent;
   }
@@ -44,17 +52,6 @@ module arpg {
     public startFrame:number;
     public lifeFrame:number;
     public totalFrame:number;
-  }
-  export class MouseComponent implements IComponent {
-    public isTrigger:boolean;
-    public x:number;
-    public y:number;
-  }
-  export class PretreatMoveComponent implements IComponent {
-  }
-  export class NetMoveComponent implements IComponent {
-  }
-  export class RealMoveComponent implements IComponent {
   }
 
 

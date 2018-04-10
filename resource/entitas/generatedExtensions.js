@@ -10,14 +10,138 @@
   var Entity = entitas.Entity;
   var Matcher = entitas.Matcher;
   var SingleEntityException = entitas.SingleEntityException;
+  var MouseComponent = arpg.MouseComponent;
+  var FacadeComponent = arpg.FacadeComponent;
   var AvatarComponent = arpg.AvatarComponent;
   var PositionComponent = arpg.PositionComponent;
   var MoveComponent = arpg.MoveComponent;
-  var MouseComponent = arpg.MouseComponent;
-  var PretreatMoveComponent = arpg.PretreatMoveComponent;
-  var NetMoveComponent = arpg.NetMoveComponent;
-  var RealMoveComponent = arpg.RealMoveComponent;
   var CoreComponentIds = arpg.CoreComponentIds;
+  /** @type {entitas.utils.Bag} */
+  Entity._mouseComponentPool = new Bag();
+  (function() {
+    for (var i=0; i<128; i++) {
+      Entity._mouseComponentPool.add(new MouseComponent());
+    }
+  })();
+  Entity.clearMouseComponentPool = function() {
+    Entity._mouseComponentPool.clear();
+  };
+  /** @type {{arpg.MouseComponent} */
+  Object.defineProperty(Entity.prototype, 'mouse', {
+    get: function() {
+      return this.getComponent(CoreComponentIds.Mouse);
+    }
+  });
+  /** @type {boolean} */
+  Object.defineProperty(Entity.prototype, 'hasMouse', {
+    get: function() {
+      return this.hasComponent(CoreComponentIds.Mouse);
+    }
+  });
+  /**
+   * @param {boolean} isTrigger
+   * @param {number} x
+   * @param {number} y
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.addMouse = function(isTrigger, x, y) {
+    var component = Entity._mouseComponentPool.size() > 0 ? Entity._mouseComponentPool.removeLast() : new MouseComponent();
+    component.isTrigger = isTrigger;
+    component.x = x;
+    component.y = y;
+    this.addComponent(CoreComponentIds.Mouse, component);
+    return this;
+  };
+  /**
+   * @param {boolean} isTrigger
+   * @param {number} x
+   * @param {number} y
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.replaceMouse = function(isTrigger, x, y) {
+    var previousComponent = this.hasMouse ? this.mouse : null;
+    var component = Entity._mouseComponentPool.size() > 0 ? Entity._mouseComponentPool.removeLast() : new MouseComponent();
+    component.isTrigger = isTrigger;
+    component.x = x;
+    component.y = y;
+    this.replaceComponent(CoreComponentIds.Mouse, component);
+    if (previousComponent != null) {
+      Entity._mouseComponentPool.add(previousComponent);
+    }
+    return this;
+  };
+  /**
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.removeMouse = function() {
+    var component = this.mouse;
+    this.removeComponent(CoreComponentIds.Mouse);
+    Entity._mouseComponentPool.add(component);
+    return this;
+  };
+  /** @type {entitas.utils.Bag} */
+  Entity._facadeComponentPool = new Bag();
+  (function() {
+    for (var i=0; i<128; i++) {
+      Entity._facadeComponentPool.add(new FacadeComponent());
+    }
+  })();
+  Entity.clearFacadeComponentPool = function() {
+    Entity._facadeComponentPool.clear();
+  };
+  /** @type {{arpg.FacadeComponent} */
+  Object.defineProperty(Entity.prototype, 'facade', {
+    get: function() {
+      return this.getComponent(CoreComponentIds.Facade);
+    }
+  });
+  /** @type {boolean} */
+  Object.defineProperty(Entity.prototype, 'hasFacade', {
+    get: function() {
+      return this.hasComponent(CoreComponentIds.Facade);
+    }
+  });
+  /**
+   * @param {Entity} myRoleReal
+   * @param {Entity} myRolePretreat
+   * @param {Entity} myRoleNet
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.addFacade = function(myRoleReal, myRolePretreat, myRoleNet) {
+    var component = Entity._facadeComponentPool.size() > 0 ? Entity._facadeComponentPool.removeLast() : new FacadeComponent();
+    component.myRoleReal = myRoleReal;
+    component.myRolePretreat = myRolePretreat;
+    component.myRoleNet = myRoleNet;
+    this.addComponent(CoreComponentIds.Facade, component);
+    return this;
+  };
+  /**
+   * @param {Entity} myRoleReal
+   * @param {Entity} myRolePretreat
+   * @param {Entity} myRoleNet
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.replaceFacade = function(myRoleReal, myRolePretreat, myRoleNet) {
+    var previousComponent = this.hasFacade ? this.facade : null;
+    var component = Entity._facadeComponentPool.size() > 0 ? Entity._facadeComponentPool.removeLast() : new FacadeComponent();
+    component.myRoleReal = myRoleReal;
+    component.myRolePretreat = myRolePretreat;
+    component.myRoleNet = myRoleNet;
+    this.replaceComponent(CoreComponentIds.Facade, component);
+    if (previousComponent != null) {
+      Entity._facadeComponentPool.add(previousComponent);
+    }
+    return this;
+  };
+  /**
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.removeFacade = function() {
+    var component = this.facade;
+    this.removeComponent(CoreComponentIds.Facade);
+    Entity._facadeComponentPool.add(component);
+    return this;
+  };
   /** @type {entitas.utils.Bag} */
   Entity._avatarComponentPool = new Bag();
   (function() {
@@ -219,144 +343,32 @@
     Entity._moveComponentPool.add(component);
     return this;
   };
-  /** @type {entitas.utils.Bag} */
-  Entity._mouseComponentPool = new Bag();
-  (function() {
-    for (var i=0; i<128; i++) {
-      Entity._mouseComponentPool.add(new MouseComponent());
-    }
-  })();
-  Entity.clearMouseComponentPool = function() {
-    Entity._mouseComponentPool.clear();
-  };
-  /** @type {{arpg.MouseComponent} */
-  Object.defineProperty(Entity.prototype, 'mouse', {
+  /** @type {entitas.Matcher} */
+  Matcher._matcherMouse=null;
+  
+  /** @type {entitas.Matcher} */
+  Object.defineProperty(Matcher, 'Mouse', {
     get: function() {
-      return this.getComponent(CoreComponentIds.Mouse);
-    }
-  });
-  /** @type {boolean} */
-  Object.defineProperty(Entity.prototype, 'hasMouse', {
-    get: function() {
-      return this.hasComponent(CoreComponentIds.Mouse);
-    }
-  });
-  /**
-   * @param {boolean} isTrigger
-   * @param {number} x
-   * @param {number} y
-   * @returns {entitas.Entity}
-   */
-  Entity.prototype.addMouse = function(isTrigger, x, y) {
-    var component = Entity._mouseComponentPool.size() > 0 ? Entity._mouseComponentPool.removeLast() : new MouseComponent();
-    component.isTrigger = isTrigger;
-    component.x = x;
-    component.y = y;
-    this.addComponent(CoreComponentIds.Mouse, component);
-    return this;
-  };
-  /**
-   * @param {boolean} isTrigger
-   * @param {number} x
-   * @param {number} y
-   * @returns {entitas.Entity}
-   */
-  Entity.prototype.replaceMouse = function(isTrigger, x, y) {
-    var previousComponent = this.hasMouse ? this.mouse : null;
-    var component = Entity._mouseComponentPool.size() > 0 ? Entity._mouseComponentPool.removeLast() : new MouseComponent();
-    component.isTrigger = isTrigger;
-    component.x = x;
-    component.y = y;
-    this.replaceComponent(CoreComponentIds.Mouse, component);
-    if (previousComponent != null) {
-      Entity._mouseComponentPool.add(previousComponent);
-    }
-    return this;
-  };
-  /**
-   * @returns {entitas.Entity}
-   */
-  Entity.prototype.removeMouse = function() {
-    var component = this.mouse;
-    this.removeComponent(CoreComponentIds.Mouse);
-    Entity._mouseComponentPool.add(component);
-    return this;
-  };
-  /** @type {arpg.PretreatMoveComponent} */
-  Entity.pretreatMoveComponent = new PretreatMoveComponent();
-  /** @type {boolean} */
-  Object.defineProperty(Entity.prototype, 'isPretreatMove', {
-    get: function() {
-      return this.hasComponent(CoreComponentIds.PretreatMove);
-    },
-    set: function(value) {
-      if (value !== this.isPretreatMove) {
-        if (value) {
-          this.addComponent(CoreComponentIds.PretreatMove, Entity.pretreatMoveComponent);
-        } else {
-          this.removeComponent(CoreComponentIds.PretreatMove);
-        }
+      if (Matcher._matcherMouse == null) {
+        Matcher._matcherMouse = Matcher.allOf(CoreComponentIds.Mouse);
       }
+      
+      return Matcher._matcherMouse;
     }
   });
-  /**
-   * @param {boolean} value
-   * @returns {entitas.Entity}
-   */
-  Entity.prototype.setPretreatMove = function(value) {
-    this.isPretreatMove = value;
-    return this;
-  };
-  /** @type {arpg.NetMoveComponent} */
-  Entity.netMoveComponent = new NetMoveComponent();
-  /** @type {boolean} */
-  Object.defineProperty(Entity.prototype, 'isNetMove', {
+  /** @type {entitas.Matcher} */
+  Matcher._matcherFacade=null;
+  
+  /** @type {entitas.Matcher} */
+  Object.defineProperty(Matcher, 'Facade', {
     get: function() {
-      return this.hasComponent(CoreComponentIds.NetMove);
-    },
-    set: function(value) {
-      if (value !== this.isNetMove) {
-        if (value) {
-          this.addComponent(CoreComponentIds.NetMove, Entity.netMoveComponent);
-        } else {
-          this.removeComponent(CoreComponentIds.NetMove);
-        }
+      if (Matcher._matcherFacade == null) {
+        Matcher._matcherFacade = Matcher.allOf(CoreComponentIds.Facade);
       }
+      
+      return Matcher._matcherFacade;
     }
   });
-  /**
-   * @param {boolean} value
-   * @returns {entitas.Entity}
-   */
-  Entity.prototype.setNetMove = function(value) {
-    this.isNetMove = value;
-    return this;
-  };
-  /** @type {arpg.RealMoveComponent} */
-  Entity.realMoveComponent = new RealMoveComponent();
-  /** @type {boolean} */
-  Object.defineProperty(Entity.prototype, 'isRealMove', {
-    get: function() {
-      return this.hasComponent(CoreComponentIds.RealMove);
-    },
-    set: function(value) {
-      if (value !== this.isRealMove) {
-        if (value) {
-          this.addComponent(CoreComponentIds.RealMove, Entity.realMoveComponent);
-        } else {
-          this.removeComponent(CoreComponentIds.RealMove);
-        }
-      }
-    }
-  });
-  /**
-   * @param {boolean} value
-   * @returns {entitas.Entity}
-   */
-  Entity.prototype.setRealMove = function(value) {
-    this.isRealMove = value;
-    return this;
-  };
   /** @type {entitas.Matcher} */
   Matcher._matcherAvatar=null;
   
@@ -394,58 +406,6 @@
       }
       
       return Matcher._matcherMove;
-    }
-  });
-  /** @type {entitas.Matcher} */
-  Matcher._matcherMouse=null;
-  
-  /** @type {entitas.Matcher} */
-  Object.defineProperty(Matcher, 'Mouse', {
-    get: function() {
-      if (Matcher._matcherMouse == null) {
-        Matcher._matcherMouse = Matcher.allOf(CoreComponentIds.Mouse);
-      }
-      
-      return Matcher._matcherMouse;
-    }
-  });
-  /** @type {entitas.Matcher} */
-  Matcher._matcherPretreatMove=null;
-  
-  /** @type {entitas.Matcher} */
-  Object.defineProperty(Matcher, 'PretreatMove', {
-    get: function() {
-      if (Matcher._matcherPretreatMove == null) {
-        Matcher._matcherPretreatMove = Matcher.allOf(CoreComponentIds.PretreatMove);
-      }
-      
-      return Matcher._matcherPretreatMove;
-    }
-  });
-  /** @type {entitas.Matcher} */
-  Matcher._matcherNetMove=null;
-  
-  /** @type {entitas.Matcher} */
-  Object.defineProperty(Matcher, 'NetMove', {
-    get: function() {
-      if (Matcher._matcherNetMove == null) {
-        Matcher._matcherNetMove = Matcher.allOf(CoreComponentIds.NetMove);
-      }
-      
-      return Matcher._matcherNetMove;
-    }
-  });
-  /** @type {entitas.Matcher} */
-  Matcher._matcherRealMove=null;
-  
-  /** @type {entitas.Matcher} */
-  Object.defineProperty(Matcher, 'RealMove', {
-    get: function() {
-      if (Matcher._matcherRealMove == null) {
-        Matcher._matcherRealMove = Matcher.allOf(CoreComponentIds.RealMove);
-      }
-      
-      return Matcher._matcherRealMove;
     }
   });
   /** @type {entitas.Entity} */
@@ -500,5 +460,58 @@
    */
   Pool.prototype.removeMouse = function() {
     this.destroyEntity(this.mouseEntity);
+  };
+  /** @type {entitas.Entity} */
+  Object.defineProperty(Pool.prototype, 'facadeEntity', {
+    get: function() {
+      return this.getGroup(Matcher.Facade).getSingleEntity();
+    }
+  });
+  /** @type {arpg.FacadeComponent} */
+  Object.defineProperty(Pool.prototype, 'facade', {
+    get: function() {
+      return this.facadeEntity.facade;
+    }
+  });
+  /** @type {boolean} */
+  Object.defineProperty(Pool.prototype, 'hasFacade', {
+    get: function() {
+      return this.facadeEntity != undefined;
+    }
+  });
+  /**
+   * @param {Entity} myRoleReal
+   * @param {Entity} myRolePretreat
+   * @param {Entity} myRoleNet
+   * @returns {entitas.Entity}
+   */
+  Pool.prototype.setFacade = function(myRoleReal, myRolePretreat, myRoleNet) {
+    if (this.hasFacade) {
+      throw new SingleEntityException(Matcher.Facade);
+    }
+    var entity = this.createEntity('Facade');
+    entity.addFacade(myRoleReal, myRolePretreat, myRoleNet);
+    return entity;
+  };
+  /**
+   * @param {Entity} myRoleReal
+   * @param {Entity} myRolePretreat
+   * @param {Entity} myRoleNet
+   * @returns {entitas.Entity}
+   */
+  Pool.prototype.replaceFacade = function(myRoleReal, myRolePretreat, myRoleNet) {
+    var entity = this.facadeEntity;
+    if (entity == null) {
+      entity = this.setFacade(myRoleReal, myRolePretreat, myRoleNet);
+    } else {
+      entity.replaceFacade(myRoleReal, myRolePretreat, myRoleNet);
+    }
+    return entity;
+  };
+  /**
+   * @returns {entitas.Entity}
+   */
+  Pool.prototype.removeFacade = function() {
+    this.destroyEntity(this.facadeEntity);
   };
 })();
