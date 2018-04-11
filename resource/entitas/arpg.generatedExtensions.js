@@ -14,8 +14,14 @@
   var AvatarComponent = arpg.AvatarComponent;
   var PropLv1Component = arpg.PropLv1Component;
   var PositionComponent = arpg.PositionComponent;
+  var ForwardComponent = arpg.ForwardComponent;
   var MoveComponent = arpg.MoveComponent;
-  var SkillNormalComponent = arpg.SkillNormalComponent;
+  var CurrOrderComponent = arpg.CurrOrderComponent;
+  var SkillArrComponent = arpg.SkillArrComponent;
+  var MeComponent = arpg.MeComponent;
+  var MyTeamComponent = arpg.MyTeamComponent;
+  var NeutralComponent = arpg.NeutralComponent;
+  var EnemyComponent = arpg.EnemyComponent;
   var CoreComponentIds = arpg.CoreComponentIds;
   /** @type {entitas.utils.Bag} */
   Entity._mouseComponentPool = new Bag();
@@ -161,13 +167,15 @@
    * @param {number} moveSpeed
    * @param {number} hpMax
    * @param {number} hp
+   * @param {number} radii
    * @returns {entitas.Entity}
    */
-  Entity.prototype.addPropLv1 = function(moveSpeed, hpMax, hp) {
+  Entity.prototype.addPropLv1 = function(moveSpeed, hpMax, hp, radii) {
     var component = Entity._propLv1ComponentPool.size() > 0 ? Entity._propLv1ComponentPool.removeLast() : new PropLv1Component();
     component.moveSpeed = moveSpeed;
     component.hpMax = hpMax;
     component.hp = hp;
+    component.radii = radii;
     this.addComponent(CoreComponentIds.PropLv1, component);
     return this;
   };
@@ -175,14 +183,16 @@
    * @param {number} moveSpeed
    * @param {number} hpMax
    * @param {number} hp
+   * @param {number} radii
    * @returns {entitas.Entity}
    */
-  Entity.prototype.replacePropLv1 = function(moveSpeed, hpMax, hp) {
+  Entity.prototype.replacePropLv1 = function(moveSpeed, hpMax, hp, radii) {
     var previousComponent = this.hasPropLv1 ? this.propLv1 : null;
     var component = Entity._propLv1ComponentPool.size() > 0 ? Entity._propLv1ComponentPool.removeLast() : new PropLv1Component();
     component.moveSpeed = moveSpeed;
     component.hpMax = hpMax;
     component.hp = hp;
+    component.radii = radii;
     this.replaceComponent(CoreComponentIds.PropLv1, component);
     if (previousComponent != null) {
       Entity._propLv1ComponentPool.add(previousComponent);
@@ -258,6 +268,61 @@
     return this;
   };
   /** @type {entitas.utils.Bag} */
+  Entity._forwardComponentPool = new Bag();
+  (function() {
+    for (var i=0; i<128; i++) {
+      Entity._forwardComponentPool.add(new ForwardComponent());
+    }
+  })();
+  Entity.clearForwardComponentPool = function() {
+    Entity._forwardComponentPool.clear();
+  };
+  /** @type {{arpg.ForwardComponent} */
+  Object.defineProperty(Entity.prototype, 'forward', {
+    get: function() {
+      return this.getComponent(CoreComponentIds.Forward);
+    }
+  });
+  /** @type {boolean} */
+  Object.defineProperty(Entity.prototype, 'hasForward', {
+    get: function() {
+      return this.hasComponent(CoreComponentIds.Forward);
+    }
+  });
+  /**
+   * @param {number} degree
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.addForward = function(degree) {
+    var component = Entity._forwardComponentPool.size() > 0 ? Entity._forwardComponentPool.removeLast() : new ForwardComponent();
+    component.degree = degree;
+    this.addComponent(CoreComponentIds.Forward, component);
+    return this;
+  };
+  /**
+   * @param {number} degree
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.replaceForward = function(degree) {
+    var previousComponent = this.hasForward ? this.forward : null;
+    var component = Entity._forwardComponentPool.size() > 0 ? Entity._forwardComponentPool.removeLast() : new ForwardComponent();
+    component.degree = degree;
+    this.replaceComponent(CoreComponentIds.Forward, component);
+    if (previousComponent != null) {
+      Entity._forwardComponentPool.add(previousComponent);
+    }
+    return this;
+  };
+  /**
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.removeForward = function() {
+    var component = this.forward;
+    this.removeComponent(CoreComponentIds.Forward);
+    Entity._forwardComponentPool.add(component);
+    return this;
+  };
+  /** @type {entitas.utils.Bag} */
   Entity._moveComponentPool = new Bag();
   (function() {
     for (var i=0; i<128; i++) {
@@ -280,41 +345,33 @@
     }
   });
   /**
-   * @param {boolean} block
    * @param {number} kind
-   * @param {number} toX
-   * @param {number} toY
+   * @param {IXY} to
    * @param {number} startFrame
    * @param {number} lifeFrame
    * @returns {entitas.Entity}
    */
-  Entity.prototype.addMove = function(block, kind, toX, toY, startFrame, lifeFrame) {
+  Entity.prototype.addMove = function(kind, to, startFrame, lifeFrame) {
     var component = Entity._moveComponentPool.size() > 0 ? Entity._moveComponentPool.removeLast() : new MoveComponent();
-    component.block = block;
     component.kind = kind;
-    component.toX = toX;
-    component.toY = toY;
+    component.to = to;
     component.startFrame = startFrame;
     component.lifeFrame = lifeFrame;
     this.addComponent(CoreComponentIds.Move, component);
     return this;
   };
   /**
-   * @param {boolean} block
    * @param {number} kind
-   * @param {number} toX
-   * @param {number} toY
+   * @param {IXY} to
    * @param {number} startFrame
    * @param {number} lifeFrame
    * @returns {entitas.Entity}
    */
-  Entity.prototype.replaceMove = function(block, kind, toX, toY, startFrame, lifeFrame) {
+  Entity.prototype.replaceMove = function(kind, to, startFrame, lifeFrame) {
     var previousComponent = this.hasMove ? this.move : null;
     var component = Entity._moveComponentPool.size() > 0 ? Entity._moveComponentPool.removeLast() : new MoveComponent();
-    component.block = block;
     component.kind = kind;
-    component.toX = toX;
-    component.toY = toY;
+    component.to = to;
     component.startFrame = startFrame;
     component.lifeFrame = lifeFrame;
     this.replaceComponent(CoreComponentIds.Move, component);
@@ -333,66 +390,221 @@
     return this;
   };
   /** @type {entitas.utils.Bag} */
-  Entity._skillNormalComponentPool = new Bag();
+  Entity._currOrderComponentPool = new Bag();
   (function() {
     for (var i=0; i<128; i++) {
-      Entity._skillNormalComponentPool.add(new SkillNormalComponent());
+      Entity._currOrderComponentPool.add(new CurrOrderComponent());
     }
   })();
-  Entity.clearSkillNormalComponentPool = function() {
-    Entity._skillNormalComponentPool.clear();
+  Entity.clearCurrOrderComponentPool = function() {
+    Entity._currOrderComponentPool.clear();
   };
-  /** @type {{arpg.SkillNormalComponent} */
-  Object.defineProperty(Entity.prototype, 'skillNormal', {
+  /** @type {{arpg.CurrOrderComponent} */
+  Object.defineProperty(Entity.prototype, 'currOrder', {
     get: function() {
-      return this.getComponent(CoreComponentIds.SkillNormal);
+      return this.getComponent(CoreComponentIds.CurrOrder);
     }
   });
   /** @type {boolean} */
-  Object.defineProperty(Entity.prototype, 'hasSkillNormal', {
+  Object.defineProperty(Entity.prototype, 'hasCurrOrder', {
     get: function() {
-      return this.hasComponent(CoreComponentIds.SkillNormal);
+      return this.hasComponent(CoreComponentIds.CurrOrder);
     }
   });
   /**
-   * @param {number} sid
-   * @param {number} state
-   * @param {number} statePhase
+   * @param {OrderKind} order
+   * @param {boolean} autoAttack
+   * @param {ActionTarget} target
    * @returns {entitas.Entity}
    */
-  Entity.prototype.addSkillNormal = function(sid, state, statePhase) {
-    var component = Entity._skillNormalComponentPool.size() > 0 ? Entity._skillNormalComponentPool.removeLast() : new SkillNormalComponent();
-    component.sid = sid;
-    component.state = state;
-    component.statePhase = statePhase;
-    this.addComponent(CoreComponentIds.SkillNormal, component);
+  Entity.prototype.addCurrOrder = function(order, autoAttack, target) {
+    var component = Entity._currOrderComponentPool.size() > 0 ? Entity._currOrderComponentPool.removeLast() : new CurrOrderComponent();
+    component.order = order;
+    component.autoAttack = autoAttack;
+    component.target = target;
+    this.addComponent(CoreComponentIds.CurrOrder, component);
     return this;
   };
   /**
-   * @param {number} sid
-   * @param {number} state
-   * @param {number} statePhase
+   * @param {OrderKind} order
+   * @param {boolean} autoAttack
+   * @param {ActionTarget} target
    * @returns {entitas.Entity}
    */
-  Entity.prototype.replaceSkillNormal = function(sid, state, statePhase) {
-    var previousComponent = this.hasSkillNormal ? this.skillNormal : null;
-    var component = Entity._skillNormalComponentPool.size() > 0 ? Entity._skillNormalComponentPool.removeLast() : new SkillNormalComponent();
-    component.sid = sid;
-    component.state = state;
-    component.statePhase = statePhase;
-    this.replaceComponent(CoreComponentIds.SkillNormal, component);
+  Entity.prototype.replaceCurrOrder = function(order, autoAttack, target) {
+    var previousComponent = this.hasCurrOrder ? this.currOrder : null;
+    var component = Entity._currOrderComponentPool.size() > 0 ? Entity._currOrderComponentPool.removeLast() : new CurrOrderComponent();
+    component.order = order;
+    component.autoAttack = autoAttack;
+    component.target = target;
+    this.replaceComponent(CoreComponentIds.CurrOrder, component);
     if (previousComponent != null) {
-      Entity._skillNormalComponentPool.add(previousComponent);
+      Entity._currOrderComponentPool.add(previousComponent);
     }
     return this;
   };
   /**
    * @returns {entitas.Entity}
    */
-  Entity.prototype.removeSkillNormal = function() {
-    var component = this.skillNormal;
-    this.removeComponent(CoreComponentIds.SkillNormal);
-    Entity._skillNormalComponentPool.add(component);
+  Entity.prototype.removeCurrOrder = function() {
+    var component = this.currOrder;
+    this.removeComponent(CoreComponentIds.CurrOrder);
+    Entity._currOrderComponentPool.add(component);
+    return this;
+  };
+  /** @type {entitas.utils.Bag} */
+  Entity._skillArrComponentPool = new Bag();
+  (function() {
+    for (var i=0; i<128; i++) {
+      Entity._skillArrComponentPool.add(new SkillArrComponent());
+    }
+  })();
+  Entity.clearSkillArrComponentPool = function() {
+    Entity._skillArrComponentPool.clear();
+  };
+  /** @type {{arpg.SkillArrComponent} */
+  Object.defineProperty(Entity.prototype, 'skillArr', {
+    get: function() {
+      return this.getComponent(CoreComponentIds.SkillArr);
+    }
+  });
+  /** @type {boolean} */
+  Object.defineProperty(Entity.prototype, 'hasSkillArr', {
+    get: function() {
+      return this.hasComponent(CoreComponentIds.SkillArr);
+    }
+  });
+  /**
+   * @param {SkillStateComponent[]} skillArr
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.addSkillArr = function(skillArr) {
+    var component = Entity._skillArrComponentPool.size() > 0 ? Entity._skillArrComponentPool.removeLast() : new SkillArrComponent();
+    component.skillArr = skillArr;
+    this.addComponent(CoreComponentIds.SkillArr, component);
+    return this;
+  };
+  /**
+   * @param {SkillStateComponent[]} skillArr
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.replaceSkillArr = function(skillArr) {
+    var previousComponent = this.hasSkillArr ? this.skillArr : null;
+    var component = Entity._skillArrComponentPool.size() > 0 ? Entity._skillArrComponentPool.removeLast() : new SkillArrComponent();
+    component.skillArr = skillArr;
+    this.replaceComponent(CoreComponentIds.SkillArr, component);
+    if (previousComponent != null) {
+      Entity._skillArrComponentPool.add(previousComponent);
+    }
+    return this;
+  };
+  /**
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.removeSkillArr = function() {
+    var component = this.skillArr;
+    this.removeComponent(CoreComponentIds.SkillArr);
+    Entity._skillArrComponentPool.add(component);
+    return this;
+  };
+  /** @type {arpg.MeComponent} */
+  Entity.meComponent = new MeComponent();
+  /** @type {boolean} */
+  Object.defineProperty(Entity.prototype, 'isMe', {
+    get: function() {
+      return this.hasComponent(CoreComponentIds.Me);
+    },
+    set: function(value) {
+      if (value !== this.isMe) {
+        if (value) {
+          this.addComponent(CoreComponentIds.Me, Entity.meComponent);
+        } else {
+          this.removeComponent(CoreComponentIds.Me);
+        }
+      }
+    }
+  });
+  /**
+   * @param {boolean} value
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.setMe = function(value) {
+    this.isMe = value;
+    return this;
+  };
+  /** @type {arpg.MyTeamComponent} */
+  Entity.myTeamComponent = new MyTeamComponent();
+  /** @type {boolean} */
+  Object.defineProperty(Entity.prototype, 'isMyTeam', {
+    get: function() {
+      return this.hasComponent(CoreComponentIds.MyTeam);
+    },
+    set: function(value) {
+      if (value !== this.isMyTeam) {
+        if (value) {
+          this.addComponent(CoreComponentIds.MyTeam, Entity.myTeamComponent);
+        } else {
+          this.removeComponent(CoreComponentIds.MyTeam);
+        }
+      }
+    }
+  });
+  /**
+   * @param {boolean} value
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.setMyTeam = function(value) {
+    this.isMyTeam = value;
+    return this;
+  };
+  /** @type {arpg.NeutralComponent} */
+  Entity.neutralComponent = new NeutralComponent();
+  /** @type {boolean} */
+  Object.defineProperty(Entity.prototype, 'isNeutral', {
+    get: function() {
+      return this.hasComponent(CoreComponentIds.Neutral);
+    },
+    set: function(value) {
+      if (value !== this.isNeutral) {
+        if (value) {
+          this.addComponent(CoreComponentIds.Neutral, Entity.neutralComponent);
+        } else {
+          this.removeComponent(CoreComponentIds.Neutral);
+        }
+      }
+    }
+  });
+  /**
+   * @param {boolean} value
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.setNeutral = function(value) {
+    this.isNeutral = value;
+    return this;
+  };
+  /** @type {arpg.EnemyComponent} */
+  Entity.enemyComponent = new EnemyComponent();
+  /** @type {boolean} */
+  Object.defineProperty(Entity.prototype, 'isEnemy', {
+    get: function() {
+      return this.hasComponent(CoreComponentIds.Enemy);
+    },
+    set: function(value) {
+      if (value !== this.isEnemy) {
+        if (value) {
+          this.addComponent(CoreComponentIds.Enemy, Entity.enemyComponent);
+        } else {
+          this.removeComponent(CoreComponentIds.Enemy);
+        }
+      }
+    }
+  });
+  /**
+   * @param {boolean} value
+   * @returns {entitas.Entity}
+   */
+  Entity.prototype.setEnemy = function(value) {
+    this.isEnemy = value;
     return this;
   };
   /** @type {entitas.Matcher} */
@@ -448,6 +660,19 @@
     }
   });
   /** @type {entitas.Matcher} */
+  Matcher._matcherForward=null;
+  
+  /** @type {entitas.Matcher} */
+  Object.defineProperty(Matcher, 'Forward', {
+    get: function() {
+      if (Matcher._matcherForward == null) {
+        Matcher._matcherForward = Matcher.allOf(CoreComponentIds.Forward);
+      }
+      
+      return Matcher._matcherForward;
+    }
+  });
+  /** @type {entitas.Matcher} */
   Matcher._matcherMove=null;
   
   /** @type {entitas.Matcher} */
@@ -461,16 +686,81 @@
     }
   });
   /** @type {entitas.Matcher} */
-  Matcher._matcherSkillNormal=null;
+  Matcher._matcherCurrOrder=null;
   
   /** @type {entitas.Matcher} */
-  Object.defineProperty(Matcher, 'SkillNormal', {
+  Object.defineProperty(Matcher, 'CurrOrder', {
     get: function() {
-      if (Matcher._matcherSkillNormal == null) {
-        Matcher._matcherSkillNormal = Matcher.allOf(CoreComponentIds.SkillNormal);
+      if (Matcher._matcherCurrOrder == null) {
+        Matcher._matcherCurrOrder = Matcher.allOf(CoreComponentIds.CurrOrder);
       }
       
-      return Matcher._matcherSkillNormal;
+      return Matcher._matcherCurrOrder;
+    }
+  });
+  /** @type {entitas.Matcher} */
+  Matcher._matcherSkillArr=null;
+  
+  /** @type {entitas.Matcher} */
+  Object.defineProperty(Matcher, 'SkillArr', {
+    get: function() {
+      if (Matcher._matcherSkillArr == null) {
+        Matcher._matcherSkillArr = Matcher.allOf(CoreComponentIds.SkillArr);
+      }
+      
+      return Matcher._matcherSkillArr;
+    }
+  });
+  /** @type {entitas.Matcher} */
+  Matcher._matcherMe=null;
+  
+  /** @type {entitas.Matcher} */
+  Object.defineProperty(Matcher, 'Me', {
+    get: function() {
+      if (Matcher._matcherMe == null) {
+        Matcher._matcherMe = Matcher.allOf(CoreComponentIds.Me);
+      }
+      
+      return Matcher._matcherMe;
+    }
+  });
+  /** @type {entitas.Matcher} */
+  Matcher._matcherMyTeam=null;
+  
+  /** @type {entitas.Matcher} */
+  Object.defineProperty(Matcher, 'MyTeam', {
+    get: function() {
+      if (Matcher._matcherMyTeam == null) {
+        Matcher._matcherMyTeam = Matcher.allOf(CoreComponentIds.MyTeam);
+      }
+      
+      return Matcher._matcherMyTeam;
+    }
+  });
+  /** @type {entitas.Matcher} */
+  Matcher._matcherNeutral=null;
+  
+  /** @type {entitas.Matcher} */
+  Object.defineProperty(Matcher, 'Neutral', {
+    get: function() {
+      if (Matcher._matcherNeutral == null) {
+        Matcher._matcherNeutral = Matcher.allOf(CoreComponentIds.Neutral);
+      }
+      
+      return Matcher._matcherNeutral;
+    }
+  });
+  /** @type {entitas.Matcher} */
+  Matcher._matcherEnemy=null;
+  
+  /** @type {entitas.Matcher} */
+  Object.defineProperty(Matcher, 'Enemy', {
+    get: function() {
+      if (Matcher._matcherEnemy == null) {
+        Matcher._matcherEnemy = Matcher.allOf(CoreComponentIds.Enemy);
+      }
+      
+      return Matcher._matcherEnemy;
     }
   });
   /** @type {entitas.Entity} */

@@ -15,23 +15,36 @@ declare module entitas {
       public moveSpeed:number;
       public hpMax:number;
       public hp:number;
+      public radii:number;
     }
     class PositionComponent implements IComponent {
       public x:number;
       public y:number;
     }
+    class ForwardComponent implements IComponent {
+      public degree:number;
+    }
     class MoveComponent implements IComponent {
-      public block:boolean;
       public kind:number;
-      public toX:number;
-      public toY:number;
+      public to:IXY;
       public startFrame:number;
       public lifeFrame:number;
     }
-    class SkillNormalComponent implements IComponent {
-      public sid:number;
-      public state:number;
-      public statePhase:number;
+    class CurrOrderComponent implements IComponent {
+      public order:OrderKind;
+      public autoAttack:boolean;
+      public target:ActionTarget;
+    }
+    class SkillArrComponent implements IComponent {
+      public skillArr:SkillStateComponent[];
+    }
+    class MeComponent implements IComponent {
+    }
+    class MyTeamComponent implements IComponent {
+    }
+    class NeutralComponent implements IComponent {
+    }
+    class EnemyComponent implements IComponent {
     }
 
 }
@@ -471,10 +484,22 @@ declare module entitas {
         static PropLv1: Matcher;
         static _matcherPosition;
         static Position: Matcher;
+        static _matcherForward;
+        static Forward: Matcher;
         static _matcherMove;
         static Move: Matcher;
-        static _matcherSkillNormal;
-        static SkillNormal: Matcher;
+        static _matcherCurrOrder;
+        static CurrOrder: Matcher;
+        static _matcherSkillArr;
+        static SkillArr: Matcher;
+        static _matcherMe;
+        static Me: Matcher;
+        static _matcherMyTeam;
+        static MyTeam: Matcher;
+        static _matcherNeutral;
+        static Neutral: Matcher;
+        static _matcherEnemy;
+        static Enemy: Matcher;
         /**
          * Get the matcher id
          * @type {number}
@@ -625,8 +650,8 @@ declare module entitas {
         static clearPropLv1ComponentPool();
         propLv1: PropLv1Component;
         hasPropLv1: boolean;
-        addPropLv1(moveSpeed:number, hpMax:number, hp:number);
-        replacePropLv1(moveSpeed:number, hpMax:number, hp:number);
+        addPropLv1(moveSpeed:number, hpMax:number, hp:number, radii:number);
+        replacePropLv1(moveSpeed:number, hpMax:number, hp:number, radii:number);
         removePropLv1();
         static _positionComponentPool;
         static clearPositionComponentPool();
@@ -635,20 +660,46 @@ declare module entitas {
         addPosition(x:number, y:number);
         replacePosition(x:number, y:number);
         removePosition();
+        static _forwardComponentPool;
+        static clearForwardComponentPool();
+        forward: ForwardComponent;
+        hasForward: boolean;
+        addForward(degree:number);
+        replaceForward(degree:number);
+        removeForward();
         static _moveComponentPool;
         static clearMoveComponentPool();
         move: MoveComponent;
         hasMove: boolean;
-        addMove(block:boolean, kind:number, toX:number, toY:number, startFrame:number, lifeFrame:number);
-        replaceMove(block:boolean, kind:number, toX:number, toY:number, startFrame:number, lifeFrame:number);
+        addMove(kind:number, to:IXY, startFrame:number, lifeFrame:number);
+        replaceMove(kind:number, to:IXY, startFrame:number, lifeFrame:number);
         removeMove();
-        static _skillNormalComponentPool;
-        static clearSkillNormalComponentPool();
-        skillNormal: SkillNormalComponent;
-        hasSkillNormal: boolean;
-        addSkillNormal(sid:number, state:number, statePhase:number);
-        replaceSkillNormal(sid:number, state:number, statePhase:number);
-        removeSkillNormal();
+        static _currOrderComponentPool;
+        static clearCurrOrderComponentPool();
+        currOrder: CurrOrderComponent;
+        hasCurrOrder: boolean;
+        addCurrOrder(order:OrderKind, autoAttack:boolean, target:ActionTarget);
+        replaceCurrOrder(order:OrderKind, autoAttack:boolean, target:ActionTarget);
+        removeCurrOrder();
+        static _skillArrComponentPool;
+        static clearSkillArrComponentPool();
+        skillArr: SkillArrComponent;
+        hasSkillArr: boolean;
+        addSkillArr(skillArr:SkillStateComponent[]);
+        replaceSkillArr(skillArr:SkillStateComponent[]);
+        removeSkillArr();
+        static meComponent: MeComponent;
+        isMe: boolean;
+        setMe(value: boolean);
+        static myTeamComponent: MyTeamComponent;
+        isMyTeam: boolean;
+        setMyTeam(value: boolean);
+        static neutralComponent: NeutralComponent;
+        isNeutral: boolean;
+        setNeutral(value: boolean);
+        static enemyComponent: EnemyComponent;
+        isEnemy: boolean;
+        setEnemy(value: boolean);
         /**
          * @static
          * @type {number} */

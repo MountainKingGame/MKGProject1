@@ -4,10 +4,9 @@ class FakeServer{
         FakeServer.si = this;
     }
     onSend(cmd,req:any):void{
-        var role = ARPGFacade.si.myRoleNet;
+        var role = ARPGFacade.si.myRoleReal;
         req.currFrame = ARPGFacade.si.timer.currFrame+3;
-        req.fromX = role.position.x;
-        req.fromY = role.position.y;
+        req.from = role.position;
         setTimeout(() => {
             MsgMgr.si.send(MsgConsts.NetRes_+cmd,req);
         }, 200);

@@ -25,23 +25,34 @@
     "PropLv1":[
       "moveSpeed:number",
       "hpMax:number",
-      "hp:number"
+      "hp:number",
+      "radii:number"
     ],
     "Position": [
       "x:number",
       "y:number"
     ],
+    "Forward":[
+      "degree:number"
+    ],
     "Move": [
-      "block:boolean",
       "kind:number",
-      "toX:number",
-      "toY:number",
+      "to:IXY",
       "startFrame:number",
       "lifeFrame:number"
     ],
+    "CurrOrder":[
+      "order:OrderKind",
+      "autoAttack:boolean",
+      "target:ActionTarget"
+    ],
     "SkillArr":[
       "skillArr:SkillStateComponent[]"
-    ]
+    ],
+    "Me":false,
+    "MyTeam":false,
+    "Neutral":false,
+    "Enemy":false
   },
   "extensions": {
     "Pool": {

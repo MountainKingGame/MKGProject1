@@ -1,3 +1,5 @@
+//--egret
+import Point = egret.Point
 //--entitas
 import Pool = entitas.Pool;
 import Group = entitas.Group

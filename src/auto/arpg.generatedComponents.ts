@@ -18,8 +18,14 @@ module arpg {
     Avatar,
     PropLv1,
     Position,
+    Forward,
     Move,
-    SkillNormal,
+    CurrOrder,
+    SkillArr,
+    Me,
+    MyTeam,
+    Neutral,
+    Enemy,
     TotalComponents
   }
 
@@ -38,23 +44,36 @@ module arpg {
     public moveSpeed:number;
     public hpMax:number;
     public hp:number;
+    public radii:number;
   }
   export class PositionComponent implements IComponent {
     public x:number;
     public y:number;
   }
+  export class ForwardComponent implements IComponent {
+    public degree:number;
+  }
   export class MoveComponent implements IComponent {
-    public block:boolean;
     public kind:number;
-    public toX:number;
-    public toY:number;
+    public to:IXY;
     public startFrame:number;
     public lifeFrame:number;
   }
-  export class SkillNormalComponent implements IComponent {
-    public sid:number;
-    public state:number;
-    public statePhase:number;
+  export class CurrOrderComponent implements IComponent {
+    public order:OrderKind;
+    public autoAttack:boolean;
+    public target:ActionTarget;
+  }
+  export class SkillArrComponent implements IComponent {
+    public skillArr:SkillStateComponent[];
+  }
+  export class MeComponent implements IComponent {
+  }
+  export class MyTeamComponent implements IComponent {
+  }
+  export class NeutralComponent implements IComponent {
+  }
+  export class EnemyComponent implements IComponent {
   }
 
 

@@ -1397,7 +1397,6 @@ var entitas;
             this._entitiesCache = null;
             this._singleEntityCache = null;
             this._toStringCache = '';
-            this._entities = {};
             this.onEntityAdded = new Signal(this);
             this.onEntityRemoved = new Signal(this);
             this.onEntityUpdated = new Signal(this);
