@@ -2,6 +2,8 @@
 <component size="1,1">
   <displayList>
     <component id="n4_q06t" name="avatar" src="q06t1" xy="0,0" pivot="0.5,0.5" anchor="true" controller="color,0"/>
-    <text id="n1_q06t" name="txtName" xy="-50,-15" size="100,31" fontSize="24" color="#333333" align="center" autoSize="none" text="name&#xA;"/>
+    <text id="n1_q06t" name="txt0" xy="-49,-19" size="100,31" fontSize="18" color="#333333" align="center" autoSize="none" bold="true" text="txt0"/>
+    <text id="n5_c9px" name="txt1" xy="-49,4" size="100,31" fontSize="18" color="#00ff00" align="center" autoSize="none" bold="true" text="txt1&#xA;"/>
+    <text id="n6_c9px" name="txt2" xy="-49,27" size="100,31" fontSize="18" color="#ffff00" align="center" autoSize="none" bold="true" text="txt2"/>
   </displayList>
 </component>

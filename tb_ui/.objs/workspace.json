@@ -1,4 +1,13 @@
 {
+	"expanded_nodes": [
+		"cl98qbvq",
+		"/"
+	],
+	"active_doc": [
+		"cl98qbvq",
+		"q06t0"
+	],
+	"hidden_packages": [],
 	"docs": [
 		"i6vaqd5a",
 		"ysfl1",
@@ -23,12 +32,8 @@
 		"ybsps8tf",
 		"u9boc",
 		"ybsps8tf",
-		"xk2t1f"
-	],
-	"expanded_nodes": [],
-	"active_doc": [
-		"ybsps8tf",
-		"u9boc"
-	],
-	"hidden_packages": []
+		"xk2t1f",
+		"cl98qbvq",
+		"q06t0"
+	]
 }
