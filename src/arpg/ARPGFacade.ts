@@ -8,7 +8,6 @@ class ARPGFacade {
     gameView: fairygui.GComponent
     inputView: fairygui.GComponent
     constructor() {
-        new arpg.Imports();
         ARPGFacade.si = this;
         new FakeServer();
     }

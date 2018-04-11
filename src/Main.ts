@@ -57,32 +57,21 @@ class Main extends egret.DisplayObjectContainer {
     }
     private createGameScene(): void {
         new Imports();
+        new arpg.Imports();
         this.stage.addChild(fairygui.GRoot.inst.displayObject);
-        //===tb
-        CtrlFacade.si = new CtrlFacade();
-        // CtrlFacade.si.stage = this.stage;
-        // CtrlFacade.si.init(true);
-        //===ARPG
-        var arpgFacade = new ARPGFacade()
-        arpgFacade.stage = this.stage
-        arpgFacade.init()
-        //===test
-        // new tests.TestProtobuf();
-        // new TestMoveSmooth().init();
-        // console.log("[info]",toml("[x.y.z]\na=13\nb=3"),"`toml`");
-        // let o = RES.getRes("map1_toml");
-        // console.log(o);
-        // let a:any = toml(o);
-        // console.log("[info]",a,"`toml`",a.products.length);
-        // this.stage.addChild(new astars.TestAStar());
-        // new TestSort().testSortBy1();
-        // new TestSort().testSortBy2();
-        // new tests.TestSort().testDoubleLinkedList();
-        // new TestHttp().get1();
-        // new TestBinaryHeap().test0();
-        // new tests.TestExcel().func1();
-        // new tests.TestEntitas()
-        // new tests.TestTypeScript()
+        if(new tests.Test().exec()){
+
+        }else{
+            //===tb
+            CtrlFacade.si = new CtrlFacade();
+            // CtrlFacade.si.stage = this.stage;
+            // CtrlFacade.si.init(true);
+            //===ARPG
+            var arpgFacade = new ARPGFacade()
+            arpgFacade.stage = this.stage
+            arpgFacade.init()
+        }
+        
     }
     onResize() {
         // console.log("[debug]", "OnResize StageWH:", Laya.stage.width, Laya.stage.height);
